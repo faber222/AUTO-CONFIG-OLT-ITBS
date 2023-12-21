@@ -1,4 +1,4 @@
-package main.java.engtelecom;
+package engtelecom.access;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -97,6 +97,18 @@ public class Telnet implements Runnable {
         return JOptionPane.showInputDialog("Digite um comando:");
     }
 
+    private static String getIpAddress() {
+        return JOptionPane.showInputDialog("Digite o ip da olt:");
+    }
+
+    private static String getOltUser() {
+        return JOptionPane.showInputDialog("Digite o usuario da olt:");
+    }
+
+    private static String getOltPwd() {
+        return JOptionPane.showInputDialog("Digite a senha da olt:");
+    }
+
     public static void main(String args[]) {
         String host;
         int port;
@@ -104,11 +116,11 @@ public class Telnet implements Runnable {
         String password;
         String[] commands;
 
-        host = "10.1.40.131";
+        host = getIpAddress();
         port = 23;
-        username = "admin";
-        password = "admin";
-        commands = new String[] { "enable", "sh in br", "sh ip interface" };
+        username = getOltUser();
+        password = getOltPwd();
+        commands = new String[] { "enable", "sh in br", "sh ip interface", "sh ip rou" };
 
         new Telnet(host, port, username, password, commands);
     }

@@ -1,0 +1,6 @@
+deploy profile dba
+aim 1 name DBA-DEFAULT
+type 4 max 1200000
+active
+exit
+
