@@ -4,3 +4,619 @@ type 4 max 1200000
 active
 exit
 
+vlan 201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216
+
+interface ethernet 1/1
+switchport mode hybrid
+switchport hybrid tagged vlan 201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216
+exit
+
+deploy profile vlan
+aim 1 name vlan201
+translate old-vlan 201 new-vlan 201
+active
+aim 2 name vlan202
+translate old-vlan 202 new-vlan 202
+active
+aim 3 name vlan203
+translate old-vlan 203 new-vlan 203
+active
+aim 4 name vlan204
+translate old-vlan 204 new-vlan 204
+active
+aim 5 name vlan205
+translate old-vlan 205 new-vlan 205
+active
+aim 6 name vlan206
+translate old-vlan 206 new-vlan 206
+active
+aim 7 name vlan207
+translate old-vlan 207 new-vlan 207
+active
+aim 8 name vlan208
+translate old-vlan 208 new-vlan 208
+active
+aim 9 name vlan209
+translate old-vlan 209 new-vlan 209
+active
+aim 10 name vlan210
+translate old-vlan 210 new-vlan 210
+active
+aim 11 name vlan211
+translate old-vlan 211 new-vlan 211
+active
+aim 12 name vlan212
+translate old-vlan 212 new-vlan 212
+active
+aim 13 name vlan213
+translate old-vlan 213 new-vlan 213
+active
+aim 14 name vlan214
+translate old-vlan 214 new-vlan 214
+active
+aim 15 name vlan215
+translate old-vlan 215 new-vlan 215
+active
+aim 16 name vlan216
+translate old-vlan 216 new-vlan 216
+active
+exit
+
+deploy profile line
+aim 1 name i41-100_201
+device type i41-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 1
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 201 gemport 1
+flow 1 port eth 1 default vlan 201
+active
+
+aim 2 name i41-100_202
+device type i41-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 2
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 202 gemport 1
+flow 1 port eth 1 default vlan 202
+active
+
+aim 3 name i41-100_203
+device type i41-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 3
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 203 gemport 1
+flow 1 port eth 1 default vlan 203
+active
+
+aim 4 name i41-100_204
+device type i41-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 4
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 204 gemport 1
+flow 1 port eth 1 default vlan 204
+active
+
+aim 5 name i41-100_205
+device type i41-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 5
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 205 gemport 1
+flow 1 port eth 1 default vlan 205
+active
+
+aim 6 name i41-100_206
+device type i41-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 6
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 206 gemport 1
+flow 1 port eth 1 default vlan 206
+active
+
+aim 7 name i41-100_207
+device type i41-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 7
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 207 gemport 1
+flow 1 port eth 1 default vlan 207
+active
+
+aim 8 name i41-100_208
+device type i41-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 8
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 208 gemport 1
+flow 1 port eth 1 default vlan 208
+active
+
+aim 9 name i41-100_209
+device type i41-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 9
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 209 gemport 1
+flow 1 port eth 1 default vlan 209
+active
+
+aim 10 name i41-100_210
+device type i41-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 10
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 210 gemport 1
+flow 1 port eth 1 default vlan 210
+active
+
+aim 11 name i41-100_211
+device type i41-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 11
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 211 gemport 1
+flow 1 port eth 1 default vlan 211
+active
+
+aim 12 name i41-100_212
+device type i41-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 12
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 212 gemport 1
+flow 1 port eth 1 default vlan 212
+active
+
+aim 13 name i41-100_213
+device type i41-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 13
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 213 gemport 1
+flow 1 port eth 1 default vlan 213
+active
+
+aim 14 name i41-100_214
+device type i41-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 14
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 214 gemport 1
+flow 1 port eth 1 default vlan 214
+active
+
+aim 15 name i41-100_215
+device type i41-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 15
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 215 gemport 1
+flow 1 port eth 1 default vlan 215
+active
+
+aim 16 name i41-100_216
+device type i41-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 16
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 216 gemport 1
+flow 1 port eth 1 default vlan 216
+active
+
+deploy profile line
+aim 17 name i40-421_201
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 1
+mapping mode port-vlan
+mapping 1 port veip vlan 201 gemport 1
+flow 1 port veip vlan 201 keep
+active
+
+aim 18 name i40-421_202
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 2
+mapping mode port-vlan
+mapping 1 port veip vlan 202 gemport 1
+flow 1 port veip vlan 202 keep
+active
+
+aim 19 name i40-421_203
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 3
+mapping mode port-vlan
+mapping 1 port veip vlan 203 gemport 1
+flow 1 port veip vlan 203 keep
+active
+
+aim 20 name i40-421_204
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 4
+mapping mode port-vlan
+mapping 1 port veip vlan 204 gemport 1
+flow 1 port veip vlan 204 keep
+active
+
+aim 21 name i40-421_205
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 5
+mapping mode port-vlan
+mapping 1 port veip vlan 205 gemport 1
+flow 1 port veip vlan 205 keep
+active
+
+aim 22 name i40-421_206
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 6
+mapping mode port-vlan
+mapping 1 port veip vlan 206 gemport 1
+flow 1 port veip vlan 206 keep
+active
+
+aim 23 name i40-421_207
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 7
+mapping mode port-vlan
+mapping 1 port veip vlan 207 gemport 1
+flow 1 port veip vlan 207 keep
+active
+
+aim 24 name i40-421_208
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 8
+mapping mode port-vlan
+mapping 1 port veip vlan 208 gemport 1
+flow 1 port veip vlan 208 keep
+active
+
+aim 25 name i40-421_209
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 9
+mapping mode port-vlan
+mapping 1 port veip vlan 209 gemport 1
+flow 1 port veip vlan 209 keep
+active
+
+aim 26 name i40-421_210
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 10
+mapping mode port-vlan
+mapping 1 port veip vlan 210 gemport 1
+flow 1 port veip vlan 210 keep
+active
+
+aim 27 name i40-421_211
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 11
+mapping mode port-vlan
+mapping 1 port veip vlan 211 gemport 1
+flow 1 port veip vlan 211 keep
+active
+
+aim 28 name i40-421_212
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 12
+mapping mode port-vlan
+mapping 1 port veip vlan 212 gemport 1
+flow 1 port veip vlan 212 keep
+active
+
+aim 29 name i40-421_213
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 13
+mapping mode port-vlan
+mapping 1 port veip vlan 213 gemport 1
+flow 1 port veip vlan 213 keep
+active
+
+aim 30 name i40-421_214
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 14
+mapping mode port-vlan
+mapping 1 port veip vlan 214 gemport 1
+flow 1 port veip vlan 214 keep
+active
+
+aim 31 name i40-421_215
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 15
+mapping mode port-vlan
+mapping 1 port veip vlan 215 gemport 1
+flow 1 port veip vlan 215 keep
+active
+
+aim 32 name i40-421_216
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 16
+mapping mode port-vlan
+mapping 1 port veip vlan 216 gemport 1
+flow 1 port veip vlan 216 keep
+active
+
+ont auto-config
+ont-find interface gpon all
+ont-find list-age time 60 interface gpon all
+
+ont auto-config name 110Gi-VLAN-201 device-type i30-100 line 1 interface gpon 0/1
+ont auto-config name 110Gi-VLAN-202 device-type i30-100 line 2 interface gpon 0/2
+ont auto-config name 110Gi-VLAN-203 device-type i30-100 line 3 interface gpon 0/3
+ont auto-config name 110Gi-VLAN-204 device-type i30-100 line 4 interface gpon 0/4
+ont auto-config name 110Gi-VLAN-205 device-type i30-100 line 5 interface gpon 0/5
+ont auto-config name 110Gi-VLAN-206 device-type i30-100 line 6 interface gpon 0/6
+ont auto-config name 110Gi-VLAN-207 device-type i30-100 line 7 interface gpon 0/7
+ont auto-config name 110Gi-VLAN-208 device-type i30-100 line 8 interface gpon 0/8
+ont auto-config name 110Gi-VLAN-209 device-type i30-100 line 9 interface gpon 0/9
+ont auto-config name 110Gi-VLAN-210 device-type i30-100 line 10 interface gpon 0/10
+ont auto-config name 110Gi-VLAN-211 device-type i30-100 line 11 interface gpon 0/11
+ont auto-config name 110Gi-VLAN-212 device-type i30-100 line 12 interface gpon 0/12
+ont auto-config name 110Gi-VLAN-213 device-type i30-100 line 13 interface gpon 0/13
+ont auto-config name 110Gi-VLAN-214 device-type i30-100 line 14 interface gpon 0/14
+ont auto-config name 110Gi-VLAN-215 device-type i30-100 line 15 interface gpon 0/15
+ont auto-config name 110Gi-VLAN-216 device-type i30-100 line 16 interface gpon 0/16
+
+ont auto-config name 110Gb-VLAN-201 device-type i41-100 line 1 interface gpon 0/1
+ont auto-config name 110Gb-VLAN-202 device-type i41-100 line 2 interface gpon 0/2
+ont auto-config name 110Gb-VLAN-203 device-type i41-100 line 3 interface gpon 0/3
+ont auto-config name 110Gb-VLAN-204 device-type i41-100 line 4 interface gpon 0/4
+ont auto-config name 110Gb-VLAN-205 device-type i41-100 line 5 interface gpon 0/5
+ont auto-config name 110Gb-VLAN-206 device-type i41-100 line 6 interface gpon 0/6
+ont auto-config name 110Gb-VLAN-207 device-type i41-100 line 7 interface gpon 0/7
+ont auto-config name 110Gb-VLAN-208 device-type i41-100 line 8 interface gpon 0/8
+ont auto-config name 110Gb-VLAN-209 device-type i41-100 line 9 interface gpon 0/9
+ont auto-config name 110Gb-VLAN-210 device-type i41-100 line 10 interface gpon 0/10
+ont auto-config name 110Gb-VLAN-211 device-type i41-100 line 11 interface gpon 0/11
+ont auto-config name 110Gb-VLAN-212 device-type i41-100 line 12 interface gpon 0/12
+ont auto-config name 110Gb-VLAN-213 device-type i41-100 line 13 interface gpon 0/13
+ont auto-config name 110Gb-VLAN-214 device-type i41-100 line 14 interface gpon 0/14
+ont auto-config name 110Gb-VLAN-215 device-type i41-100 line 15 interface gpon 0/15
+ont auto-config name 110Gb-VLAN-216 device-type i41-100 line 16 interface gpon 0/16
+
+ont auto-config name R1-VLAN-201 device-type i40-100 line 1 interface gpon 0/1
+ont auto-config name R1-VLAN-202 device-type i40-100 line 2 interface gpon 0/2
+ont auto-config name R1-VLAN-203 device-type i40-100 line 3 interface gpon 0/3
+ont auto-config name R1-VLAN-204 device-type i40-100 line 4 interface gpon 0/4
+ont auto-config name R1-VLAN-205 device-type i40-100 line 5 interface gpon 0/5
+ont auto-config name R1-VLAN-206 device-type i40-100 line 6 interface gpon 0/6
+ont auto-config name R1-VLAN-207 device-type i40-100 line 7 interface gpon 0/7
+ont auto-config name R1-VLAN-208 device-type i40-100 line 8 interface gpon 0/8
+ont auto-config name R1-VLAN-209 device-type i40-100 line 9 interface gpon 0/9
+ont auto-config name R1-VLAN-210 device-type i40-100 line 10 interface gpon 0/10
+ont auto-config name R1-VLAN-211 device-type i40-100 line 11 interface gpon 0/11
+ont auto-config name R1-VLAN-212 device-type i40-100 line 12 interface gpon 0/12
+ont auto-config name R1-VLAN-213 device-type i40-100 line 13 interface gpon 0/13
+ont auto-config name R1-VLAN-214 device-type i40-100 line 14 interface gpon 0/14
+ont auto-config name R1-VLAN-215 device-type i40-100 line 15 interface gpon 0/15
+ont auto-config name R1-VLAN-216 device-type i40-100 line 16 interface gpon 0/16
+
+ont auto-config name R1v2-VLAN-201 device-type i40-100-v2 line 1 interface gpon 0/1
+ont auto-config name R1v2-VLAN-202 device-type i40-100-v2 line 2 interface gpon 0/2
+ont auto-config name R1v2-VLAN-203 device-type i40-100-v2 line 3 interface gpon 0/3
+ont auto-config name R1v2-VLAN-204 device-type i40-100-v2 line 4 interface gpon 0/4
+ont auto-config name R1v2-VLAN-205 device-type i40-100-v2 line 5 interface gpon 0/5
+ont auto-config name R1v2-VLAN-206 device-type i40-100-v2 line 6 interface gpon 0/6
+ont auto-config name R1v2-VLAN-207 device-type i40-100-v2 line 7 interface gpon 0/7
+ont auto-config name R1v2-VLAN-208 device-type i40-100-v2 line 8 interface gpon 0/8
+ont auto-config name R1v2-VLAN-209 device-type i40-100-v2 line 9 interface gpon 0/9
+ont auto-config name R1v2-VLAN-210 device-type i40-100-v2 line 10 interface gpon 0/10
+ont auto-config name R1v2-VLAN-211 device-type i40-100-v2 line 11 interface gpon 0/11
+ont auto-config name R1v2-VLAN-212 device-type i40-100-v2 line 12 interface gpon 0/12
+ont auto-config name R1v2-VLAN-213 device-type i40-100-v2 line 13 interface gpon 0/13
+ont auto-config name R1v2-VLAN-214 device-type i40-100-v2 line 14 interface gpon 0/14
+ont auto-config name R1v2-VLAN-215 device-type i40-100-v2 line 15 interface gpon 0/15
+ont auto-config name R1v2-VLAN-216 device-type i40-100-v2 line 16 interface gpon 0/16
+
+#######################################################################################
+default terceiros bridge
+
+ont auto-config name TERCEIROS-1 all-ont line 1 interface gpon 0/1
+ont auto-config name TERCEIROS-2 all-ont line 2 interface gpon 0/2
+ont auto-config name TERCEIROS-3 all-ont line 3 interface gpon 0/3
+ont auto-config name TERCEIROS-4 all-ont line 4 interface gpon 0/4
+ont auto-config name TERCEIROS-5 all-ont line 5 interface gpon 0/5
+ont auto-config name TERCEIROS-6 all-ont line 6 interface gpon 0/6
+ont auto-config name TERCEIROS-7 all-ont line 7 interface gpon 0/7
+ont auto-config name TERCEIROS-8 all-ont line 8 interface gpon 0/8
+ont auto-config name TERCEIROS-9 all-ont line 9 interface gpon 0/9
+ont auto-config name TERCEIROS-10 all-ont line 10 interface gpon 0/10
+ont auto-config name TERCEIROS-11 all-ont line 11 interface gpon 0/11
+ont auto-config name TERCEIROS-12 all-ont line 12 interface gpon 0/12
+ont auto-config name TERCEIROS-13 all-ont line 13 interface gpon 0/13
+ont auto-config name TERCEIROS-14 all-ont line 14 interface gpon 0/14
+ont auto-config name TERCEIROS-15 all-ont line 15 interface gpon 0/15
+ont auto-config name TERCEIROS-16 all-ont line 16 interface gpon 0/16
+
+#######################################################################################
+
+ont auto-config name 1420G-VLAN-201 device-type i10-420 line 17 interface gpon 0/1
+ont auto-config name 1420G-VLAN-202 device-type i10-420 line 18 interface gpon 0/2
+ont auto-config name 1420G-VLAN-203 device-type i10-420 line 19 interface gpon 0/3
+ont auto-config name 1420G-VLAN-204 device-type i10-420 line 20 interface gpon 0/4
+ont auto-config name 1420G-VLAN-205 device-type i10-420 line 21 interface gpon 0/5
+ont auto-config name 1420G-VLAN-206 device-type i10-420 line 22 interface gpon 0/6
+ont auto-config name 1420G-VLAN-207 device-type i10-420 line 23 interface gpon 0/7
+ont auto-config name 1420G-VLAN-208 device-type i10-420 line 24 interface gpon 0/8
+ont auto-config name 1420G-VLAN-209 device-type i10-420 line 25 interface gpon 0/9
+ont auto-config name 1420G-VLAN-210 device-type i10-420 line 26 interface gpon 0/10
+ont auto-config name 1420G-VLAN-211 device-type i10-420 line 27 interface gpon 0/11
+ont auto-config name 1420G-VLAN-212 device-type i10-420 line 28 interface gpon 0/12
+ont auto-config name 1420G-VLAN-213 device-type i10-420 line 29 interface gpon 0/13
+ont auto-config name 1420G-VLAN-214 device-type i10-420 line 30 interface gpon 0/14
+ont auto-config name 1420G-VLAN-215 device-type i10-420 line 31 interface gpon 0/15
+ont auto-config name 1420G-VLAN-216 device-type i10-420 line 32 interface gpon 0/16
+
+ont auto-config name 142NW-VLAN-201 device-type i40-421 line 17 interface gpon 0/1
+ont auto-config name 142NW-VLAN-202 device-type i40-421 line 18 interface gpon 0/2
+ont auto-config name 142NW-VLAN-203 device-type i40-421 line 19 interface gpon 0/3
+ont auto-config name 142NW-VLAN-204 device-type i40-421 line 20 interface gpon 0/4
+ont auto-config name 142NW-VLAN-205 device-type i40-421 line 21 interface gpon 0/5
+ont auto-config name 142NW-VLAN-206 device-type i40-421 line 22 interface gpon 0/6
+ont auto-config name 142NW-VLAN-207 device-type i40-421 line 23 interface gpon 0/7
+ont auto-config name 142NW-VLAN-208 device-type i40-421 line 24 interface gpon 0/8
+ont auto-config name 142NW-VLAN-209 device-type i40-421 line 25 interface gpon 0/9
+ont auto-config name 142NW-VLAN-210 device-type i40-421 line 26 interface gpon 0/10
+ont auto-config name 142NW-VLAN-211 device-type i40-421 line 27 interface gpon 0/11
+ont auto-config name 142NW-VLAN-212 device-type i40-421 line 28 interface gpon 0/12
+ont auto-config name 142NW-VLAN-213 device-type i40-421 line 29 interface gpon 0/13
+ont auto-config name 142NW-VLAN-214 device-type i40-421 line 30 interface gpon 0/14
+ont auto-config name 142NW-VLAN-215 device-type i40-421 line 31 interface gpon 0/15
+ont auto-config name 142NW-VLAN-216 device-type i40-421 line 32 interface gpon 0/16
+
+ont auto-config name 142NG-VLAN-201 device-type i41-421 line 17 interface gpon 0/1
+ont auto-config name 142NG-VLAN-202 device-type i41-421 line 18 interface gpon 0/2
+ont auto-config name 142NG-VLAN-203 device-type i41-421 line 19 interface gpon 0/3
+ont auto-config name 142NG-VLAN-204 device-type i41-421 line 20 interface gpon 0/4
+ont auto-config name 142NG-VLAN-205 device-type i41-421 line 21 interface gpon 0/5
+ont auto-config name 142NG-VLAN-206 device-type i41-421 line 22 interface gpon 0/6
+ont auto-config name 142NG-VLAN-207 device-type i41-421 line 23 interface gpon 0/7
+ont auto-config name 142NG-VLAN-208 device-type i41-421 line 24 interface gpon 0/8
+ont auto-config name 142NG-VLAN-209 device-type i41-421 line 25 interface gpon 0/9
+ont auto-config name 142NG-VLAN-210 device-type i41-421 line 26 interface gpon 0/10
+ont auto-config name 142NG-VLAN-211 device-type i41-421 line 27 interface gpon 0/11
+ont auto-config name 142NG-VLAN-212 device-type i41-421 line 28 interface gpon 0/12
+ont auto-config name 142NG-VLAN-213 device-type i41-421 line 29 interface gpon 0/13
+ont auto-config name 142NG-VLAN-214 device-type i41-421 line 30 interface gpon 0/14
+ont auto-config name 142NG-VLAN-215 device-type i41-421 line 31 interface gpon 0/15
+ont auto-config name 142NG-VLAN-216 device-type i41-421 line 32 interface gpon 0/16
+
+ont auto-config name 121W-VLAN-201 device-type i40-211 line 17 interface gpon 0/1
+ont auto-config name 121W-VLAN-202 device-type i40-211 line 18 interface gpon 0/2
+ont auto-config name 121W-VLAN-203 device-type i40-211 line 19 interface gpon 0/3
+ont auto-config name 121W-VLAN-204 device-type i40-211 line 20 interface gpon 0/4
+ont auto-config name 121W-VLAN-205 device-type i40-211 line 21 interface gpon 0/5
+ont auto-config name 121W-VLAN-206 device-type i40-211 line 22 interface gpon 0/6
+ont auto-config name 121W-VLAN-207 device-type i40-211 line 23 interface gpon 0/7
+ont auto-config name 121W-VLAN-208 device-type i40-211 line 24 interface gpon 0/8
+ont auto-config name 121W-VLAN-209 device-type i40-211 line 25 interface gpon 0/9
+ont auto-config name 121W-VLAN-210 device-type i40-211 line 26 interface gpon 0/10
+ont auto-config name 121W-VLAN-211 device-type i40-211 line 27 interface gpon 0/11
+ont auto-config name 121W-VLAN-212 device-type i40-211 line 28 interface gpon 0/12
+ont auto-config name 121W-VLAN-213 device-type i40-211 line 29 interface gpon 0/13
+ont auto-config name 121W-VLAN-214 device-type i40-211 line 30 interface gpon 0/14
+ont auto-config name 121W-VLAN-215 device-type i40-211 line 31 interface gpon 0/15
+ont auto-config name 121W-VLAN-216 device-type i40-211 line 32 interface gpon 0/16
+
+ont auto-config name 121AC-VLAN-201 device-type i41-211 line 17 interface gpon 0/1
+ont auto-config name 121AC-VLAN-202 device-type i41-211 line 18 interface gpon 0/2
+ont auto-config name 121AC-VLAN-203 device-type i41-211 line 19 interface gpon 0/3
+ont auto-config name 121AC-VLAN-204 device-type i41-211 line 20 interface gpon 0/4
+ont auto-config name 121AC-VLAN-205 device-type i41-211 line 21 interface gpon 0/5
+ont auto-config name 121AC-VLAN-206 device-type i41-211 line 22 interface gpon 0/6
+ont auto-config name 121AC-VLAN-207 device-type i41-211 line 23 interface gpon 0/7
+ont auto-config name 121AC-VLAN-208 device-type i41-211 line 24 interface gpon 0/8
+ont auto-config name 121AC-VLAN-209 device-type i41-211 line 25 interface gpon 0/9
+ont auto-config name 121AC-VLAN-210 device-type i41-211 line 26 interface gpon 0/10
+ont auto-config name 121AC-VLAN-211 device-type i41-211 line 27 interface gpon 0/11
+ont auto-config name 121AC-VLAN-212 device-type i41-211 line 28 interface gpon 0/12
+ont auto-config name 121AC-VLAN-213 device-type i41-211 line 29 interface gpon 0/13
+ont auto-config name 121AC-VLAN-214 device-type i41-211 line 30 interface gpon 0/14
+ont auto-config name 121AC-VLAN-215 device-type i41-211 line 31 interface gpon 0/15
+ont auto-config name 121AC-VLAN-216 device-type i41-211 line 32 interface gpon 0/16
+
+ont auto-config name 120AC-VLAN-201 device-type i40-201 line 17 interface gpon 0/1
+ont auto-config name 120AC-VLAN-202 device-type i40-201 line 18 interface gpon 0/2
+ont auto-config name 120AC-VLAN-203 device-type i40-201 line 19 interface gpon 0/3
+ont auto-config name 120AC-VLAN-204 device-type i40-201 line 20 interface gpon 0/4
+ont auto-config name 120AC-VLAN-205 device-type i40-201 line 21 interface gpon 0/5
+ont auto-config name 120AC-VLAN-206 device-type i40-201 line 22 interface gpon 0/6
+ont auto-config name 120AC-VLAN-207 device-type i40-201 line 23 interface gpon 0/7
+ont auto-config name 120AC-VLAN-208 device-type i40-201 line 24 interface gpon 0/8
+ont auto-config name 120AC-VLAN-209 device-type i40-201 line 25 interface gpon 0/9
+ont auto-config name 120AC-VLAN-210 device-type i40-201 line 26 interface gpon 0/10
+ont auto-config name 120AC-VLAN-211 device-type i40-201 line 27 interface gpon 0/11
+ont auto-config name 120AC-VLAN-212 device-type i40-201 line 28 interface gpon 0/12
+ont auto-config name 120AC-VLAN-213 device-type i40-201 line 29 interface gpon 0/13
+ont auto-config name 120AC-VLAN-214 device-type i40-201 line 30 interface gpon 0/14
+ont auto-config name 120AC-VLAN-215 device-type i40-201 line 31 interface gpon 0/15
+ont auto-config name 120AC-VLAN-216 device-type i40-201 line 32 interface gpon 0/16
+
+ont auto-config name 1200R-VLAN-201 device-type i41-201 line 17 interface gpon 0/1
+ont auto-config name 1200R-VLAN-202 device-type i41-201 line 18 interface gpon 0/2
+ont auto-config name 1200R-VLAN-203 device-type i41-201 line 19 interface gpon 0/3
+ont auto-config name 1200R-VLAN-204 device-type i41-201 line 20 interface gpon 0/4
+ont auto-config name 1200R-VLAN-205 device-type i41-201 line 21 interface gpon 0/5
+ont auto-config name 1200R-VLAN-206 device-type i41-201 line 22 interface gpon 0/6
+ont auto-config name 1200R-VLAN-207 device-type i41-201 line 23 interface gpon 0/7
+ont auto-config name 1200R-VLAN-208 device-type i41-201 line 24 interface gpon 0/8
+ont auto-config name 1200R-VLAN-209 device-type i41-201 line 25 interface gpon 0/9
+ont auto-config name 1200R-VLAN-210 device-type i41-201 line 26 interface gpon 0/10
+ont auto-config name 1200R-VLAN-211 device-type i41-201 line 27 interface gpon 0/11
+ont auto-config name 1200R-VLAN-212 device-type i41-201 line 28 interface gpon 0/12
+ont auto-config name 1200R-VLAN-213 device-type i41-201 line 29 interface gpon 0/13
+ont auto-config name 1200R-VLAN-214 device-type i41-201 line 30 interface gpon 0/14
+ont auto-config name 1200R-VLAN-215 device-type i41-201 line 31 interface gpon 0/15
+ont auto-config name 1200R-VLAN-216 device-type i41-201 line 32 interface gpon 0/16
+
+ont auto-config name 1800-VLAN-201 device-type i40-401 line 17 interface gpon 0/1
+ont auto-config name 1800-VLAN-202 device-type i40-401 line 18 interface gpon 0/2
+ont auto-config name 1800-VLAN-203 device-type i40-401 line 19 interface gpon 0/3
+ont auto-config name 1800-VLAN-204 device-type i40-401 line 20 interface gpon 0/4
+ont auto-config name 1800-VLAN-205 device-type i40-401 line 21 interface gpon 0/5
+ont auto-config name 1800-VLAN-206 device-type i40-401 line 22 interface gpon 0/6
+ont auto-config name 1800-VLAN-207 device-type i40-401 line 23 interface gpon 0/7
+ont auto-config name 1800-VLAN-208 device-type i40-401 line 24 interface gpon 0/8
+ont auto-config name 1800-VLAN-209 device-type i40-401 line 25 interface gpon 0/9
+ont auto-config name 1800-VLAN-210 device-type i40-401 line 26 interface gpon 0/10
+ont auto-config name 1800-VLAN-211 device-type i40-401 line 27 interface gpon 0/11
+ont auto-config name 1800-VLAN-212 device-type i40-401 line 28 interface gpon 0/12
+ont auto-config name 1800-VLAN-213 device-type i40-401 line 29 interface gpon 0/13
+ont auto-config name 1800-VLAN-214 device-type i40-401 line 30 interface gpon 0/14
+ont auto-config name 1800-VLAN-215 device-type i40-401 line 31 interface gpon 0/15
+ont auto-config name 1800-VLAN-216 device-type i40-401 line 32 interface gpon 0/16
+
+ont auto-config name 1800v-VLAN-201 device-type i40-411 line 17 interface gpon 0/1
+ont auto-config name 1800v-VLAN-202 device-type i40-411 line 18 interface gpon 0/2
+ont auto-config name 1800v-VLAN-203 device-type i40-411 line 19 interface gpon 0/3
+ont auto-config name 1800v-VLAN-204 device-type i40-411 line 20 interface gpon 0/4
+ont auto-config name 1800v-VLAN-205 device-type i40-411 line 21 interface gpon 0/5
+ont auto-config name 1800v-VLAN-206 device-type i40-411 line 22 interface gpon 0/6
+ont auto-config name 1800v-VLAN-207 device-type i40-411 line 23 interface gpon 0/7
+ont auto-config name 1800v-VLAN-208 device-type i40-411 line 24 interface gpon 0/8
+ont auto-config name 1800v-VLAN-209 device-type i40-411 line 25 interface gpon 0/9
+ont auto-config name 1800v-VLAN-210 device-type i40-411 line 26 interface gpon 0/10
+ont auto-config name 1800v-VLAN-211 device-type i40-411 line 27 interface gpon 0/11
+ont auto-config name 1800v-VLAN-212 device-type i40-411 line 28 interface gpon 0/12
+ont auto-config name 1800v-VLAN-213 device-type i40-411 line 29 interface gpon 0/13
+ont auto-config name 1800v-VLAN-214 device-type i40-411 line 30 interface gpon 0/14
+ont auto-config name 1800v-VLAN-215 device-type i40-411 line 31 interface gpon 0/15
+ont auto-config name 1800v-VLAN-216 device-type i40-411 line 32 interface gpon 0/16
+
+#######################################################################################
+default terceiros router
+
+ont auto-config name TERCEIROS-1 all-ont line 17 interface gpon 0/1
+ont auto-config name TERCEIROS-2 all-ont line 18 interface gpon 0/2
+ont auto-config name TERCEIROS-3 all-ont line 19 interface gpon 0/3
+ont auto-config name TERCEIROS-4 all-ont line 20 interface gpon 0/4
+ont auto-config name TERCEIROS-5 all-ont line 21 interface gpon 0/5
+ont auto-config name TERCEIROS-6 all-ont line 22 interface gpon 0/6
+ont auto-config name TERCEIROS-7 all-ont line 23 interface gpon 0/7
+ont auto-config name TERCEIROS-8 all-ont line 24 interface gpon 0/8
+ont auto-config name TERCEIROS-9 all-ont line 25 interface gpon 0/9
+ont auto-config name TERCEIROS-10 all-ont line 26 interface gpon 0/10
+ont auto-config name TERCEIROS-11 all-ont line 27 interface gpon 0/11
+ont auto-config name TERCEIROS-12 all-ont line 28 interface gpon 0/12
+ont auto-config name TERCEIROS-13 all-ont line 29 interface gpon 0/13
+ont auto-config name TERCEIROS-14 all-ont line 30 interface gpon 0/14
+ont auto-config name TERCEIROS-15 all-ont line 31 interface gpon 0/15
+ont auto-config name TERCEIROS-16 all-ont line 32 interface gpon 0/16
+
+#######################################################################################
