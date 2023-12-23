@@ -350,6 +350,8 @@ public class OltG16 {
 
         ConfigGenerator configGeneratorG16 = new ConfigGenerator(arrayVlan, arrayAimVlan, interfaceEth, arrayAimLine,
                 null);
+        configGeneratorG16.createScript();
+        
         // configuração final para definir o acesso a olt
 
         Telnet telnetAccess = new Telnet(newOltG16.getIp(), newOltG16.getPort(), newOltG16.getUser(),

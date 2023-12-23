@@ -121,6 +121,7 @@ public class Telnet implements Runnable {
         username = getOltUser();
         password = getOltPwd();
         commands = new String[] { "enable", "sh in br", "sh ip interface", "sh ip rou" };
+        // File commands = new File("scriptG16.txt");
 
         new Telnet(host, port, username, password, commands);
     }

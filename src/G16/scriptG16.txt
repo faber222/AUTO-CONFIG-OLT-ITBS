@@ -1,0 +1,490 @@
+deploy profile dba
+aim 1 name DBA-DEFAULT
+type 4 max 1200000
+active
+exit
+
+vlan 1
+vlan 2
+vlan 3
+vlan 4
+vlan 5
+vlan 6
+vlan 7
+vlan 8
+vlan 9
+vlan 10
+vlan 11
+vlan 12
+vlan 13
+vlan 14
+vlan 15
+vlan 16
+
+interface ethernet 1/4
+switchport mode hybrid
+switchport hybrid tagged vlan 1
+exit
+interface ethernet 1/4
+switchport mode hybrid
+switchport hybrid tagged vlan 2
+exit
+interface ethernet 1/4
+switchport mode hybrid
+switchport hybrid tagged vlan 3
+exit
+interface ethernet 1/4
+switchport mode hybrid
+switchport hybrid tagged vlan 4
+exit
+interface ethernet 1/4
+switchport mode hybrid
+switchport hybrid tagged vlan 5
+exit
+interface ethernet 1/4
+switchport mode hybrid
+switchport hybrid tagged vlan 6
+exit
+interface ethernet 1/4
+switchport mode hybrid
+switchport hybrid tagged vlan 7
+exit
+interface ethernet 1/4
+switchport mode hybrid
+switchport hybrid tagged vlan 8
+exit
+interface ethernet 1/4
+switchport mode hybrid
+switchport hybrid tagged vlan 9
+exit
+interface ethernet 1/4
+switchport mode hybrid
+switchport hybrid tagged vlan 10
+exit
+interface ethernet 1/4
+switchport mode hybrid
+switchport hybrid tagged vlan 11
+exit
+interface ethernet 1/4
+switchport mode hybrid
+switchport hybrid tagged vlan 12
+exit
+interface ethernet 1/4
+switchport mode hybrid
+switchport hybrid tagged vlan 13
+exit
+interface ethernet 1/4
+switchport mode hybrid
+switchport hybrid tagged vlan 14
+exit
+interface ethernet 1/4
+switchport mode hybrid
+switchport hybrid tagged vlan 15
+exit
+interface ethernet 1/4
+switchport mode hybrid
+switchport hybrid tagged vlan 16
+exit
+
+deploy profile vlan
+aim 1 name 1
+translate old-vlan 1 new-vlan 1
+active
+exit
+deploy profile vlan
+aim 2 name 2
+translate old-vlan 2 new-vlan 2
+active
+exit
+deploy profile vlan
+aim 3 name 3
+translate old-vlan 3 new-vlan 3
+active
+exit
+deploy profile vlan
+aim 4 name 4
+translate old-vlan 4 new-vlan 4
+active
+exit
+deploy profile vlan
+aim 5 name 5
+translate old-vlan 5 new-vlan 5
+active
+exit
+deploy profile vlan
+aim 6 name 6
+translate old-vlan 6 new-vlan 6
+active
+exit
+deploy profile vlan
+aim 7 name 7
+translate old-vlan 7 new-vlan 7
+active
+exit
+deploy profile vlan
+aim 8 name 8
+translate old-vlan 8 new-vlan 8
+active
+exit
+deploy profile vlan
+aim 9 name 9
+translate old-vlan 9 new-vlan 9
+active
+exit
+deploy profile vlan
+aim 10 name 10
+translate old-vlan 10 new-vlan 10
+active
+exit
+deploy profile vlan
+aim 11 name 11
+translate old-vlan 11 new-vlan 11
+active
+exit
+deploy profile vlan
+aim 12 name 12
+translate old-vlan 12 new-vlan 12
+active
+exit
+deploy profile vlan
+aim 13 name 13
+translate old-vlan 13 new-vlan 13
+active
+exit
+deploy profile vlan
+aim 14 name 14
+translate old-vlan 14 new-vlan 14
+active
+exit
+deploy profile vlan
+aim 15 name 15
+translate old-vlan 15 new-vlan 15
+active
+exit
+deploy profile vlan
+aim 16 name 16
+translate old-vlan 16 new-vlan 16
+active
+exit
+
+deploy profile line
+aim 1
+device type i40-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 1
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 1 gemport 1
+flow 1 port eth 1 default vlan 1
+active
+exit
+deploy profile line
+aim 2
+device type i40-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 2
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 2 gemport 1
+flow 1 port eth 1 default vlan 2
+active
+exit
+deploy profile line
+aim 3
+device type i40-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 3
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 3 gemport 1
+flow 1 port eth 1 default vlan 3
+active
+exit
+deploy profile line
+aim 4
+device type i40-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 4
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 4 gemport 1
+flow 1 port eth 1 default vlan 4
+active
+exit
+deploy profile line
+aim 5
+device type i40-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 5
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 5 gemport 1
+flow 1 port eth 1 default vlan 5
+active
+exit
+deploy profile line
+aim 6
+device type i40-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 6
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 6 gemport 1
+flow 1 port eth 1 default vlan 6
+active
+exit
+deploy profile line
+aim 7
+device type i40-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 7
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 7 gemport 1
+flow 1 port eth 1 default vlan 7
+active
+exit
+deploy profile line
+aim 8
+device type i40-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 8
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 8 gemport 1
+flow 1 port eth 1 default vlan 8
+active
+exit
+deploy profile line
+aim 9
+device type i40-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 9
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 9 gemport 1
+flow 1 port eth 1 default vlan 9
+active
+exit
+deploy profile line
+aim 10
+device type i40-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 10
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 10 gemport 1
+flow 1 port eth 1 default vlan 10
+active
+exit
+deploy profile line
+aim 11
+device type i40-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 11
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 11 gemport 1
+flow 1 port eth 1 default vlan 11
+active
+exit
+deploy profile line
+aim 12
+device type i40-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 12
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 12 gemport 1
+flow 1 port eth 1 default vlan 12
+active
+exit
+deploy profile line
+aim 13
+device type i40-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 13
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 13 gemport 1
+flow 1 port eth 1 default vlan 13
+active
+exit
+deploy profile line
+aim 14
+device type i40-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 14
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 14 gemport 1
+flow 1 port eth 1 default vlan 14
+active
+exit
+deploy profile line
+aim 15
+device type i40-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 15
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 15 gemport 1
+flow 1 port eth 1 default vlan 15
+active
+exit
+deploy profile line
+aim 16
+device type i40-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 16
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 16 gemport 1
+flow 1 port eth 1 default vlan 16
+active
+exit
+
+deploy profile line
+aim 17
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 1
+mapping mode port-vlan
+mapping 1 port veip vlan 1 gemport 1
+flow 1 port veip vlan 1 keep
+active
+exit
+deploy profile line
+aim 18
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 2
+mapping mode port-vlan
+mapping 1 port veip vlan 2 gemport 1
+flow 1 port veip vlan 2 keep
+active
+exit
+deploy profile line
+aim 19
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 3
+mapping mode port-vlan
+mapping 1 port veip vlan 3 gemport 1
+flow 1 port veip vlan 3 keep
+active
+exit
+deploy profile line
+aim 20
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 4
+mapping mode port-vlan
+mapping 1 port veip vlan 4 gemport 1
+flow 1 port veip vlan 4 keep
+active
+exit
+deploy profile line
+aim 21
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 5
+mapping mode port-vlan
+mapping 1 port veip vlan 5 gemport 1
+flow 1 port veip vlan 5 keep
+active
+exit
+deploy profile line
+aim 22
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 6
+mapping mode port-vlan
+mapping 1 port veip vlan 6 gemport 1
+flow 1 port veip vlan 6 keep
+active
+exit
+deploy profile line
+aim 23
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 7
+mapping mode port-vlan
+mapping 1 port veip vlan 7 gemport 1
+flow 1 port veip vlan 7 keep
+active
+exit
+deploy profile line
+aim 24
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 8
+mapping mode port-vlan
+mapping 1 port veip vlan 8 gemport 1
+flow 1 port veip vlan 8 keep
+active
+exit
+deploy profile line
+aim 25
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 9
+mapping mode port-vlan
+mapping 1 port veip vlan 9 gemport 1
+flow 1 port veip vlan 9 keep
+active
+exit
+deploy profile line
+aim 26
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 10
+mapping mode port-vlan
+mapping 1 port veip vlan 10 gemport 1
+flow 1 port veip vlan 10 keep
+active
+exit
+deploy profile line
+aim 27
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 11
+mapping mode port-vlan
+mapping 1 port veip vlan 11 gemport 1
+flow 1 port veip vlan 11 keep
+active
+exit
+deploy profile line
+aim 28
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 12
+mapping mode port-vlan
+mapping 1 port veip vlan 12 gemport 1
+flow 1 port veip vlan 12 keep
+active
+exit
+deploy profile line
+aim 29
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 13
+mapping mode port-vlan
+mapping 1 port veip vlan 13 gemport 1
+flow 1 port veip vlan 13 keep
+active
+exit
+deploy profile line
+aim 30
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 14
+mapping mode port-vlan
+mapping 1 port veip vlan 14 gemport 1
+flow 1 port veip vlan 14 keep
+active
+exit
+deploy profile line
+aim 31
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 15
+mapping mode port-vlan
+mapping 1 port veip vlan 15 gemport 1
+flow 1 port veip vlan 15 keep
+active
+exit
+deploy profile line
+aim 32
+device type i40-421
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 16
+mapping mode port-vlan
+mapping 1 port veip vlan 16 gemport 1
+flow 1 port veip vlan 16 keep
+active
+exit
