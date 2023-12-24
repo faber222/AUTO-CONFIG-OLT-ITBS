@@ -22,11 +22,12 @@ Também terá a implementação de uma instalação unificada para windows, visa
 ### FEATURES
 
 - [X] Interface CLI
-- [ ] Interface Gráfica
+- [X] Interface Gráfica
 - [X] Acesso Telnet
 - [ ] Compatibilidade Java8
 - [X] Compatibilidade JDK 21
-- [ ] Auto-config uma vlan por pon
-- [ ] Auto-config uma vlan para todas as pon
+- [X] Auto-config uma vlan por pon
+- [X] Auto-config uma vlan para todas as pon
+- [X] Auto-config uma vlan por pon untagged
 - [ ] Possibilidade de rollback
 - [ ] Finalizado
