@@ -48,19 +48,19 @@ public class OltG16 {
      */
     public static void mostrarCriador() {
         // Informações sobre o criador
-        String nomeCriador = "Faber";
-        String githubLink = "https://github.com/faber222"; // Substitua com o link do GitHub do criador
+        final String nomeCriador = "Faber";
+        final String githubLink = "https://github.com/faber222"; // Substitua com o link do GitHub do criador
 
         // Configura as opções de codificação do QR code
-        Hashtable<EncodeHintType, Object> hints = new Hashtable<>();
+        final Hashtable<EncodeHintType, Object> hints = new Hashtable<>();
         hints.put(EncodeHintType.MARGIN, 2);
 
         try {
             // Gera o QR code
-            BitMatrix bitMatrix = new QRCodeWriter().encode(githubLink, BarcodeFormat.QR_CODE, 100, 100, hints);
+            final BitMatrix bitMatrix = new QRCodeWriter().encode(githubLink, BarcodeFormat.QR_CODE, 100, 100, hints);
 
             // Converte a matriz de bits do QR code em uma imagem BufferedImage
-            BufferedImage bufferedImage = new BufferedImage(bitMatrix.getWidth(), bitMatrix.getHeight(),
+            final BufferedImage bufferedImage = new BufferedImage(bitMatrix.getWidth(), bitMatrix.getHeight(),
                     BufferedImage.TYPE_INT_ARGB);
             for (int x = 0; x < bitMatrix.getWidth(); x++) {
                 for (int y = 0; y < bitMatrix.getHeight(); y++) {
@@ -69,16 +69,16 @@ public class OltG16 {
             }
 
             // Cria uma ImageIcon a partir do QR code
-            ImageIcon qrCodeIcon = new ImageIcon(bufferedImage);
+            final ImageIcon qrCodeIcon = new ImageIcon(bufferedImage);
 
             // Mensagem informativa com detalhes sobre o criador e o link do GitHub
-            String mensagem = "O criador deste código: " + nomeCriador + "\n\n" +
+            final String mensagem = "O criador deste código: " + nomeCriador + "\n\n" +
                     "Você pode encontrá-lo no GitHub em:\n" + githubLink;
 
             // Exibe a mensagem com a ImageIcon contendo o QR code
             JOptionPane.showMessageDialog(
                     null, mensagem, "Criador faber222 e Link do GitHub", JOptionPane.INFORMATION_MESSAGE, qrCodeIcon);
-        } catch (WriterException e) {
+        } catch (final WriterException e) {
             // Lida com exceções relacionadas à geração do QR code
             e.printStackTrace();
         }
@@ -89,7 +89,7 @@ public class OltG16 {
      * 
      * @param saidaIcon Ícone a ser exibido na mensagem de saída.
      */
-    public static void saida(ImageIcon saidaIcon) {
+    public static void saida(final ImageIcon saidaIcon) {
         // Exibe uma caixa de diálogo com uma mensagem de aviso indicando que o programa
         // será encerrado.
         JOptionPane.showMessageDialog(null,
@@ -124,15 +124,15 @@ public class OltG16 {
      * @param erroIcon        Ícone de erro.
      * @return true se a condição for satisfeita, false caso contrário.
      */
-    public static boolean presentation(Object[] options, ImageIcon equipamentoIcon, ImageIcon saidaIcon,
-            ImageIcon erroIcon) {
+    public static boolean presentation(final Object[] options, final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
+            final ImageIcon erroIcon) {
         // Condição para controlar o loop.
         boolean condition = false;
 
         // Loop para apresentar o diálogo até que a condição seja satisfeita.
         do {
             // Exibe um diálogo de opções ao usuário.
-            int result = JOptionPane.showOptionDialog(null, "Bem Vindo ao AUTO-CONFIG-G16!", "faber222",
+            final int result = JOptionPane.showOptionDialog(null, "Bem Vindo ao AUTO-CONFIG-G16!", "faber222",
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.INFORMATION_MESSAGE, equipamentoIcon, options, options[0]);
 
@@ -160,6 +160,9 @@ public class OltG16 {
         return false;
     }
 
+    /**
+     * Construtor padrão
+     */
     public OltG16() {
     }
 
@@ -171,7 +174,7 @@ public class OltG16 {
      * @param saidaIcon Ícone de saída.
      * @param erroIcon  Ícone de erro.
      */
-    public void getIpFromUser(OltG16 oltClient, ImageIcon saidaIcon, ImageIcon erroIcon) {
+    public void getIpFromUser(final OltG16 oltClient, final ImageIcon saidaIcon, final ImageIcon erroIcon) {
         // Loop para garantir que o usuário forneça um endereço IP válido.
         do {
             // Solicita ao usuário que insira o endereço IP da OLT.
@@ -201,7 +204,7 @@ public class OltG16 {
      * @param saidaIcon Ícone de saída.
      * @param erroIcon  Ícone de erro.
      */
-    public void getUserAndPwd(OltG16 oltClient, ImageIcon saidaIcon, ImageIcon erroIcon) {
+    public void getUserAndPwd(final OltG16 oltClient, final ImageIcon saidaIcon, final ImageIcon erroIcon) {
         // Loop para garantir que o usuário forneça tanto o nome de usuário quanto a
         // senha.
         do {
@@ -235,13 +238,13 @@ public class OltG16 {
      * @param range            O intervalo permitido para a VLAN.
      * @return true se o range for válido, false caso contrário.
      */
-    public static boolean isValidAimVlanLineRange(String aimVlanLineRange, ImageIcon erroIcon, int range) {
+    public static boolean isValidAimVlanLineRange(final String aimVlanLineRange, final ImageIcon erroIcon, final int range) {
         // Validando o formato do range
-        if (aimVlanLineRange.matches("\\d+-\\d+") && range >= 2) {
+        if (aimVlanLineRange.matches("^[1-9]\\d*-\\d*[1-9]\\d*$") && range >= 2) {
             // Se o formato for válido e o range for maior ou igual a 2
-            String[] partes = aimVlanLineRange.split("-");
-            int inicio = Integer.parseInt(partes[0]);
-            int fim = Integer.parseInt(partes[1]);
+            final String[] partes = aimVlanLineRange.split("-");
+            final int inicio = Integer.parseInt(partes[0]);
+            final int fim = Integer.parseInt(partes[1]);
 
             // Validando se são "range" números e se não ultrapassam 4095
             if (fim - inicio + 1 == range && fim <= 4095) {
@@ -254,9 +257,9 @@ public class OltG16 {
                         JOptionPane.ERROR_MESSAGE, erroIcon);
                 return false;
             }
-        } else if (range == 1) {
-            // Se o range for 1
-            int inicio = Integer.parseInt(aimVlanLineRange);
+        } else if (range == 1 && aimVlanLineRange.matches("^[1-9]\\d*$")) {
+            // Se o range for 1 e o formato for um inteiro
+            final int inicio = Integer.parseInt(aimVlanLineRange);
 
             // Validando se é um número válido e se não ultrapassa 4095
             if (inicio >= 1 && inicio <= 4095) {
@@ -272,7 +275,7 @@ public class OltG16 {
         }
         // Se não atender a nenhum dos casos anteriores, exibe mensagem de formato
         // inválido
-        JOptionPane.showMessageDialog(null, "Formato inválido. Use o formato: vlan",
+        JOptionPane.showMessageDialog(null, "Formato inválido",
                 "Erro", JOptionPane.ERROR_MESSAGE, erroIcon);
         return false;
     }
@@ -286,10 +289,11 @@ public class OltG16 {
      * @param range           O intervalo permitido para a VLAN.
      * @return Uma lista de strings representando a VLAN para o cliente.
      */
-    public static List<String> getVlanClient(ImageIcon equipamentoIcon, ImageIcon saidaIcon,
-            ImageIcon erroIcon, int range) {
+    public static List<String> getVlanClient(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
+            final ImageIcon erroIcon, final int range) {
         // Lista que armazenará as informações de VLAN para o cliente.
-        List<String> vlan = new ArrayList<String>();
+
+        final List<String> vlan = new ArrayList<String>();
         // String para armazenar a entrada do usuário.
         String input = new String();
         // Mensagem a ser exibida com base no intervalo especificado.
@@ -316,9 +320,9 @@ public class OltG16 {
         // Processa a entrada do usuário com base no intervalo especificado.
         if (range != 1) {
             // Se o intervalo não for 1, divide a entrada e adiciona os valores à lista.
-            String[] partes = input.split("-");
-            int inicio = Integer.parseInt(partes[0]);
-            int fim = Integer.parseInt(partes[1]);
+            final String[] partes = input.split("-");
+            final int inicio = Integer.parseInt(partes[0]);
+            final int fim = Integer.parseInt(partes[1]);
 
             for (int j = inicio; j <= fim; j++) {
                 vlan.add(String.valueOf(j));
@@ -343,16 +347,25 @@ public class OltG16 {
      *                        objetivo.
      * @return Uma lista de strings representando o perfil de VLAN de objetivo.
      */
-    public static List<String> getAimProfileVlan(ImageIcon equipamentoIcon, ImageIcon saidaIcon,
-            ImageIcon erroIcon, int range) {
+    public static List<String> getAimProfileVlan(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
+            final ImageIcon erroIcon, final int range) {
         // Lista que armazenará o perfil de VLAN de objetivo.
-        List<String> aimProfileVlan = new ArrayList<String>();
+        final List<String> aimProfileVlan = new ArrayList<String>();
         // String para armazenar a entrada do usuário.
         String input = new String();
+        // Mensagem a ser exibida com base no intervalo especificado.
+        String message;
+
+        // Determina a mensagem com base no intervalo.
+        if (range == 1) {
+            message = "Qual o profile vlan?:";
+        } else {
+            message = "Qual o range do profile vlan?: Use o formato: inicio-fim";
+        }
 
         // Loop para garantir que a entrada do usuário seja válida.
         do {
-            input = (String) JOptionPane.showInputDialog("Qual o range do profile vlan?: Use o formato: inicio-fim");
+            input = (String) JOptionPane.showInputDialog(message);
 
             // Verifica se o usuário cancelou a operação.
             if (input == null) {
@@ -364,9 +377,9 @@ public class OltG16 {
         // Processa a entrada do usuário com base no intervalo especificado.
         if (range != 1) {
             // Se o intervalo não for 1, divide a entrada e adiciona os valores à lista.
-            String[] partes = input.split("-");
-            int inicio = Integer.parseInt(partes[0]);
-            int fim = Integer.parseInt(partes[1]);
+            final String[] partes = input.split("-");
+            final int inicio = Integer.parseInt(partes[0]);
+            final int fim = Integer.parseInt(partes[1]);
 
             for (int j = inicio; j <= fim; j++) {
                 aimProfileVlan.add(String.valueOf(j));
@@ -391,10 +404,10 @@ public class OltG16 {
      *                        objetivo.
      * @return Uma lista de strings representando o perfil de linha de objetivo.
      */
-    public static List<String> getAimProfileLine(ImageIcon equipamentoIcon, ImageIcon saidaIcon,
-            ImageIcon erroIcon, int range) {
+    public static List<String> getAimProfileLine(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
+            final ImageIcon erroIcon, final int range) {
         // Lista que armazenará o perfil de linha de objetivo.
-        List<String> aimProfileLine = new ArrayList<String>();
+        final List<String> aimProfileLine = new ArrayList<String>();
         // String para armazenar a entrada do usuário.
         String input = new String();
 
@@ -412,9 +425,9 @@ public class OltG16 {
         // Processa a entrada do usuário com base no intervalo especificado.
         if (range == 32) {
             // Se o intervalo for 32, divide a entrada e adiciona os valores à lista.
-            String[] partes = input.split("-");
-            int inicio = Integer.parseInt(partes[0]);
-            int fim = Integer.parseInt(partes[1]);
+            final String[] partes = input.split("-");
+            final int inicio = Integer.parseInt(partes[0]);
+            final int fim = Integer.parseInt(partes[1]);
 
             for (int j = inicio; j <= fim; j++) {
                 aimProfileLine.add(String.valueOf(j));
@@ -422,7 +435,7 @@ public class OltG16 {
         } else {
             // Se o intervalo não for 32, simplesmente divide a entrada e adiciona os
             // valores à lista.
-            String[] partes = input.split("-");
+            final String[] partes = input.split("-");
             aimProfileLine.add(partes[0]);
             aimProfileLine.add(partes[1]);
         }
@@ -440,10 +453,10 @@ public class OltG16 {
      * @param interfaceEth    Um array contendo opções de interfaces Ethernet.
      * @return A interface Ethernet escolhida pelo usuário.
      */
-    public static String getInterfaceEth(ImageIcon equipamentoIcon, ImageIcon saidaIcon, ImageIcon erroIcon,
-            String[] interfaceEth) {
+    public static String getInterfaceEth(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon, final ImageIcon erroIcon,
+            final String[] interfaceEth) {
         String input = new String();
-        Object[] interfaces = interfaceEth;
+        final Object[] interfaces = interfaceEth;
 
         // Loop para garantir que o usuário forneça uma escolha válida da interface
         // Ethernet.
@@ -480,10 +493,10 @@ public class OltG16 {
      *                           configuração.
      * @return O modelo de configuração escolhido pelo usuário.
      */
-    public static String getModelConfiguration(ImageIcon equipamentoIcon, ImageIcon saidaIcon,
-            ImageIcon erroIcon, String[] modelConfiguration) {
+    public static String getModelConfiguration(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
+            final ImageIcon erroIcon, final String[] modelConfiguration) {
         String input = new String();
-        Object[] configuration = modelConfiguration;
+        final Object[] configuration = modelConfiguration;
 
         // Loop para garantir que o usuário forneça uma escolha válida do modelo de
         // configuração.
@@ -509,16 +522,61 @@ public class OltG16 {
         } while (input == null);
     }
 
+    /**
+     * Obtém o tipo padrão do equipamento CPE (Customer Premises Equipment).
+     * 
+     * @param equipamentoIcon Ícone para exibição do diálogo.
+     * @param saidaIcon       Ícone para a mensagem de saída.
+     * @param erroIcon        Ícone para a mensagem de erro.
+     * @param defaultCpeType  Tipos padrão disponíveis para escolha.
+     * @return O tipo padrão do equipamento CPE escolhido pelo usuário.
+     *         {@code null} se a operação for cancelada.
+     */
+    public static String getDefaultCpeType(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
+            final ImageIcon erroIcon, final String[] defaultCpeType) {
+        String input = new String();
+        final Object[] configuration = defaultCpeType;
+
+        // Loop para garantir que o usuário forneça uma escolha válida do modelo de
+        // configuração.
+        do {
+            // Solicita ao usuário que escolha o tipo de operação da ont de terceiros.
+            input = (String) JOptionPane.showInputDialog(null, "Por favor, escolha o tipo default de ont:",
+                    "faber222",
+                    JOptionPane.QUESTION_MESSAGE, equipamentoIcon, configuration, configuration[0]);
+
+            // Verifica se o usuário cancelou a operação.
+            if (input == null) {
+                OltG16.saida(saidaIcon);
+                System.exit(0);
+            }
+
+            try {
+                // Retorna a escolha do usuário se for válida.
+                return input;
+            } catch (final NumberFormatException e) {
+                // Lida com uma exceção (isso não parece ser relevante nesta lógica).
+                return null;
+            }
+        } while (input == null);
+    }
+
+    /**
+     * Método responsável por iniciar o processo de configuração da OLT G16.
+     * Aqui é onde a "magia" acontece, guiando o usuário através da configuração.
+     */
     public void start() {
-        OltG16 newOltG16 = new OltG16();
-        Object[] options = { "Avancar", "Autor", "Cancelar" };
+        final Object[] options = { "Avancar", "Autor", "Cancelar" };
 
-        ClassLoader classLoader = OltG16.class.getClassLoader();
-        ImageIcon equipamentoIcon = new ImageIcon(classLoader.getResource("equipamento.png"));
-        ImageIcon ipIcon = new ImageIcon(classLoader.getResource("ip.png"));
-        ImageIcon saidaIcon = new ImageIcon(classLoader.getResource("saida.png"));
-        ImageIcon erroIcon = new ImageIcon(classLoader.getResource("erro.png"));
+        // Carrega os ícones necessários para o diálogo
+        final ClassLoader classLoader = OltG16.class.getClassLoader();
+        final ImageIcon equipamentoIcon = new ImageIcon(classLoader.getResource("equipamento.png"));
+        final ImageIcon ipIcon = new ImageIcon(classLoader.getResource("ip.png"));
+        final ImageIcon saidaIcon = new ImageIcon(classLoader.getResource("saida.png"));
+        final ImageIcon erroIcon = new ImageIcon(classLoader.getResource("erro.png"));
+        String nomeArq = "scriptG16.txt";
 
+        // Apresenta o diálogo inicial
         OltG16.presentation(options, equipamentoIcon, saidaIcon, erroIcon);
 
         final String[] modelosInterface = {
@@ -536,31 +594,75 @@ public class OltG16 {
                 "Uma vlan por pon untagged"
         };
 
-        String interfaceEth = OltG16.getInterfaceEth(equipamentoIcon, saidaIcon, erroIcon, modelosInterface);
-        String modelConfiguration = OltG16.getModelConfiguration(equipamentoIcon, saidaIcon, erroIcon, configuracoes);
+        final String[] deviceType = {
+                "i10-100",
+                "i10-420",
+                "i30-100",
+                "i40-100",
+                "i40-100-v2",
+                "i40-201",
+                "i40-211",
+                "i40-421",
+                "i41-100",
+                "i41-201",
+                "i41-211",
+                "i41-421"
+        };
+
+        final String[] interfaceGpon = {
+                "0/1",
+                "0/2",
+                "0/3",
+                "0/4",
+                "0/5",
+                "0/6",
+                "0/7",
+                "0/8",
+                "0/9",
+                "0/10",
+                "0/11",
+                "0/12",
+                "0/13",
+                "0/14",
+                "0/15",
+                "0/16"
+        };
+
+        final String[] defaultCpeType = {
+                "bridge",
+                "router"
+        };
+        final String regex = "^[1-9]\\d*-\\d*[1-9]\\d*$";
+
+        // Obtém informações do usuário para a configuração
+        final String interfaceEth = OltG16.getInterfaceEth(equipamentoIcon, saidaIcon, erroIcon, modelosInterface);
+        final String modelConfiguration = OltG16.getModelConfiguration(equipamentoIcon, saidaIcon, erroIcon, configuracoes);
+        final String defaultCpe = OltG16.getDefaultCpeType(equipamentoIcon, saidaIcon, erroIcon, defaultCpeType);
         int rangeVlan;
         int rangeAimVlan;
         int rangeAimLine;
 
-        if (modelConfiguration == configuracoes[1]) {
+        if (modelConfiguration.equals(configuracoes[1])) {
             rangeVlan = rangeAimVlan = 1;
             rangeAimLine = 2;
         } else {
             rangeVlan = rangeAimVlan = 16;
             rangeAimLine = 32;
         }
-        List<String> arrayVlan = OltG16.getVlanClient(equipamentoIcon, saidaIcon, erroIcon, rangeVlan);
-        List<String> arrayAimVlan = OltG16.getAimProfileVlan(equipamentoIcon, saidaIcon, erroIcon, rangeAimVlan);
-        List<String> arrayAimLine = OltG16.getAimProfileLine(equipamentoIcon, saidaIcon, erroIcon, rangeAimLine);
 
-        ConfigGenerator configGeneratorG16 = new ConfigGenerator(arrayVlan, arrayAimVlan, interfaceEth, arrayAimLine,
-                null);
-        configGeneratorG16.createScript();
+        // Obtém as listas necessárias para a configuração
+        final List<String> arrayVlan = OltG16.getVlanClient(equipamentoIcon, saidaIcon, erroIcon, rangeVlan);
+        final List<String> arrayAimVlan = OltG16.getAimProfileVlan(equipamentoIcon, saidaIcon, erroIcon, rangeAimVlan);
+        final List<String> arrayAimLine = OltG16.getAimProfileLine(equipamentoIcon, saidaIcon, erroIcon, rangeAimLine);
 
-        // configuração final para definir o acesso a olt
+        // Cria um objeto ConfigGenerator para gerar o script de configuração
+        final ConfigGenerator configGeneratorG16 = new ConfigGenerator(arrayVlan, arrayAimVlan, interfaceEth, arrayAimLine,
+                deviceType, modelConfiguration, configuracoes, defaultCpe, interfaceGpon, defaultCpeType);
+        configGeneratorG16.createScript(nomeArq);
 
-        Telnet telnetAccess = new Telnet();
-        telnetAccess.oltAccess();
+        // Configuração final para definir o acesso à OLT
+        final Telnet telnetAccess = new Telnet();
+        telnetAccess.oltAccess(nomeArq);
     }
 
     /**
@@ -577,7 +679,7 @@ public class OltG16 {
      * 
      * @param ip O novo endereço IP a ser definido.
      */
-    public void setIp(String ip) {
+    public void setIp(final String ip) {
         this.ip = ip;
     }
 
@@ -595,7 +697,7 @@ public class OltG16 {
      * 
      * @param port A nova porta a ser definida.
      */
-    public void setPort(Integer port) {
+    public void setPort(final Integer port) {
         this.port = port;
     }
 
@@ -613,7 +715,7 @@ public class OltG16 {
      * 
      * @param passwd A nova senha a ser definida.
      */
-    public void setPasswd(String passwd) {
+    public void setPasswd(final String passwd) {
         this.passwd = passwd;
     }
 
@@ -631,7 +733,7 @@ public class OltG16 {
      * 
      * @param user O novo nome de usuário a ser definido.
      */
-    public void setUser(String user) {
+    public void setUser(final String user) {
         this.user = user;
     }
 

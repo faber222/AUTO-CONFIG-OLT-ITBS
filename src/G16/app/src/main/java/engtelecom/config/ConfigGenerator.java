@@ -7,6 +7,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+ */
 import engtelecom.scripts.ScriptsG16;
 
 /**
@@ -15,7 +23,11 @@ import engtelecom.scripts.ScriptsG16;
  * Estende a classe Config para herdar as configurações básicas.
  */
 public class ConfigGenerator extends Config {
-    private String ponVlanType;
+    private final String ponVlanType;
+    private final String[] vlanType;
+    private final String defaultCpe;
+    private final String[] interfaceGpon;
+    private final String[] defaultCpeType;
 
     /**
      * Construtor da classe ConfigGenerator.
@@ -24,11 +36,32 @@ public class ConfigGenerator extends Config {
      * @param aimProfileVlan    Lista de perfis de VLAN.
      * @param interfaceEthernet Nome da interface Ethernet.
      * @param aimProfileLine    Lista de perfis de linhas.
-     * @param produtos          Lista de produtos associados.
+     * @param deviceType        Array que contem os devices de ont
+     * @param ponVlanType       Palavra escolhida que define o tipo de config.
+     * @param vlanType          Array de comparacao do tipo de config.
+     * @param defaultCpe        String que define se é Router ou Bridge
+     * @param interfaceGpon     Array com as interfaces gpon que a olt tem
+     * @param defaultCpeType    Array contendo o default bridge ou router
      */
-    public ConfigGenerator(List<String> vlans, List<String> aimProfileVlan, String interfaceEthernet,
-            List<String> aimProfileLine, List<String> produtos) {
-        super(vlans, aimProfileVlan, interfaceEthernet, aimProfileLine, produtos);
+    public ConfigGenerator(final List<String> vlans, final List<String> aimProfileVlan, final String interfaceEthernet,
+            final List<String> aimProfileLine, final String[] deviceType, final String ponVlanType,
+            final String[] vlanType, final String defaultCpe, final String[] interfaceGpon,
+            final String[] defaultCpeType) {
+        super(vlans, aimProfileVlan, interfaceEthernet, aimProfileLine, deviceType);
+        this.ponVlanType = ponVlanType;
+        this.vlanType = vlanType;
+        this.defaultCpe = defaultCpe;
+        this.interfaceGpon = interfaceGpon;
+        this.defaultCpeType = defaultCpeType;
+    }
+
+    /**
+     * Obtem o tipo de config escolhida
+     * 
+     * @return Array da config escolhida
+     */
+    public String[] getVlanType() {
+        return vlanType;
     }
 
     /**
@@ -41,33 +74,58 @@ public class ConfigGenerator extends Config {
     }
 
     /**
-     * Define o tipo de VLAN da PON.
+     * Obtém a interafce gpon da olt.
      *
-     * @param ponVlanType O tipo de VLAN da PON.
+     * @return O numero da pon.
      */
-    public void setPonVlanType(String ponVlanType) {
-        this.ponVlanType = ponVlanType;
+    public String[] getInterfaceGpon() {
+        return interfaceGpon;
     }
 
     /**
-     * Escreve o script de configuração no arquivo fornecido.
-     *
-     * @param script            Arquivo de script a ser escrito.
-     * @param accessLevel       Lista de níveis de acesso.
-     * @param dba               Lista de configurações de DBA.
-     * @param mgrInterface      Interface de gerenciamento.
-     * @param vlan              Configuração VLAN.
-     * @param profileVlan       Lista de configurações de perfil de VLAN.
-     * @param profileLineBridge Lista de configurações de perfil de linha Bridge.
-     * @param profileLineRouter Lista de configurações de perfil de linha Router.
-     * @return true se a escrita for bem-sucedida, false caso contrário.
+     * Obtém o valor default da cpe de terceiros
+     * 
+     * @return O tipo da cpe de terceiros {bridge ou router}
      */
-    public boolean writeScript(File script, List<String> accessLevel, List<String> dba, String mgrInterface,
-            String vlan, List<List<String>> profileVlan, List<List<String>> profileLineBridge,
-            List<List<String>> profileLineRouter) {
+    public String getDefaultCpe() {
+        return defaultCpe;
+    }
+
+    /**
+     * Obtém a lista de escolha de bridge ou router
+     * 
+     * @return Ou bridge ou router
+     */
+    public String[] getDefaultCpeType() {
+        return defaultCpeType;
+    }
+
+    /**
+     * Escreve o script de configuração em um arquivo.
+     *
+     * @param script            Arquivo onde o script será gravado.
+     * @param accessLevel       Lista de comandos para o nível de acesso.
+     * @param dba               Lista de comandos para a configuração DBA.
+     * @param mgrInterface      Comandos para a configuração da interface de
+     *                          gerenciamento.
+     * @param vlan              Comandos para a configuração VLAN.
+     * @param profileVlan       Lista de comandos para o deploy do perfil VLAN.
+     * @param profileLineBridge Lista de comandos para o deploy do perfil de linha
+     *                          Bridge.
+     * @param profileLineRouter Lista de comandos para o deploy do perfil de linha
+     *                          Router.
+     * @param autoConfig        Lista de comandos para a autoconfiguração.
+     * @param ontAutoConfig     Lista de comandos para a autoconfiguração ONT.
+     *
+     * @return true se a escrita do script for bem-sucedida, false caso contrário.
+     */
+    public boolean writeScript(final File script, final List<String> accessLevel, final List<String> dba,
+            final String mgrInterface, final String vlan, final List<List<String>> profileVlan,
+            final List<List<String>> profileLineBridge, final List<List<String>> profileLineRouter,
+            final List<String> autoConfig, final List<String> ontAutoConfig) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(script))) {
             // Escreve os comandos de nível de acesso
-            for (String access : accessLevel) {
+            for (final String access : accessLevel) {
                 writer.write(access);
                 writer.newLine();
             }
@@ -75,7 +133,7 @@ public class ConfigGenerator extends Config {
             writer.newLine();
 
             // Escreve os comandos de configuração DBA
-            for (String dbaLine : dba) {
+            for (final String dbaLine : dba) {
                 writer.write(dbaLine);
                 writer.newLine();
             }
@@ -97,8 +155,8 @@ public class ConfigGenerator extends Config {
             // Escreve os comandos de deploy de perfil de VLAN
             writer.write("deploy profile vlan");
             writer.newLine();
-            for (List<String> profileVlanLine : profileVlan) {
-                for (String item : profileVlanLine) {
+            for (final List<String> profileVlanLine : profileVlan) {
+                for (final String item : profileVlanLine) {
                     writer.write(item);
                     writer.newLine();
                 }
@@ -112,8 +170,8 @@ public class ConfigGenerator extends Config {
             // Escreve os comandos de deploy de perfil de linha Bridge
             writer.write("deploy profile line");
             writer.newLine();
-            for (List<String> profileLineBridgeLine : profileLineBridge) {
-                for (String item : profileLineBridgeLine) {
+            for (final List<String> profileLineBridgeLine : profileLineBridge) {
+                for (final String item : profileLineBridgeLine) {
                     writer.write(item);
                     writer.newLine();
                 }
@@ -122,8 +180,8 @@ public class ConfigGenerator extends Config {
             writer.newLine();
 
             // Escreve os comandos de deploy de perfil de linha Router
-            for (List<String> profileLineRouterLine : profileLineRouter) {
-                for (String item : profileLineRouterLine) {
+            for (final List<String> profileLineRouterLine : profileLineRouter) {
+                for (final String item : profileLineRouterLine) {
                     writer.write(item);
                     writer.newLine();
                 }
@@ -134,80 +192,138 @@ public class ConfigGenerator extends Config {
             writer.newLine();
             writer.newLine();
 
+            // Escreve os comandos de autoconfiguração
+            for (final String config : autoConfig) {
+                writer.write(config);
+                writer.newLine();
+            }
+            writer.newLine();
+
+            // Escreve os comandos de autoconfiguração ONT
+            for (String ontAuto : ontAutoConfig) {
+                writer.write(ontAuto);
+                writer.newLine();
+            }
+            writer.newLine();
+
             return true;
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
             return false;
         }
     }
 
     /**
-     * Cria o script de configuração com base nos parâmetros fornecidos.
-     *
-     * @return true se a criação for bem-sucedida, false caso contrário.
+     * Cria o script de configuração com base nos parâmetros e opções escolhidos.
+     * @param nomeArq       Representa o nome do arquivo da olt
+     * @return true se a criação do script foi bem-sucedida, false caso contrário.
      */
-    public boolean createScript() {
-        File newScript = new File("scriptG16.txt");
+    public boolean createScript(String nomeArq) {
+        // Caminho do novo script
+        final File newScript = new File(nomeArq);
+
+        // Inicialização de variáveis
         String vlan = new String();
         String mgrInterface = new String();
-        ScriptsG16 g16 = new ScriptsG16();
-        List<String> accessLevel = g16.enable();
-        List<String> dba = g16.profileDba();
-        List<List<String>> profileVlan = new ArrayList<>();
-        List<List<String>> profileLineBridge = new ArrayList<>();
-        List<List<String>> profileLineRouter = new ArrayList<>();
 
-        String[] deviceType = {
-                "i10-100",
-                "i10-420",
-                "i30-100",
-                "i40-100",
-                "i40-100-v2",
-                "i40-201",
-                "i40-211",
-                "i40-421",
-                "i41-100",
-                "i41-201",
-                "i41-211",
-                "i41-421"
-        };
+        // Instância da classe ScriptsG16 para obter scripts pré-definidos
+        final ScriptsG16 g16 = new ScriptsG16();
 
+        // Obtenção de listas de scripts pré-definidos
+        final List<String> accessLevel = g16.enable();
+        final List<String> dba = g16.profileDba();
+        final List<String> autoConfig = g16.autoConfig();
+
+        // Listas para armazenar scripts específicos
+        final List<List<String>> profileVlan = new ArrayList<>();
+        final List<List<String>> profileLineBridge = new ArrayList<>();
+        final List<List<String>> profileLineRouter = new ArrayList<>();
+        final List<String> ontAutoConfig = new ArrayList<>();
+
+        // Construção das strings para VLAN e interfaces de gerenciamento
         vlan = g16.vlan(getVlans());
         mgrInterface = g16.interfaceMgr(getInterfaceEthernet(), getVlans());
 
-        for (int i = 0; i < getVlans().size(); i++) {
-            profileVlan.add(g16.profileVlan(getVlans().get(i), getAimProfileVlan().get(i)));
-            profileLineBridge.add(g16.profileLineBridge(getVlans().get(i), getAimProfileLine().get(i),
-                    getAimProfileVlan().get(i), deviceType[3]));
-            if (getVlans().size() == 1) {
-                profileLineRouter.add(g16.profileLineRouter(getVlans().get(i), getAimProfileLine().get(i + 1),
-                        getAimProfileVlan().get(i), deviceType[7]));
-            } else {
-                profileLineRouter.add(g16.profileLineRouter(getVlans().get(i), getAimProfileLine().get(i + 16),
-                        getAimProfileVlan().get(i), deviceType[7]));
+        // Construção dos scripts para VLAN, Profile Line Bridge e Profile Line Router
+        if (getPonVlanType() == getVlanType()[2]) {
+            for (int i = 0; i < getVlans().size(); i++) {
+                profileVlan.add(g16.profileVlanUntagged(getVlans().get(i), getAimProfileVlan().get(i)));
+                profileLineBridge.add(g16.profileLineBridgeUntagged(getAimProfileLine().get(i),
+                        getAimProfileVlan().get(i), getDeviceType()[3]));
+
+                // Verificação do tamanho da lista para evitar índices fora dos limites
+                if (getVlans().size() == 1) {
+                    profileLineRouter.add(g16.profileLineRouterUnTagged(getAimProfileLine().get(i + 1),
+                            getAimProfileVlan().get(i), getDeviceType()[7]));
+                } else {
+                    profileLineRouter.add(g16.profileLineRouterUnTagged(getAimProfileLine().get(i + 16),
+                            getAimProfileVlan().get(i), getDeviceType()[7]));
+                }
+            }
+        } else {
+            for (int i = 0; i < getVlans().size(); i++) {
+                profileVlan.add(g16.profileVlanTagged(getVlans().get(i), getAimProfileVlan().get(i)));
+                profileLineBridge.add(g16.profileLineBridgeTagged(getVlans().get(i), getAimProfileLine().get(i),
+                        getAimProfileVlan().get(i), getDeviceType()[3]));
+
+                // Verificação do tamanho da lista para evitar índices fora dos limites
+                if (getVlans().size() == 1) {
+                    profileLineRouter.add(g16.profileLineRouterTagged(getVlans().get(i), getAimProfileLine().get(i + 1),
+                            getAimProfileVlan().get(i), getDeviceType()[7]));
+                } else {
+                    profileLineRouter.add(g16.profileLineRouterTagged(getVlans().get(i),
+                            getAimProfileLine().get(i + 16), getAimProfileVlan().get(i), getDeviceType()[7]));
+                }
             }
         }
 
-        // if (getPonVlanType().equals("Uma vlan por pon")) {
-        // // Escreva comandos para uma VLAN por PON
+        // Configuração específica para "Uma vlan para todas as pon"
+        if (getPonVlanType() == getVlanType()[1]) {
+            for (int i = 0; i < getDeviceType().length; i++) {
+                if (i < 5) {
+                    ontAutoConfig.add(g16.ontAutoConfigUmaVlanPon(getAimProfileLine().get(0), getDeviceType()[i]));
+                } else {
+                    ontAutoConfig.add(g16.ontAutoConfigUmaVlanPon(getAimProfileLine().get(1), getDeviceType()[i]));
+                }
+            }
 
-        // // Adicione mais comandos conforme necessário
-        // } else if (getPonVlanType().equals("Uma vlan para todas as pon")) {
-        // // Escreva comandos para uma VLAN para todas as PON
+            // Definindo se é default bridge
+            if (getDefaultCpe() == getDefaultCpeType()[0]) {
+                ontAutoConfig.add(g16.ontAutoConfigDefaultUmaVlanPon(getAimProfileLine().get(0)));
+            } else {
+                ontAutoConfig.add(g16.ontAutoConfigDefaultUmaVlanPon(getAimProfileLine().get(1)));
+            }
+        } else {
+            // Configuração específica para "Uma vlan por pon"
+            for (int i = 0; i < getDeviceType().length; i++) {
+                for (int j = 0; j < getAimProfileVlan().size(); j++) {
+                    if (i < 5) {
+                        ontAutoConfig.add(g16.ontAutoConfigUmaVlanPorPon(getAimProfileLine().get(j), getVlans().get(j),
+                                getDeviceType()[i], getInterfaceGpon()[j]));
+                    } else {
+                        ontAutoConfig
+                                .add(g16.ontAutoConfigUmaVlanPorPon(getAimProfileLine().get(j + 16), getVlans().get(j),
+                                        getDeviceType()[i], getInterfaceGpon()[j]));
+                    }
+                }
+            }
 
-        // // Adicione mais comandos conforme necessário
-        // } else {
-        // // Lógica para outros casos (se necessário)
-
-        // // Adicione mais comandos conforme necessário
-        // }
+            for (int i = 0; i < getAimProfileVlan().size(); i++) {
+                // Definindo se é default bridge
+                if (getDefaultCpe() == getDefaultCpeType()[0]) {
+                    ontAutoConfig.add(
+                            g16.ontAutoConfigDefaultUmaVlanPorPon(getAimProfileLine().get(i), getInterfaceGpon()[i]));
+                } else {
+                    ontAutoConfig.add(g16.ontAutoConfigDefaultUmaVlanPorPon(getAimProfileLine().get(i + 16),
+                            getInterfaceGpon()[i]));
+                }
+            }
+        }
 
         // Se o código chegar aqui, significa que a escrita foi bem-sucedida
         return writeScript(newScript, accessLevel, dba, mgrInterface, vlan, profileVlan, profileLineBridge,
-                profileLineRouter);
+                profileLineRouter, autoConfig, ontAutoConfig);
     }
-
-    // Métodos sobrescritos da classe Config
 
     @Override
     public List<String> getAimProfileLine() {
@@ -220,8 +336,8 @@ public class ConfigGenerator extends Config {
     }
 
     @Override
-    public List<String> getProdutos() {
-        return super.getProdutos();
+    public String[] getDeviceType() {
+        return super.getDeviceType();
     }
 
     @Override
@@ -230,22 +346,17 @@ public class ConfigGenerator extends Config {
     }
 
     @Override
-    public void setAimProfileLine(List<String> aimProfileLine) {
+    public void setAimProfileLine(final List<String> aimProfileLine) {
         super.setAimProfileLine(aimProfileLine);
     }
 
     @Override
-    public void setAimProfileVlan(List<String> aimProfileVlan) {
+    public void setAimProfileVlan(final List<String> aimProfileVlan) {
         super.setAimProfileVlan(aimProfileVlan);
     }
 
     @Override
-    public void setProdutos(List<String> produtos) {
-        super.setProdutos(produtos);
-    }
-
-    @Override
-    public void setVlans(List<String> vlans) {
+    public void setVlans(final List<String> vlans) {
         super.setVlans(vlans);
     }
 
@@ -255,7 +366,7 @@ public class ConfigGenerator extends Config {
     }
 
     @Override
-    public void setInterfaceEthernet(String interfaceEthernet) {
+    public void setInterfaceEthernet(final String interfaceEthernet) {
         super.setInterfaceEthernet(interfaceEthernet);
     }
 }

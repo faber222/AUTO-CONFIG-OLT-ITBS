@@ -29,7 +29,7 @@ public class Config {
     /**
      * Lista de produtos associados à configuração.
      */
-    private List<String> produtos;
+    private final String[] deviceType;
 
     /**
      * Construtor que inicializa os atributos da classe.
@@ -41,12 +41,12 @@ public class Config {
      * @param produtos          Lista de produtos.
      */
     public Config(final List<String> vlans, final List<String> aimProfileVlan, final String interfaceEthernet,
-            final List<String> aimProfileLine, final List<String> produtos) {
+            final List<String> aimProfileLine, final String[] produtos) {
         this.vlans = vlans;
         this.aimProfileVlan = aimProfileVlan;
         this.interfaceEthernet = interfaceEthernet;
         this.aimProfileLine = aimProfileLine;
-        this.produtos = produtos;
+        this.deviceType = produtos;
     }
 
     /**
@@ -99,7 +99,7 @@ public class Config {
      * 
      * @param interfaceEthernet A nova interface Ethernet a ser definida.
      */
-    public void setInterfaceEthernet(String interfaceEthernet) {
+    public void setInterfaceEthernet(final String interfaceEthernet) {
         this.interfaceEthernet = interfaceEthernet;
     }
 
@@ -126,17 +126,8 @@ public class Config {
      * 
      * @return A lista de produtos.
      */
-    public List<String> getProdutos() {
-        return produtos;
-    }
-
-    /**
-     * Define a lista de produtos.
-     * 
-     * @param produtos A nova lista de produtos a ser definida.
-     */
-    public void setProdutos(final List<String> produtos) {
-        this.produtos = produtos;
+    public String[] getDeviceType() {
+        return deviceType;
     }
 
 }

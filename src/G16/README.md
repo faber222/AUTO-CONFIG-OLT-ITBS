@@ -31,3 +31,33 @@ Também terá a implementação de uma instalação unificada para windows, visa
 - [X] Auto-config uma vlan por pon untagged
 - [ ] Possibilidade de rollback
 - [ ] Finalizado
+
+
+/**
+ * Esta classe implementa uma conexão Telnet para acessar um dispositivo de
+ * rede,
+ * como uma OLT (Optical Line Terminal).
+ * 
+ * <p>
+ * Os atributos padrão são configurados para acesso a uma OLT, mas podem ser
+ * personalizados conforme necessário.
+ * </p>
+ * 
+ * <p>
+ * Os comandos padrão executados na OLT incluem a ativação, exibição de
+ * interfaces,
+ * exibição de informações de IP e exibição de rotas IP.
+ * </p>
+ * 
+ * <p>
+ * O acesso Telnet é realizado por meio de um socket, e a leitura das respostas
+ * é feita em uma thread separada para permitir a leitura em tempo real.
+ * </p>
+ * 
+ * <p>
+ * O usuário pode interagir inserindo comandos adicionais por meio de uma janela
+ * de entrada de dados.
+ * </p>
+ * 
+ * @see <a href="https://en.wikipedia.org/wiki/Telnet">Telnet - Wikipedia</a>
+ */
