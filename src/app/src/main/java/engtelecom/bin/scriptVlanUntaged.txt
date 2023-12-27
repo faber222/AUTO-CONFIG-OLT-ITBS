@@ -1,0 +1,62 @@
+deploy profile dba
+aim 1 name DBA-DEFAULT
+type 4 max 1200000
+active
+exit
+ 
+interface ethernet 1/1
+switchport mode hybrid
+switchport default vlan 1
+exitvlan
+ 
+deploy profile vlan
+aim 1 name vlan1
+translate old-vlan 1 new-vlan 1
+active
+ 
+deploy profile line
+aim 1 name i41-100_10
+device type i41-100
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 1
+mapping mode port-vlan
+mapping 1 port eth 1 vlan 1 gemport 1
+flow 1 port eth 1 default vlan 1
+active
+ 
+deploy profile line
+aim 9 name i41-211_10
+device type i41-211
+tcont 1 profile dba 1
+gemport 1 tcont 1 vlan-profile 1
+mapping mode port-vlan
+mapping 1 port veip vlan 1 gemport 1
+flow 1 port veip default vlan 1
+active
+ 
+ont auto-config
+ont-find interface gpon all
+ont-find list-age time 60 interface gpon all
+ 
+ont auto-config 0 name ONU_110 device-type i30-100 line 1
+ont auto-config 1 name ONU_110B device-type i41-100 line 1
+ont auto-config 2 name ONU_110G device-type i10-100 line 1
+ont auto-config 3 name ONU_R1 device-type i40-100 line 1
+ont auto-config 4 name ONU_R1_v2 device-type i40-100-v2 line 1
+ont auto-config 5 name ONT_121_W device-type i40-211 line 9
+ont auto-config 6 name ONT_121_AC device-type i41-211 line 9
+ont auto-config 7 name ONT_142_NW device-type i40-421 line 9
+ont auto-config 8 name ONT_142NG device-type i41-421 line 9
+ont auto-config 9 name ONT_1420G device-type i10-420 line 9
+ont auto-config 10 name ONT_120ac device-type i40-201 line 9
+ont auto-config 11 name ONT_1200R device-type i41-201 line 9
+ont auto-config 10 name ONT_AX1800 device-type i40-401 line 9
+ont auto-config 11 name ONT_AX1800v device-type i40-411 line 9
+ont auto-config 12 name DEFAULT all-ont line 1
+ 
+
+ont auto-config
+ont-find interface gpon all
+ont-find list-age time 40 interface gpon all
+ont-find distance min 0 max 40 interface gpon all
+y
