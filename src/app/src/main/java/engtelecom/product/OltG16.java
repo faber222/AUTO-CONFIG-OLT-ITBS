@@ -552,7 +552,7 @@ public class OltG16 {
         // configuração.
         do {
             // Solicita ao usuário que escolha o tipo de operação da ont de terceiros.
-            input = (String) JOptionPane.showInputDialog(null, "Por favor, escolha o tipo default de ont:",
+            input = (String) JOptionPane.showInputDialog(null, "CPEs de terceiros, em:",
                     "faber222",
                     JOptionPane.QUESTION_MESSAGE, equipamentoIcon, configuration, configuration[0]);
 
