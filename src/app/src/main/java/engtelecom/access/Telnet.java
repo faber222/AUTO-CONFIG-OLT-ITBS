@@ -92,6 +92,9 @@ public class Telnet implements Runnable {
             // Ler comandos do arquivo
             readCommandsFromFile(nomeArq);
 
+            // Mostra a mensagem que deu tudo certo e alerta o usuario para salvar as configurações
+            finalMessage();
+
         } catch (final UnknownHostException exception) {
             System.err.println("Host " + host + " desconhecido");
             System.exit(1);
@@ -100,14 +103,14 @@ public class Telnet implements Runnable {
             System.exit(1);
         }
 
-        // Interatividade opcional para inserir comandos adicionais
-        while (true) {
-            final String command = getUserInput();
-            if ("Bye.".equals(command)) {
-                System.exit(0);
-            }
-            out.println(command);
-        }
+        // // Interatividade opcional para inserir comandos adicionais
+        // while (true) {
+        //     final String command = getUserInput();
+        //     if ("Bye.".equals(command)) {
+        //         System.exit(0);
+        //     }
+        //     out.println(command);
+        // }
     }
 
     /**
@@ -133,6 +136,16 @@ public class Telnet implements Runnable {
     }
 
     /**
+     * Mensagem de alerta ao usuário
+     */
+    private void finalMessage() {
+        JOptionPane.showInternalMessageDialog(null, "Comandos aplicados com sucesso!", "Aviso!",
+                JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showInternalMessageDialog(null, "NÃO ESQUEÇA DE VALIDAR E SALVAR AS CONFIGURAÇÕES!", "Aviso!",
+                JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    /**
      * Implementação do método run() da interface Runnable.
      * Este método é executado em uma thread separada para permitir a leitura
      * em tempo real das respostas do dispositivo de rede.
@@ -154,13 +167,13 @@ public class Telnet implements Runnable {
         }
     }
 
-    /**
-     * Método auxiliar para obter a entrada do usuário por meio de uma janela de
-     * diálogo.
-     * 
-     * @return O comando inserido pelo usuário.
-     */
-    private static String getUserInput() {
-        return JOptionPane.showInputDialog("Digite um comando:");
-    }
+    // /**
+    //  * Método auxiliar para obter a entrada do usuário por meio de uma janela de
+    //  * diálogo.
+    //  * 
+    //  * @return O comando inserido pelo usuário.
+    //  */
+    // private static String getUserInput() {
+    //     return JOptionPane.showInputDialog(null,"Digite um comando:", "Para sair, digite Bye.", JOptionPane.OK_OPTION);
+    // }
 }

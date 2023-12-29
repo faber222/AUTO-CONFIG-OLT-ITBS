@@ -260,9 +260,6 @@ public class Scripts {
         final List<String> autoConfig = new ArrayList<>();
         autoConfig.add("ont auto-config");
         autoConfig.add("ont-find interface gpon all");
-        autoConfig.add("ont-find list-age time 40 interface gpon all");
-        autoConfig.add("ont-find distance min 0 max 40 interface gpon all");
-        autoConfig.add("y");
         return autoConfig;
     }
 
