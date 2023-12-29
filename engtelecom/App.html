@@ -126,6 +126,19 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">O método principal que inicia a aplicação.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#presentation(java.lang.Object%5B%5D,javax.swing.ImageIcon,javax.swing.ImageIcon,javax.swing.ImageIcon)" class="member-name-link">presentation</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>[]&nbsp;options,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/javax/swing/ImageIcon.html" title="class or interface in javax.swing" class="external-link">ImageIcon</a>&nbsp;equipamentoIcon,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/javax/swing/ImageIcon.html" title="class or interface in javax.swing" class="external-link">ImageIcon</a>&nbsp;saidaIcon,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/javax/swing/ImageIcon.html" title="class or interface in javax.swing" class="external-link">ImageIcon</a>&nbsp;erroIcon)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Apresenta um diálogo de boas-vindas e opções ao usuário.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#saida(javax.swing.ImageIcon)" class="member-name-link">saida</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/javax/swing/ImageIcon.html" title="class or interface in javax.swing" class="external-link">ImageIcon</a>&nbsp;saidaIcon)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Exibe uma mensagem de saída quando o usuário pressiona o botão "Cancelar".</div>
+</div>
 </div>
 </div>
 </div>
@@ -158,6 +171,36 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="saida(javax.swing.ImageIcon)">
+<h3>saida</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">saida</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/javax/swing/ImageIcon.html" title="class or interface in javax.swing" class="external-link">ImageIcon</a>&nbsp;saidaIcon)</span></div>
+<div class="block">Exibe uma mensagem de saída quando o usuário pressiona o botão "Cancelar".</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>saidaIcon</code> - Ícone a ser exibido na mensagem de saída.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="presentation(java.lang.Object[],javax.swing.ImageIcon,javax.swing.ImageIcon,javax.swing.ImageIcon)">
+<h3>presentation</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">presentation</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>[]&nbsp;options,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/javax/swing/ImageIcon.html" title="class or interface in javax.swing" class="external-link">ImageIcon</a>&nbsp;equipamentoIcon,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/javax/swing/ImageIcon.html" title="class or interface in javax.swing" class="external-link">ImageIcon</a>&nbsp;saidaIcon,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/javax/swing/ImageIcon.html" title="class or interface in javax.swing" class="external-link">ImageIcon</a>&nbsp;erroIcon)</span></div>
+<div class="block">Apresenta um diálogo de boas-vindas e opções ao usuário.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>options</code> - Opções a serem exibidas no diálogo.</dd>
+<dd><code>equipamentoIcon</code> - Ícone do equipamento.</dd>
+<dd><code>saidaIcon</code> - Ícone de saída.</dd>
+<dd><code>erroIcon</code> - Ícone de erro.</dd>
+<dt>Returns:</dt>
+<dd>true se a condição for satisfeita, false caso contrário.</dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="main(java.lang.String[])">
 <h3>main</h3>

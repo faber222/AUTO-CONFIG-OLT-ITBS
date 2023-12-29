@@ -135,7 +135,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createScript(java.lang.String)" class="member-name-link">createScript</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;nomeArq)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createScript(java.lang.String,int)" class="member-name-link">createScript</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;nomeArq,
+ int&nbsp;slotLength)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Cria o script de configuração com base nos parâmetros e opções escolhidos.</div>
 </div>
@@ -367,13 +368,15 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="createScript(java.lang.String)">
+<section class="detail" id="createScript(java.lang.String,int)">
 <h3>createScript</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">createScript</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;nomeArq)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">createScript</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;nomeArq,
+ int&nbsp;slotLength)</span></div>
 <div class="block">Cria o script de configuração com base nos parâmetros e opções escolhidos.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>nomeArq</code> - Representa o nome do arquivo da olt</dd>
+<dd><code>slotLength</code> - Representa o tamanho do slot que a olt tem</dd>
 <dt>Returns:</dt>
 <dd>true se a criação do script foi bem-sucedida, false caso contrário.</dd>
 </dl>
