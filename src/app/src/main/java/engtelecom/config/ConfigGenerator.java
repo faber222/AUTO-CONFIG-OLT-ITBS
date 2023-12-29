@@ -7,6 +7,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+ */
 import engtelecom.scripts.Scripts;
 
 /**
@@ -14,8 +22,7 @@ import engtelecom.scripts.Scripts;
  * fornecidos.
  * Estende a classe Config para herdar as configurações básicas.
  */
-public class ConfigGeneratorG08 extends Config {
-
+public class ConfigGenerator extends Config {
     private final String ponVlanType;
     private final String[] vlanType;
     private final String defaultCpe;
@@ -36,8 +43,7 @@ public class ConfigGeneratorG08 extends Config {
      * @param interfaceGpon     Array com as interfaces gpon que a olt tem
      * @param defaultCpeType    Array contendo o default bridge ou router
      */
-    public ConfigGeneratorG08(final List<String> vlans, final List<String> aimProfileVlan,
-            final String interfaceEthernet,
+    public ConfigGenerator(final List<String> vlans, final List<String> aimProfileVlan, final String interfaceEthernet,
             final List<String> aimProfileLine, final String[] deviceType, final String ponVlanType,
             final String[] vlanType, final String defaultCpe, final String[] interfaceGpon,
             final String[] defaultCpeType) {
@@ -211,9 +217,11 @@ public class ConfigGeneratorG08 extends Config {
      * Cria o script de configuração com base nos parâmetros e opções escolhidos.
      * 
      * @param nomeArq Representa o nome do arquivo da olt
+     * @param slotLength Representa o tamanho do slot que a olt tem
+     * 
      * @return true se a criação do script foi bem-sucedida, false caso contrário.
      */
-    public boolean createScript(String nomeArq) {
+    public boolean createScript(String nomeArq, int slotLength) {
         // Caminho do novo script
         final File newScript = new File(nomeArq);
 
@@ -222,12 +230,12 @@ public class ConfigGeneratorG08 extends Config {
         String mgrInterface = new String();
 
         // Instância da classe Scripts para obter scripts pré-definidos
-        final Scripts g08 = new Scripts();
+        final Scripts oltGpon = new Scripts();
 
         // Obtenção de listas de scripts pré-definidos
-        final List<String> accessLevel = g08.enable();
-        final List<String> dba = g08.profileDba();
-        final List<String> autoConfig = g08.autoConfig();
+        final List<String> accessLevel = oltGpon.enable();
+        final List<String> dba = oltGpon.profileDba();
+        final List<String> autoConfig = oltGpon.autoConfig();
 
         // Listas para armazenar scripts específicos
         final List<List<String>> profileVlan = new ArrayList<>();
@@ -236,38 +244,38 @@ public class ConfigGeneratorG08 extends Config {
         final List<String> ontAutoConfig = new ArrayList<>();
 
         // Construção das strings para VLAN e interfaces de gerenciamento
-        vlan = g08.vlan(getVlans());
-        mgrInterface = g08.interfaceMgr(getInterfaceEthernet(), getVlans());
+        vlan = oltGpon.vlan(getVlans());
+        mgrInterface = oltGpon.interfaceMgr(getInterfaceEthernet(), getVlans());
 
         // Construção dos scripts para VLAN, Profile Line Bridge e Profile Line Router
         if (getPonVlanType() == getVlanType()[2]) {
             for (int i = 0; i < getVlans().size(); i++) {
-                profileVlan.add(g08.profileVlanUntagged(getVlans().get(i), getAimProfileVlan().get(i)));
-                profileLineBridge.add(g08.profileLineBridgeUntagged(getAimProfileLine().get(i),
+                profileVlan.add(oltGpon.profileVlanUntagged(getVlans().get(i), getAimProfileVlan().get(i)));
+                profileLineBridge.add(oltGpon.profileLineBridgeUntagged(getAimProfileLine().get(i),
                         getAimProfileVlan().get(i), getDeviceType()[3]));
 
                 // Verificação do tamanho da lista para evitar índices fora dos limites
                 if (getVlans().size() == 1) {
-                    profileLineRouter.add(g08.profileLineRouterUnTagged(getAimProfileLine().get(i + 1),
+                    profileLineRouter.add(oltGpon.profileLineRouterUnTagged(getAimProfileLine().get(i + 1),
                             getAimProfileVlan().get(i), getDeviceType()[7]));
                 } else {
-                    profileLineRouter.add(g08.profileLineRouterUnTagged(getAimProfileLine().get(i + 8),
+                    profileLineRouter.add(oltGpon.profileLineRouterUnTagged(getAimProfileLine().get(i + slotLength),
                             getAimProfileVlan().get(i), getDeviceType()[7]));
                 }
             }
         } else {
             for (int i = 0; i < getVlans().size(); i++) {
-                profileVlan.add(g08.profileVlanTagged(getVlans().get(i), getAimProfileVlan().get(i)));
-                profileLineBridge.add(g08.profileLineBridgeTagged(getVlans().get(i), getAimProfileLine().get(i),
+                profileVlan.add(oltGpon.profileVlanTagged(getVlans().get(i), getAimProfileVlan().get(i)));
+                profileLineBridge.add(oltGpon.profileLineBridgeTagged(getVlans().get(i), getAimProfileLine().get(i),
                         getAimProfileVlan().get(i), getDeviceType()[3]));
 
                 // Verificação do tamanho da lista para evitar índices fora dos limites
                 if (getVlans().size() == 1) {
-                    profileLineRouter.add(g08.profileLineRouterTagged(getVlans().get(i), getAimProfileLine().get(i + 1),
+                    profileLineRouter.add(oltGpon.profileLineRouterTagged(getVlans().get(i), getAimProfileLine().get(i + 1),
                             getAimProfileVlan().get(i), getDeviceType()[7]));
                 } else {
-                    profileLineRouter.add(g08.profileLineRouterTagged(getVlans().get(i),
-                            getAimProfileLine().get(i + 8), getAimProfileVlan().get(i), getDeviceType()[7]));
+                    profileLineRouter.add(oltGpon.profileLineRouterTagged(getVlans().get(i),
+                            getAimProfileLine().get(i + slotLength), getAimProfileVlan().get(i), getDeviceType()[7]));
                 }
             }
         }
@@ -276,28 +284,28 @@ public class ConfigGeneratorG08 extends Config {
         if (getPonVlanType() == getVlanType()[1]) {
             for (int i = 0; i < getDeviceType().length; i++) {
                 if (i < 5) {
-                    ontAutoConfig.add(g08.ontAutoConfigUmaVlanPon(getAimProfileLine().get(0), getDeviceType()[i]));
+                    ontAutoConfig.add(oltGpon.ontAutoConfigUmaVlanPon(getAimProfileLine().get(0), getDeviceType()[i]));
                 } else {
-                    ontAutoConfig.add(g08.ontAutoConfigUmaVlanPon(getAimProfileLine().get(1), getDeviceType()[i]));
+                    ontAutoConfig.add(oltGpon.ontAutoConfigUmaVlanPon(getAimProfileLine().get(1), getDeviceType()[i]));
                 }
             }
 
             // Definindo se é default bridge
             if (getDefaultCpe() == getDefaultCpeType()[0]) {
-                ontAutoConfig.add(g08.ontAutoConfigDefaultUmaVlanPon(getAimProfileLine().get(0)));
+                ontAutoConfig.add(oltGpon.ontAutoConfigDefaultUmaVlanPon(getAimProfileLine().get(0)));
             } else {
-                ontAutoConfig.add(g08.ontAutoConfigDefaultUmaVlanPon(getAimProfileLine().get(1)));
+                ontAutoConfig.add(oltGpon.ontAutoConfigDefaultUmaVlanPon(getAimProfileLine().get(1)));
             }
         } else {
             // Configuração específica para "Uma vlan por pon"
             for (int i = 0; i < getDeviceType().length; i++) {
                 for (int j = 0; j < getAimProfileVlan().size(); j++) {
                     if (i < 5) {
-                        ontAutoConfig.add(g08.ontAutoConfigUmaVlanPorPon(getAimProfileLine().get(j), getVlans().get(j),
+                        ontAutoConfig.add(oltGpon.ontAutoConfigUmaVlanPorPon(getAimProfileLine().get(j), getVlans().get(j),
                                 getDeviceType()[i], getInterfaceGpon()[j]));
                     } else {
                         ontAutoConfig
-                                .add(g08.ontAutoConfigUmaVlanPorPon(getAimProfileLine().get(j + 8), getVlans().get(j),
+                                .add(oltGpon.ontAutoConfigUmaVlanPorPon(getAimProfileLine().get(j + slotLength), getVlans().get(j),
                                         getDeviceType()[i], getInterfaceGpon()[j]));
                     }
                 }
@@ -307,9 +315,9 @@ public class ConfigGeneratorG08 extends Config {
                 // Definindo se é default bridge
                 if (getDefaultCpe() == getDefaultCpeType()[0]) {
                     ontAutoConfig.add(
-                            g08.ontAutoConfigDefaultUmaVlanPorPon(getAimProfileLine().get(i), getInterfaceGpon()[i]));
+                            oltGpon.ontAutoConfigDefaultUmaVlanPorPon(getAimProfileLine().get(i), getInterfaceGpon()[i]));
                 } else {
-                    ontAutoConfig.add(g08.ontAutoConfigDefaultUmaVlanPorPon(getAimProfileLine().get(i + 8),
+                    ontAutoConfig.add(oltGpon.ontAutoConfigDefaultUmaVlanPorPon(getAimProfileLine().get(i + slotLength),
                             getInterfaceGpon()[i]));
                 }
             }
@@ -336,33 +344,32 @@ public class ConfigGeneratorG08 extends Config {
     }
 
     @Override
-    public String getInterfaceEthernet() {
-        return super.getInterfaceEthernet();
-    }
-
-    @Override
     public List<String> getVlans() {
         return super.getVlans();
     }
 
     @Override
-    public void setAimProfileLine(List<String> aimProfileLine) {
+    public void setAimProfileLine(final List<String> aimProfileLine) {
         super.setAimProfileLine(aimProfileLine);
     }
 
     @Override
-    public void setAimProfileVlan(List<String> aimProfileVlan) {
+    public void setAimProfileVlan(final List<String> aimProfileVlan) {
         super.setAimProfileVlan(aimProfileVlan);
     }
 
     @Override
-    public void setInterfaceEthernet(String interfaceEthernet) {
-        super.setInterfaceEthernet(interfaceEthernet);
-    }
-
-    @Override
-    public void setVlans(List<String> vlans) {
+    public void setVlans(final List<String> vlans) {
         super.setVlans(vlans);
     }
 
+    @Override
+    public String getInterfaceEthernet() {
+        return super.getInterfaceEthernet();
+    }
+
+    @Override
+    public void setInterfaceEthernet(final String interfaceEthernet) {
+        super.setInterfaceEthernet(interfaceEthernet);
+    }
 }

@@ -14,34 +14,41 @@ import javax.swing.JOptionPane;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
-// import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
 import engtelecom.access.Telnet;
-import engtelecom.config.ConfigGeneratorG16;
+import engtelecom.config.ConfigGenerator;
 
 /**
- * Objeto que representa a OLT G16
+ * Objeto que representa a OLT G08
  */
-public class OltG16 {
+public class OltGpon {
     /**
-     * Variável que armazena o endereço IP da conexão.
+     * Atributo que armazena o endereço IP da conexão.
      */
     private static String ip;
+
     /**
-     * Variável que armazena a porta da conexão (pode ser Integer ou int, dependendo
+     * Atributo que armazena a porta da conexão (pode ser Integer ou int, dependendo
      * da necessidade).
      */
     private static Integer port;
+
     /**
-     * Variável que armazena a senha da conexão.
+     * Atributo que armazena a senha da conexão.
      */
     private static String passwd;
+
     /**
-     * Variável que armazena o nome de usuário da conexão.
+     * Atributo que armazena o nome de usuário da conexão.
      */
     private static String user;
+
+    /**
+     * Atributo que armazena o tamanho do slot gpon
+     */
+    private static int slotLength;
 
     /**
      * Exibe informações sobre o criador e um QR code contendo o link do GitHub.
@@ -132,7 +139,7 @@ public class OltG16 {
         // Loop para apresentar o diálogo até que a condição seja satisfeita.
         do {
             // Exibe um diálogo de opções ao usuário.
-            final int result = JOptionPane.showOptionDialog(null, "Bem Vindo ao AUTO-CONFIG-G16!", "faber222",
+            final int result = JOptionPane.showOptionDialog(null, "Bem Vindo ao AUTO-CONFIG!", "faber222",
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.INFORMATION_MESSAGE, equipamentoIcon, options, options[0]);
 
@@ -144,12 +151,12 @@ public class OltG16 {
                     return true;
                 case 1:
                     // Se a opção for 1, chama o método mostrarCriador().
-                    OltG16.mostrarCriador();
+                    OltGpon.mostrarCriador();
                     break;
                 default:
                     // Se nenhuma opção válida for escolhida, chama o método saida() e encerra o
                     // programa.
-                    OltG16.saida(saidaIcon);
+                    OltGpon.saida(saidaIcon);
                     System.exit(0);
                     break;
             }
@@ -162,8 +169,11 @@ public class OltG16 {
 
     /**
      * Construtor padrão
+     * 
+     * @param slotLength Tamanho dos slots que a olt possui, pode ser 8 ou 16
      */
-    public OltG16() {
+    public OltGpon(final int slotLength) {
+        OltGpon.setSlotLength(slotLength);
     }
 
     /**
@@ -176,21 +186,21 @@ public class OltG16 {
         // Loop para garantir que o usuário forneça um endereço IP válido.
         do {
             // Solicita ao usuário que insira o endereço IP da OLT.
-            OltG16.setIp(JOptionPane.showInputDialog("Digite o IP da OLT:"));
+            OltGpon.setIp(JOptionPane.showInputDialog("Digite o IP da OLT:"));
 
             // Verifica se o usuário cancelou a operação.
-            if (OltG16.getIp() == null) {
+            if (OltGpon.getIp() == null) {
                 saida(saidaIcon);
                 System.exit(0);
             }
 
             // Verifica se o endereço IP inserido é válido.
-            if (!isValidIPv4Address(OltG16.getIp())) {
+            if (!isValidIPv4Address(OltGpon.getIp())) {
                 JOptionPane.showMessageDialog(null,
                         "Entrada inválida. Por favor, insira um endereço IP válido (0-255).", "Erro",
                         JOptionPane.ERROR_MESSAGE, erroIcon);
             }
-        } while (!isValidIPv4Address(OltG16.getIp()));
+        } while (!isValidIPv4Address(OltGpon.getIp()));
     }
 
     /**
@@ -204,7 +214,7 @@ public class OltG16 {
         do {
             port = JOptionPane.showInputDialog("Digite a porta de acesso Telnet da OLT:");
         } while (!port.matches("^[1-9]\\d*$"));
-        OltG16.setPort(Integer.parseInt(port));
+        OltGpon.setPort(Integer.parseInt(port));
     }
 
     /**
@@ -218,24 +228,24 @@ public class OltG16 {
         // senha.
         do {
             // Solicita ao usuário que insira o nome de usuário da OLT.
-            OltG16.setUser(JOptionPane.showInputDialog("Digite o usuário da OLT:"));
+            OltGpon.setUser(JOptionPane.showInputDialog("Digite o usuário da OLT:"));
 
             // Verifica se o usuário cancelou a operação.
-            if (OltG16.getUser() == null) {
+            if (OltGpon.getUser() == null) {
                 saida(saidaIcon);
                 System.exit(0);
             }
 
             // Solicita ao usuário que insira a senha da OLT.
-            OltG16.setPasswd(JOptionPane.showInputDialog("Digite a senha da OLT:"));
+            OltGpon.setPasswd(JOptionPane.showInputDialog("Digite a senha da OLT:"));
 
             // Verifica se o usuário cancelou a operação.
-            if (OltG16.getPasswd() == null) {
+            if (OltGpon.getPasswd() == null) {
                 saida(saidaIcon);
                 System.exit(0);
             }
 
-        } while (OltG16.getPasswd() == null && OltG16.getUser() == null);
+        } while (OltGpon.getPasswd() == null && OltGpon.getUser() == null);
     }
 
     /**
@@ -322,10 +332,10 @@ public class OltG16 {
 
             // Verifica se o usuário cancelou a operação.
             if (input == null) {
-                OltG16.saida(saidaIcon);
+                OltGpon.saida(saidaIcon);
                 System.exit(0);
             }
-        } while (!OltG16.isValidAimVlanLineRange(input, erroIcon, range));
+        } while (!OltGpon.isValidAimVlanLineRange(input, erroIcon, range));
 
         // Processa a entrada do usuário com base no intervalo especificado.
         if (range != 1) {
@@ -379,10 +389,10 @@ public class OltG16 {
 
             // Verifica se o usuário cancelou a operação.
             if (input == null) {
-                OltG16.saida(saidaIcon);
+                OltGpon.saida(saidaIcon);
                 System.exit(0);
             }
-        } while (!OltG16.isValidAimVlanLineRange(input, erroIcon, range));
+        } while (!OltGpon.isValidAimVlanLineRange(input, erroIcon, range));
 
         // Processa a entrada do usuário com base no intervalo especificado.
         if (range != 1) {
@@ -427,14 +437,14 @@ public class OltG16 {
 
             // Verifica se o usuário cancelou a operação.
             if (input == null) {
-                OltG16.saida(saidaIcon);
+                OltGpon.saida(saidaIcon);
                 System.exit(0);
             }
-        } while (!OltG16.isValidAimVlanLineRange(input, erroIcon, range));
+        } while (!OltGpon.isValidAimVlanLineRange(input, erroIcon, range));
 
         // Processa a entrada do usuário com base no intervalo especificado.
-        if (range == 32) {
-            // Se o intervalo for 32, divide a entrada e adiciona os valores à lista.
+        if (range == OltGpon.getSlotLength() * 2) {
+            // Se o intervalo for 16 ou 32, divide a entrada e adiciona os valores à lista.
             final String[] partes = input.split("-");
             final int inicio = Integer.parseInt(partes[0]);
             final int fim = Integer.parseInt(partes[1]);
@@ -443,7 +453,7 @@ public class OltG16 {
                 aimProfileLine.add(String.valueOf(j));
             }
         } else {
-            // Se o intervalo não for 32, simplesmente divide a entrada e adiciona os
+            // Se o intervalo não for 16 ou 32, simplesmente divide a entrada e adiciona os
             // valores à lista.
             final String[] partes = input.split("-");
             aimProfileLine.add(partes[0]);
@@ -479,7 +489,7 @@ public class OltG16 {
 
             // Verifica se o usuário cancelou a operação.
             if (input == null) {
-                OltG16.saida(saidaIcon);
+                OltGpon.saida(saidaIcon);
                 System.exit(0);
             }
 
@@ -519,7 +529,7 @@ public class OltG16 {
 
             // Verifica se o usuário cancelou a operação.
             if (input == null) {
-                OltG16.saida(saidaIcon);
+                OltGpon.saida(saidaIcon);
                 System.exit(0);
             }
 
@@ -558,7 +568,7 @@ public class OltG16 {
 
             // Verifica se o usuário cancelou a operação.
             if (input == null) {
-                OltG16.saida(saidaIcon);
+                OltGpon.saida(saidaIcon);
                 System.exit(0);
             }
 
@@ -580,15 +590,19 @@ public class OltG16 {
         final Object[] options = { "Avancar", "Autor", "Cancelar" };
 
         // Carrega os ícones necessários para o diálogo
-        final ClassLoader classLoader = OltG16.class.getClassLoader();
+        final ClassLoader classLoader = OltGpon.class.getClassLoader();
         final ImageIcon equipamentoIcon = new ImageIcon(classLoader.getResource("equipamento.png"));
-        final ImageIcon ipIcon = new ImageIcon(classLoader.getResource("ip.png"));
+        // final ImageIcon ipIcon = new ImageIcon(classLoader.getResource("ip.png"));
         final ImageIcon saidaIcon = new ImageIcon(classLoader.getResource("saida.png"));
         final ImageIcon erroIcon = new ImageIcon(classLoader.getResource("erro.png"));
-        String nomeArq = "scriptG16.txt";
+        String nomeArq = "scriptG08.txt";
+
+        if (OltGpon.getSlotLength() == 16) {
+            nomeArq = "scriptG16.txt";
+        }
 
         // Apresenta o diálogo inicial
-        OltG16.presentation(options, equipamentoIcon, saidaIcon, erroIcon);
+        OltGpon.presentation(options, equipamentoIcon, saidaIcon, erroIcon);
 
         final String[] modelosInterface = {
                 "interface ethernet 1/1",
@@ -620,7 +634,18 @@ public class OltG16 {
                 "i41-421"
         };
 
-        final String[] interfaceGpon = {
+        final String[] interfaceGponG08 = {
+                "0/1",
+                "0/2",
+                "0/3",
+                "0/4",
+                "0/5",
+                "0/6",
+                "0/7",
+                "0/8"
+        };
+
+        final String[] interfaceGponG16 = {
                 "0/1",
                 "0/2",
                 "0/3",
@@ -639,17 +664,25 @@ public class OltG16 {
                 "0/16"
         };
 
+        String[] interfaceGpon = interfaceGponG08;
+
+        if (OltGpon.getSlotLength() == 16) {
+            interfaceGpon = interfaceGponG16;
+        }
+
         final String[] defaultCpeType = {
                 "bridge",
                 "router"
         };
+
         final String regex = "^[1-9]\\d*-\\d*[1-9]\\d*$";
 
         // Obtém informações do usuário para a configuração
-        final String interfaceEth = OltG16.getInterfaceEth(equipamentoIcon, saidaIcon, erroIcon, modelosInterface);
-        final String modelConfiguration = OltG16.getModelConfiguration(equipamentoIcon, saidaIcon, erroIcon,
+        final String interfaceEth = OltGpon.getInterfaceEth(equipamentoIcon, saidaIcon, erroIcon, modelosInterface);
+        final String modelConfiguration = OltGpon.getModelConfiguration(equipamentoIcon, saidaIcon, erroIcon,
                 configuracoes);
-        final String defaultCpe = OltG16.getDefaultCpeType(equipamentoIcon, saidaIcon, erroIcon, defaultCpeType);
+        final String defaultCpe = OltGpon.getDefaultCpeType(equipamentoIcon, saidaIcon, erroIcon, defaultCpeType);
+
         int rangeVlan;
         int rangeAimVlan;
         int rangeAimLine;
@@ -658,24 +691,25 @@ public class OltG16 {
             rangeVlan = rangeAimVlan = 1;
             rangeAimLine = 2;
         } else {
-            rangeVlan = rangeAimVlan = 16;
-            rangeAimLine = 32;
+            rangeVlan = rangeAimVlan = OltGpon.getSlotLength();
+            rangeAimLine = OltGpon.getSlotLength() * 2;
         }
 
         // Obtém as listas necessárias para a configuração
-        final List<String> arrayVlan = OltG16.getVlanClient(equipamentoIcon, saidaIcon, erroIcon, rangeVlan);
-        final List<String> arrayAimVlan = OltG16.getAimProfileVlan(equipamentoIcon, saidaIcon, erroIcon, rangeAimVlan);
-        final List<String> arrayAimLine = OltG16.getAimProfileLine(equipamentoIcon, saidaIcon, erroIcon, rangeAimLine);
+        final List<String> arrayVlan = OltGpon.getVlanClient(equipamentoIcon, saidaIcon, erroIcon, rangeVlan);
+        final List<String> arrayAimVlan = OltGpon.getAimProfileVlan(equipamentoIcon, saidaIcon, erroIcon, rangeAimVlan);
+        final List<String> arrayAimLine = OltGpon.getAimProfileLine(equipamentoIcon, saidaIcon, erroIcon, rangeAimLine);
 
         // Cria um objeto ConfigGenerator para gerar o script de configuração
-        final ConfigGeneratorG16 configGeneratorG16 = new ConfigGeneratorG16(arrayVlan, arrayAimVlan, interfaceEth,
-                arrayAimLine,
-                deviceType, modelConfiguration, configuracoes, defaultCpe, interfaceGpon, defaultCpeType);
-        configGeneratorG16.createScript(nomeArq);
+        final ConfigGenerator configGenerator = new ConfigGenerator(arrayVlan, arrayAimVlan, interfaceEth,
+                arrayAimLine, deviceType, modelConfiguration, configuracoes,
+                defaultCpe, interfaceGpon, defaultCpeType);
 
-        OltG16.getIpFromUser(saidaIcon, erroIcon);
-        OltG16.getPortFromUser(saidaIcon, erroIcon);
-        OltG16.getUserAndPwd(saidaIcon, erroIcon);
+        configGenerator.createScript(nomeArq, OltGpon.getSlotLength());
+
+        OltGpon.getIpFromUser(saidaIcon, erroIcon);
+        OltGpon.getPortFromUser(saidaIcon, erroIcon);
+        OltGpon.getUserAndPwd(saidaIcon, erroIcon);
 
         // Configuração final para definir o acesso à OLT
         final Telnet telnetAccess = new Telnet(getIp(), getPort(), getUser(), getPasswd());
@@ -696,8 +730,8 @@ public class OltG16 {
      *
      * @param ip O endereço IP a ser configurado.
      */
-    public static void setIp(String ip) {
-        OltG16.ip = ip;
+    public static void setIp(final String ip) {
+        OltGpon.ip = ip;
     }
 
     /**
@@ -714,8 +748,8 @@ public class OltG16 {
      *
      * @param port A porta a ser configurada.
      */
-    public static void setPort(Integer port) {
-        OltG16.port = port;
+    public static void setPort(final Integer port) {
+        OltGpon.port = port;
     }
 
     /**
@@ -732,8 +766,8 @@ public class OltG16 {
      *
      * @param passwd A senha a ser configurada.
      */
-    public static void setPasswd(String passwd) {
-        OltG16.passwd = passwd;
+    public static void setPasswd(final String passwd) {
+        OltGpon.passwd = passwd;
     }
 
     /**
@@ -750,8 +784,26 @@ public class OltG16 {
      *
      * @param user O nome de usuário a ser configurado.
      */
-    public static void setUser(String user) {
-        OltG16.user = user;
+    public static void setUser(final String user) {
+        OltGpon.user = user;
+    }
+
+    /**
+     * Retorna o valor do slotLength
+     * 
+     * @return Inteiro contendo quantos slots gpon tem
+     */
+    public static int getSlotLength() {
+        return slotLength;
+    }
+
+    /**
+     * Define o valor do slot
+     * 
+     * @param slotLength Valor inteiro, deve ser 8 ou 16
+     */
+    public static void setSlotLength(final int slotLength) {
+        OltGpon.slotLength = slotLength;
     }
 
 }

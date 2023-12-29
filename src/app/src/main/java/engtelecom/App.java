@@ -3,8 +3,7 @@ package engtelecom;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-import engtelecom.product.OltG08;
-import engtelecom.product.OltG16;
+import engtelecom.product.OltGpon;
 
 /**
  * Classe principal da aplicação que inicia a OLT G16.
@@ -57,14 +56,18 @@ public class App {
                 case 0:
                     // Se a opção for 0, a condição é satisfeita e retorna true.
                     condition = true;
-                    final OltG16 OltG16 = new OltG16();
+
+                    final OltGpon OltG16 = new OltGpon(16);
                     OltG16.start();
+
                     return true;
                 case 1:
                     // Se a opção for 1, chama o método mostrarCriador().
-                    final OltG08 OltG08 = new OltG08();
+                    condition = true;
+
+                    final OltGpon OltG08 = new OltGpon(8);
                     OltG08.start();
-                    break;
+                    return true;
                 default:
                     // Se nenhuma opção válida for escolhida, chama o método saida() e encerra o
                     // programa.
