@@ -31,6 +31,6 @@ Também terá a implementação de uma instalação unificada para windows, visa
 - [X] Auto-config uma vlan por pon untagged
 - [X] Compativel com OLT G16 Intelbras
 - [X] Compativel com OLT G08 Intelbras
-- [ ] Compativel com OLt 8820i Intelbras
+- [X] Compativel com OLt 8820i Intelbras
 - [ ] Possibilidade de rollback
 - [ ] Finalizado

@@ -4,4 +4,4 @@
 # Ignore Gradle build output directory
 build
 
-src/G16/app/bin
+src/app/bin
