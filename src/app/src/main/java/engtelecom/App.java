@@ -13,6 +13,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
+import engtelecom.product.Olt8820Plus;
 import engtelecom.product.OltGpon;
 
 /**
@@ -27,7 +28,7 @@ public class App {
         // Construtor padrão, não há ações específicas aqui no momento.
     }
 
-        /**
+    /**
      * Exibe informações sobre o criador e um QR code contendo o link do GitHub.
      */
     public static void mostrarCriador() {
@@ -81,7 +82,7 @@ public class App {
         // Condição para controlar o loop.
         boolean condition = false;
 
-        final Object[] oltOptions = { "G16", "G08", "Cancelar" };
+        final Object[] oltOptions = { "G16", "G08", "8820i", "Cancelar" };
 
         // Loop para apresentar o diálogo até que a condição seja satisfeita.
         do {
@@ -96,6 +97,7 @@ public class App {
                     // Se a opção for 0, a condição é satisfeita e retorna true.
                     condition = true;
                     App.oltOption(oltOptions, equipamentoIcon, saidaIcon, erroIcon);
+                    break;
                 case 1:
                     // Se a opção for 1, chama o método mostrarCriador().
                     App.mostrarCriador();
@@ -159,6 +161,12 @@ public class App {
 
                     final OltGpon OltG08 = new OltGpon(8);
                     OltG08.start();
+                    break;
+                case 2:
+                    condition = true;
+
+                    final Olt8820Plus Olt8820Plus = new Olt8820Plus(8);
+                    Olt8820Plus.start();
                     break;
                 default:
                     // Se nenhuma opção válida for escolhida, chama o método saida() e encerra o

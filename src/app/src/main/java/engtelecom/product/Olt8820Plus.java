@@ -12,6 +12,7 @@ import engtelecom.access.Telnet8820Plus;
 import engtelecom.config.ConfigGenerator8820Plus;
 
 public class Olt8820Plus {
+    
     /**
      * Atributo que armazena o endereço IP da conexão.
      */
@@ -38,11 +39,11 @@ public class Olt8820Plus {
      */
     private static int slotLength;
 
-    /**
-     * Exibe uma mensagem de saída quando o usuário pressiona o botão "Cancelar".
-     * 
-     * @param saidaIcon Ícone a ser exibido na mensagem de saída.
-     */
+    public Olt8820Plus(int slotLength) {
+        Olt8820Plus.slotLength = slotLength;
+    }
+
+
     public static void saida(final ImageIcon saidaIcon) {
         // Exibe uma caixa de diálogo com uma mensagem de aviso indicando que o programa
         // será encerrado.
@@ -51,12 +52,6 @@ public class Olt8820Plus {
                 null, JOptionPane.WARNING_MESSAGE, saidaIcon);
     }
 
-    /**
-     * Verifica se a string fornecida representa um endereço IPv4 válido.
-     * 
-     * @param ipAddress A string contendo o endereço IPv4 a ser validado.
-     * @return true se a string for um endereço IPv4 válido, false caso contrário.
-     */
     public static boolean isValidIPv4Address(final String ipAddress) {
         // Expressão regular para validar um endereço IPv4
         final String regex = "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
@@ -69,12 +64,6 @@ public class Olt8820Plus {
         return matcher.matches();
     }
 
-    /**
-     * Obtém o endereço IP da OLT a partir do usuário.
-     * 
-     * @param saidaIcon Ícone de saída.
-     * @param erroIcon  Ícone de erro.
-     */
     public static void getIpFromUser(final ImageIcon saidaIcon, final ImageIcon erroIcon) {
         // Loop para garantir que o usuário forneça um endereço IP válido.
         do {
@@ -96,12 +85,6 @@ public class Olt8820Plus {
         } while (!isValidIPv4Address(Olt8820Plus.getIp()));
     }
 
-    /**
-     * Obtém a porta de acesso da OLT.
-     * 
-     * @param saidaIcon Ícone de saída.
-     * @param erroIcon  Ícone de erro.
-     */
     public static void getPortFromUser(final ImageIcon saidaIcon, final ImageIcon erroIcon) {
         String port;
         do {
@@ -110,12 +93,6 @@ public class Olt8820Plus {
         Olt8820Plus.setPort(Integer.parseInt(port));
     }
 
-    /**
-     * Obtém o nome de usuário e senha do usuário para a OLT.
-     * 
-     * @param saidaIcon Ícone de saída.
-     * @param erroIcon  Ícone de erro.
-     */
     public static void getUserAndPwd(final ImageIcon saidaIcon, final ImageIcon erroIcon) {
         // Loop para garantir que o usuário forneça tanto o nome de usuário quanto a
         // senha.
@@ -141,15 +118,6 @@ public class Olt8820Plus {
         } while (Olt8820Plus.getPasswd() == null && Olt8820Plus.getUser() == null);
     }
 
-    /**
-     * Verifica se o range de VLAN é válido com base no formato e nos limites
-     * permitidos.
-     * 
-     * @param aimVlanLineRange A string que representa o range de VLAN.
-     * @param erroIcon         Ícone de erro.
-     * @param range            O intervalo permitido para a VLAN.
-     * @return true se o range for válido, false caso contrário.
-     */
     public static boolean isValidVlanRange(final String aimVlanLineRange, final ImageIcon erroIcon,
             final int range) {
         // Validando o formato do range
@@ -193,15 +161,6 @@ public class Olt8820Plus {
         return false;
     }
 
-    /**
-     * Obtém informações de VLAN para um cliente a partir de uma entrada do usuário.
-     * 
-     * @param equipamentoIcon Ícone do equipamento.
-     * @param saidaIcon       Ícone de saída.
-     * @param erroIcon        Ícone de erro.
-     * @param range           O intervalo permitido para a VLAN.
-     * @return Uma lista de strings representando a VLAN para o cliente.
-     */
     public static List<String> getVlanClient(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
             final ImageIcon erroIcon, final int range) {
         // Lista que armazenará as informações de VLAN para o cliente.
@@ -249,15 +208,7 @@ public class Olt8820Plus {
         return vlan;
     }
 
-    /**
-     * Obtém a interface Ethernet (Uplink) da OLT a partir do usuário.
-     * 
-     * @param equipamentoIcon Ícone do equipamento.
-     * @param saidaIcon       Ícone de saída.
-     * @param erroIcon        Ícone de erro.
-     * @param interfaceEth    Um array contendo opções de interfaces Ethernet.
-     * @return A interface Ethernet escolhida pelo usuário.
-     */
+
     public static String getInterfaceEth(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
             final ImageIcon erroIcon,
             final String[] interfaceEth) {
@@ -288,17 +239,7 @@ public class Olt8820Plus {
         } while (input == null);
     }
 
-    /**
-     * Obtém o modelo de configuração (tipo de auto-config) da OLT a partir do
-     * usuário.
-     * 
-     * @param equipamentoIcon    Ícone do equipamento.
-     * @param saidaIcon          Ícone de saída.
-     * @param erroIcon           Ícone de erro.
-     * @param modelConfiguration Um array contendo opções de modelos de
-     *                           configuração.
-     * @return O modelo de configuração escolhido pelo usuário.
-     */
+
     public static String getModelConfiguration(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
             final ImageIcon erroIcon, final String[] modelConfiguration) {
         String input = new String();
@@ -328,16 +269,7 @@ public class Olt8820Plus {
         } while (input == null);
     }
 
-    /**
-     * Obtém o tipo padrão do equipamento CPE (Customer Premises Equipment).
-     * 
-     * @param equipamentoIcon Ícone para exibição do diálogo.
-     * @param saidaIcon       Ícone para a mensagem de saída.
-     * @param erroIcon        Ícone para a mensagem de erro.
-     * @param defaultCpeType  Tipos padrão disponíveis para escolha.
-     * @return O tipo padrão do equipamento CPE escolhido pelo usuário.
-     *         {@code null} se a operação for cancelada.
-     */
+
     public static String getDefaultCpeType(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
             final ImageIcon erroIcon, final String[] defaultCpeType) {
         String input = new String();
@@ -367,17 +299,7 @@ public class Olt8820Plus {
         } while (input == null);
     }
 
-    /**
-     * Obtém o modelo de configuração (tipo de auto-config) da OLT a partir do
-     * usuário.
-     * 
-     * @param equipamentoIcon    Ícone do equipamento.
-     * @param saidaIcon          Ícone de saída.
-     * @param erroIcon           Ícone de erro.
-     * @param modelConfiguration Um array contendo opções de modelos de
-     *                           configuração.
-     * @return O modelo de configuração escolhido pelo usuário.
-     */
+
     public static String getBridgeInterfaceUplink(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
             final ImageIcon erroIcon, final String[] modelConfiguration) {
         String input = new String();
@@ -407,17 +329,7 @@ public class Olt8820Plus {
         } while (input == null);
     }
 
-    /**
-     * Obtém o modelo de configuração (tipo de auto-config) da OLT a partir do
-     * usuário.
-     * 
-     * @param equipamentoIcon    Ícone do equipamento.
-     * @param saidaIcon          Ícone de saída.
-     * @param erroIcon           Ícone de erro.
-     * @param modelConfiguration Um array contendo opções de modelos de
-     *                           configuração.
-     * @return O modelo de configuração escolhido pelo usuário.
-     */
+
     public static String getBridgeInterfaceUplinkVlanMode(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
             final ImageIcon erroIcon, final String[] modelConfiguration) {
         String input = new String();
@@ -458,7 +370,7 @@ public class Olt8820Plus {
         // final ImageIcon ipIcon = new ImageIcon(classLoader.getResource("ip.png"));
         final ImageIcon saidaIcon = new ImageIcon(classLoader.getResource("saida.png"));
         final ImageIcon erroIcon = new ImageIcon(classLoader.getResource("erro.png"));
-        String nomeArq = "script8820i.txt";
+        final String nomeArq = "script8820i.txt";
 
         final String[] modelosInterface = {
                 "eth 1",
@@ -522,8 +434,6 @@ public class Olt8820Plus {
                 "router"
         };
 
-        final String regex = "^[1-9]\\d*-\\d*[1-9]\\d*$";
-
         // Obtém informações do usuário para a configuração
         final String interfaceEth = Olt8820Plus.getInterfaceEth(equipamentoIcon, saidaIcon, erroIcon, modelosInterface);
         final String modelConfiguration = Olt8820Plus.getModelConfiguration(equipamentoIcon, saidaIcon, erroIcon,
@@ -550,7 +460,7 @@ public class Olt8820Plus {
                 modelConfiguration, configuracoes, defaultCpe, interfaceGpon, defaultCpeType, bridgeInterfaceUplinkType,
                 bridgeInterfaceUplinkVlanModeType);
 
-        configGenerator.createScript(nomeArq, Olt8820Plus.getSlotLength());
+        configGenerator.createScript(nomeArq);
 
         Olt8820Plus.getIpFromUser(saidaIcon, erroIcon);
         Olt8820Plus.getPortFromUser(saidaIcon, erroIcon);
@@ -565,7 +475,7 @@ public class Olt8820Plus {
         return ip;
     }
 
-    public static void setIp(String ip) {
+    public static void setIp(final String ip) {
         Olt8820Plus.ip = ip;
     }
 
@@ -573,7 +483,7 @@ public class Olt8820Plus {
         return port;
     }
 
-    public static void setPort(Integer port) {
+    public static void setPort(final Integer port) {
         Olt8820Plus.port = port;
     }
 
@@ -581,7 +491,7 @@ public class Olt8820Plus {
         return passwd;
     }
 
-    public static void setPasswd(String passwd) {
+    public static void setPasswd(final String passwd) {
         Olt8820Plus.passwd = passwd;
     }
 
@@ -589,7 +499,7 @@ public class Olt8820Plus {
         return user;
     }
 
-    public static void setUser(String user) {
+    public static void setUser(final String user) {
         Olt8820Plus.user = user;
     }
 
@@ -597,7 +507,7 @@ public class Olt8820Plus {
         return slotLength;
     }
 
-    public static void setSlotLength(int slotLength) {
+    public static void setSlotLength(final int slotLength) {
         Olt8820Plus.slotLength = slotLength;
     }
 

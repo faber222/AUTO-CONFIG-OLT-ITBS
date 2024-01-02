@@ -11,6 +11,9 @@ import javax.swing.JOptionPane;
 
 import org.apache.commons.net.telnet.TelnetClient;
 
+/**
+ * Classe que realiza acesso via Telnet a uma OLT 8820 Plus.
+ */
 public class Telnet8820Plus implements Runnable {
     private TelnetClient telnetClient;
     private BufferedReader in;
@@ -24,6 +27,14 @@ public class Telnet8820Plus implements Runnable {
     private final String username;
     private final String password;
 
+    /**
+     * Construtor da classe Telnet8820Plus.
+     * 
+     * @param host     O endereço IP do host.
+     * @param port     A porta para a conexão Telnet.
+     * @param user     O nome de usuário para autenticação.
+     * @param pwd      A senha para autenticação.
+     */
     public Telnet8820Plus(String host, int port, String user, String pwd) {
         this.host = host;
         this.port = port;
@@ -31,6 +42,11 @@ public class Telnet8820Plus implements Runnable {
         this.password = pwd;
     }
 
+    /**
+     * Método principal que realiza o acesso Telnet à OLT 8820 Plus.
+     * 
+     * @param nomeArq O nome do arquivo contendo os comandos a serem executados.
+     */
     public void oltAccess(final String nomeArq) {
         try {
             telnetClient = new TelnetClient();
@@ -44,7 +60,7 @@ public class Telnet8820Plus implements Runnable {
             thread.start();
 
             try {
-                // Adiciona um atraso de 100ms para o usuario
+                // Adiciona um atraso de 100ms para o usuário
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -62,7 +78,7 @@ public class Telnet8820Plus implements Runnable {
             out.println(password);
 
             try {
-                // Adiciona um atraso de 10s 
+                // Adiciona um atraso de 8s
                 Thread.sleep(8000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -75,9 +91,14 @@ public class Telnet8820Plus implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
+    /**
+     * Lê comandos de um arquivo e os envia para a OLT via Telnet.
+     * 
+     * @param filename O nome do arquivo contendo os comandos.
+     * @throws IOException Exceção lançada em caso de erro na leitura do arquivo.
+     */
     private void readCommandsFromFile(final String filename) throws IOException {
         try (BufferedReader fileReader = new BufferedReader(new FileReader(filename))) {
             String command;
@@ -85,7 +106,7 @@ public class Telnet8820Plus implements Runnable {
                 writeToTelnet(command);
                 try {
                     // Adiciona um atraso de 1s após cada out.println
-                    Thread.sleep(500);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -93,25 +114,28 @@ public class Telnet8820Plus implements Runnable {
         }
     }
 
+    /**
+     * Envia um comando para a OLT via Telnet.
+     * 
+     * @param command O comando a ser enviado.
+     */
     private void writeToTelnet(String command) {
-        command += "\r\n"; // Adicione a quebra de linha ao final de cada comando
+        command += "\r\n"; // Adiciona a quebra de linha ao final de cada comando
         out.write(command);
         out.flush();
     }
 
-    public static void main(String[] args) {
-        Telnet8820Plus telnetClient = new Telnet8820Plus("10.1.40.133", 23, "admin", "admin");
-        telnetClient.oltAccess("teste.txt");
-    }
-
     /**
-     * Mensagem de alerta ao usuário
+     * Exibe uma mensagem de alerta ao usuário.
      */
     private void finalMessage() {
         JOptionPane.showInternalMessageDialog(null, "Comandos aplicados com sucesso!", "Aviso!",
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
+    /**
+     * Método run da interface Runnable para processar as mensagens recebidas do Telnet.
+     */
     public void run() {
         try {
             String answer;
@@ -128,5 +152,4 @@ public class Telnet8820Plus implements Runnable {
             System.exit(1);
         }
     }
-
 }

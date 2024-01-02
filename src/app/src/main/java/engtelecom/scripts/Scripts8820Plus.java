@@ -13,50 +13,112 @@ public class Scripts8820Plus {
     public Scripts8820Plus() {
     }
 
+    /**
+     * Gera o script para adicionar uma uplink para uma bridge.
+     *
+     * @param vlanRange            Números de VLANs a serem configuradas.
+     * @param interfaceEth         Nome da interface Ethernet.
+     * @param bridgeInterfaceUplink Nome da interface de uplink da bridge.
+     * @return O script para adicionar uma uplink para uma bridge.
+     */
     public String bridgeUplink(final String vlanRange, final String interfaceEth,
             final String bridgeInterfaceUplink) {
         return String.format("bridge add %s %s vlan %s tagged", interfaceEth, bridgeInterfaceUplink, vlanRange);
     }
 
+    /**
+     * Gera o script para adicionar um perfil de bridge.
+     *
+     * @param vlanRange Números de VLANs a serem configuradas.
+     * @param gponId    Identificador da porta GPON.
+     * @return O script para adicionar um perfil de bridge.
+     */
     public String bridgeProfile(final String vlanRange, final String gponId) {
         return String.format("bridge-profile add gpon%s-default downlink vlan %s tagged eth 1", gponId, vlanRange);
     }
 
+    /**
+     * Gera o script para adicionar um perfil de bridge para roteador.
+     *
+     * @param vlanRange Números de VLANs a serem configuradas.
+     * @param gponId    Identificador da porta GPON.
+     * @return O script para adicionar um perfil de bridge para roteador.
+     */
     public String bridgeProfileRouter(final String vlanRange, final String gponId) {
         return String.format("bridge-profile add gpon%s-default-router downlink vlan %s tagged router", gponId,
                 vlanRange);
     }
 
+    /**
+     * Gera o script para vincular um perfil de bridge.
+     *
+     * @param gponId        Identificador da porta GPON.
+     * @param deviceType    Tipo de dispositivo.
+     * @param interfaceGpon Nome da interface GPON.
+     * @return O script para vincular um perfil de bridge.
+     */
     public String bridgeProfileBind(final String gponId, final String deviceType, final String interfaceGpon) {
         return String.format("bridge-profile bind add gpon%s-default device intelbras-%s %s", gponId, deviceType,
                 interfaceGpon);
     }
 
+    /**
+     * Gera o script para vincular um perfil de bridge para roteador.
+     *
+     * @param gponId        Identificador da porta GPON.
+     * @param deviceType    Tipo de dispositivo.
+     * @param interfaceGpon Nome da interface GPON.
+     * @return O script para vincular um perfil de bridge para roteador.
+     */
     public String bridgeProfileBindRouter(final String gponId, final String deviceType, final String interfaceGpon) {
         return String.format("bridge-profile bind add gpon%s-default-router device intelbras-%s %s", gponId, deviceType,
                 interfaceGpon);
     }
 
+    /**
+     * Gera o script para adicionar um perfil de bridge padrão.
+     *
+     * @param vlanRange Números de VLANs a serem configuradas.
+     * @return O script para adicionar um perfil de bridge padrão.
+     */
     public String bridgeProfile(final String vlanRange) {
         return String.format("bridge-profile add default downlink vlan %s tagged eth 1", vlanRange);
     }
 
+    /**
+     * Gera o script para adicionar um perfil de bridge padrão para roteador.
+     *
+     * @param vlanRange Números de VLANs a serem configuradas.
+     * @return O script para adicionar um perfil de bridge padrão para roteador.
+     */
     public String bridgeProfileRouter(final String vlanRange) {
         return String.format("bridge-profile add default-router downlink vlan %s tagged router", vlanRange);
     }
 
+    /**
+     * Gera o script para vincular um perfil de bridge padrão.
+     *
+     * @param deviceType Tipo de dispositivo.
+     * @return O script para vincular um perfil de bridge padrão.
+     */
     public String bridgeProfileBind(final String deviceType) {
         return String.format("bridge-profile bind add default device intelbras-%s", deviceType);
     }
 
+    /**
+     * Gera o script para vincular um perfil de bridge padrão para roteador.
+     *
+     * @param deviceType Tipo de dispositivo.
+     * @return O script para vincular um perfil de bridge padrão para roteador.
+     */
     public String bridgeProfileBindRouter(final String deviceType) {
         return String.format("bridge-profile bind add default-router device intelbras-%s", deviceType);
     }
 
     /**
-     * Retorna o script de configuração automática de ONTs.
+     * Gera uma lista de comandos para configuração automática.
      *
-     * @return Lista de strings com os comandos de configuração automática.
+     * @return Uma lista de comandos para configuração automática.
      */
     public List<String> autoConfig() {
         final List<String> autoConfig = new ArrayList<>();
@@ -66,5 +128,4 @@ public class Scripts8820Plus {
         autoConfig.add("onu show refresh");
         return autoConfig;
     }
-
 }
