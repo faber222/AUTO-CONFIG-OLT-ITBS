@@ -30,10 +30,10 @@ import javax.swing.JOptionPane;
  * O acesso Telnet é realizado por meio de um socket, e a leitura das respostas
  * é feita em uma thread separada para permitir a leitura em tempo real.
  * </p>
- * 
+ *
  * <p>
- * O usuário pode interagir inserindo comandos adicionais por meio de uma janela
- * de entrada de dados.
+ * Mas esse código fornece apenas um acesso ao socket telnet, e não uma conexão real.
+ * Portanto, caso seu produto só forneça usando um acesso real, deve ser usado o Telnet8820Plus
  * </p>
  * 
  * @see <a href="https://en.wikipedia.org/wiki/Telnet">Telnet - Wikipedia</a>

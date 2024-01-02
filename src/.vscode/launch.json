@@ -3,6 +3,20 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Telnet8820Plus",
+      "request": "launch",
+      "mainClass": "engtelecom.access.Telnet8820Plus",
+      "projectName": "app"
+    },
+    {
+      "type": "java",
+      "name": "Telnet",
+      "request": "launch",
+      "mainClass": "engtelecom.access.Telnet",
+      "projectName": "app"
+    },
+    {
+      "type": "java",
       "name": "App",
       "request": "launch",
       "mainClass": "engtelecom.App",
