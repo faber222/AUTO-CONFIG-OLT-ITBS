@@ -57,8 +57,8 @@ public class App {
             final ImageIcon qrCodeIcon = new ImageIcon(bufferedImage);
 
             // Mensagem informativa com detalhes sobre o criador e o link do GitHub
-            final String mensagem = "O criador deste código: " + nomeCriador + "\n\n" +
-                    "Você pode encontrá-lo no GitHub em:\n" + githubLink;
+            final String mensagem = "O criador deste codigo: " + nomeCriador + "\n\n" +
+                    "Voce pode encontra-lo no GitHub em:\n" + githubLink;
 
             // Exibe a mensagem com a ImageIcon contendo o QR code
             JOptionPane.showMessageDialog(
@@ -122,7 +122,7 @@ public class App {
         // Exibe uma caixa de diálogo com uma mensagem de aviso indicando que o programa
         // será encerrado.
         JOptionPane.showMessageDialog(null,
-                "Você pressionou o botão 'Cancelar'. O programa será encerrado.",
+                "Voce pressionou o botao 'Cancelar'. O programa sera encerrado.",
                 null, JOptionPane.WARNING_MESSAGE, saidaIcon);
     }
 
