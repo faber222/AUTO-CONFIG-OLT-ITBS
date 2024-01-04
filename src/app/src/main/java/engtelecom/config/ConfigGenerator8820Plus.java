@@ -13,7 +13,7 @@ import engtelecom.scripts.Scripts8820Plus;
  * Classe responsável por gerar configurações e scripts com base nos parâmetros fornecidos.
  * Estende a classe Config8820Plus para herdar as configurações básicas.
  */
-public class ConfigGenerator8820Plus extends Config8820Plus {
+public class ConfigGenerator8820Plus extends Config {
     private final String ponVlanType;
     private final String[] vlanType;
     private final String defaultCpe;

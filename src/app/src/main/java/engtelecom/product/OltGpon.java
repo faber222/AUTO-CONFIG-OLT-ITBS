@@ -14,64 +14,7 @@ import engtelecom.config.ConfigGenerator;
 /**
  * Objeto que representa a OLT G08
  */
-public class OltGpon {
-    /**
-     * Atributo que armazena o endereço IP da conexão.
-     */
-    private static String ip;
-
-    /**
-     * Atributo que armazena a porta da conexão (pode ser Integer ou int, dependendo
-     * da necessidade).
-     */
-    private static Integer port;
-
-    /**
-     * Atributo que armazena a senha da conexão.
-     */
-    private static String passwd;
-
-    /**
-     * Atributo que armazena o nome de usuário da conexão.
-     */
-    private static String user;
-
-    /**
-     * Atributo que armazena o tamanho do slot gpon
-     */
-    private static int slotLength;
-
-    /**
-     * Exibe uma mensagem de saída quando o usuário pressiona o botão "Cancelar".
-     * 
-     * @param saidaIcon Ícone a ser exibido na mensagem de saída.
-     */
-    public static void saida(final ImageIcon saidaIcon) {
-        // Exibe uma caixa de diálogo com uma mensagem de aviso indicando que o programa
-        // será encerrado.
-        JOptionPane.showMessageDialog(null,
-                "Você pressionou o botão 'Cancelar'. O programa será encerrado.",
-                null, JOptionPane.WARNING_MESSAGE, saidaIcon);
-    }
-
-    /**
-     * Verifica se a string fornecida representa um endereço IPv4 válido.
-     * 
-     * @param ipAddress A string contendo o endereço IPv4 a ser validado.
-     * @return true se a string for um endereço IPv4 válido, false caso contrário.
-     */
-    public static boolean isValidIPv4Address(final String ipAddress) {
-        // Expressão regular para validar um endereço IPv4
-        final String regex = "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
-        // Compila a expressão regular
-        final Pattern pattern = Pattern.compile(regex);
-        // Compara a string de entrada com a expressão regular
-        final Matcher matcher = pattern.matcher(ipAddress);
-        // Retorna true se a string corresponder à expressão regular (representando um
-        // IPv4 válido)
-        return matcher.matches();
-    }
-
+public class OltGpon extends Olt {
 
     /**
      * Construtor padrão
@@ -79,79 +22,7 @@ public class OltGpon {
      * @param slotLength Tamanho dos slots que a olt possui, pode ser 8 ou 16
      */
     public OltGpon(final int slotLength) {
-        OltGpon.setSlotLength(slotLength);
-    }
-
-    /**
-     * Obtém o endereço IP da OLT a partir do usuário.
-     * 
-     * @param saidaIcon Ícone de saída.
-     * @param erroIcon  Ícone de erro.
-     */
-    public static void getIpFromUser(final ImageIcon saidaIcon, final ImageIcon erroIcon) {
-        // Loop para garantir que o usuário forneça um endereço IP válido.
-        do {
-            // Solicita ao usuário que insira o endereço IP da OLT.
-            OltGpon.setIp(JOptionPane.showInputDialog("Digite o IP da OLT:"));
-
-            // Verifica se o usuário cancelou a operação.
-            if (OltGpon.getIp() == null) {
-                saida(saidaIcon);
-                System.exit(0);
-            }
-
-            // Verifica se o endereço IP inserido é válido.
-            if (!isValidIPv4Address(OltGpon.getIp())) {
-                JOptionPane.showMessageDialog(null,
-                        "Entrada inválida. Por favor, insira um endereço IP válido (0-255).", "Erro",
-                        JOptionPane.ERROR_MESSAGE, erroIcon);
-            }
-        } while (!isValidIPv4Address(OltGpon.getIp()));
-    }
-
-    /**
-     * Obtém a porta de acesso da OLT.
-     * 
-     * @param saidaIcon Ícone de saída.
-     * @param erroIcon  Ícone de erro.
-     */
-    public static void getPortFromUser(final ImageIcon saidaIcon, final ImageIcon erroIcon) {
-        String port;
-        do {
-            port = JOptionPane.showInputDialog("Digite a porta de acesso Telnet da OLT:");
-        } while (!port.matches("^[1-9]\\d*$"));
-        OltGpon.setPort(Integer.parseInt(port));
-    }
-
-    /**
-     * Obtém o nome de usuário e senha do usuário para a OLT.
-     * 
-     * @param saidaIcon Ícone de saída.
-     * @param erroIcon  Ícone de erro.
-     */
-    public static void getUserAndPwd(final ImageIcon saidaIcon, final ImageIcon erroIcon) {
-        // Loop para garantir que o usuário forneça tanto o nome de usuário quanto a
-        // senha.
-        do {
-            // Solicita ao usuário que insira o nome de usuário da OLT.
-            OltGpon.setUser(JOptionPane.showInputDialog("Digite o usuário da OLT:"));
-
-            // Verifica se o usuário cancelou a operação.
-            if (OltGpon.getUser() == null) {
-                saida(saidaIcon);
-                System.exit(0);
-            }
-
-            // Solicita ao usuário que insira a senha da OLT.
-            OltGpon.setPasswd(JOptionPane.showInputDialog("Digite a senha da OLT:"));
-
-            // Verifica se o usuário cancelou a operação.
-            if (OltGpon.getPasswd() == null) {
-                saida(saidaIcon);
-                System.exit(0);
-            }
-
-        } while (OltGpon.getPasswd() == null && OltGpon.getUser() == null);
+        this.setSlotLength(slotLength);
     }
 
     /**
@@ -163,7 +34,7 @@ public class OltGpon {
      * @param range            O intervalo permitido para a VLAN.
      * @return true se o range for válido, false caso contrário.
      */
-    public static boolean isValidAimVlanLineRange(final String aimVlanLineRange, final ImageIcon erroIcon,
+    public boolean isValidAimVlanLineRange(final String aimVlanLineRange, final ImageIcon erroIcon,
             final int range) {
         // Validando o formato do range
         if (aimVlanLineRange.matches("^[1-9]\\d*-\\d*[1-9]\\d*$") && range >= 2) {
@@ -207,62 +78,6 @@ public class OltGpon {
     }
 
     /**
-     * Obtém informações de VLAN para um cliente a partir de uma entrada do usuário.
-     * 
-     * @param equipamentoIcon Ícone do equipamento.
-     * @param saidaIcon       Ícone de saída.
-     * @param erroIcon        Ícone de erro.
-     * @param range           O intervalo permitido para a VLAN.
-     * @return Uma lista de strings representando a VLAN para o cliente.
-     */
-    public static List<String> getVlanClient(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
-            final ImageIcon erroIcon, final int range) {
-        // Lista que armazenará as informações de VLAN para o cliente.
-
-        final List<String> vlan = new ArrayList<String>();
-        // String para armazenar a entrada do usuário.
-        String input = new String();
-        // Mensagem a ser exibida com base no intervalo especificado.
-        String message;
-
-        // Determina a mensagem com base no intervalo.
-        if (range == 1) {
-            message = "Qual a vlan?:";
-        } else {
-            message = "Qual o range de vlan?: Use o formato: inicio-fim";
-        }
-
-        // Loop para garantir que a entrada do usuário seja válida.
-        do {
-            input = (String) JOptionPane.showInputDialog(message);
-
-            // Verifica se o usuário cancelou a operação.
-            if (input == null) {
-                OltGpon.saida(saidaIcon);
-                System.exit(0);
-            }
-        } while (!OltGpon.isValidAimVlanLineRange(input, erroIcon, range));
-
-        // Processa a entrada do usuário com base no intervalo especificado.
-        if (range != 1) {
-            // Se o intervalo não for 1, divide a entrada e adiciona os valores à lista.
-            final String[] partes = input.split("-");
-            final int inicio = Integer.parseInt(partes[0]);
-            final int fim = Integer.parseInt(partes[1]);
-
-            for (int j = inicio; j <= fim; j++) {
-                vlan.add(String.valueOf(j));
-            }
-        } else {
-            // Se o intervalo for 1, adiciona a entrada diretamente à lista.
-            vlan.add(input);
-        }
-
-        // Retorna a lista contendo as informações de VLAN para o cliente.
-        return vlan;
-    }
-
-    /**
      * Obtém um perfil de VLAN de objetivo (aim VLAN profile) a partir de uma
      * entrada do usuário.
      * 
@@ -273,7 +88,7 @@ public class OltGpon {
      *                        objetivo.
      * @return Uma lista de strings representando o perfil de VLAN de objetivo.
      */
-    public static List<String> getAimProfileVlan(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
+    public List<String> getAimProfileVlan(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
             final ImageIcon erroIcon, final int range) {
         // Lista que armazenará o perfil de VLAN de objetivo.
         final List<String> aimProfileVlan = new ArrayList<String>();
@@ -295,10 +110,10 @@ public class OltGpon {
 
             // Verifica se o usuário cancelou a operação.
             if (input == null) {
-                OltGpon.saida(saidaIcon);
+                this.saida(saidaIcon);
                 System.exit(0);
             }
-        } while (!OltGpon.isValidAimVlanLineRange(input, erroIcon, range));
+        } while (!this.isValidAimVlanLineRange(input, erroIcon, range));
 
         // Processa a entrada do usuário com base no intervalo especificado.
         if (range != 1) {
@@ -330,7 +145,7 @@ public class OltGpon {
      *                        objetivo.
      * @return Uma lista de strings representando o perfil de linha de objetivo.
      */
-    public static List<String> getAimProfileLine(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
+    public List<String> getAimProfileLine(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
             final ImageIcon erroIcon, final int range) {
         // Lista que armazenará o perfil de linha de objetivo.
         final List<String> aimProfileLine = new ArrayList<String>();
@@ -343,13 +158,13 @@ public class OltGpon {
 
             // Verifica se o usuário cancelou a operação.
             if (input == null) {
-                OltGpon.saida(saidaIcon);
+                this.saida(saidaIcon);
                 System.exit(0);
             }
-        } while (!OltGpon.isValidAimVlanLineRange(input, erroIcon, range));
+        } while (!this.isValidAimVlanLineRange(input, erroIcon, range));
 
         // Processa a entrada do usuário com base no intervalo especificado.
-        if (range == OltGpon.getSlotLength() * 2) {
+        if (range == this.getSlotLength() * 2) {
             // Se o intervalo for 16 ou 32, divide a entrada e adiciona os valores à lista.
             final String[] partes = input.split("-");
             final int inicio = Integer.parseInt(partes[0]);
@@ -371,124 +186,6 @@ public class OltGpon {
     }
 
     /**
-     * Obtém a interface Ethernet (Uplink) da OLT a partir do usuário.
-     * 
-     * @param equipamentoIcon Ícone do equipamento.
-     * @param saidaIcon       Ícone de saída.
-     * @param erroIcon        Ícone de erro.
-     * @param interfaceEth    Um array contendo opções de interfaces Ethernet.
-     * @return A interface Ethernet escolhida pelo usuário.
-     */
-    public static String getInterfaceEth(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
-            final ImageIcon erroIcon,
-            final String[] interfaceEth) {
-        String input = new String();
-        final Object[] interfaces = interfaceEth;
-
-        // Loop para garantir que o usuário forneça uma escolha válida da interface
-        // Ethernet.
-        do {
-            // Solicita ao usuário que escolha a interface Ethernet Uplink da OLT.
-            input = (String) JOptionPane.showInputDialog(null, "Por favor, escolha a interface Uplink da OLT:",
-                    "faber222",
-                    JOptionPane.QUESTION_MESSAGE, equipamentoIcon, interfaces, interfaces[0]);
-
-            // Verifica se o usuário cancelou a operação.
-            if (input == null) {
-                OltGpon.saida(saidaIcon);
-                System.exit(0);
-            }
-
-            try {
-                // Retorna a escolha do usuário se for válida.
-                return input;
-            } catch (final NumberFormatException e) {
-                // Lida com uma exceção (isso não parece ser relevante nesta lógica).
-                return null;
-            }
-        } while (input == null);
-    }
-
-    /**
-     * Obtém o modelo de configuração (tipo de auto-config) da OLT a partir do
-     * usuário.
-     * 
-     * @param equipamentoIcon    Ícone do equipamento.
-     * @param saidaIcon          Ícone de saída.
-     * @param erroIcon           Ícone de erro.
-     * @param modelConfiguration Um array contendo opções de modelos de
-     *                           configuração.
-     * @return O modelo de configuração escolhido pelo usuário.
-     */
-    public static String getModelConfiguration(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
-            final ImageIcon erroIcon, final String[] modelConfiguration) {
-        String input = new String();
-        final Object[] configuration = modelConfiguration;
-
-        // Loop para garantir que o usuário forneça uma escolha válida do modelo de
-        // configuração.
-        do {
-            // Solicita ao usuário que escolha o tipo de auto-config.
-            input = (String) JOptionPane.showInputDialog(null, "Por favor, escolha o tipo de auto-config:",
-                    "faber222",
-                    JOptionPane.QUESTION_MESSAGE, equipamentoIcon, configuration, configuration[0]);
-
-            // Verifica se o usuário cancelou a operação.
-            if (input == null) {
-                OltGpon.saida(saidaIcon);
-                System.exit(0);
-            }
-
-            try {
-                // Retorna a escolha do usuário se for válida.
-                return input;
-            } catch (final NumberFormatException e) {
-                // Lida com uma exceção (isso não parece ser relevante nesta lógica).
-                return null;
-            }
-        } while (input == null);
-    }
-
-    /**
-     * Obtém o tipo padrão do equipamento CPE (Customer Premises Equipment).
-     * 
-     * @param equipamentoIcon Ícone para exibição do diálogo.
-     * @param saidaIcon       Ícone para a mensagem de saída.
-     * @param erroIcon        Ícone para a mensagem de erro.
-     * @param defaultCpeType  Tipos padrão disponíveis para escolha.
-     * @return O tipo padrão do equipamento CPE escolhido pelo usuário.
-     *         {@code null} se a operação for cancelada.
-     */
-    public static String getDefaultCpeType(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
-            final ImageIcon erroIcon, final String[] defaultCpeType) {
-        String input = new String();
-        final Object[] configuration = defaultCpeType;
-
-        // Loop para garantir que o usuário forneça uma escolha válida do modelo de
-        // configuração.
-        do {
-            // Solicita ao usuário que escolha o tipo de operação da ont de terceiros.
-            input = (String) JOptionPane.showInputDialog(null, "CPEs de terceiros, em:",
-                    "faber222",
-                    JOptionPane.QUESTION_MESSAGE, equipamentoIcon, configuration, configuration[0]);
-
-            // Verifica se o usuário cancelou a operação.
-            if (input == null) {
-                OltGpon.saida(saidaIcon);
-                System.exit(0);
-            }
-
-            try {
-                // Retorna a escolha do usuário se for válida.
-                return input;
-            } catch (final NumberFormatException e) {
-                // Lida com uma exceção (isso não parece ser relevante nesta lógica).
-                return null;
-            }
-        } while (input == null);
-    }
-
-    /**
      * Método responsável por iniciar o processo de configuração da OLT G16.
      * Aqui é onde a "magia" acontece, guiando o usuário através da configuração.
      */
@@ -502,7 +199,7 @@ public class OltGpon {
         final ImageIcon erroIcon = new ImageIcon(classLoader.getResource("erro.png"));
         String nomeArq = "scriptG08.txt";
 
-        if (OltGpon.getSlotLength() == 16) {
+        if (this.getSlotLength() == 16) {
             nomeArq = "scriptG16.txt";
         }
 
@@ -568,7 +265,7 @@ public class OltGpon {
 
         String[] interfaceGpon = interfaceGponG08;
 
-        if (OltGpon.getSlotLength() == 16) {
+        if (this.getSlotLength() == 16) {
             interfaceGpon = interfaceGponG16;
         }
 
@@ -580,10 +277,10 @@ public class OltGpon {
         final String regex = "^[1-9]\\d*-\\d*[1-9]\\d*$";
 
         // Obtém informações do usuário para a configuração
-        final String interfaceEth = OltGpon.getInterfaceEth(equipamentoIcon, saidaIcon, erroIcon, modelosInterface);
-        final String modelConfiguration = OltGpon.getModelConfiguration(equipamentoIcon, saidaIcon, erroIcon,
+        final String interfaceEth = this.getInterfaceEth(equipamentoIcon, saidaIcon, erroIcon, modelosInterface);
+        final String modelConfiguration = this.getModelConfiguration(equipamentoIcon, saidaIcon, erroIcon,
                 configuracoes);
-        final String defaultCpe = OltGpon.getDefaultCpeType(equipamentoIcon, saidaIcon, erroIcon, defaultCpeType);
+        final String defaultCpe = this.getDefaultCpeType(equipamentoIcon, saidaIcon, erroIcon, defaultCpeType);
 
         int rangeVlan;
         int rangeAimVlan;
@@ -593,119 +290,297 @@ public class OltGpon {
             rangeVlan = rangeAimVlan = 1;
             rangeAimLine = 2;
         } else {
-            rangeVlan = rangeAimVlan = OltGpon.getSlotLength();
-            rangeAimLine = OltGpon.getSlotLength() * 2;
+            rangeVlan = rangeAimVlan = this.getSlotLength();
+            rangeAimLine = this.getSlotLength() * 2;
         }
 
         // Obtém as listas necessárias para a configuração
-        final List<String> arrayVlan = OltGpon.getVlanClient(equipamentoIcon, saidaIcon, erroIcon, rangeVlan);
-        final List<String> arrayAimVlan = OltGpon.getAimProfileVlan(equipamentoIcon, saidaIcon, erroIcon, rangeAimVlan);
-        final List<String> arrayAimLine = OltGpon.getAimProfileLine(equipamentoIcon, saidaIcon, erroIcon, rangeAimLine);
+        final List<String> arrayVlan = this.getVlanClient(equipamentoIcon, saidaIcon, erroIcon, rangeVlan);
+        final List<String> arrayAimVlan = this.getAimProfileVlan(equipamentoIcon, saidaIcon, erroIcon,
+                rangeAimVlan);
+        final List<String> arrayAimLine = this.getAimProfileLine(equipamentoIcon, saidaIcon, erroIcon,
+                rangeAimLine);
 
         // Cria um objeto ConfigGenerator para gerar o script de configuração
         final ConfigGenerator configGenerator = new ConfigGenerator(arrayVlan, arrayAimVlan, interfaceEth,
                 arrayAimLine, deviceType, modelConfiguration, configuracoes,
                 defaultCpe, interfaceGpon, defaultCpeType);
 
-        configGenerator.createScript(nomeArq, OltGpon.getSlotLength());
+        configGenerator.createScript(nomeArq, this.getSlotLength());
 
-        OltGpon.getIpFromUser(saidaIcon, erroIcon);
-        OltGpon.getPortFromUser(saidaIcon, erroIcon);
-        OltGpon.getUserAndPwd(saidaIcon, erroIcon);
+        this.getIpFromUser(saidaIcon, erroIcon);
+        this.getPortFromUser(saidaIcon, erroIcon);
+        this.getUserAndPwd(saidaIcon, erroIcon);
 
         // Configuração final para definir o acesso à OLT
         final Telnet telnetAccess = new Telnet(getIp(), getPort(), getUser(), getPasswd());
         telnetAccess.oltAccess(nomeArq);
     }
 
-    /**
-     * Retorna o endereço IP configurado para conexão com a OLT.
-     *
-     * @return O endereço IP configurado.
-     */
-    public static String getIp() {
+    @Override
+    public String getIp() {
         return ip;
     }
 
-    /**
-     * Define o endereço IP para a conexão com a OLT.
-     *
-     * @param ip O endereço IP a ser configurado.
-     */
-    public static void setIp(final String ip) {
-        OltGpon.ip = ip;
+    @Override
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
-    /**
-     * Retorna a porta configurada para conexão com a OLT.
-     *
-     * @return A porta configurada.
-     */
-    public static Integer getPort() {
+    @Override
+    public int getPort() {
         return port;
     }
 
-    /**
-     * Define a porta para a conexão com a OLT.
-     *
-     * @param port A porta a ser configurada.
-     */
-    public static void setPort(final Integer port) {
-        OltGpon.port = port;
+    @Override
+    public void setPort(int port) {
+        this.port = port;
     }
 
-    /**
-     * Retorna a senha configurada para a conexão com a OLT.
-     *
-     * @return A senha configurada.
-     */
-    public static String getPasswd() {
+    @Override
+    public String getPasswd() {
         return passwd;
     }
 
-    /**
-     * Define a senha para a conexão com a OLT.
-     *
-     * @param passwd A senha a ser configurada.
-     */
-    public static void setPasswd(final String passwd) {
-        OltGpon.passwd = passwd;
+    @Override
+    public void setPasswd(String passwd) {
+        this.passwd = passwd;
     }
 
-    /**
-     * Retorna o nome de usuário configurado para a conexão com a OLT.
-     *
-     * @return O nome de usuário configurado.
-     */
-    public static String getUser() {
+    @Override
+    public String getUser() {
         return user;
     }
 
-    /**
-     * Define o nome de usuário para a conexão com a OLT.
-     *
-     * @param user O nome de usuário a ser configurado.
-     */
-    public static void setUser(final String user) {
-        OltGpon.user = user;
+    @Override
+    public void setUser(String user) {
+        this.user = user;
     }
 
-    /**
-     * Retorna o valor do slotLength
-     * 
-     * @return Inteiro contendo quantos slots gpon tem
-     */
-    public static int getSlotLength() {
+    @Override
+    public int getSlotLength() {
         return slotLength;
     }
 
-    /**
-     * Define o valor do slot
-     * 
-     * @param slotLength Valor inteiro, deve ser 8 ou 16
-     */
-    public static void setSlotLength(final int slotLength) {
-        OltGpon.slotLength = slotLength;
+    @Override
+    public void setSlotLength(int slotLength) {
+        this.slotLength = slotLength;
+    }
+
+    @Override
+    public void saida(ImageIcon saidaIcon) {
+        // Exibe uma caixa de diálogo com uma mensagem de aviso indicando que o programa
+        // será encerrado.
+        JOptionPane.showMessageDialog(null,
+                "Você pressionou o botão 'Cancelar'. O programa será encerrado.",
+                null, JOptionPane.WARNING_MESSAGE, saidaIcon);
+    }
+
+    @Override
+    public boolean isValidIPv4Address(String ipAddress) {
+        // Expressão regular para validar um endereço IPv4
+        final String regex = "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
+        // Compila a expressão regular
+        final Pattern pattern = Pattern.compile(regex);
+        // Compara a string de entrada com a expressão regular
+        final Matcher matcher = pattern.matcher(ipAddress);
+        // Retorna true se a string corresponder à expressão regular (representando um
+        // IPv4 válido)
+        return matcher.matches();
+    }
+
+    @Override
+    public void getIpFromUser(ImageIcon saidaIcon, ImageIcon erroIcon) {
+        // Loop para garantir que o usuário forneça um endereço IP válido.
+        do {
+            // Solicita ao usuário que insira o endereço IP da OLT.
+            this.setIp(JOptionPane.showInputDialog("Digite o IP da OLT:"));
+
+            // Verifica se o usuário cancelou a operação.
+            if (this.getIp() == null) {
+                saida(saidaIcon);
+                System.exit(0);
+            }
+
+            // Verifica se o endereço IP inserido é válido.
+            if (!isValidIPv4Address(this.getIp())) {
+                JOptionPane.showMessageDialog(null,
+                        "Entrada inválida. Por favor, insira um endereço IP válido (0-255).", "Erro",
+                        JOptionPane.ERROR_MESSAGE, erroIcon);
+            }
+        } while (!isValidIPv4Address(this.getIp()));
+    }
+
+    @Override
+    public void getPortFromUser(ImageIcon saidaIcon, ImageIcon erroIcon) {
+        String port;
+        do {
+            port = JOptionPane.showInputDialog("Digite a porta de acesso Telnet da OLT:");
+        } while (!port.matches("^[1-9]\\d*$"));
+        this.setPort(Integer.parseInt(port));
+    }
+
+    @Override
+    public void getUserAndPwd(ImageIcon saidaIcon, ImageIcon erroIcon) {
+        // Loop para garantir que o usuário forneça tanto o nome de usuário quanto a
+        // senha.
+        do {
+            // Solicita ao usuário que insira o nome de usuário da OLT.
+            this.setUser(JOptionPane.showInputDialog("Digite o usuário da OLT:"));
+
+            // Verifica se o usuário cancelou a operação.
+            if (this.getUser() == null) {
+                saida(saidaIcon);
+                System.exit(0);
+            }
+
+            // Solicita ao usuário que insira a senha da OLT.
+            this.setPasswd(JOptionPane.showInputDialog("Digite a senha da OLT:"));
+
+            // Verifica se o usuário cancelou a operação.
+            if (this.getPasswd() == null) {
+                saida(saidaIcon);
+                System.exit(0);
+            }
+
+        } while (this.getPasswd() == null && this.getUser() == null);
+    }
+
+    @Override
+    public List<String> getVlanClient(ImageIcon equipamentoIcon, ImageIcon saidaIcon, ImageIcon erroIcon, int range) {
+        // Lista que armazenará as informações de VLAN para o cliente.
+
+        final List<String> vlan = new ArrayList<String>();
+        // String para armazenar a entrada do usuário.
+        String input = new String();
+        // Mensagem a ser exibida com base no intervalo especificado.
+        String message;
+
+        // Determina a mensagem com base no intervalo.
+        if (range == 1) {
+            message = "Qual a vlan?:";
+        } else {
+            message = "Qual o range de vlan?: Use o formato: inicio-fim";
+        }
+
+        // Loop para garantir que a entrada do usuário seja válida.
+        do {
+            input = (String) JOptionPane.showInputDialog(message);
+
+            // Verifica se o usuário cancelou a operação.
+            if (input == null) {
+                this.saida(saidaIcon);
+                System.exit(0);
+            }
+        } while (!this.isValidAimVlanLineRange(input, erroIcon, range));
+
+        // Processa a entrada do usuário com base no intervalo especificado.
+        if (range != 1) {
+            // Se o intervalo não for 1, divide a entrada e adiciona os valores à lista.
+            final String[] partes = input.split("-");
+            final int inicio = Integer.parseInt(partes[0]);
+            final int fim = Integer.parseInt(partes[1]);
+
+            for (int j = inicio; j <= fim; j++) {
+                vlan.add(String.valueOf(j));
+            }
+        } else {
+            // Se o intervalo for 1, adiciona a entrada diretamente à lista.
+            vlan.add(input);
+        }
+
+        // Retorna a lista contendo as informações de VLAN para o cliente.
+        return vlan;
+    }
+
+    @Override
+    public String getDefaultCpeType(ImageIcon equipamentoIcon, ImageIcon saidaIcon, ImageIcon erroIcon,
+            String[] defaultCpeType) {
+        String input = new String();
+        final Object[] configuration = defaultCpeType;
+
+        // Loop para garantir que o usuário forneça uma escolha válida do modelo de
+        // configuração.
+        do {
+            // Solicita ao usuário que escolha o tipo de operação da ont de terceiros.
+            input = (String) JOptionPane.showInputDialog(null, "CPEs de terceiros, em:",
+                    "faber222",
+                    JOptionPane.QUESTION_MESSAGE, equipamentoIcon, configuration, configuration[0]);
+
+            // Verifica se o usuário cancelou a operação.
+            if (input == null) {
+                this.saida(saidaIcon);
+                System.exit(0);
+            }
+
+            try {
+                // Retorna a escolha do usuário se for válida.
+                return input;
+            } catch (final NumberFormatException e) {
+                // Lida com uma exceção (isso não parece ser relevante nesta lógica).
+                return null;
+            }
+        } while (input == null);
+    }
+
+    @Override
+    public String getModelConfiguration(ImageIcon equipamentoIcon, ImageIcon saidaIcon, ImageIcon erroIcon,
+            String[] modelConfiguration) {
+        String input = new String();
+        final Object[] configuration = modelConfiguration;
+
+        // Loop para garantir que o usuário forneça uma escolha válida do modelo de
+        // configuração.
+        do {
+            // Solicita ao usuário que escolha o tipo de auto-config.
+            input = (String) JOptionPane.showInputDialog(null, "Por favor, escolha o tipo de auto-config:",
+                    "faber222",
+                    JOptionPane.QUESTION_MESSAGE, equipamentoIcon, configuration, configuration[0]);
+
+            // Verifica se o usuário cancelou a operação.
+            if (input == null) {
+                this.saida(saidaIcon);
+                System.exit(0);
+            }
+
+            try {
+                // Retorna a escolha do usuário se for válida.
+                return input;
+            } catch (final NumberFormatException e) {
+                // Lida com uma exceção (isso não parece ser relevante nesta lógica).
+                return null;
+            }
+        } while (input == null);
+    }
+
+    @Override
+    public String getInterfaceEth(ImageIcon equipamentoIcon, ImageIcon saidaIcon, ImageIcon erroIcon,
+            String[] interfaceEth) {
+        String input = new String();
+        final Object[] interfaces = interfaceEth;
+
+        // Loop para garantir que o usuário forneça uma escolha válida da interface
+        // Ethernet.
+        do {
+            // Solicita ao usuário que escolha a interface Ethernet Uplink da OLT.
+            input = (String) JOptionPane.showInputDialog(null, "Por favor, escolha a interface Uplink da OLT:",
+                    "faber222",
+                    JOptionPane.QUESTION_MESSAGE, equipamentoIcon, interfaces, interfaces[0]);
+
+            // Verifica se o usuário cancelou a operação.
+            if (input == null) {
+                this.saida(saidaIcon);
+                System.exit(0);
+            }
+
+            try {
+                // Retorna a escolha do usuário se for válida.
+                return input;
+            } catch (final NumberFormatException e) {
+                // Lida com uma exceção (isso não parece ser relevante nesta lógica).
+                return null;
+            }
+        } while (input == null);
     }
 
 }

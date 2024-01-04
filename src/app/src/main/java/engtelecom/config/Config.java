@@ -12,19 +12,9 @@ public class Config {
     private List<String> vlans;
 
     /**
-     * Lista de perfis AIM VLAN associados à configuração.
-     */
-    private List<String> aimProfileVlan;
-
-    /**
      * Interface Ethernet associada à configuração.
      */
     private String interfaceEthernet;
-
-    /**
-     * Lista de perfis AIM Line associados à configuração.
-     */
-    private List<String> aimProfileLine;
 
     /**
      * Lista de produtos associados à configuração.
@@ -35,17 +25,13 @@ public class Config {
      * Construtor que inicializa os atributos da classe.
      * 
      * @param vlans             Lista de VLANs.
-     * @param aimProfileVlan    Lista de perfis AIM VLAN.
      * @param interfaceEthernet Interface Ethernet.
-     * @param aimProfileLine    Lista de perfis AIM Line.
      * @param produtos          Lista de produtos.
      */
-    public Config(final List<String> vlans, final List<String> aimProfileVlan, final String interfaceEthernet,
-            final List<String> aimProfileLine, final String[] produtos) {
+    public Config(final List<String> vlans, final String interfaceEthernet,
+            final String[] produtos) {
         this.vlans = vlans;
-        this.aimProfileVlan = aimProfileVlan;
         this.interfaceEthernet = interfaceEthernet;
-        this.aimProfileLine = aimProfileLine;
         this.deviceType = produtos;
     }
 
@@ -68,24 +54,6 @@ public class Config {
     }
 
     /**
-     * Obtém a lista de perfis AIM VLAN.
-     * 
-     * @return A lista de perfis AIM VLAN.
-     */
-    public List<String> getAimProfileVlan() {
-        return aimProfileVlan;
-    }
-
-    /**
-     * Define a lista de perfis AIM VLAN.
-     * 
-     * @param aimProfileVlan A nova lista de perfis AIM VLAN a ser definida.
-     */
-    public void setAimProfileVlan(final List<String> aimProfileVlan) {
-        this.aimProfileVlan = aimProfileVlan;
-    }
-
-    /**
      * Obtém a interface Ethernet.
      * 
      * @return A interface Ethernet.
@@ -101,24 +69,6 @@ public class Config {
      */
     public void setInterfaceEthernet(final String interfaceEthernet) {
         this.interfaceEthernet = interfaceEthernet;
-    }
-
-    /**
-     * Obtém a lista de perfis AIM Line.
-     * 
-     * @return A lista de perfis AIM Line.
-     */
-    public List<String> getAimProfileLine() {
-        return aimProfileLine;
-    }
-
-    /**
-     * Define a lista de perfis AIM Line.
-     * 
-     * @param aimProfileLine A nova lista de perfis AIM Line a ser definida.
-     */
-    public void setAimProfileLine(final List<String> aimProfileLine) {
-        this.aimProfileLine = aimProfileLine;
     }
 
     /**

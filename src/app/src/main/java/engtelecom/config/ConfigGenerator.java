@@ -28,6 +28,8 @@ public class ConfigGenerator extends Config {
     private final String defaultCpe;
     private final String[] interfaceGpon;
     private final String[] defaultCpeType;
+    private final List<String> aimProfileVlan;
+    private final List<String> aimProfileLine;
 
     /**
      * Construtor da classe ConfigGenerator.
@@ -47,12 +49,22 @@ public class ConfigGenerator extends Config {
             final List<String> aimProfileLine, final String[] deviceType, final String ponVlanType,
             final String[] vlanType, final String defaultCpe, final String[] interfaceGpon,
             final String[] defaultCpeType) {
-        super(vlans, aimProfileVlan, interfaceEthernet, aimProfileLine, deviceType);
+        super(vlans, interfaceEthernet, deviceType);
         this.ponVlanType = ponVlanType;
         this.vlanType = vlanType;
         this.defaultCpe = defaultCpe;
         this.interfaceGpon = interfaceGpon;
         this.defaultCpeType = defaultCpeType;
+        this.aimProfileLine = aimProfileLine;
+        this.aimProfileVlan = aimProfileVlan;
+    }
+
+    public List<String> getAimProfileVlan() {
+        return aimProfileVlan;
+    }
+
+    public List<String> getAimProfileLine() {
+        return aimProfileLine;
     }
 
     /**
@@ -329,16 +341,6 @@ public class ConfigGenerator extends Config {
     }
 
     @Override
-    public List<String> getAimProfileLine() {
-        return super.getAimProfileLine();
-    }
-
-    @Override
-    public List<String> getAimProfileVlan() {
-        return super.getAimProfileVlan();
-    }
-
-    @Override
     public String[] getDeviceType() {
         return super.getDeviceType();
     }
@@ -346,16 +348,6 @@ public class ConfigGenerator extends Config {
     @Override
     public List<String> getVlans() {
         return super.getVlans();
-    }
-
-    @Override
-    public void setAimProfileLine(final List<String> aimProfileLine) {
-        super.setAimProfileLine(aimProfileLine);
-    }
-
-    @Override
-    public void setAimProfileVlan(final List<String> aimProfileVlan) {
-        super.setAimProfileVlan(aimProfileVlan);
     }
 
     @Override
