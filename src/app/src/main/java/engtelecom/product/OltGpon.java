@@ -1,3 +1,7 @@
+/**
+ * Criado por faber222
+ * Ano 2024
+*/
 package engtelecom.product;
 
 import java.util.ArrayList;
@@ -49,7 +53,7 @@ public class OltGpon extends Olt {
             } else {
                 // Exibe mensagem de erro se o range não atender às condições
                 JOptionPane.showMessageDialog(null,
-                        "Range inválido. Deve conter " + range + " números e não ultrapassar 4095.",
+                        "Range invalido. Deve conter " + range + " numeros e nao ultrapassar 4095.",
                         "Erro",
                         JOptionPane.ERROR_MESSAGE, erroIcon);
                 return false;
@@ -64,7 +68,7 @@ public class OltGpon extends Olt {
             } else {
                 // Exibe mensagem de erro se a VLAN não atender às condições
                 JOptionPane.showMessageDialog(null,
-                        "Vlan inválida. Deve conter " + range + " número, ser maior que 0 e não ultrapassar 4095.",
+                        "Vlan invalida. Deve conter " + range + " numero, ser maior que 0 e nao ultrapassar 4095.",
                         "Erro",
                         JOptionPane.ERROR_MESSAGE, erroIcon);
                 return false;
@@ -72,7 +76,7 @@ public class OltGpon extends Olt {
         }
         // Se não atender a nenhum dos casos anteriores, exibe mensagem de formato
         // inválido
-        JOptionPane.showMessageDialog(null, "Formato inválido",
+        JOptionPane.showMessageDialog(null, "Formato invalido",
                 "Erro", JOptionPane.ERROR_MESSAGE, erroIcon);
         return false;
     }
@@ -372,7 +376,7 @@ public class OltGpon extends Olt {
         // Exibe uma caixa de diálogo com uma mensagem de aviso indicando que o programa
         // será encerrado.
         JOptionPane.showMessageDialog(null,
-                "Você pressionou o botão 'Cancelar'. O programa será encerrado.",
+                "Voce pressionou o botao 'Cancelar'. O programa sera encerrado.",
                 null, JOptionPane.WARNING_MESSAGE, saidaIcon);
     }
 
@@ -405,7 +409,7 @@ public class OltGpon extends Olt {
             // Verifica se o endereço IP inserido é válido.
             if (!isValidIPv4Address(this.getIp())) {
                 JOptionPane.showMessageDialog(null,
-                        "Entrada inválida. Por favor, insira um endereço IP válido (0-255).", "Erro",
+                        "Entrada invalida. Por favor, insira um endereço IP valido (0-255).", "Erro",
                         JOptionPane.ERROR_MESSAGE, erroIcon);
             }
         } while (!isValidIPv4Address(this.getIp()));
@@ -426,7 +430,7 @@ public class OltGpon extends Olt {
         // senha.
         do {
             // Solicita ao usuário que insira o nome de usuário da OLT.
-            this.setUser(JOptionPane.showInputDialog("Digite o usuário da OLT:"));
+            this.setUser(JOptionPane.showInputDialog("Digite o usuario da OLT:"));
 
             // Verifica se o usuário cancelou a operação.
             if (this.getUser() == null) {
@@ -504,7 +508,7 @@ public class OltGpon extends Olt {
         do {
             // Solicita ao usuário que escolha o tipo de operação da ont de terceiros.
             input = (String) JOptionPane.showInputDialog(null, "CPEs de terceiros, em:",
-                    "faber222",
+                    "OLT-AUTO-CONFIG",
                     JOptionPane.QUESTION_MESSAGE, equipamentoIcon, configuration, configuration[0]);
 
             // Verifica se o usuário cancelou a operação.
@@ -534,7 +538,7 @@ public class OltGpon extends Olt {
         do {
             // Solicita ao usuário que escolha o tipo de auto-config.
             input = (String) JOptionPane.showInputDialog(null, "Por favor, escolha o tipo de auto-config:",
-                    "faber222",
+                    "OLT-AUTO-CONFIG",
                     JOptionPane.QUESTION_MESSAGE, equipamentoIcon, configuration, configuration[0]);
 
             // Verifica se o usuário cancelou a operação.
@@ -564,7 +568,7 @@ public class OltGpon extends Olt {
         do {
             // Solicita ao usuário que escolha a interface Ethernet Uplink da OLT.
             input = (String) JOptionPane.showInputDialog(null, "Por favor, escolha a interface Uplink da OLT:",
-                    "faber222",
+                    "OLT-AUTO-CONFIG",
                     JOptionPane.QUESTION_MESSAGE, equipamentoIcon, interfaces, interfaces[0]);
 
             // Verifica se o usuário cancelou a operação.

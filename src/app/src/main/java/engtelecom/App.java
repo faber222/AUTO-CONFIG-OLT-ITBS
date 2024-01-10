@@ -1,3 +1,7 @@
+/**
+ * Criado por faber222
+ * Ano 2024
+*/
 package engtelecom;
 
 import java.awt.Color;
@@ -87,7 +91,7 @@ public class App {
         // Loop para apresentar o diálogo até que a condição seja satisfeita.
         do {
             // Exibe um diálogo de opções ao usuário.
-            final int result = JOptionPane.showOptionDialog(null, "Bem Vindo ao AUTO-CONFIG!", "faber222",
+            final int result = JOptionPane.showOptionDialog(null, "Bem Vindo ao AUTO-CONFIG!", "OLT-AUTO-CONFIG",
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.INFORMATION_MESSAGE, equipamentoIcon, options, options[0]);
 
@@ -98,10 +102,10 @@ public class App {
                     condition = true;
                     App.oltOption(oltOptions, equipamentoIcon, saidaIcon, erroIcon);
                     break;
-                case 1:
-                    // Se a opção for 1, chama o método mostrarCriador().
-                    App.mostrarCriador();
-                    break;
+                // case 1:
+                //     // Se a opção for 1, chama o método mostrarCriador().
+                //     App.mostrarCriador();
+                //     break;
                 default:
                     // Se nenhuma opção válida for escolhida, chama o método saida() e encerra o
                     // programa.
@@ -142,7 +146,7 @@ public class App {
         // Loop para apresentar o diálogo até que a condição seja satisfeita.
         do {
             // Exibe um diálogo de opções ao usuário.
-            final int result = JOptionPane.showOptionDialog(null, "Qual OLT deseja configurar?", "faber222",
+            final int result = JOptionPane.showOptionDialog(null, "Qual OLT deseja configurar?", "OLT-AUTO-CONFIG",
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.INFORMATION_MESSAGE, equipamentoIcon, options, options[0]);
 
@@ -185,7 +189,7 @@ public class App {
      * @param args Argumentos da linha de comando (não utilizados neste momento).
      */
     public static void main(final String[] args) {
-        final Object[] options = { "Avancar", "Autor", "Cancelar" };
+        final Object[] options = { "Avancar", "Cancelar" };
 
         // Carrega os ícones necessários para o diálogo
         final ClassLoader classLoader = App.class.getClassLoader();

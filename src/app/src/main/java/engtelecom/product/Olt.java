@@ -1,3 +1,7 @@
+/**
+ * Criado por faber222
+ * Ano 2024
+*/
 package engtelecom.product;
 
 public abstract class Olt implements OltInterface {

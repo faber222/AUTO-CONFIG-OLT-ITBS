@@ -1,3 +1,7 @@
+/**
+ * Criado por faber222
+ * Ano 2024
+*/
 package engtelecom.access;
 
 import java.io.BufferedReader;
@@ -106,7 +110,7 @@ public class Telnet8820Plus implements Runnable {
                 writeToTelnet(command);
                 try {
                     // Adiciona um atraso de 1s após cada out.println
-                    Thread.sleep(1000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
