@@ -1,3 +1,7 @@
+/**
+ * @author faber222
+ * @since 2024
+*/
 package engtelecom.config;
 
 import java.util.List;

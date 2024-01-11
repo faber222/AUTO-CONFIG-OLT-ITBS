@@ -1,3 +1,11 @@
+/**
+ * Olt8820Plus - Classe que representa a configuração específica da OLT 8820I.
+ * @author faber222
+ * @since 2024
+ *
+ * Esta classe guia o usuário através do processo de configuração da OLT 8820I,
+ * interagindo com o usuário por meio de caixas de diálogo.
+ */
 package engtelecom.product;
 
 import java.util.ArrayList;
@@ -13,53 +21,114 @@ import engtelecom.config.ConfigGenerator8820Plus;
 
 public class Olt8820Plus extends Olt {
 
+    /**
+     * Construtor da classe Olt8820Plus.
+     * 
+     * @param slotLength O comprimento do slot da OLT.
+     */
     public Olt8820Plus(final int slotLength) {
         this.slotLength = slotLength;
     }
 
-    public boolean isValidVlanRange(final String aimVlanLineRange, final ImageIcon erroIcon,
+    /**
+     * Verifica se a faixa de VLAN fornecida pelo usuário é válida.
+     * 
+     * @param vlanRange A faixa de VLAN fornecida pelo usuário.
+     * @param erroIcon  Ícone de erro para caixa de diálogo.
+     * @param range     O número de VLANs esperado no range.
+     * @return true se a faixa de VLAN for válida, false caso contrário.
+     */
+    public boolean isValidVlanRange(final String vlanRange, final ImageIcon erroIcon,
             final int range) {
-        // Validando o formato do range
-        if (aimVlanLineRange.matches("^[1-9]\\d*-\\d*[1-9]\\d*$") && range >= 2) {
-            // Se o formato for válido e o range for maior ou igual a 2
-            final String[] partes = aimVlanLineRange.split("-");
-            final int inicio = Integer.parseInt(partes[0]);
-            final int fim = Integer.parseInt(partes[1]);
+        // Verifica se é um range no formato inicio-fim
+        if (range == 1) {
+            if (vlanRange.matches("^[1-9]\\d*$")) {
+                // Se o range for 1 e o formato for um inteiro
+                final int inicio = Integer.parseInt(vlanRange);
 
-            // Validando se são "range" números e se não ultrapassam 4095
-            if (fim - inicio + 1 == range && fim <= 4095) {
-                return true;
-            } else {
-                // Exibe mensagem de erro se o range não atender às condições
-                JOptionPane.showMessageDialog(null,
-                        "Range inválido. Deve conter " + range + " números e não ultrapassar 4095.",
-                        "Erro",
-                        JOptionPane.ERROR_MESSAGE, erroIcon);
-                return false;
-            }
-        } else if (range == 1 && aimVlanLineRange.matches("^[1-9]\\d*$")) {
-            // Se o range for 1 e o formato for um inteiro
-            final int inicio = Integer.parseInt(aimVlanLineRange);
-
-            // Validando se é um número válido e se não ultrapassa 4095
-            if (inicio >= 1 && inicio <= 4095) {
-                return true;
+                // Validando se é um número válido e se não ultrapassa 4095
+                if (inicio >= 1 && inicio <= 4095) {
+                    return true;
+                } else {
+                    // Exibe mensagem de erro se a VLAN não atender às condições
+                    JOptionPane.showMessageDialog(null,
+                            "Valor invalido. Deve conter " + range + " numero, ser maior que 0 e nao ultrapassar 4095.",
+                            "Erro",
+                            JOptionPane.ERROR_MESSAGE, erroIcon);
+                    return false;
+                }
             } else {
                 // Exibe mensagem de erro se a VLAN não atender às condições
                 JOptionPane.showMessageDialog(null,
-                        "Vlan inválida. Deve conter " + range + " número, ser maior que 0 e não ultrapassar 4095.",
+                        "Valor invalido. Deve conter apenas numero(s) inteiro(s) nao nulo, maior que 0 e menor que 4095.",
                         "Erro",
                         JOptionPane.ERROR_MESSAGE, erroIcon);
                 return false;
             }
+        } else {
+            if (vlanRange.matches("^[1-9]\\d*-\\d*[1-9]\\d*$")) {
+                final String[] partes = vlanRange.split("-");
+
+                final int inicio = Integer.parseInt(partes[0]);
+                final int fim = Integer.parseInt(partes[1]);
+
+                // Validando se são "range" números e se não ultrapassam 4095
+                if (fim - inicio + 1 == range && fim <= 4095) {
+                    return true;
+                } else {
+                    // Exibe mensagem de erro se o range não atender às condições
+                    JOptionPane.showMessageDialog(null,
+                            "Range invalido. Deve conter " + range + " numeros e nao ultrapassar 4095.",
+                            "Erro",
+                            JOptionPane.ERROR_MESSAGE, erroIcon);
+                    return false;
+                }
+            } else if (vlanRange.matches("^([1-9]\\d*,)+[1-9]\\d*$")) {
+                // Verifica se é uma lista de valores separados por vírgula
+                final String[] valores = vlanRange.split(",");
+
+                if (valores.length == range) {
+                    // Verifica se há exatamente o número correto de valores
+                    for (String valor : valores) {
+                        int num = Integer.parseInt(valor);
+                        if (num <= 0) {
+                            // Exibe mensagem de erro se algum valor não for um número inteiro não nulo
+                            JOptionPane.showMessageDialog(null,
+                                    "Valor " + valor + " invalido. Deve ser um numero inteiro nao nulo.",
+                                    "Erro",
+                                    JOptionPane.ERROR_MESSAGE, erroIcon);
+                            return false;
+                        }
+                    }
+                    return true;
+                } else {
+                    // Exibe mensagem de erro se o número de valores não for igual ao range
+                    JOptionPane.showMessageDialog(null,
+                            "Deve conter exatamente " + range
+                                    + " valores separados por virgula.",
+                            "Erro",
+                            JOptionPane.ERROR_MESSAGE, erroIcon);
+                    return false;
+                }
+            }
         }
-        // Se não atender a nenhum dos casos anteriores, exibe mensagem de formato
-        // inválido
-        JOptionPane.showMessageDialog(null, "Formato inválido",
-                "Erro", JOptionPane.ERROR_MESSAGE, erroIcon);
+        // Exibe mensagem de erro se o range não atender às condições
+        JOptionPane.showMessageDialog(null,
+                "Valor invalido. Deve conter " + range + " numeros e nao ultrapassar 4095.",
+                "Erro",
+                JOptionPane.ERROR_MESSAGE, erroIcon);
         return false;
     }
 
+    /**
+     * Obtém a escolha do usuário para a interface Ethernet Uplink da OLT.
+     * 
+     * @param equipamentoIcon    Ícone para caixa de diálogo.
+     * @param saidaIcon          Ícone para caixa de diálogo de saída.
+     * @param erroIcon           Ícone de erro para caixa de diálogo.
+     * @param modelConfiguration As opções de configuração do modelo.
+     * @return A escolha do usuário para a interface Ethernet Uplink.
+     */
     public String getBridgeInterfaceUplink(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
             final ImageIcon erroIcon, final String[] modelConfiguration) {
         String input = new String();
@@ -70,7 +139,7 @@ public class Olt8820Plus extends Olt {
         do {
             // Solicita ao usuário que escolha o tipo de auto-config.
             input = (String) JOptionPane.showInputDialog(null, "Por favor, escolha o tipo de bridge uplink:",
-                    "faber222",
+                    "OLT-AUTO-CONFIG",
                     JOptionPane.QUESTION_MESSAGE, equipamentoIcon, configuration, configuration[0]);
 
             // Verifica se o usuário cancelou a operação.
@@ -89,6 +158,15 @@ public class Olt8820Plus extends Olt {
         } while (input == null);
     }
 
+    /**
+     * Obtém a escolha do usuário para o modo da interface Ethernet Uplink VLAN.
+     * 
+     * @param equipamentoIcon    Ícone para caixa de diálogo.
+     * @param saidaIcon          Ícone para caixa de diálogo de saída.
+     * @param erroIcon           Ícone de erro para caixa de diálogo.
+     * @param modelConfiguration As opções de configuração do modelo.
+     * @return A escolha do usuário para o modo VLAN da interface Ethernet Uplink.
+     */
     public String getBridgeInterfaceUplinkVlanMode(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
             final ImageIcon erroIcon, final String[] modelConfiguration) {
         String input = new String();
@@ -99,7 +177,7 @@ public class Olt8820Plus extends Olt {
         do {
             // Solicita ao usuário que escolha o tipo de auto-config.
             input = (String) JOptionPane.showInputDialog(null, "Por favor, escolha o modo da bridge uplink:",
-                    "faber222",
+                    "OLT-AUTO-CONFIG",
                     JOptionPane.QUESTION_MESSAGE, equipamentoIcon, configuration, configuration[0]);
 
             // Verifica se o usuário cancelou a operação.
@@ -288,10 +366,16 @@ public class Olt8820Plus extends Olt {
         // Exibe uma caixa de diálogo com uma mensagem de aviso indicando que o programa
         // será encerrado.
         JOptionPane.showMessageDialog(null,
-                "Você pressionou o botão 'Cancelar'. O programa será encerrado.",
+                "Voce pressionou o botao 'Cancelar'. O programa sera encerrado.",
                 null, JOptionPane.WARNING_MESSAGE, saidaIcon);
     }
 
+    /**
+     * Verifica se um endereço IP é válido.
+     * 
+     * @param ipAddress O endereço IP a ser verificado.
+     * @return true se o endereço IP for válido, false caso contrário.
+     */
     @Override
     public boolean isValidIPv4Address(final String ipAddress) {
         // Expressão regular para validar um endereço IPv4
@@ -305,6 +389,12 @@ public class Olt8820Plus extends Olt {
         return matcher.matches();
     }
 
+    /**
+     * Obtém o endereço IP da OLT a partir do usuário.
+     * 
+     * @param saidaIcon Ícone para caixa de diálogo de saída.
+     * @param erroIcon  Ícone de erro para caixa de diálogo.
+     */
     @Override
     public void getIpFromUser(final ImageIcon saidaIcon, final ImageIcon erroIcon) {
         // Loop para garantir que o usuário forneça um endereço IP válido.
@@ -321,12 +411,18 @@ public class Olt8820Plus extends Olt {
             // Verifica se o endereço IP inserido é válido.
             if (!isValidIPv4Address(this.getIp())) {
                 JOptionPane.showMessageDialog(null,
-                        "Entrada inválida. Por favor, insira um endereço IP válido (0-255).", "Erro",
+                        "Entrada invalida. Por favor, insira um endereço IP valido (0-255).", "Erro",
                         JOptionPane.ERROR_MESSAGE, erroIcon);
             }
         } while (!isValidIPv4Address(this.getIp()));
     }
 
+    /**
+     * Obtém a porta de acesso Telnet da OLT a partir do usuário.
+     * 
+     * @param saidaIcon Ícone para caixa de diálogo de saída.
+     * @param erroIcon  Ícone de erro para caixa de diálogo.
+     */
     @Override
     public void getPortFromUser(final ImageIcon saidaIcon, final ImageIcon erroIcon) {
         String port;
@@ -336,13 +432,19 @@ public class Olt8820Plus extends Olt {
         this.setPort(Integer.parseInt(port));
     }
 
+    /**
+     * Obtém o nome de usuário e senha da OLT a partir do usuário.
+     * 
+     * @param saidaIcon Ícone para caixa de diálogo de saída.
+     * @param erroIcon  Ícone de erro para caixa de diálogo.
+     */
     @Override
     public void getUserAndPwd(final ImageIcon saidaIcon, final ImageIcon erroIcon) {
         // Loop para garantir que o usuário forneça tanto o nome de usuário quanto a
         // senha.
         do {
             // Solicita ao usuário que insira o nome de usuário da OLT.
-            this.setUser(JOptionPane.showInputDialog("Digite o usuário da OLT:"));
+            this.setUser(JOptionPane.showInputDialog("Digite o usuario da OLT:"));
 
             // Verifica se o usuário cancelou a operação.
             if (this.getUser() == null) {
@@ -362,8 +464,18 @@ public class Olt8820Plus extends Olt {
         } while (this.getPasswd() == null && this.getUser() == null);
     }
 
+    /**
+     * Obtém as VLANs do cliente a partir do usuário.
+     * 
+     * @param equipamentoIcon Ícone para caixa de diálogo.
+     * @param saidaIcon       Ícone para caixa de diálogo de saída.
+     * @param erroIcon        Ícone de erro para caixa de diálogo.
+     * @param range           O número de VLANs esperado no range.
+     * @return Lista de VLANs do cliente.
+     */
     @Override
-    public List<String> getVlanClient(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon, final ImageIcon erroIcon, final int range) {
+    public List<String> getVlanClient(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
+            final ImageIcon erroIcon, final int range) {
         // Lista que armazenará as informações de VLAN para o cliente.
 
         final List<String> vlan = new ArrayList<String>();
@@ -376,7 +488,7 @@ public class Olt8820Plus extends Olt {
         if (range == 1) {
             message = "Qual a vlan?:";
         } else {
-            message = "Qual o range de vlan?: Use o formato: inicio-fim";
+            message = "Qual o range de vlan?: Use o formato: inicio-fim ou digite {1,2,3,...,n}";
         }
 
         // Loop para garantir que a entrada do usuário seja válida.
@@ -392,13 +504,21 @@ public class Olt8820Plus extends Olt {
 
         // Processa a entrada do usuário com base no intervalo especificado.
         if (range != 1) {
+            final String[] partes;
             // Se o intervalo não for 1, divide a entrada e adiciona os valores à lista.
-            final String[] partes = input.split("-");
-            final int inicio = Integer.parseInt(partes[0]);
-            final int fim = Integer.parseInt(partes[1]);
+            if (input.matches("^([1-9]\\d*,)+[1-9]\\d*$")) {
+                partes = input.split(",");
+                for (String valor : partes) {
+                    vlan.add(valor);
+                }
+            } else {
+                partes = input.split("-");
+                final int inicio = Integer.parseInt(partes[0]);
+                final int fim = Integer.parseInt(partes[1]);
 
-            for (int j = inicio; j <= fim; j++) {
-                vlan.add(String.valueOf(j));
+                for (int j = inicio; j <= fim; j++) {
+                    vlan.add(String.valueOf(j));
+                }
             }
         } else {
             // Se o intervalo for 1, adiciona a entrada diretamente à lista.
@@ -409,8 +529,18 @@ public class Olt8820Plus extends Olt {
         return vlan;
     }
 
+    /**
+     * Obtém o tipo padrão do CPE (Bridge ou Router) a partir do usuário.
+     * 
+     * @param equipamentoIcon Ícone para caixa de diálogo.
+     * @param saidaIcon       Ícone para caixa de diálogo de saída.
+     * @param erroIcon        Ícone de erro para caixa de diálogo.
+     * @param defaultCpeType  As opções de tipo padrão do CPE.
+     * @return O tipo padrão do CPE escolhido pelo usuário.
+     */
     @Override
-    public String getDefaultCpeType(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon, final ImageIcon erroIcon,
+    public String getDefaultCpeType(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
+            final ImageIcon erroIcon,
             final String[] defaultCpeType) {
         String input = new String();
         final Object[] configuration = defaultCpeType;
@@ -420,7 +550,7 @@ public class Olt8820Plus extends Olt {
         do {
             // Solicita ao usuário que escolha o tipo de operação da ont de terceiros.
             input = (String) JOptionPane.showInputDialog(null, "CPEs de terceiros, em:",
-                    "faber222",
+                    "OLT-AUTO-CONFIG",
                     JOptionPane.QUESTION_MESSAGE, equipamentoIcon, configuration, configuration[0]);
 
             // Verifica se o usuário cancelou a operação.
@@ -439,8 +569,18 @@ public class Olt8820Plus extends Olt {
         } while (input == null);
     }
 
+    /**
+     * Obtém a configuração do modelo a partir do usuário.
+     * 
+     * @param equipamentoIcon    Ícone para caixa de diálogo.
+     * @param saidaIcon          Ícone para caixa de diálogo de saída.
+     * @param erroIcon           Ícone de erro para caixa de diálogo.
+     * @param modelConfiguration As opções de configuração do modelo.
+     * @return A configuração do modelo escolhida pelo usuário.
+     */
     @Override
-    public String getModelConfiguration(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon, final ImageIcon erroIcon,
+    public String getModelConfiguration(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon,
+            final ImageIcon erroIcon,
             final String[] modelConfiguration) {
         String input = new String();
         final Object[] configuration = modelConfiguration;
@@ -450,7 +590,7 @@ public class Olt8820Plus extends Olt {
         do {
             // Solicita ao usuário que escolha o tipo de auto-config.
             input = (String) JOptionPane.showInputDialog(null, "Por favor, escolha o tipo de auto-config:",
-                    "faber222",
+                    "OLT-AUTO-CONFIG",
                     JOptionPane.QUESTION_MESSAGE, equipamentoIcon, configuration, configuration[0]);
 
             // Verifica se o usuário cancelou a operação.
@@ -469,6 +609,15 @@ public class Olt8820Plus extends Olt {
         } while (input == null);
     }
 
+    /**
+     * Obtém a interface Ethernet Uplink da OLT a partir do usuário.
+     * 
+     * @param equipamentoIcon Ícone para caixa de diálogo.
+     * @param saidaIcon       Ícone para caixa de diálogo de saída.
+     * @param erroIcon        Ícone de erro para caixa de diálogo.
+     * @param interfaceEth    As opções de interface Ethernet Uplink.
+     * @return A interface Ethernet Uplink escolhida pelo usuário.
+     */
     @Override
     public String getInterfaceEth(final ImageIcon equipamentoIcon, final ImageIcon saidaIcon, final ImageIcon erroIcon,
             final String[] interfaceEth) {
@@ -480,7 +629,7 @@ public class Olt8820Plus extends Olt {
         do {
             // Solicita ao usuário que escolha a interface Ethernet Uplink da OLT.
             input = (String) JOptionPane.showInputDialog(null, "Por favor, escolha a interface Uplink da OLT:",
-                    "faber222",
+                    "OLT-AUTO-CONFIG",
                     JOptionPane.QUESTION_MESSAGE, equipamentoIcon, interfaces, interfaces[0]);
 
             // Verifica se o usuário cancelou a operação.
