@@ -24,7 +24,7 @@ Também terá a implementação de uma instalação unificada para windows, visa
 - [X] Interface CLI
 - [X] Interface Gráfica
 - [X] Acesso Telnet
-- [ ] Compatibilidade Java8
+- [X] Compatibilidade Java8
 - [X] Compatibilidade JDK 21
 - [X] Auto-config uma vlan por pon
 - [X] Auto-config uma vlan para todas as pon
@@ -32,5 +32,6 @@ Também terá a implementação de uma instalação unificada para windows, visa
 - [X] Compativel com OLT G16 Intelbras
 - [X] Compativel com OLT G08 Intelbras
 - [X] Compativel com OLt 8820i Intelbras
+- [X] Compativel com grupo de vlan
 - [ ] Possibilidade de rollback
 - [ ] Finalizado
