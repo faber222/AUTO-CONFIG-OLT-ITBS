@@ -91,7 +91,7 @@ public class App {
         // Loop para apresentar o diálogo até que a condição seja satisfeita.
         do {
             // Exibe um diálogo de opções ao usuário.
-            final int result = JOptionPane.showOptionDialog(null, "Bem Vindo ao AUTO-CONFIG!", "faber222",
+            final int result = JOptionPane.showOptionDialog(null, "Bem Vindo ao AUTO-CONFIG!", "OLT-AUTO-CONFIG",
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.INFORMATION_MESSAGE, equipamentoIcon, options, options[0]);
 
@@ -146,7 +146,7 @@ public class App {
         // Loop para apresentar o diálogo até que a condição seja satisfeita.
         do {
             // Exibe um diálogo de opções ao usuário.
-            final int result = JOptionPane.showOptionDialog(null, "Qual OLT deseja configurar?", "faber222",
+            final int result = JOptionPane.showOptionDialog(null, "Qual OLT deseja configurar?", "OLT-AUTO-CONFIG",
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.INFORMATION_MESSAGE, equipamentoIcon, options, options[0]);
 
