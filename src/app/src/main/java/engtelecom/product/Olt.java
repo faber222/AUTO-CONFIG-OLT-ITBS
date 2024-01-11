@@ -1,14 +1,38 @@
-/**
- * Criado por faber222
- * Ano 2024
-*/
 package engtelecom.product;
 
+/**
+ * Classe abstrata que fornece uma implementação básica da interface
+ * OltInterface.
+ * Implementações concretas devem estender esta classe e fornecer a lógica
+ * específica da OLT.
+ * 
+ * @author faber222
+ * @since 2024
+ */
 public abstract class Olt implements OltInterface {
-    protected String ip;
-    protected int port;
-    protected String passwd;
-    protected String user;
-    protected int slotLength;
 
+    /**
+     * Endereço IP da OLT.
+     */
+    protected String ip;
+
+    /**
+     * Porta de acesso Telnet da OLT.
+     */
+    protected int port;
+
+    /**
+     * Senha de acesso à OLT.
+     */
+    protected String passwd;
+
+    /**
+     * Nome de usuário para acesso à OLT.
+     */
+    protected String user;
+
+    /**
+     * Tamanho dos slots que a OLT possui.
+     */
+    protected int slotLength;
 }

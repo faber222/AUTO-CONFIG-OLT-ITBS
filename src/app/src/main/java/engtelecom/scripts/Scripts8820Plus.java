@@ -1,6 +1,6 @@
 /**
- * Criado por faber222
- * Ano 2024
+ * @author faber222
+ * @since 2024
 */
 
 package engtelecom.scripts;

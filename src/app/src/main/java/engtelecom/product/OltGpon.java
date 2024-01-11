@@ -1,6 +1,6 @@
 /**
- * Criado por faber222
- * Ano 2024
+ * @author faber222
+ * @since 2024
 */
 package engtelecom.product;
 
@@ -38,48 +38,87 @@ public class OltGpon extends Olt {
      * @param range            O intervalo permitido para a VLAN.
      * @return true se o range for válido, false caso contrário.
      */
-    public boolean isValidAimVlanLineRange(final String aimVlanLineRange, final ImageIcon erroIcon,
-            final int range) {
-        // Validando o formato do range
-        if (aimVlanLineRange.matches("^[1-9]\\d*-\\d*[1-9]\\d*$") && range >= 2) {
-            // Se o formato for válido e o range for maior ou igual a 2
-            final String[] partes = aimVlanLineRange.split("-");
-            final int inicio = Integer.parseInt(partes[0]);
-            final int fim = Integer.parseInt(partes[1]);
+    public boolean isValidAimVlanLineRange(final String aimVlanLineRange, final ImageIcon erroIcon, final int range) {
+        // Verifica se é um range no formato inicio-fim
+        if (range == 1) {
+            if (aimVlanLineRange.matches("^[1-9]\\d*$")) {
+                // Se o range for 1 e o formato for um inteiro
+                final int inicio = Integer.parseInt(aimVlanLineRange);
 
-            // Validando se são "range" números e se não ultrapassam 4095
-            if (fim - inicio + 1 == range && fim <= 4095) {
-                return true;
-            } else {
-                // Exibe mensagem de erro se o range não atender às condições
-                JOptionPane.showMessageDialog(null,
-                        "Range invalido. Deve conter " + range + " numeros e nao ultrapassar 4095.",
-                        "Erro",
-                        JOptionPane.ERROR_MESSAGE, erroIcon);
-                return false;
-            }
-        } else if (range == 1 && aimVlanLineRange.matches("^[1-9]\\d*$")) {
-            // Se o range for 1 e o formato for um inteiro
-            final int inicio = Integer.parseInt(aimVlanLineRange);
-
-            // Validando se é um número válido e se não ultrapassa 4095
-            if (inicio >= 1 && inicio <= 4095) {
-                return true;
+                // Validando se é um número válido e se não ultrapassa 4095
+                if (inicio >= 1 && inicio <= 4095) {
+                    return true;
+                } else {
+                    // Exibe mensagem de erro se a VLAN não atender às condições
+                    JOptionPane.showMessageDialog(null,
+                            "Valor invalido. Deve conter " + range + " numero, ser maior que 0 e nao ultrapassar 4095.",
+                            "Erro",
+                            JOptionPane.ERROR_MESSAGE, erroIcon);
+                    return false;
+                }
             } else {
                 // Exibe mensagem de erro se a VLAN não atender às condições
                 JOptionPane.showMessageDialog(null,
-                        "Vlan invalida. Deve conter " + range + " numero, ser maior que 0 e nao ultrapassar 4095.",
+                        "Valor invalido. Deve conter apenas numero(s) inteiro(s) nao nulo, maior que 0 e menor que 4095.",
                         "Erro",
                         JOptionPane.ERROR_MESSAGE, erroIcon);
                 return false;
             }
+        } else {
+            if (aimVlanLineRange.matches("^[1-9]\\d*-\\d*[1-9]\\d*$")) {
+                final String[] partes = aimVlanLineRange.split("-");
+
+                final int inicio = Integer.parseInt(partes[0]);
+                final int fim = Integer.parseInt(partes[1]);
+
+                // Validando se são "range" números e se não ultrapassam 4095
+                if (fim - inicio + 1 == range && fim <= 4095) {
+                    return true;
+                } else {
+                    // Exibe mensagem de erro se o range não atender às condições
+                    JOptionPane.showMessageDialog(null,
+                            "Range invalido. Deve conter " + range + " numeros e nao ultrapassar 4095.",
+                            "Erro",
+                            JOptionPane.ERROR_MESSAGE, erroIcon);
+                    return false;
+                }
+            } else if (aimVlanLineRange.matches("^([1-9]\\d*,)+[1-9]\\d*$")) {
+                // Verifica se é uma lista de valores separados por vírgula
+                final String[] valores = aimVlanLineRange.split(",");
+
+                if (valores.length == range) {
+                    // Verifica se há exatamente o número correto de valores
+                    for (String valor : valores) {
+                        int num = Integer.parseInt(valor);
+                        if (num <= 0) {
+                            // Exibe mensagem de erro se algum valor não for um número inteiro não nulo
+                            JOptionPane.showMessageDialog(null,
+                                    "Valor " + valor + " invalido. Deve ser um numero inteiro nao nulo.",
+                                    "Erro",
+                                    JOptionPane.ERROR_MESSAGE, erroIcon);
+                            return false;
+                        }
+                    }
+                    return true;
+                } else {
+                    // Exibe mensagem de erro se o número de valores não for igual ao range
+                    JOptionPane.showMessageDialog(null,
+                            "Deve conter exatamente " + range
+                                    + " valores separados por virgula.",
+                            "Erro",
+                            JOptionPane.ERROR_MESSAGE, erroIcon);
+                    return false;
+                }
+            }
         }
-        // Se não atender a nenhum dos casos anteriores, exibe mensagem de formato
-        // inválido
-        JOptionPane.showMessageDialog(null, "Formato invalido",
-                "Erro", JOptionPane.ERROR_MESSAGE, erroIcon);
+        // Exibe mensagem de erro se o range não atender às condições
+        JOptionPane.showMessageDialog(null,
+                "Valor invalido. Deve conter " + range + " numeros e nao ultrapassar 4095.",
+                "Erro",
+                JOptionPane.ERROR_MESSAGE, erroIcon);
         return false;
     }
+
 
     /**
      * Obtém um perfil de VLAN de objetivo (aim VLAN profile) a partir de uma
@@ -105,7 +144,7 @@ public class OltGpon extends Olt {
         if (range == 1) {
             message = "Qual o profile vlan?:";
         } else {
-            message = "Qual o range do profile vlan?: Use o formato: inicio-fim";
+            message = "Qual o range do profile vlan?: Use o formato: inicio-fim ou digite {1,2,3,...,n}";
         }
 
         // Loop para garantir que a entrada do usuário seja válida.
@@ -122,12 +161,21 @@ public class OltGpon extends Olt {
         // Processa a entrada do usuário com base no intervalo especificado.
         if (range != 1) {
             // Se o intervalo não for 1, divide a entrada e adiciona os valores à lista.
-            final String[] partes = input.split("-");
-            final int inicio = Integer.parseInt(partes[0]);
-            final int fim = Integer.parseInt(partes[1]);
+            final String[] partes;
+            // Se o intervalo não for 1, divide a entrada e adiciona os valores à lista.
+            if (input.matches("^([1-9]\\d*,)+[1-9]\\d*$")) {
+                partes = input.split(",");
+                for (String valor : partes) {
+                    aimProfileVlan.add(valor);
+                }
+            } else {
+                partes = input.split("-");
+                final int inicio = Integer.parseInt(partes[0]);
+                final int fim = Integer.parseInt(partes[1]);
 
-            for (int j = inicio; j <= fim; j++) {
-                aimProfileVlan.add(String.valueOf(j));
+                for (int j = inicio; j <= fim; j++) {
+                    aimProfileVlan.add(String.valueOf(j));
+                }
             }
         } else {
             // Se o intervalo for 1, adiciona a entrada diretamente à lista.
@@ -158,7 +206,7 @@ public class OltGpon extends Olt {
 
         // Loop para garantir que a entrada do usuário seja válida.
         do {
-            input = (String) JOptionPane.showInputDialog("Qual o range do profile Line?: Use o formato: inicio-fim");
+            input = (String) JOptionPane.showInputDialog("Qual o range do profile Line?: Use o formato: inicio-fim ou digite {1,2,3,...,n}");
 
             // Verifica se o usuário cancelou a operação.
             if (input == null) {
@@ -169,13 +217,22 @@ public class OltGpon extends Olt {
 
         // Processa a entrada do usuário com base no intervalo especificado.
         if (range == this.getSlotLength() * 2) {
-            // Se o intervalo for 16 ou 32, divide a entrada e adiciona os valores à lista.
-            final String[] partes = input.split("-");
-            final int inicio = Integer.parseInt(partes[0]);
-            final int fim = Integer.parseInt(partes[1]);
+            // Se o intervalo não for 1, divide a entrada e adiciona os valores à lista.
+            final String[] partes;
+            // Se o intervalo não for 1, divide a entrada e adiciona os valores à lista.
+            if (input.matches("^([1-9]\\d*,)+[1-9]\\d*$")) {
+                partes = input.split(",");
+                for (String valor : partes) {
+                    aimProfileLine.add(valor);
+                }
+            } else {
+                partes = input.split("-");
+                final int inicio = Integer.parseInt(partes[0]);
+                final int fim = Integer.parseInt(partes[1]);
 
-            for (int j = inicio; j <= fim; j++) {
-                aimProfileLine.add(String.valueOf(j));
+                for (int j = inicio; j <= fim; j++) {
+                    aimProfileLine.add(String.valueOf(j));
+                }
             }
         } else {
             // Se o intervalo não for 16 ou 32, simplesmente divide a entrada e adiciona os
@@ -393,6 +450,12 @@ public class OltGpon extends Olt {
         return matcher.matches();
     }
 
+    /**
+     * Obtém o endereço IP da OLT a partir do usuário.
+     * 
+     * @param saidaIcon Ícone para caixa de diálogo de saída.
+     * @param erroIcon  Ícone de erro para caixa de diálogo.
+     */
     @Override
     public void getIpFromUser(ImageIcon saidaIcon, ImageIcon erroIcon) {
         // Loop para garantir que o usuário forneça um endereço IP válido.
@@ -415,6 +478,12 @@ public class OltGpon extends Olt {
         } while (!isValidIPv4Address(this.getIp()));
     }
 
+    /**
+     * Obtém a porta de acesso Telnet da OLT a partir do usuário.
+     * 
+     * @param saidaIcon Ícone para caixa de diálogo de saída.
+     * @param erroIcon  Ícone de erro para caixa de diálogo.
+     */
     @Override
     public void getPortFromUser(ImageIcon saidaIcon, ImageIcon erroIcon) {
         String port;
@@ -424,6 +493,12 @@ public class OltGpon extends Olt {
         this.setPort(Integer.parseInt(port));
     }
 
+    /**
+     * Obtém o nome de usuário e senha da OLT a partir do usuário.
+     * 
+     * @param saidaIcon Ícone para caixa de diálogo de saída.
+     * @param erroIcon  Ícone de erro para caixa de diálogo.
+     */
     @Override
     public void getUserAndPwd(ImageIcon saidaIcon, ImageIcon erroIcon) {
         // Loop para garantir que o usuário forneça tanto o nome de usuário quanto a
@@ -450,6 +525,16 @@ public class OltGpon extends Olt {
         } while (this.getPasswd() == null && this.getUser() == null);
     }
 
+    /**
+     * Obtém informações de VLAN para o cliente a partir do usuário.
+     * 
+     * @param equipamentoIcon Ícone do equipamento.
+     * @param saidaIcon       Ícone de saída.
+     * @param erroIcon        Ícone de erro.
+     * @param range           O intervalo permitido para as informações de VLAN.
+     * @return Uma lista de strings representando as informações de VLAN para o
+     *         cliente.
+     */
     @Override
     public List<String> getVlanClient(ImageIcon equipamentoIcon, ImageIcon saidaIcon, ImageIcon erroIcon, int range) {
         // Lista que armazenará as informações de VLAN para o cliente.
@@ -464,7 +549,7 @@ public class OltGpon extends Olt {
         if (range == 1) {
             message = "Qual a vlan?:";
         } else {
-            message = "Qual o range de vlan?: Use o formato: inicio-fim";
+            message = "Qual o range de vlan?: Use o formato: inicio-fim ou digite {1,2,3,...,n}";
         }
 
         // Loop para garantir que a entrada do usuário seja válida.
@@ -480,13 +565,21 @@ public class OltGpon extends Olt {
 
         // Processa a entrada do usuário com base no intervalo especificado.
         if (range != 1) {
+            final String[] partes;
             // Se o intervalo não for 1, divide a entrada e adiciona os valores à lista.
-            final String[] partes = input.split("-");
-            final int inicio = Integer.parseInt(partes[0]);
-            final int fim = Integer.parseInt(partes[1]);
+            if (input.matches("^([1-9]\\d*,)+[1-9]\\d*$")) {
+                partes = input.split(",");
+                for (String valor : partes) {
+                    vlan.add(valor);
+                }
+            } else {
+                partes = input.split("-");
+                final int inicio = Integer.parseInt(partes[0]);
+                final int fim = Integer.parseInt(partes[1]);
 
-            for (int j = inicio; j <= fim; j++) {
-                vlan.add(String.valueOf(j));
+                for (int j = inicio; j <= fim; j++) {
+                    vlan.add(String.valueOf(j));
+                }
             }
         } else {
             // Se o intervalo for 1, adiciona a entrada diretamente à lista.
@@ -497,6 +590,15 @@ public class OltGpon extends Olt {
         return vlan;
     }
 
+    /**
+     * Obtém o tipo padrão de CPE (Customer Premises Equipment) a partir do usuário.
+     * 
+     * @param equipamentoIcon Ícone do equipamento.
+     * @param saidaIcon       Ícone de saída.
+     * @param erroIcon        Ícone de erro.
+     * @param defaultCpeType  Array de strings representando os tipos padrão de CPE.
+     * @return O tipo padrão de CPE escolhido pelo usuário.
+     */
     @Override
     public String getDefaultCpeType(ImageIcon equipamentoIcon, ImageIcon saidaIcon, ImageIcon erroIcon,
             String[] defaultCpeType) {
@@ -527,6 +629,16 @@ public class OltGpon extends Olt {
         } while (input == null);
     }
 
+    /**
+     * Obtém a configuração do modelo a partir do usuário.
+     * 
+     * @param equipamentoIcon    Ícone do equipamento.
+     * @param saidaIcon          Ícone de saída.
+     * @param erroIcon           Ícone de erro.
+     * @param modelConfiguration Array de strings representando as configurações de
+     *                           modelo.
+     * @return A configuração do modelo escolhida pelo usuário.
+     */
     @Override
     public String getModelConfiguration(ImageIcon equipamentoIcon, ImageIcon saidaIcon, ImageIcon erroIcon,
             String[] modelConfiguration) {
@@ -557,6 +669,15 @@ public class OltGpon extends Olt {
         } while (input == null);
     }
 
+    /**
+     * Obtém a interface Ethernet Uplink da OLT a partir do usuário.
+     * 
+     * @param equipamentoIcon Ícone do equipamento.
+     * @param saidaIcon       Ícone de saída.
+     * @param erroIcon        Ícone de erro.
+     * @param interfaceEth    Array de strings representando as interfaces Ethernet.
+     * @return A interface Ethernet Uplink escolhida pelo usuário.
+     */
     @Override
     public String getInterfaceEth(ImageIcon equipamentoIcon, ImageIcon saidaIcon, ImageIcon erroIcon,
             String[] interfaceEth) {

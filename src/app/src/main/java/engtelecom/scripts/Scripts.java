@@ -1,6 +1,6 @@
 /**
- * Criado por faber222
- * Ano 2024
+ * @author faber222
+ * @since 2024
 */
 package engtelecom.scripts;
 
@@ -264,6 +264,7 @@ public class Scripts {
         final List<String> autoConfig = new ArrayList<>();
         autoConfig.add("ont auto-config");
         autoConfig.add("ont-find interface gpon all");
+        autoConfig.add("ont-find list-age time 60 interface gpon all");
         return autoConfig;
     }
 
