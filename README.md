@@ -32,6 +32,6 @@ Também terá a implementação de uma instalação unificada para windows, visa
 - [X] Compativel com OLT G16 Intelbras
 - [X] Compativel com OLT G08 Intelbras
 - [X] Compativel com OLt 8820i Intelbras
-- [ ] Compatibilidade com grupo de vlan separados por ","
+- [X] Compatibilidade com grupo de vlan separados por ","
 - [ ] Possibilidade de rollback
 - [ ] Finalizado
