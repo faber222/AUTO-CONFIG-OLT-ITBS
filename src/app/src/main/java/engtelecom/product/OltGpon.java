@@ -119,7 +119,6 @@ public class OltGpon extends Olt {
         return false;
     }
 
-
     /**
      * Obtém um perfil de VLAN de objetivo (aim VLAN profile) a partir de uma
      * entrada do usuário.
@@ -206,7 +205,8 @@ public class OltGpon extends Olt {
 
         // Loop para garantir que a entrada do usuário seja válida.
         do {
-            input = (String) JOptionPane.showInputDialog("Qual o range do profile Line?: Use o formato: inicio-fim ou digite {1,2,3,...,n}");
+            input = (String) JOptionPane.showInputDialog(
+                    "Qual o range do profile Line?: Use o formato: inicio-fim ou digite {1,2,3,...,n}");
 
             // Verifica se o usuário cancelou a operação.
             if (input == null) {
@@ -216,30 +216,21 @@ public class OltGpon extends Olt {
         } while (!this.isValidAimVlanLineRange(input, erroIcon, range));
 
         // Processa a entrada do usuário com base no intervalo especificado.
-        if (range == this.getSlotLength() * 2) {
-            // Se o intervalo não for 1, divide a entrada e adiciona os valores à lista.
-            final String[] partes;
-            // Se o intervalo não for 1, divide a entrada e adiciona os valores à lista.
-            if (input.matches("^([1-9]\\d*,)+[1-9]\\d*$")) {
-                partes = input.split(",");
-                for (String valor : partes) {
-                    aimProfileLine.add(valor);
-                }
-            } else {
-                partes = input.split("-");
-                final int inicio = Integer.parseInt(partes[0]);
-                final int fim = Integer.parseInt(partes[1]);
-
-                for (int j = inicio; j <= fim; j++) {
-                    aimProfileLine.add(String.valueOf(j));
-                }
+        final String[] partes;
+        
+        if (input.matches("^([1-9]\\d*,)+[1-9]\\d*$")) {
+            partes = input.split(",");
+            for (String valor : partes) {
+                aimProfileLine.add(valor);
             }
         } else {
-            // Se o intervalo não for 16 ou 32, simplesmente divide a entrada e adiciona os
-            // valores à lista.
-            final String[] partes = input.split("-");
-            aimProfileLine.add(partes[0]);
-            aimProfileLine.add(partes[1]);
+            partes = input.split("-");
+            final int inicio = Integer.parseInt(partes[0]);
+            final int fim = Integer.parseInt(partes[1]);
+
+            for (int j = inicio; j <= fim; j++) {
+                aimProfileLine.add(String.valueOf(j));
+            }
         }
 
         // Retorna a lista contendo o perfil de linha de objetivo.
