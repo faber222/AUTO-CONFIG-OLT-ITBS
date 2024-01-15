@@ -3,6 +3,27 @@
   "configurations": [
     {
       "type": "java",
+      "name": "OltGponMenu",
+      "request": "launch",
+      "mainClass": "engtelecom.swingType.OltGponMenu",
+      "projectName": "app"
+    },
+    {
+      "type": "java",
+      "name": "FormularioSwing2",
+      "request": "launch",
+      "mainClass": "engtelecom.swingType.FormularioSwing2",
+      "projectName": "app"
+    },
+    {
+      "type": "java",
+      "name": "FormularioSwing",
+      "request": "launch",
+      "mainClass": "engtelecom.swingType.FormularioSwing",
+      "projectName": "app"
+    },
+    {
+      "type": "java",
       "name": "Telnet8820Plus",
       "request": "launch",
       "mainClass": "engtelecom.access.Telnet8820Plus",

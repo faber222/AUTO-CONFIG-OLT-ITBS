@@ -180,7 +180,6 @@ public class OltGpon extends Olt {
             // Se o intervalo for 1, adiciona a entrada diretamente à lista.
             aimProfileVlan.add(input);
         }
-
         // Retorna a lista contendo o perfil de VLAN de objetivo.
         return aimProfileVlan;
     }
