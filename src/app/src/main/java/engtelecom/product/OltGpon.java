@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 
 import engtelecom.access.Telnet;
 import engtelecom.config.ConfigGenerator;
+import engtelecom.swingType.OltGponMenu;
 
 /**
  * Objeto que representa a OLT G08
@@ -326,6 +327,9 @@ public class OltGpon extends Olt {
         };
 
         final String regex = "^[1-9]\\d*-\\d*[1-9]\\d*$";
+        OltGponMenu OltGponMenu = new OltGponMenu();
+        OltGponMenu.start();
+        
 
         // Obtém informações do usuário para a configuração
         final String interfaceEth = this.getInterfaceEth(equipamentoIcon, saidaIcon, erroIcon, modelosInterface);
