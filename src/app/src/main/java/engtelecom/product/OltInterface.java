@@ -7,8 +7,6 @@
  */
 package engtelecom.product;
 
-import java.util.List;
-
 import javax.swing.ImageIcon;
 
 public interface OltInterface {
@@ -84,11 +82,6 @@ public interface OltInterface {
         public abstract void setSlotLength(int slotLength);
 
         /**
-         * Inicia o processo de interação/configuração da OLT.
-         */
-        public abstract void start();
-
-        /**
          * Exibe uma caixa de diálogo de saída.
          * 
          * @param saidaIcon Ícone para a caixa de diálogo de saída.
@@ -137,8 +130,7 @@ public interface OltInterface {
          * @return Uma lista de strings representando as informações de VLAN para o
          *         cliente.
          */
-        public abstract List<String> getVlanClient(ImageIcon equipamentoIcon, ImageIcon saidaIcon,
-                        ImageIcon erroIcon, int range);
+        public abstract boolean checkVlanClient(String rangeVlan, ImageIcon erroIcon, int range);
 
         /**
          * Obtém o tipo padrão de CPE (Customer Premises Equipment) a partir do usuário.

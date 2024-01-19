@@ -10,6 +10,8 @@ import java.util.Hashtable;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -17,8 +19,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
-import engtelecom.product.Olt8820Plus;
-import engtelecom.product.OltGpon;
+import engtelecom.swingType.OltGponMenu;
 
 /**
  * Classe principal da aplicação que inicia a OLT G16.
@@ -155,22 +156,23 @@ public class App {
                 case 0:
                     // Se a opção for 0, a condição é satisfeita e retorna true.
                     condition = true;
-
-                    final OltGpon OltG16 = new OltGpon(16);
-                    OltG16.start();
+                    final OltGponMenu teste = new OltGponMenu(16);
+                    teste.start();
+                    // final OltGpon OltG16 = new OltGpon();
+                    // OltG16.start();
                     break;
                 case 1:
                     // Se a opção for 1, chama o método mostrarCriador().
                     condition = true;
 
-                    final OltGpon OltG08 = new OltGpon(8);
-                    OltG08.start();
+                    // final OltGpon OltG08 = new OltGpon(8);
+                    // OltG08.start();
                     break;
                 case 2:
                     condition = true;
 
-                    final Olt8820Plus Olt8820Plus = new Olt8820Plus(8);
-                    Olt8820Plus.start();
+                    // final Olt8820Plus Olt8820Plus = new Olt8820Plus(8);
+                    // Olt8820Plus.start();
                     break;
                 default:
                     // Se nenhuma opção válida for escolhida, chama o método saida() e encerra o
@@ -189,6 +191,39 @@ public class App {
      * @param args Argumentos da linha de comando (não utilizados neste momento).
      */
     public static void main(final String[] args) {
+                /* Set the Nimbus look and feel */
+        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
+        // (optional) ">
+        /*
+         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
+         * look and feel.
+         * For details see
+         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         */
+        try {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(OltGponMenu.class.getName()).log(
+                    java.util.logging.Level.SEVERE, null,
+                    ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(OltGponMenu.class.getName()).log(
+                    java.util.logging.Level.SEVERE, null,
+                    ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(OltGponMenu.class.getName()).log(
+                    java.util.logging.Level.SEVERE, null,
+                    ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(OltGponMenu.class.getName()).log(
+                    java.util.logging.Level.SEVERE, null,
+                    ex);
+        }
         final Object[] options = { "Avancar", "Autor", "Cancelar" };
 
         // Carrega os ícones necessários para o diálogo
