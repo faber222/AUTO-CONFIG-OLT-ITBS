@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "FileChooser",
+      "request": "launch",
+      "mainClass": "engtelecom.swingType.FileChooser",
+      "projectName": "app"
+    },
+    {
+      "type": "java",
       "name": "OltGponMenu",
       "request": "launch",
       "mainClass": "engtelecom.swingType.OltGponMenu",

@@ -28,7 +28,8 @@ public class OltGpon extends Olt {
 
     }
 
-    public boolean isValidAimVlanLineRange(final String aimVlanLineRange, final ImageIcon erroIcon, final int range) {
+    public boolean isValidAimVlanLineRange(final String aimVlanLineRange, final ImageIcon erroIcon, final int range,
+            String errorName) {
         // Verifica se é um range no formato inicio-fim
         if (range == 1) {
             if (aimVlanLineRange.matches("^[1-9]\\d*$")) {
@@ -41,7 +42,8 @@ public class OltGpon extends Olt {
                 } else {
                     // Exibe mensagem de erro se a VLAN não atender às condições
                     JOptionPane.showMessageDialog(null,
-                            "Valor invalido. Deve conter " + range + " numero, ser maior que 0 e nao ultrapassar 4095.",
+                            "Valor invalido para " + errorName + ". Deve conter " + range
+                                    + " numero, ser maior que 0 e nao ultrapassar 4095.",
                             "Erro",
                             JOptionPane.ERROR_MESSAGE, erroIcon);
                     return false;
@@ -49,7 +51,8 @@ public class OltGpon extends Olt {
             } else {
                 // Exibe mensagem de erro se a VLAN não atender às condições
                 JOptionPane.showMessageDialog(null,
-                        "Valor invalido. Deve conter apenas numero(s) inteiro(s) nao nulo, maior que 0 e menor que 4095.",
+                        "Valor invalido para " + errorName
+                                + ". Deve conter apenas numero(s) inteiro(s) nao nulo, maior que 0 e menor que 4095.",
                         "Erro",
                         JOptionPane.ERROR_MESSAGE, erroIcon);
                 return false;
@@ -67,7 +70,8 @@ public class OltGpon extends Olt {
                 } else {
                     // Exibe mensagem de erro se o range não atender às condições
                     JOptionPane.showMessageDialog(null,
-                            "Range invalido. Deve conter " + range + " numeros e nao ultrapassar 4095.",
+                            "Range invalido para " + errorName + ". Deve conter " + range
+                                    + " numeros e nao ultrapassar 4095.",
                             "Erro",
                             JOptionPane.ERROR_MESSAGE, erroIcon);
                     return false;
@@ -83,7 +87,8 @@ public class OltGpon extends Olt {
                         if (num <= 0) {
                             // Exibe mensagem de erro se algum valor não for um número inteiro não nulo
                             JOptionPane.showMessageDialog(null,
-                                    "Valor " + valor + " invalido. Deve ser um numero inteiro nao nulo.",
+                                    "Valor " + valor + " invalido para " + errorName
+                                            + ". Deve ser um numero inteiro nao nulo.",
                                     "Erro",
                                     JOptionPane.ERROR_MESSAGE, erroIcon);
                             return false;
@@ -94,7 +99,7 @@ public class OltGpon extends Olt {
                     // Exibe mensagem de erro se o número de valores não for igual ao range
                     JOptionPane.showMessageDialog(null,
                             "Deve conter exatamente " + range
-                                    + " valores separados por virgula.",
+                                    + " valores separados por virgula para " + errorName + ".",
                             "Erro",
                             JOptionPane.ERROR_MESSAGE, erroIcon);
                     return false;
@@ -103,7 +108,7 @@ public class OltGpon extends Olt {
         }
         // Exibe mensagem de erro se o range não atender às condições
         JOptionPane.showMessageDialog(null,
-                "Valor invalido. Deve conter " + range + " numeros e nao ultrapassar 4095.",
+                "Valor invalido para " + errorName + ". Deve conter " + range + " numeros e nao ultrapassar 4095.",
                 "Erro",
                 JOptionPane.ERROR_MESSAGE, erroIcon);
         return false;
@@ -111,7 +116,7 @@ public class OltGpon extends Olt {
 
     public boolean checkAimProfileVlan(String rangeProfileVlan,
             final ImageIcon erroIcon, final int range) {
-        if (this.isValidAimVlanLineRange(rangeProfileVlan, erroIcon, range)) {
+        if (this.isValidAimVlanLineRange(rangeProfileVlan, erroIcon, range, "Profile Vlan")) {
             return true;
         }
         return false;
@@ -119,7 +124,7 @@ public class OltGpon extends Olt {
 
     public boolean checkAimProfileLine(String rangeProfielLine, final ImageIcon erroIcon, final int range) {
 
-        if (this.isValidAimVlanLineRange(rangeProfielLine, erroIcon, range)) {
+        if (this.isValidAimVlanLineRange(rangeProfielLine, erroIcon, range, "Profile Line")) {
             return true;
         }
 
@@ -132,7 +137,7 @@ public class OltGpon extends Olt {
      */
     public boolean start(String[] interfaceGpon, String interfaceEth, String configuracaoAutoConfig,
             String defaultCpe, int slotLength, String rangeVlan, String rangeProfileVlan, String rangeProfileLine,
-            String[] configuracoes, String host, String port, String user, char[] pwd, String nomeArq) {
+            String[] configuracoes, String nomeArq) {
 
         // Carrega os ícones necessários para o diálogo
         final ClassLoader classLoader = OltGpon.class.getClassLoader();
@@ -262,9 +267,29 @@ public class OltGpon extends Olt {
         configGenerator.createScript(nomeArq, slotLength);
         return true;
 
-        // // // Configuração final para definir o acesso à OLT
-        // final Telnet telnetAccess = new Telnet(host, port, user, pwd);
-        // telnetAccess.oltAccess(nomeArq);
+    }
+
+    public boolean checkTelnet(String ipAddress, String port, String user, char[] pwd, final ImageIcon erroIcon) {
+        // Verifica se o endereço IP inserido é válido.
+        if (!isValidIPv4Address(ipAddress)) {
+            JOptionPane.showMessageDialog(null,
+                    "Entrada invalida. Por favor, insira um endereço IP valido (0-255).", "Erro",
+                    JOptionPane.ERROR_MESSAGE, erroIcon);
+            return false;
+        }
+        if (!port.matches("^[1-9]\\d*$")) {
+            JOptionPane.showMessageDialog(null,
+                    "Entrada invalida. Por favor, insira uma porta valida.", "Erro",
+                    JOptionPane.ERROR_MESSAGE, erroIcon);
+            return false;
+        }
+        if (user == null || pwd == null) {
+            JOptionPane.showMessageDialog(null,
+                    "Entrada invalida. O campo usuario ou senha não podem ser nulos", "Erro",
+                    JOptionPane.ERROR_MESSAGE, erroIcon);
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -329,96 +354,11 @@ public class OltGpon extends Olt {
         return matcher.matches();
     }
 
-    /**
-     * Obtém o endereço IP da OLT a partir do usuário.
-     * 
-     * @param saidaIcon Ícone para caixa de diálogo de saída.
-     * @param erroIcon  Ícone de erro para caixa de diálogo.
-     */
-    @Override
-    public void getIpFromUser(ImageIcon saidaIcon, ImageIcon erroIcon) {
-        // Loop para garantir que o usuário forneça um endereço IP válido.
-        do {
-            // Solicita ao usuário que insira o endereço IP da OLT.
-            this.setIp(JOptionPane.showInputDialog("Digite o IP da OLT:"));
-
-            // Verifica se o usuário cancelou a operação.
-            if (this.getIp() == null) {
-                saida(saidaIcon);
-                System.exit(0);
-            }
-
-            // Verifica se o endereço IP inserido é válido.
-            if (!isValidIPv4Address(this.getIp())) {
-                JOptionPane.showMessageDialog(null,
-                        "Entrada invalida. Por favor, insira um endereço IP valido (0-255).", "Erro",
-                        JOptionPane.ERROR_MESSAGE, erroIcon);
-            }
-        } while (!isValidIPv4Address(this.getIp()));
-    }
-
-    /**
-     * Obtém a porta de acesso Telnet da OLT a partir do usuário.
-     * 
-     * @param saidaIcon Ícone para caixa de diálogo de saída.
-     * @param erroIcon  Ícone de erro para caixa de diálogo.
-     */
-    @Override
-    public void getPortFromUser(ImageIcon saidaIcon, ImageIcon erroIcon) {
-        String port;
-        do {
-            port = JOptionPane.showInputDialog("Digite a porta de acesso Telnet da OLT:");
-        } while (!port.matches("^[1-9]\\d*$"));
-        this.setPort(Integer.parseInt(port));
-    }
-
-    /**
-     * Obtém o nome de usuário e senha da OLT a partir do usuário.
-     * 
-     * @param saidaIcon Ícone para caixa de diálogo de saída.
-     * @param erroIcon  Ícone de erro para caixa de diálogo.
-     */
-    @Override
-    public void getUserAndPwd(ImageIcon saidaIcon, ImageIcon erroIcon) {
-        // Loop para garantir que o usuário forneça tanto o nome de usuário quanto a
-        // senha.
-        do {
-            // Solicita ao usuário que insira o nome de usuário da OLT.
-            this.setUser(JOptionPane.showInputDialog("Digite o usuario da OLT:"));
-
-            // Verifica se o usuário cancelou a operação.
-            if (this.getUser() == null) {
-                saida(saidaIcon);
-                System.exit(0);
-            }
-
-            // Solicita ao usuário que insira a senha da OLT.
-            this.setPasswd(JOptionPane.showInputDialog("Digite a senha da OLT:"));
-
-            // Verifica se o usuário cancelou a operação.
-            if (this.getPasswd() == null) {
-                saida(saidaIcon);
-                System.exit(0);
-            }
-
-        } while (this.getPasswd() == null && this.getUser() == null);
-    }
-
-    /**
-     * Obtém informações de VLAN para o cliente a partir do usuário.
-     * 
-     * @param equipamentoIcon Ícone do equipamento.
-     * @param saidaIcon       Ícone de saída.
-     * @param erroIcon        Ícone de erro.
-     * @param range           O intervalo permitido para as informações de VLAN.
-     * @return Uma lista de strings representando as informações de VLAN para o
-     *         cliente.
-     */
     @Override
     public boolean checkVlanClient(String rangeVlan,
             ImageIcon erroIcon, int range) {
 
-        if (this.isValidAimVlanLineRange(rangeVlan, erroIcon, range)) {
+        if (this.isValidAimVlanLineRange(rangeVlan, erroIcon, range, "Range Vlan")) {
             return true;
         }
         return false;
@@ -450,6 +390,24 @@ public class OltGpon extends Olt {
     @Override
     public void setSlotLength(int slotLength) {
         throw new UnsupportedOperationException("Unimplemented method 'setSlotLength'");
+    }
+
+    @Override
+    public void getIpFromUser(ImageIcon saidaIcon, ImageIcon erroIcon) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getIpFromUser'");
+    }
+
+    @Override
+    public void getPortFromUser(ImageIcon saidaIcon, ImageIcon erroIcon) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPortFromUser'");
+    }
+
+    @Override
+    public void getUserAndPwd(ImageIcon saidaIcon, ImageIcon erroIcon) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getUserAndPwd'");
     }
 
 }

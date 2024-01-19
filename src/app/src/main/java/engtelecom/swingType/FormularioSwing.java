@@ -1,3 +1,6 @@
+/**
+ * ARQUIVO BASE, CRIADO POR CHATGPT
+ */
 package engtelecom.swingType;
 
 import java.awt.GridLayout;
