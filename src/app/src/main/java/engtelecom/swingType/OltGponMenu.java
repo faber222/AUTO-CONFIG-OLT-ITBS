@@ -75,12 +75,9 @@ public class OltGponMenu extends JFrame {
 	public OltGponMenu(int slotLength) {
 		this.slotLength = slotLength;
 		initComponents();
+		setLocationRelativeTo(null);
 		oltGpon = new OltGpon();
 	}
-
-	// public void waitForCriar() throws InterruptedException {
-	// criarLatch.await();
-	// }
 
 	/**
 	 * @param args the command line arguments
@@ -103,94 +100,6 @@ public class OltGponMenu extends JFrame {
 		JOptionPane.showMessageDialog(null,
 				"Voce pressionou o botao 'Cancelar'. O programa sera encerrado.",
 				null, JOptionPane.WARNING_MESSAGE, this.saidaIcon);
-	}
-
-	public JComboBox<String> getjComboBoxInterfaceUplink() {
-		return jComboBoxInterfaceUplink;
-	}
-
-	public void setjComboBoxInterfaceUplink(JComboBox<String> jComboBoxInterfaceUplink) {
-		this.jComboBoxInterfaceUplink = jComboBoxInterfaceUplink;
-	}
-
-	public JComboBox<String> getjComboBoxModoAutoConfig() {
-		return jComboBoxModoAutoConfig;
-	}
-
-	public void setjComboBoxModoAutoConfig(JComboBox<String> jComboBoxModoAutoConfig) {
-		this.jComboBoxModoAutoConfig = jComboBoxModoAutoConfig;
-	}
-
-	public JPasswordField getjPasswordFieldOltPasswd() {
-		return jPasswordFieldOltPasswd;
-	}
-
-	public void setjPasswordFieldOltPasswd(JPasswordField jPasswordFieldOltPasswd) {
-		this.jPasswordFieldOltPasswd = jPasswordFieldOltPasswd;
-	}
-
-	public JRadioButton getjRadioButtonBridge() {
-		return jRadioButtonBridge;
-	}
-
-	public void setjRadioButtonBridge(JRadioButton jRadioButtonBridge) {
-		this.jRadioButtonBridge = jRadioButtonBridge;
-	}
-
-	public JRadioButton getjRadioButtonRouter() {
-		return jRadioButtonRouter;
-	}
-
-	public void setjRadioButtonRouter(JRadioButton jRadioButtonRouter) {
-		this.jRadioButtonRouter = jRadioButtonRouter;
-	}
-
-	public JTextField getjTextFieldIpOlt() {
-		return jTextFieldIpOlt;
-	}
-
-	public void setjTextFieldIpOlt(JTextField jTextFieldIpOlt) {
-		this.jTextFieldIpOlt = jTextFieldIpOlt;
-	}
-
-	public JTextField getjTextFieldOltUser() {
-		return jTextFieldOltUser;
-	}
-
-	public void setjTextFieldOltUser(JTextField jTextFieldOltUser) {
-		this.jTextFieldOltUser = jTextFieldOltUser;
-	}
-
-	public JTextField getjTextFieldPortOlt() {
-		return jTextFieldPortOlt;
-	}
-
-	public void setjTextFieldPortOlt(JTextField jTextFieldPortOlt) {
-		this.jTextFieldPortOlt = jTextFieldPortOlt;
-	}
-
-	public JTextField getjTextFieldRangeProfileLine() {
-		return jTextFieldRangeProfileLine;
-	}
-
-	public void setjTextFieldRangeProfileLine(JTextField jTextFieldRangeProfileLine) {
-		this.jTextFieldRangeProfileLine = jTextFieldRangeProfileLine;
-	}
-
-	public JTextField getjTextFieldRangeProfileVlan() {
-		return jTextFieldRangeProfileVlan;
-	}
-
-	public void setjTextFieldRangeProfileVlan(JTextField jTextFieldRangeProfileVlan) {
-		this.jTextFieldRangeProfileVlan = jTextFieldRangeProfileVlan;
-	}
-
-	public JTextField getjTextFieldRangeVlan() {
-		return jTextFieldRangeVlan;
-	}
-
-	public void setjTextFieldRangeVlan(JTextField jTextFieldRangeVlan) {
-		this.jTextFieldRangeVlan = jTextFieldRangeVlan;
 	}
 
 	private void olt() {
