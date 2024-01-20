@@ -65,6 +65,7 @@ public class OltGponMenu extends JFrame {
 	private String nomeArq;
 	private ImageIcon errorIcon;
 	private ImageIcon successIcon;
+	private ImageIcon saidaIcon;
 	private OltGpon oltGpon;
 	private int slotLength;
 
@@ -94,6 +95,14 @@ public class OltGponMenu extends JFrame {
 			}
 		});
 
+	}
+
+	public void saida() {
+		// Exibe uma caixa de diálogo com uma mensagem de aviso indicando que o programa
+		// será encerrado.
+		JOptionPane.showMessageDialog(null,
+				"Voce pressionou o botao 'Cancelar'. O programa sera encerrado.",
+				null, JOptionPane.WARNING_MESSAGE, this.saidaIcon);
 	}
 
 	public JComboBox<String> getjComboBoxInterfaceUplink() {
@@ -189,6 +198,7 @@ public class OltGponMenu extends JFrame {
 		final ClassLoader classLoader = OltGpon.class.getClassLoader();
 		this.errorIcon = new ImageIcon(classLoader.getResource("erro.png"));
 		this.successIcon = new ImageIcon(classLoader.getResource("success.png"));
+		this.saidaIcon = new ImageIcon(classLoader.getResource("saida.png"));
 		this.nomeArq = "scriptG08.txt";
 
 		this.modelosInterface = new String[] {
@@ -287,12 +297,17 @@ public class OltGponMenu extends JFrame {
 		jLabel15 = new JLabel();
 		jButtonFileChooser = new JButton();
 
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setTitle("OLT-AUTO-CONFIG");
 		setFont(new java.awt.Font("JetBrains Mono", 0, 10)); // NOI18N
 		setResizable(false);
 
 		jButtonCancel.setText("Cancel");
+		jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jButtonCancelActionPerformed(evt);
+			}
+		});
 
 		jButtonCriar.setText("Criar");
 		jButtonCriar.addActionListener(new java.awt.event.ActionListener() {
@@ -714,6 +729,12 @@ public class OltGponMenu extends JFrame {
 
 	}// GEN-LAST:event_jComboBoxModoAutoConfigActionPerformed
 
+	private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jComboBoxModoAutoConfigActionPerformed
+		saida();
+		dispose();
+		System.exit(0);
+	}// GEN-LAST:event_jComboBoxModoAutoConfigActionPerformed
+
 	private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonEnviarActionPerformed
 		if (this.oltGpon.checkTelnet(jTextFieldIpOlt.getText(), jTextFieldPortOlt.getText(),
 				jTextFieldOltUser.getText(), jPasswordFieldOltPasswd.getPassword(), this.errorIcon)) {
@@ -746,7 +767,7 @@ public class OltGponMenu extends JFrame {
 			JOptionPane.showMessageDialog(null,
 					"Script criado com sucesso!", "Sucesso!",
 					JOptionPane.ERROR_MESSAGE, this.successIcon);
-			
+
 		} else {
 			System.out.println("Deu errado");
 		}
@@ -777,11 +798,14 @@ public class OltGponMenu extends JFrame {
 			java.io.File selectedFile = fileChooser.getSelectedFile();
 			System.out.println("Arquivo selecionado: " + selectedFile.getAbsolutePath());
 			this.nomeArq = selectedFile.getAbsolutePath();
+			System.out.println(selectedFile.getName());
+			jButtonFileChooser.setText(selectedFile.getName());
 		} else {
 			JOptionPane.showMessageDialog(null,
 					"Nenhum arquivo selecionado.", "Error!",
 					JOptionPane.ERROR_MESSAGE, this.errorIcon);
 			System.out.println("Nenhum arquivo selecionado.");
+			jButtonFileChooser.setText("File");
 		}
 	}// GEN-LAST:event_jButtonFileChooserActionPerformed
 
