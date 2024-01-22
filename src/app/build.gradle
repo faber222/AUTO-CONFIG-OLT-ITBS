@@ -26,6 +26,7 @@ dependencies {
 
     // This dependency is used by the application.
     implementation("com.google.guava:guava:32.1.1-jre")
+    implementation("com.jtattoo:JTattoo:1.6.13")
 
     implementation("org.xerial:sqlite-jdbc:3.43.0.0")
     implementation("com.google.zxing:core:3.5.0")
@@ -35,7 +36,7 @@ dependencies {
 // Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(8))
+        languageVersion.set(JavaLanguageVersion.of(21))
     }
 }
 

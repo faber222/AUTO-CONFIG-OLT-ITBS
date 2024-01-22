@@ -1,0 +1,146 @@
+bridge add eth 1 uplink vlan 1 tagged
+bridge add eth 1 uplink vlan 2 tagged
+bridge add eth 1 uplink vlan 3 tagged
+bridge add eth 1 uplink vlan 4 tagged
+bridge add eth 1 uplink vlan 5 tagged
+bridge add eth 1 uplink vlan 6 tagged
+bridge add eth 1 uplink vlan 7 tagged
+bridge add eth 1 uplink vlan 8 tagged
+
+bridge-profile add gpon1-default downlink vlan 1 tagged eth 1
+bridge-profile add gpon2-default downlink vlan 2 tagged eth 1
+bridge-profile add gpon3-default downlink vlan 3 tagged eth 1
+bridge-profile add gpon4-default downlink vlan 4 tagged eth 1
+bridge-profile add gpon5-default downlink vlan 5 tagged eth 1
+bridge-profile add gpon6-default downlink vlan 6 tagged eth 1
+bridge-profile add gpon7-default downlink vlan 7 tagged eth 1
+bridge-profile add gpon8-default downlink vlan 8 tagged eth 1
+
+bridge-profile add gpon1-default-router downlink vlan 1 tagged router
+bridge-profile add gpon2-default-router downlink vlan 2 tagged router
+bridge-profile add gpon3-default-router downlink vlan 3 tagged router
+bridge-profile add gpon4-default-router downlink vlan 4 tagged router
+bridge-profile add gpon5-default-router downlink vlan 5 tagged router
+bridge-profile add gpon6-default-router downlink vlan 6 tagged router
+bridge-profile add gpon7-default-router downlink vlan 7 tagged router
+bridge-profile add gpon8-default-router downlink vlan 8 tagged router
+
+bridge-profile bind add gpon1-default device intelbras-110 gpon 1
+bridge-profile bind add gpon1-default device intelbras-110b gpon 1
+bridge-profile bind add gpon1-default device intelbras-110g gpon 1
+bridge-profile bind add gpon1-default device intelbras-r1 gpon 1
+bridge-profile bind add gpon1-default device intelbras-default gpon 1
+bridge-profile bind add gpon2-default device intelbras-110 gpon 2
+bridge-profile bind add gpon2-default device intelbras-110b gpon 2
+bridge-profile bind add gpon2-default device intelbras-110g gpon 2
+bridge-profile bind add gpon2-default device intelbras-r1 gpon 2
+bridge-profile bind add gpon2-default device intelbras-default gpon 2
+bridge-profile bind add gpon3-default device intelbras-110 gpon 3
+bridge-profile bind add gpon3-default device intelbras-110b gpon 3
+bridge-profile bind add gpon3-default device intelbras-110g gpon 3
+bridge-profile bind add gpon3-default device intelbras-r1 gpon 3
+bridge-profile bind add gpon3-default device intelbras-default gpon 3
+bridge-profile bind add gpon4-default device intelbras-110 gpon 4
+bridge-profile bind add gpon4-default device intelbras-110b gpon 4
+bridge-profile bind add gpon4-default device intelbras-110g gpon 4
+bridge-profile bind add gpon4-default device intelbras-r1 gpon 4
+bridge-profile bind add gpon4-default device intelbras-default gpon 4
+bridge-profile bind add gpon5-default device intelbras-110 gpon 5
+bridge-profile bind add gpon5-default device intelbras-110b gpon 5
+bridge-profile bind add gpon5-default device intelbras-110g gpon 5
+bridge-profile bind add gpon5-default device intelbras-r1 gpon 5
+bridge-profile bind add gpon5-default device intelbras-default gpon 5
+bridge-profile bind add gpon6-default device intelbras-110 gpon 6
+bridge-profile bind add gpon6-default device intelbras-110b gpon 6
+bridge-profile bind add gpon6-default device intelbras-110g gpon 6
+bridge-profile bind add gpon6-default device intelbras-r1 gpon 6
+bridge-profile bind add gpon6-default device intelbras-default gpon 6
+bridge-profile bind add gpon7-default device intelbras-110 gpon 7
+bridge-profile bind add gpon7-default device intelbras-110b gpon 7
+bridge-profile bind add gpon7-default device intelbras-110g gpon 7
+bridge-profile bind add gpon7-default device intelbras-r1 gpon 7
+bridge-profile bind add gpon7-default device intelbras-default gpon 7
+bridge-profile bind add gpon8-default device intelbras-110 gpon 8
+bridge-profile bind add gpon8-default device intelbras-110b gpon 8
+bridge-profile bind add gpon8-default device intelbras-110g gpon 8
+bridge-profile bind add gpon8-default device intelbras-r1 gpon 8
+bridge-profile bind add gpon8-default device intelbras-default gpon 8
+
+bridge-profile bind add gpon1-default-router device intelbras-121w gpon 1
+bridge-profile bind add gpon1-default-router device intelbras-142ng gpon 1
+bridge-profile bind add gpon1-default-router device intelbras-142nw gpon 1
+bridge-profile bind add gpon1-default-router device intelbras-1420g gpon 1
+bridge-profile bind add gpon1-default-router device intelbras-120ac gpon 1
+bridge-profile bind add gpon1-default-router device intelbras-121ac gpon 1
+bridge-profile bind add gpon1-default-router device intelbras-1200r gpon 1
+bridge-profile bind add gpon1-default-router device intelbras-ax1800 gpon 1
+bridge-profile bind add gpon1-default-router device intelbras-ax1800v gpon 1
+bridge-profile bind add gpon2-default-router device intelbras-121w gpon 2
+bridge-profile bind add gpon2-default-router device intelbras-142ng gpon 2
+bridge-profile bind add gpon2-default-router device intelbras-142nw gpon 2
+bridge-profile bind add gpon2-default-router device intelbras-1420g gpon 2
+bridge-profile bind add gpon2-default-router device intelbras-120ac gpon 2
+bridge-profile bind add gpon2-default-router device intelbras-121ac gpon 2
+bridge-profile bind add gpon2-default-router device intelbras-1200r gpon 2
+bridge-profile bind add gpon2-default-router device intelbras-ax1800 gpon 2
+bridge-profile bind add gpon2-default-router device intelbras-ax1800v gpon 2
+bridge-profile bind add gpon3-default-router device intelbras-121w gpon 3
+bridge-profile bind add gpon3-default-router device intelbras-142ng gpon 3
+bridge-profile bind add gpon3-default-router device intelbras-142nw gpon 3
+bridge-profile bind add gpon3-default-router device intelbras-1420g gpon 3
+bridge-profile bind add gpon3-default-router device intelbras-120ac gpon 3
+bridge-profile bind add gpon3-default-router device intelbras-121ac gpon 3
+bridge-profile bind add gpon3-default-router device intelbras-1200r gpon 3
+bridge-profile bind add gpon3-default-router device intelbras-ax1800 gpon 3
+bridge-profile bind add gpon3-default-router device intelbras-ax1800v gpon 3
+bridge-profile bind add gpon4-default-router device intelbras-121w gpon 4
+bridge-profile bind add gpon4-default-router device intelbras-142ng gpon 4
+bridge-profile bind add gpon4-default-router device intelbras-142nw gpon 4
+bridge-profile bind add gpon4-default-router device intelbras-1420g gpon 4
+bridge-profile bind add gpon4-default-router device intelbras-120ac gpon 4
+bridge-profile bind add gpon4-default-router device intelbras-121ac gpon 4
+bridge-profile bind add gpon4-default-router device intelbras-1200r gpon 4
+bridge-profile bind add gpon4-default-router device intelbras-ax1800 gpon 4
+bridge-profile bind add gpon4-default-router device intelbras-ax1800v gpon 4
+bridge-profile bind add gpon5-default-router device intelbras-121w gpon 5
+bridge-profile bind add gpon5-default-router device intelbras-142ng gpon 5
+bridge-profile bind add gpon5-default-router device intelbras-142nw gpon 5
+bridge-profile bind add gpon5-default-router device intelbras-1420g gpon 5
+bridge-profile bind add gpon5-default-router device intelbras-120ac gpon 5
+bridge-profile bind add gpon5-default-router device intelbras-121ac gpon 5
+bridge-profile bind add gpon5-default-router device intelbras-1200r gpon 5
+bridge-profile bind add gpon5-default-router device intelbras-ax1800 gpon 5
+bridge-profile bind add gpon5-default-router device intelbras-ax1800v gpon 5
+bridge-profile bind add gpon6-default-router device intelbras-121w gpon 6
+bridge-profile bind add gpon6-default-router device intelbras-142ng gpon 6
+bridge-profile bind add gpon6-default-router device intelbras-142nw gpon 6
+bridge-profile bind add gpon6-default-router device intelbras-1420g gpon 6
+bridge-profile bind add gpon6-default-router device intelbras-120ac gpon 6
+bridge-profile bind add gpon6-default-router device intelbras-121ac gpon 6
+bridge-profile bind add gpon6-default-router device intelbras-1200r gpon 6
+bridge-profile bind add gpon6-default-router device intelbras-ax1800 gpon 6
+bridge-profile bind add gpon6-default-router device intelbras-ax1800v gpon 6
+bridge-profile bind add gpon7-default-router device intelbras-121w gpon 7
+bridge-profile bind add gpon7-default-router device intelbras-142ng gpon 7
+bridge-profile bind add gpon7-default-router device intelbras-142nw gpon 7
+bridge-profile bind add gpon7-default-router device intelbras-1420g gpon 7
+bridge-profile bind add gpon7-default-router device intelbras-120ac gpon 7
+bridge-profile bind add gpon7-default-router device intelbras-121ac gpon 7
+bridge-profile bind add gpon7-default-router device intelbras-1200r gpon 7
+bridge-profile bind add gpon7-default-router device intelbras-ax1800 gpon 7
+bridge-profile bind add gpon7-default-router device intelbras-ax1800v gpon 7
+bridge-profile bind add gpon8-default-router device intelbras-121w gpon 8
+bridge-profile bind add gpon8-default-router device intelbras-142ng gpon 8
+bridge-profile bind add gpon8-default-router device intelbras-142nw gpon 8
+bridge-profile bind add gpon8-default-router device intelbras-1420g gpon 8
+bridge-profile bind add gpon8-default-router device intelbras-120ac gpon 8
+bridge-profile bind add gpon8-default-router device intelbras-121ac gpon 8
+bridge-profile bind add gpon8-default-router device intelbras-1200r gpon 8
+bridge-profile bind add gpon8-default-router device intelbras-ax1800 gpon 8
+bridge-profile bind add gpon8-default-router device intelbras-ax1800v gpon 8
+
+onu set auto
+auto-service enable
+yes
+onu show refresh
+
