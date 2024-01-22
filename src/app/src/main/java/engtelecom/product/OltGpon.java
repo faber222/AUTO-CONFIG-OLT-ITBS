@@ -264,7 +264,7 @@ public class OltGpon extends Olt {
         // Verifica se o endereço IP inserido é válido.
         if (!isValidIPv4Address(ipAddress)) {
             JOptionPane.showMessageDialog(null,
-                    "Entrada invalida. Por favor, insira um endereço IP valido (0-255).", "Erro",
+                    "Entrada invalida. Por favor, insira um endereco IP valido (0-255).", "Erro",
                     JOptionPane.ERROR_MESSAGE, erroIcon);
             return false;
         }
@@ -276,7 +276,7 @@ public class OltGpon extends Olt {
         }
         if (user == null || pwd == null) {
             JOptionPane.showMessageDialog(null,
-                    "Entrada invalida. O campo usuario ou senha não podem ser nulos", "Erro",
+                    "Entrada invalida. O campo usuario ou senha nao podem ser nulos", "Erro",
                     JOptionPane.ERROR_MESSAGE, erroIcon);
             return false;
         }
