@@ -11,28 +11,4 @@ package engtelecom.product;
  */
 public abstract class Olt implements OltInterface {
 
-    /**
-     * Endereço IP da OLT.
-     */
-    protected String ip;
-
-    /**
-     * Porta de acesso Telnet da OLT.
-     */
-    protected int port;
-
-    /**
-     * Senha de acesso à OLT.
-     */
-    protected String passwd;
-
-    /**
-     * Nome de usuário para acesso à OLT.
-     */
-    protected String user;
-
-    /**
-     * Tamanho dos slots que a OLT possui.
-     */
-    protected int slotLength;
 }

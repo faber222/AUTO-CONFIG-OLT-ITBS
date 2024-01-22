@@ -127,7 +127,6 @@ public class Telnet implements Runnable {
         try (BufferedReader fileReader = new BufferedReader(new FileReader(filename))) {
             String command;
             while ((command = fileReader.readLine()) != null) {
-                System.out.println(command);
                 out.println(command);
                 try {
                     // Adiciona um atraso de 100ms após cada out.println

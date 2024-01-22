@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "DarkModeExample",
+      "request": "launch",
+      "mainClass": "engtelecom.swingType.DarkModeExample",
+      "projectName": "app"
+    },
+    {
+      "type": "java",
       "name": "DarkThemeExample",
       "request": "launch",
       "mainClass": "engtelecom.swingType.DarkThemeExample",

@@ -62,6 +62,7 @@ public class OltGponMenu extends JFrame {
 	private String[] modelosInterface;
 	private String[] configuracoes;
 	private String[] interfaceGpon;
+	private boolean fileChooserIsSelected;
 	private String nomeArq;
 	private ImageIcon errorIcon;
 	private ImageIcon successIcon;
@@ -83,8 +84,6 @@ public class OltGponMenu extends JFrame {
 	 * @param args the command line arguments
 	 */
 	public void start() {
-		// OltGponMenu teste = new OltGponMenu();
-		// teste.setVisible(true);
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -109,6 +108,7 @@ public class OltGponMenu extends JFrame {
 		this.successIcon = new ImageIcon(classLoader.getResource("success.png"));
 		this.saidaIcon = new ImageIcon(classLoader.getResource("saida.png"));
 		this.nomeArq = "scriptG08.txt";
+		this.fileChooserIsSelected = false;
 
 		this.modelosInterface = new String[] {
 				"interface ethernet 1/1",
@@ -225,9 +225,8 @@ public class OltGponMenu extends JFrame {
 			}
 		});
 
-		jPanel1.setBorder(BorderFactory.createTitledBorder(null, " Dados de acesso da OLT ",
-				javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
-				javax.swing.border.TitledBorder.DEFAULT_POSITION,
+		jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Dados de acesso da OLT ",
+				javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION,
 				new java.awt.Font("JetBrains Mono ExtraBold", 0, 12))); // NOI18N
 		jPanel1.setToolTipText("OLT");
 		jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -238,7 +237,7 @@ public class OltGponMenu extends JFrame {
 		jLabel2.setFont(new java.awt.Font("JetBrains Mono ExtraBold", 0, 12)); // NOI18N
 		jLabel2.setText("Usuario");
 
-		jTextFieldIpOlt.setText("John");
+		// jTextFieldIpOlt.setText("x.x.x.x");
 		jTextFieldIpOlt.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jTextFieldIpOltActionPerformed(evt);
@@ -251,16 +250,16 @@ public class OltGponMenu extends JFrame {
 		jLabel10.setFont(new java.awt.Font("JetBrains Mono ExtraBold", 0, 12)); // NOI18N
 		jLabel10.setText("Senha");
 
-		jPasswordFieldOltPasswd.setText("jPasswordField1");
+		// jPasswordFieldOltPasswd.setText("");
 		jPasswordFieldOltPasswd.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jPasswordFieldOltPasswdActionPerformed(evt);
 			}
 		});
 
-		jTextFieldOltUser.setText("John");
+		// jTextFieldOltUser.setText("John");
 
-		jTextFieldPortOlt.setText("John");
+		// jTextFieldPortOlt.setText("John");
 		jTextFieldPortOlt.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jTextFieldPortOltActionPerformed(evt);
@@ -370,14 +369,14 @@ public class OltGponMenu extends JFrame {
 
 		jLabel8.setText("Range Profile Vlan");
 
-		jTextFieldRangeProfileVlan.setText("jTextField2");
+		// jTextFieldRangeProfileVlan.setText("jTextField2");
 		jTextFieldRangeProfileVlan.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jTextFieldRangeProfileVlanActionPerformed(evt);
 			}
 		});
 
-		jTextFieldRangeProfileLine.setText("jTextField2");
+		// jTextFieldRangeProfileLine.setText("jTextField2");
 		jTextFieldRangeProfileLine.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jTextFieldRangeProfileLineActionPerformed(evt);
@@ -386,7 +385,7 @@ public class OltGponMenu extends JFrame {
 
 		jLabel5.setText("Range Vlan");
 
-		jTextFieldRangeVlan.setText("jTextField2");
+		// jTextFieldRangeVlan.setText("jTextField2");
 		jTextFieldRangeVlan.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jTextFieldRangeVlanActionPerformed(evt);
@@ -520,7 +519,7 @@ public class OltGponMenu extends JFrame {
 		jPanel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
 		jLabel15.setFont(new java.awt.Font("JetBrains Mono ExtraBold", 0, 12)); // NOI18N
-		jLabel15.setText("IMPORTAR SCRIPT PRONTO");
+		jLabel15.setText("Importar Script");
 
 		jButtonFileChooser.setText("File");
 		jButtonFileChooser.addActionListener(new java.awt.event.ActionListener() {
@@ -645,15 +644,21 @@ public class OltGponMenu extends JFrame {
 	}// GEN-LAST:event_jComboBoxModoAutoConfigActionPerformed
 
 	private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonEnviarActionPerformed
-		if (this.oltGpon.checkTelnet(jTextFieldIpOlt.getText(), jTextFieldPortOlt.getText(),
-				jTextFieldOltUser.getText(), jPasswordFieldOltPasswd.getPassword(), this.errorIcon)) {
-			JOptionPane.showMessageDialog(null,
-					"Valores validos!", "Sucesso!",
-					JOptionPane.ERROR_MESSAGE, this.successIcon);
+		if (this.fileChooserIsSelected) {
+			if (this.oltGpon.checkTelnet(jTextFieldIpOlt.getText(), jTextFieldPortOlt.getText(),
+					jTextFieldOltUser.getText(), jPasswordFieldOltPasswd.getPassword(), this.errorIcon)) {
+				JOptionPane.showMessageDialog(null,
+						"Valores validos!", "Sucesso!",
+						JOptionPane.ERROR_MESSAGE, this.successIcon);
 
-			Telnet acessoOlt = new Telnet(jTextFieldIpOlt.getText(), Integer.parseInt(jTextFieldPortOlt.getText()),
-					jTextFieldOltUser.getText(), new String(jPasswordFieldOltPasswd.getPassword()));
-			acessoOlt.oltAccess(this.nomeArq);
+				Telnet acessoOlt = new Telnet(jTextFieldIpOlt.getText(), Integer.parseInt(jTextFieldPortOlt.getText()),
+						jTextFieldOltUser.getText(), new String(jPasswordFieldOltPasswd.getPassword()));
+				acessoOlt.oltAccess(this.nomeArq);
+			}
+		} else {
+			JOptionPane.showMessageDialog(null,
+					"Nenhum arquivo selecionado ou criado!", "Error",
+					JOptionPane.ERROR_MESSAGE, this.errorIcon);
 		}
 	}// GEN-LAST:event_jButtonEnviarActionPerformed
 
@@ -672,27 +677,18 @@ public class OltGponMenu extends JFrame {
 				jTextFieldRangeProfileLine.getText(),
 				this.configuracoes, nomeArq)) {
 			// Cria um objeto ConfigGenerator para gerar o script de configuração
-			System.out.println("Deu certo!");
 			JOptionPane.showMessageDialog(null,
 					"Script criado com sucesso!", "Sucesso!",
 					JOptionPane.ERROR_MESSAGE, this.successIcon);
+			this.fileChooserIsSelected = true;
+			jButtonFileChooser.setText(this.nomeArq);
 
 		} else {
-			System.out.println("Deu errado");
+			JOptionPane.showMessageDialog(null,
+					"Script nao foi criado!", "Error!",
+					JOptionPane.ERROR_MESSAGE, this.errorIcon);
 		}
 
-		System.out.println(jTextFieldIpOlt.getText());
-		System.out.println(jTextFieldPortOlt.getText());
-		System.out.println(jTextFieldOltUser.getText());
-		System.out.println(jPasswordFieldOltPasswd.getPassword());
-		System.out.println(jTextFieldRangeVlan.getText());
-		System.out.println(jTextFieldRangeProfileVlan.getText());
-		System.out.println(jTextFieldRangeProfileLine.getText());
-		System.out.println(jComboBoxInterfaceUplink.getSelectedItem());
-		System.out.println(jComboBoxModoAutoConfig.getSelectedItem());
-		System.out.println(jRadioButtonBridge.isSelected());
-		System.out.println(jRadioButtonRouter.isSelected());
-		// dispose();
 	}// GEN-LAST:event_jButtonCriarActionPerformed
 
 	private void jButtonFileChooserActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonFileChooserActionPerformed
@@ -703,17 +699,17 @@ public class OltGponMenu extends JFrame {
 
 		// Verifica se o usuário escolheu um arquivo
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
+			this.fileChooserIsSelected = true;
 			// Obtém o arquivo selecionado
 			java.io.File selectedFile = fileChooser.getSelectedFile();
 			System.out.println("Arquivo selecionado: " + selectedFile.getAbsolutePath());
 			this.nomeArq = selectedFile.getAbsolutePath();
-			System.out.println(selectedFile.getName());
 			jButtonFileChooser.setText(selectedFile.getName());
 		} else {
+			this.fileChooserIsSelected = false;
 			JOptionPane.showMessageDialog(null,
 					"Nenhum arquivo selecionado.", "Error!",
 					JOptionPane.ERROR_MESSAGE, this.errorIcon);
-			System.out.println("Nenhum arquivo selecionado.");
 			jButtonFileChooser.setText("File");
 		}
 	}// GEN-LAST:event_jButtonFileChooserActionPerformed

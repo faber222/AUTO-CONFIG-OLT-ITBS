@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.Hashtable;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -19,6 +20,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
+import engtelecom.swingType.OltGpon8820PlusMenu;
 import engtelecom.swingType.OltGponMenu;
 
 /**
@@ -26,12 +28,10 @@ import engtelecom.swingType.OltGponMenu;
  */
 public class App {
 
-    /**
-     * Construtor padrão da classe App.
-     */
-    public App() {
-        // Construtor padrão, não há ações específicas aqui no momento.
-    }
+    // Variáveis para armazenar os valores originais
+    private static Object originalBackground;
+    private static Object originalForeground;
+    private static boolean darkModeEnabled = false;
 
     /**
      * Exibe informações sobre o criador e um QR code contendo o link do GitHub.
@@ -169,6 +169,8 @@ public class App {
                 case 2:
                     condition = true;
 
+                    OltGpon8820PlusMenu olt8820 = new OltGpon8820PlusMenu(8);
+                    olt8820.start();
                     // final Olt8820Plus Olt8820Plus = new Olt8820Plus(8);
                     // Olt8820Plus.start();
                     break;
@@ -189,7 +191,7 @@ public class App {
      * @param args Argumentos da linha de comando (não utilizados neste momento).
      */
     public static void main(final String[] args) {
-                /* Set the Nimbus look and feel */
+        /* Set the Nimbus look and feel */
         // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
         // (optional) ">
         /*
@@ -199,30 +201,34 @@ public class App {
          * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
-            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+            // Ainda experimental, mas funcional
+            // enableDarkMode();
+            for (final UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (final ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(OltGponMenu.class.getName()).log(
                     java.util.logging.Level.SEVERE, null,
                     ex);
-        } catch (InstantiationException ex) {
+        } catch (final InstantiationException ex) {
             java.util.logging.Logger.getLogger(OltGponMenu.class.getName()).log(
                     java.util.logging.Level.SEVERE, null,
                     ex);
-        } catch (IllegalAccessException ex) {
+        } catch (final IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(OltGponMenu.class.getName()).log(
                     java.util.logging.Level.SEVERE, null,
                     ex);
-        } catch (UnsupportedLookAndFeelException ex) {
+        } catch (final UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(OltGponMenu.class.getName()).log(
                     java.util.logging.Level.SEVERE, null,
                     ex);
         }
         final Object[] options = { "Avancar", "Autor", "Cancelar" };
+        // Adicione esses botões no seu array de opções
+        // final Object[] options = { "Avançar", "Autor", "Dark Mode", "Cancelar" };
 
         // Carrega os ícones necessários para o diálogo
         final ClassLoader classLoader = App.class.getClassLoader();
@@ -231,5 +237,64 @@ public class App {
         final ImageIcon erroIcon = new ImageIcon(classLoader.getResource("erro.png"));
 
         App.presentation(options, equipamentoIcon, saidaIcon, erroIcon);
+    }
+
+    private static void enableDarkMode() {
+
+        // Set background and foreground colors for various components
+        UIManager.put("Button.background", Color.darkGray);
+        UIManager.put("Button.foreground", Color.white);
+        UIManager.put("Panel.background", Color.darkGray);
+        UIManager.put("Label.foreground", Color.white);
+        UIManager.put("Label.background", Color.white);
+        UIManager.put("TextField.background", Color.darkGray);
+        UIManager.put("TextField.foreground", Color.white);
+        UIManager.put("TextArea.background", Color.darkGray);
+        UIManager.put("TextArea.foreground", Color.white);
+        UIManager.put("CheckBox.background", Color.darkGray);
+        UIManager.put("CheckBox.foreground", Color.white);
+        UIManager.put("RadioButton.background", Color.darkGray);
+        UIManager.put("RadioButton.foreground", Color.white);
+        UIManager.put("PasswordField.background", Color.darkGray);
+        UIManager.put("PasswordField.foreground", Color.white);
+        UIManager.put("List.background", Color.darkGray);
+        UIManager.put("List.foreground", Color.white);
+        UIManager.put("Table.background", Color.darkGray);
+        UIManager.put("Table.foreground", Color.white);
+        UIManager.put("TableHeader.background", Color.darkGray);
+        UIManager.put("TableHeader.foreground", Color.white);
+        UIManager.put("ComboBox.background", Color.darkGray);
+        UIManager.put("ComboBox.foreground", Color.white);
+        UIManager.put("ScrollBar.background", Color.darkGray);
+        UIManager.put("ScrollBar.foreground", Color.white);
+        UIManager.put("ProgressBar.background", Color.darkGray);
+        UIManager.put("ProgressBar.foreground", Color.white);
+        UIManager.put("Slider.background", Color.darkGray);
+        UIManager.put("Slider.foreground", Color.white);
+        UIManager.put("Separator.background", Color.darkGray);
+        UIManager.put("Separator.foreground", Color.white);
+        UIManager.put("OptionPane.background", Color.darkGray);
+        UIManager.put("OptionPane.messageForeground", Color.white);
+        UIManager.put("OptionPane.foreground", Color.white);
+        UIManager.put("FileChooser.background", Color.darkGray);
+        UIManager.put("FileChooser.foreground", Color.white);
+        UIManager.put("FileChooser.previewLabelBackground", Color.darkGray);
+        UIManager.put("FileChooser.previewLabelForeground", Color.white);
+        UIManager.put("FileChooser.listViewBackground", Color.darkGray);
+        UIManager.put("FileChooser.listViewForeground", Color.white);
+        UIManager.put("FileChooser.detailsViewBackground", Color.darkGray);
+        UIManager.put("FileChooser.detailsViewForeground", Color.white);
+        UIManager.put("FileChooser.border", BorderFactory.createLineBorder(Color.darkGray));
+        UIManager.put("nimbusBase", Color.darkGray);
+
+        // Set the default font color
+        UIManager.put("OptionPane.messageForeground", Color.white);
+    }
+
+    /**
+     * Construtor padrão da classe App.
+     */
+    public App() {
+        // Construtor padrão, não há ações específicas aqui no momento.
     }
 }

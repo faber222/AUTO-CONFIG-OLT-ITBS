@@ -19,11 +19,6 @@ import engtelecom.config.ConfigGenerator;
  */
 public class OltGpon extends Olt {
 
-    /**
-     * Construtor padrão
-     * 
-     * @param slotLength Tamanho dos slots que a olt possui, pode ser 8 ou 16
-     */
     public OltGpon() {
 
     }
@@ -179,8 +174,6 @@ public class OltGpon extends Olt {
         List<String> arrayAimVlan = new ArrayList<>();
         List<String> arrayAimLine = new ArrayList<>();
 
-        System.out.println("Valor slotLenghth: " + slotLength);
-        System.out.println("Range vlan: " + rangeNumVlan);
         if (checkVlanClient(rangeVlan, erroIcon, rangeNumVlan)) {
             // Processa a entrada do usuário com base no intervalo especificado.
             if (rangeNumVlan != 1) {
@@ -208,7 +201,6 @@ public class OltGpon extends Olt {
             return false;
         }
 
-        System.out.println("Range Aim Vlan: " + rangeAimVlan);
         if (checkAimProfileVlan(rangeProfileVlan, erroIcon, rangeAimVlan)) {
             // Processa a entrada do usuário com base no intervalo especificado.
             if (rangeAimVlan != 1) {
@@ -237,7 +229,6 @@ public class OltGpon extends Olt {
             return false;
         }
 
-        System.out.println("Range Line: " + rangeAimLine);
         if (checkAimProfileLine(rangeProfileLine, erroIcon, rangeAimLine)) {
             final String[] partes;
             if (rangeProfileLine.matches("^([1-9]\\d*,)+[1-9]\\d*$")) {
@@ -293,46 +284,6 @@ public class OltGpon extends Olt {
     }
 
     @Override
-    public String getIp() {
-        return ip;
-    }
-
-    @Override
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    @Override
-    public int getPort() {
-        return port;
-    }
-
-    @Override
-    public void setPort(int port) {
-        this.port = port;
-    }
-
-    @Override
-    public String getPasswd() {
-        return passwd;
-    }
-
-    @Override
-    public void setPasswd(String passwd) {
-        this.passwd = passwd;
-    }
-
-    @Override
-    public String getUser() {
-        return user;
-    }
-
-    @Override
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    @Override
     public void saida(ImageIcon saidaIcon) {
         // Exibe uma caixa de diálogo com uma mensagem de aviso indicando que o programa
         // será encerrado.
@@ -362,52 +313,6 @@ public class OltGpon extends Olt {
             return true;
         }
         return false;
-    }
-
-    @Override
-    public String getInterfaceEth(ImageIcon equipamentoIcon, ImageIcon saidaIcon, ImageIcon erroIcon,
-            String[] interfaceEth) {
-        throw new UnsupportedOperationException("Unimplemented method 'getInterfaceEth'");
-    }
-
-    @Override
-    public String getDefaultCpeType(ImageIcon equipamentoIcon, ImageIcon saidaIcon, ImageIcon erroIcon,
-            String[] defaultCpeType) {
-        throw new UnsupportedOperationException("Unimplemented method 'getDefaultCpeType'");
-    }
-
-    @Override
-    public String getModelConfiguration(ImageIcon equipamentoIcon, ImageIcon saidaIcon, ImageIcon erroIcon,
-            String[] modelConfiguration) {
-        throw new UnsupportedOperationException("Unimplemented method 'getModelConfiguration'");
-    }
-
-    @Override
-    public int getSlotLength() {
-        throw new UnsupportedOperationException("Unimplemented method 'getSlotLength'");
-    }
-
-    @Override
-    public void setSlotLength(int slotLength) {
-        throw new UnsupportedOperationException("Unimplemented method 'setSlotLength'");
-    }
-
-    @Override
-    public void getIpFromUser(ImageIcon saidaIcon, ImageIcon erroIcon) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getIpFromUser'");
-    }
-
-    @Override
-    public void getPortFromUser(ImageIcon saidaIcon, ImageIcon erroIcon) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPortFromUser'");
-    }
-
-    @Override
-    public void getUserAndPwd(ImageIcon saidaIcon, ImageIcon erroIcon) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUserAndPwd'");
     }
 
 }
