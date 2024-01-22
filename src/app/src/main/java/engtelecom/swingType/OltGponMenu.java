@@ -65,6 +65,7 @@ public class OltGponMenu extends JFrame {
 	private String nomeArq;
 	private ImageIcon errorIcon;
 	private ImageIcon successIcon;
+	private ImageIcon saidaIcon;
 	private OltGpon oltGpon;
 	private int slotLength;
 
@@ -74,12 +75,9 @@ public class OltGponMenu extends JFrame {
 	public OltGponMenu(int slotLength) {
 		this.slotLength = slotLength;
 		initComponents();
+		setLocationRelativeTo(null);
 		oltGpon = new OltGpon();
 	}
-
-	// public void waitForCriar() throws InterruptedException {
-	// criarLatch.await();
-	// }
 
 	/**
 	 * @param args the command line arguments
@@ -96,92 +94,12 @@ public class OltGponMenu extends JFrame {
 
 	}
 
-	public JComboBox<String> getjComboBoxInterfaceUplink() {
-		return jComboBoxInterfaceUplink;
-	}
-
-	public void setjComboBoxInterfaceUplink(JComboBox<String> jComboBoxInterfaceUplink) {
-		this.jComboBoxInterfaceUplink = jComboBoxInterfaceUplink;
-	}
-
-	public JComboBox<String> getjComboBoxModoAutoConfig() {
-		return jComboBoxModoAutoConfig;
-	}
-
-	public void setjComboBoxModoAutoConfig(JComboBox<String> jComboBoxModoAutoConfig) {
-		this.jComboBoxModoAutoConfig = jComboBoxModoAutoConfig;
-	}
-
-	public JPasswordField getjPasswordFieldOltPasswd() {
-		return jPasswordFieldOltPasswd;
-	}
-
-	public void setjPasswordFieldOltPasswd(JPasswordField jPasswordFieldOltPasswd) {
-		this.jPasswordFieldOltPasswd = jPasswordFieldOltPasswd;
-	}
-
-	public JRadioButton getjRadioButtonBridge() {
-		return jRadioButtonBridge;
-	}
-
-	public void setjRadioButtonBridge(JRadioButton jRadioButtonBridge) {
-		this.jRadioButtonBridge = jRadioButtonBridge;
-	}
-
-	public JRadioButton getjRadioButtonRouter() {
-		return jRadioButtonRouter;
-	}
-
-	public void setjRadioButtonRouter(JRadioButton jRadioButtonRouter) {
-		this.jRadioButtonRouter = jRadioButtonRouter;
-	}
-
-	public JTextField getjTextFieldIpOlt() {
-		return jTextFieldIpOlt;
-	}
-
-	public void setjTextFieldIpOlt(JTextField jTextFieldIpOlt) {
-		this.jTextFieldIpOlt = jTextFieldIpOlt;
-	}
-
-	public JTextField getjTextFieldOltUser() {
-		return jTextFieldOltUser;
-	}
-
-	public void setjTextFieldOltUser(JTextField jTextFieldOltUser) {
-		this.jTextFieldOltUser = jTextFieldOltUser;
-	}
-
-	public JTextField getjTextFieldPortOlt() {
-		return jTextFieldPortOlt;
-	}
-
-	public void setjTextFieldPortOlt(JTextField jTextFieldPortOlt) {
-		this.jTextFieldPortOlt = jTextFieldPortOlt;
-	}
-
-	public JTextField getjTextFieldRangeProfileLine() {
-		return jTextFieldRangeProfileLine;
-	}
-
-	public void setjTextFieldRangeProfileLine(JTextField jTextFieldRangeProfileLine) {
-		this.jTextFieldRangeProfileLine = jTextFieldRangeProfileLine;
-	}
-
-	public JTextField getjTextFieldRangeProfileVlan() {
-		return jTextFieldRangeProfileVlan;
-	}
-
-	public void setjTextFieldRangeProfileVlan(JTextField jTextFieldRangeProfileVlan) {
-		this.jTextFieldRangeProfileVlan = jTextFieldRangeProfileVlan;
-	}
-
-	public JTextField getjTextFieldRangeVlan() {
-		return jTextFieldRangeVlan;
-	}
-
-	public void setjTextFieldRangeVlan(JTextField jTextFieldRangeVlan) {
-		this.jTextFieldRangeVlan = jTextFieldRangeVlan;
+	public void saida() {
+		// Exibe uma caixa de diálogo com uma mensagem de aviso indicando que o programa
+		// será encerrado.
+		JOptionPane.showMessageDialog(null,
+				"Voce pressionou o botao 'Cancelar'. O programa sera encerrado.",
+				null, JOptionPane.WARNING_MESSAGE, this.saidaIcon);
 	}
 
 	private void olt() {
@@ -189,6 +107,7 @@ public class OltGponMenu extends JFrame {
 		final ClassLoader classLoader = OltGpon.class.getClassLoader();
 		this.errorIcon = new ImageIcon(classLoader.getResource("erro.png"));
 		this.successIcon = new ImageIcon(classLoader.getResource("success.png"));
+		this.saidaIcon = new ImageIcon(classLoader.getResource("saida.png"));
 		this.nomeArq = "scriptG08.txt";
 
 		this.modelosInterface = new String[] {
@@ -287,12 +206,17 @@ public class OltGponMenu extends JFrame {
 		jLabel15 = new JLabel();
 		jButtonFileChooser = new JButton();
 
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setTitle("OLT-AUTO-CONFIG");
 		setFont(new java.awt.Font("JetBrains Mono", 0, 10)); // NOI18N
 		setResizable(false);
 
 		jButtonCancel.setText("Cancel");
+		jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				jButtonCancelActionPerformed(evt);
+			}
+		});
 
 		jButtonCriar.setText("Criar");
 		jButtonCriar.addActionListener(new java.awt.event.ActionListener() {
@@ -714,6 +638,12 @@ public class OltGponMenu extends JFrame {
 
 	}// GEN-LAST:event_jComboBoxModoAutoConfigActionPerformed
 
+	private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jComboBoxModoAutoConfigActionPerformed
+		saida();
+		dispose();
+		System.exit(0);
+	}// GEN-LAST:event_jComboBoxModoAutoConfigActionPerformed
+
 	private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonEnviarActionPerformed
 		if (this.oltGpon.checkTelnet(jTextFieldIpOlt.getText(), jTextFieldPortOlt.getText(),
 				jTextFieldOltUser.getText(), jPasswordFieldOltPasswd.getPassword(), this.errorIcon)) {
@@ -746,7 +676,7 @@ public class OltGponMenu extends JFrame {
 			JOptionPane.showMessageDialog(null,
 					"Script criado com sucesso!", "Sucesso!",
 					JOptionPane.ERROR_MESSAGE, this.successIcon);
-			
+
 		} else {
 			System.out.println("Deu errado");
 		}
@@ -777,11 +707,14 @@ public class OltGponMenu extends JFrame {
 			java.io.File selectedFile = fileChooser.getSelectedFile();
 			System.out.println("Arquivo selecionado: " + selectedFile.getAbsolutePath());
 			this.nomeArq = selectedFile.getAbsolutePath();
+			System.out.println(selectedFile.getName());
+			jButtonFileChooser.setText(selectedFile.getName());
 		} else {
 			JOptionPane.showMessageDialog(null,
 					"Nenhum arquivo selecionado.", "Error!",
 					JOptionPane.ERROR_MESSAGE, this.errorIcon);
 			System.out.println("Nenhum arquivo selecionado.");
+			jButtonFileChooser.setText("File");
 		}
 	}// GEN-LAST:event_jButtonFileChooserActionPerformed
 

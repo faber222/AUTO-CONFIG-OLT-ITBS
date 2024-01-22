@@ -156,17 +156,15 @@ public class App {
                 case 0:
                     // Se a opção for 0, a condição é satisfeita e retorna true.
                     condition = true;
-                    final OltGponMenu teste = new OltGponMenu(16);
-                    teste.start();
-                    // final OltGpon OltG16 = new OltGpon();
-                    // OltG16.start();
+                    final OltGponMenu oltG16 = new OltGponMenu(16);
+                    oltG16.start();
+
                     break;
                 case 1:
                     // Se a opção for 1, chama o método mostrarCriador().
                     condition = true;
-
-                    // final OltGpon OltG08 = new OltGpon(8);
-                    // OltG08.start();
+                    final OltGponMenu oltG08 = new OltGponMenu(8);
+                    oltG08.start();
                     break;
                 case 2:
                     condition = true;
