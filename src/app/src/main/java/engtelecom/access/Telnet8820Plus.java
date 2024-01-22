@@ -34,10 +34,10 @@ public class Telnet8820Plus implements Runnable {
     /**
      * Construtor da classe Telnet8820Plus.
      * 
-     * @param host     O endereço IP do host.
-     * @param port     A porta para a conexão Telnet.
-     * @param user     O nome de usuário para autenticação.
-     * @param pwd      A senha para autenticação.
+     * @param host O endereço IP do host.
+     * @param port A porta para a conexão Telnet.
+     * @param user O nome de usuário para autenticação.
+     * @param pwd  A senha para autenticação.
      */
     public Telnet8820Plus(String host, int port, String user, String pwd) {
         this.host = host;
@@ -138,7 +138,8 @@ public class Telnet8820Plus implements Runnable {
     }
 
     /**
-     * Método run da interface Runnable para processar as mensagens recebidas do Telnet.
+     * Método run da interface Runnable para processar as mensagens recebidas do
+     * Telnet.
      */
     public void run() {
         try {
@@ -153,6 +154,9 @@ public class Telnet8820Plus implements Runnable {
             }
         } catch (IOException exception) {
             System.err.println("Erro de comunicação.");
+            JOptionPane.showInternalMessageDialog(null,
+                    "Erro de comunicacao.", "Aviso!",
+                    JOptionPane.INFORMATION_MESSAGE);
             System.exit(1);
         }
     }
