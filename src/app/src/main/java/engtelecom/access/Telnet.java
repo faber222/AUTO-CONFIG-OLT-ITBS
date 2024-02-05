@@ -101,13 +101,13 @@ public class Telnet implements Runnable {
 
         } catch (final UnknownHostException exception) {
             System.err.println("Host " + host + " desconhecido");
-            JOptionPane.showInternalMessageDialog(null, "Host " + host
+            JOptionPane.showMessageDialog(null, "Host " + host
                     + " desconhecido", "Aviso!",
                     JOptionPane.INFORMATION_MESSAGE);
             System.exit(1);
         } catch (final IOException exception) {
             System.err.println("Erro na entrada.");
-            JOptionPane.showInternalMessageDialog(null, 
+            JOptionPane.showMessageDialog(null, 
                     "Erro na entrada.", "Aviso!",
                     JOptionPane.INFORMATION_MESSAGE);
             System.exit(1);
@@ -149,9 +149,9 @@ public class Telnet implements Runnable {
      * Mensagem de alerta ao usuário
      */
     private void finalMessage() {
-        JOptionPane.showInternalMessageDialog(null, "Comandos aplicados com sucesso!", "Aviso!",
+        JOptionPane.showMessageDialog(null, "Comandos aplicados com sucesso!", "Aviso!",
                 JOptionPane.INFORMATION_MESSAGE);
-        JOptionPane.showInternalMessageDialog(null, "NAO ESQUECA DE VALIDAR E SALVAR AS CONFIGURACOES!", "Aviso!",
+        JOptionPane.showMessageDialog(null, "NAO ESQUECA DE VALIDAR E SALVAR AS CONFIGURACOES!", "Aviso!",
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
@@ -173,7 +173,7 @@ public class Telnet implements Runnable {
             }
         } catch (final IOException exception) {
             System.err.println("Erro de comunicacao.");
-            JOptionPane.showInternalMessageDialog(null, 
+            JOptionPane.showMessageDialog(null, 
                     "Erro de comunicacao.", "Aviso!",
                     JOptionPane.INFORMATION_MESSAGE);
             System.exit(1);

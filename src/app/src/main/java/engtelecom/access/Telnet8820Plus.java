@@ -133,7 +133,7 @@ public class Telnet8820Plus implements Runnable {
      * Exibe uma mensagem de alerta ao usuário.
      */
     private void finalMessage() {
-        JOptionPane.showInternalMessageDialog(null, "Comandos aplicados com sucesso!", "Aviso!",
+        JOptionPane.showMessageDialog(null, "Comandos aplicados com sucesso!", "Aviso!",
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
@@ -154,7 +154,7 @@ public class Telnet8820Plus implements Runnable {
             }
         } catch (IOException exception) {
             System.err.println("Erro de comunicação.");
-            JOptionPane.showInternalMessageDialog(null,
+            JOptionPane.showMessageDialog(null,
                     "Erro de comunicacao.", "Aviso!",
                     JOptionPane.INFORMATION_MESSAGE);
             System.exit(1);
