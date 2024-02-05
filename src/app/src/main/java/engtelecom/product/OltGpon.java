@@ -149,8 +149,8 @@ public class OltGpon extends Olt {
                 "i40-421",
                 "i41-100",
                 "i41-201",
-                "i41-211",
-                "i41-421"
+                "i40-401",
+                "i40-411"
         };
 
         final String[] defaultCpeType = {
