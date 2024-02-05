@@ -121,7 +121,6 @@ public class Olt8820Plus extends Olt {
         final ImageIcon erroIcon = new ImageIcon(classLoader.getResource("erro.png"));
 
         final String[] deviceType = {
-            
                 "110",
                 "110b",
                 "110g",
