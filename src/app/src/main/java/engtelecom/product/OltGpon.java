@@ -156,6 +156,24 @@ public class OltGpon extends Olt {
                 "i41-421"       // [14] 142ng
         };
 
+        final String[] deviceTypeName = {
+                "110zhone",
+                "R1v2",
+                "110gi",
+                "R1",
+                "110gb",
+                "1420g",
+                "120ac",
+                "142nw",
+                "121w",
+                "140poe",
+                "ax1800",
+                "ax1800v",
+                "1200r",
+                "121ac",
+                "142ng"
+        };
+
         final String[] defaultCpeType = {
                 "bridge",
                 "router"
@@ -256,7 +274,7 @@ public class OltGpon extends Olt {
         final ConfigGenerator configGenerator = new ConfigGenerator(arrayVlan,
                 arrayAimVlan, interfaceEth, arrayAimLine, deviceType,
                 configuracaoAutoConfig, configuracoes,
-                defaultCpe, interfaceGpon, defaultCpeType);
+                defaultCpe, interfaceGpon, defaultCpeType, deviceTypeName);
 
         configGenerator.createScript(nomeArq, slotLength);
         return true;
