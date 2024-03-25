@@ -139,18 +139,21 @@ public class OltGpon extends Olt {
         final ImageIcon erroIcon = new ImageIcon(classLoader.getResource("erro.png"));
 
         final String[] deviceType = {
-                "i10-100",
-                "i10-420",
-                "i30-100",
-                "i40-100",
-                "i40-100-v2",
-                "i40-201",
-                "i40-211",
-                "i40-421",
-                "i41-100",
-                "i41-201",
-                "i40-401",
-                "i40-411"
+                "i10-100",      // [0] 110 zhone
+                "i40-100-v2",   // [1] R1v2
+                "i30-100",      // [2] 110gi
+                "i40-100",      // [3] R1-MANTER FIXO I40-100
+                "i41-100",      // [4] 110gb
+                "i10-420",      // [5] 1420G
+                "i40-201",      // [6] 120ac
+                "i40-421",      // [7] 142nW-MANTER FIXO I40-421
+                "i40-211",      // [8] 121w
+                "i40-400-1",    // [9] 140Poe
+                "i40-401",      // [10] ax1800
+                "i40-411",      // [11] ax1800v
+                "i41-201",      // [12] 1200r
+                "i41-211",      // [13] 121ac
+                "i41-421"       // [14] 142ng
         };
 
         final String[] defaultCpeType = {
