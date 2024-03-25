@@ -143,7 +143,7 @@ public class OltGpon extends Olt {
                 "i40-100-v2",   // [1] R1v2
                 "i30-100",      // [2] 110gi
                 "i40-100",      // [3] R1-MANTER FIXO I40-100
-                "i41-100",      // [4] 110gb
+                "i41-100",      // [4] 110gb - Caso aumente o numero de onus, favor alterar o oltAutoConfig que está para 5 <
                 "i10-420",      // [5] 1420G
                 "i40-201",      // [6] 120ac
                 "i40-421",      // [7] 142nW-MANTER FIXO I40-421
