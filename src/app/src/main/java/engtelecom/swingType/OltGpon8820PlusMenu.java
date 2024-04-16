@@ -132,7 +132,6 @@ public class OltGpon8820PlusMenu extends JFrame {
 
                 this.bridgeInterfaceUplink = new String[] {
                                 "uplink",
-                                "intralink",
                                 "tls"
                 };
 

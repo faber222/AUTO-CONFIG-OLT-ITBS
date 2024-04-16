@@ -23,28 +23,31 @@ public class ConfigGenerator8820Plus extends Config {
     private final String defaultCpe;
     private final String[] interfaceGpon;
     private final String[] defaultCpeType;
+    private final String[] uplinkType;
     private final String bridgeInterfaceUplink;
     private final String bridgeInterfaceUplinkVlanMode;
 
     /**
      * Construtor da classe ConfigGenerator8820Plus.
      *
-     * @param vlans                    Lista de VLANs.
-     * @param interfaceEthernet        Nome da interface Ethernet.
-     * @param deviceType               Lista de tipos de dispositivo.
-     * @param modelConfiguration              Tipo de VLAN da PON.
-     * @param vlanType                 Lista de tipos de VLAN.
-     * @param defaultCpe               Tipo padrão da CPE.
-     * @param interfaceGpon            Lista de interfaces GPON.
-     * @param defaultCpeType           Lista de tipos padrão de CPE.
-     * @param bridgeInterfaceUplink    Interface de uplink para a ponte.
-     * @param bridgeInterfaceUplinkVlanMode Modo de VLAN para a interface de uplink da ponte.
+     * @param vlans                         Lista de VLANs.
+     * @param interfaceEthernet             Nome da interface Ethernet.
+     * @param deviceType                    Lista de tipos de dispositivo.
+     * @param modelConfiguration            Tipo de VLAN da PON.
+     * @param vlanType                      Lista de tipos de VLAN.
+     * @param defaultCpe                    Tipo padrão da CPE.
+     * @param interfaceGpon                 Lista de interfaces GPON.
+     * @param defaultCpeType                Lista de tipos padrão de CPE.
+     * @param bridgeInterfaceUplink         Interface de uplink para a ponte.
+     * @param bridgeInterfaceUplinkVlanMode Modo de VLAN para a interface de uplink
+     *                                      da ponte.
+     * @param uplinkType                    Se e TLS ou DOWNLINK
      */
     public ConfigGenerator8820Plus(final List<String> vlans, final String interfaceEthernet,
             final String[] deviceType, final String modelConfiguration,
             final String[] vlanType, final String defaultCpe, final String[] interfaceGpon,
             final String[] defaultCpeType, final String bridgeInterfaceUplink,
-            final String bridgeInterfaceUplinkVlanMode) {
+            final String bridgeInterfaceUplinkVlanMode, final String[] uplinkType) {
         super(vlans, interfaceEthernet, deviceType);
         this.ponVlanType = modelConfiguration;
         this.vlanType = vlanType;
@@ -53,6 +56,16 @@ public class ConfigGenerator8820Plus extends Config {
         this.defaultCpeType = defaultCpeType;
         this.bridgeInterfaceUplink = bridgeInterfaceUplink;
         this.bridgeInterfaceUplinkVlanMode = bridgeInterfaceUplinkVlanMode;
+        this.uplinkType = uplinkType;
+    }
+
+    /**
+     * Obtém a interface de uplink.
+     *
+     * @return A interface de uplink.
+     */
+    public String[] getUplinkType() {
+        return this.uplinkType;
     }
 
     /**
@@ -206,45 +219,74 @@ public class ConfigGenerator8820Plus extends Config {
         List<String> bridgeProfileBindRouter = new ArrayList<>();
 
         if (getPonVlanType().equals(getVlanType()[1])) {
+            // coloca a bridge uplink da olt
             bridgeUplink.add(oltGpon.bridgeUplink(getVlans().get(0),
-                    getInterfaceEthernet(), getBridgeInterfaceUplink()));
-            bridgeProfile.add(oltGpon.bridgeProfile(getVlans().get(0)));
-            bridgeProfileRouter.add(oltGpon.bridgeProfileRouter(getVlans().get(0)));
+                    getInterfaceEthernet(), getBridgeInterfaceUplink(), getBridgeInterfaceUplinkVlanMode()));
+            if (getBridgeInterfaceUplink().equals(getUplinkType()[0])) {
+                // coloca tls no bridge profile
+                bridgeProfile.add(oltGpon.bridgeProfile(getVlans().get(0), getBridgeInterfaceUplink()));
+                bridgeProfileRouter.add(oltGpon.bridgeProfileRouter(getVlans().get(0), getBridgeInterfaceUplink()));
+            } else {
+                // coloca downlink no bridge profile
+                bridgeProfile.add(oltGpon.bridgeProfile(getVlans().get(0), getUplinkType()[1]));
+                bridgeProfileRouter.add(oltGpon.bridgeProfileRouter(getVlans().get(0), getUplinkType()[1]));
+            }
 
             for (int i = 0; i < getDeviceType().length - 1; i++) {
                 if (i <= 3) {
+                    // define o bridge-profile bind default em bridge
                     bridgeProfileBind.add(oltGpon.bridgeProfileBind(getDeviceType()[i]));
                 } else {
+                    // define o bridge-profile bind default em router
                     bridgeProfileBindRouter.add(oltGpon.bridgeProfileBindRouter(getDeviceType()[i]));
                 }
             }
             if (getDefaultCpe().equals(getDefaultCpeType()[0])) {
+                // define o bridge profile bind em modo bridge
                 bridgeProfileBind.add(oltGpon.bridgeProfileBind(getDeviceType()[getDeviceType().length - 1]));
             } else {
+                // define o bridge profile bind em modo router
                 bridgeProfileBindRouter
                         .add(oltGpon.bridgeProfileBindRouter(getDeviceType()[getDeviceType().length - 1]));
             }
         } else {
             int j = 0;
             for (String vlans : getVlans()) {
-                bridgeUplink.add(oltGpon.bridgeUplink(vlans, getInterfaceEthernet(), getBridgeInterfaceUplink()));
-                bridgeProfile.add(oltGpon.bridgeProfile(vlans, Integer.toString(j+1)));
-                bridgeProfileRouter.add(oltGpon.bridgeProfileRouter(vlans, Integer.toString(j+1)));
+                // coloca a bridge uplink da olt
+                bridgeUplink.add(oltGpon.bridgeUplink(vlans, getInterfaceEthernet(), getBridgeInterfaceUplink(),
+                        getBridgeInterfaceUplinkVlanMode()));
+
+                if (getBridgeInterfaceUplink().equals(getUplinkType()[0])) {
+                    // coloca tls no bridge profile
+                    bridgeProfile.add(oltGpon.bridgeProfile(vlans, Integer.toString(j + 1),
+                            getBridgeInterfaceUplink()));
+                    bridgeProfileRouter.add(oltGpon.bridgeProfileRouter(vlans, Integer.toString(j + 1),
+                            getBridgeInterfaceUplink()));
+                } else {
+                    // coloca downlink no bridge profile
+                    bridgeProfile.add(oltGpon.bridgeProfile(vlans, Integer.toString(j + 1), getUplinkType()[1]));
+                    bridgeProfileRouter.add(oltGpon.bridgeProfileRouter(vlans, Integer.toString(j + 1),
+                            getUplinkType()[1]));
+                }
                 for (int i = 0; i < getDeviceType().length - 1; i++) {
                     if (i <= 3) {
-                        bridgeProfileBind.add(oltGpon.bridgeProfileBind(Integer.toString(j+1), getDeviceType()[i],
+                        // define o bridge profile bind em modo bridge
+                        bridgeProfileBind.add(oltGpon.bridgeProfileBind(Integer.toString(j + 1), getDeviceType()[i],
                                 getInterfaceGpon()[j]));
                     } else {
-                        bridgeProfileBindRouter.add(oltGpon.bridgeProfileBindRouter(Integer.toString(j+1),
+                        // define o bridge profile bind em modo router
+                        bridgeProfileBindRouter.add(oltGpon.bridgeProfileBindRouter(Integer.toString(j + 1),
                                 getDeviceType()[i], getInterfaceGpon()[j]));
                     }
                 }
                 if (getDefaultCpe().equals(getDefaultCpeType()[0])) {
-                    bridgeProfileBind.add(oltGpon.bridgeProfileBind(Integer.toString(j+1),
+                    // define o bridge-profile bind default em bridge
+                    bridgeProfileBind.add(oltGpon.bridgeProfileBind(Integer.toString(j + 1),
                             getDeviceType()[getDeviceType().length - 1], getInterfaceGpon()[j]));
                 } else {
+                    // define o bridge-profile bind default em router
                     bridgeProfileBindRouter
-                            .add(oltGpon.bridgeProfileBindRouter(Integer.toString(j+1),
+                            .add(oltGpon.bridgeProfileBindRouter(Integer.toString(j + 1),
                                     getDeviceType()[getDeviceType().length - 1], getInterfaceGpon()[j]));
                 }
                 j++;
