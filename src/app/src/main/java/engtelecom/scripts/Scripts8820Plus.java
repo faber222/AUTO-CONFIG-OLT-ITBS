@@ -27,8 +27,8 @@ public class Scripts8820Plus {
      * @return O script para adicionar uma uplink para uma bridge.
      */
     public String bridgeUplink(final String vlanRange, final String interfaceEth,
-            final String bridgeInterfaceUplink) {
-        return String.format("bridge add %s %s vlan %s tagged", interfaceEth, bridgeInterfaceUplink, vlanRange);
+            final String bridgeInterfaceUplink, final String uplinkMode) {
+        return String.format("bridge add %s %s vlan %s %s", interfaceEth, bridgeInterfaceUplink, vlanRange, uplinkMode);
     }
 
     /**

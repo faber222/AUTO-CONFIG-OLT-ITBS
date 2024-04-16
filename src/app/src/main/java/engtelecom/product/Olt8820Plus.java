@@ -196,7 +196,7 @@ public class Olt8820Plus extends Olt {
         // Cria um objeto ConfigGenerator para gerar o script de configuração
         final ConfigGenerator8820Plus configGenerator = new ConfigGenerator8820Plus(arrayVlan, interfaceEth, deviceType,
                 modelConfiguration, configuracoes, defaultCpe, interfaceGpon, defaultCpeType,
-                bridgeInterfaceUplink, bridgeInterfaceUplinkVlanMode);
+                bridgeInterfaceUplink, bridgeInterfaceUplinkVlanMode, uplinkType);
 
         configGenerator.createScript(nomeArq);
 
