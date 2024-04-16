@@ -153,6 +153,11 @@ public class Olt8820Plus extends Olt {
                 "router"
         };
 
+        final String[] uplinkType = {
+            "tls",
+            "downlink"
+        };
+
         int rangeNumVlan = 1;
 
         if (!modelConfiguration.equals(configuracoes[1])) {

@@ -14,7 +14,8 @@ import java.util.List;
 import engtelecom.scripts.Scripts8820Plus;
 
 /**
- * Classe responsável por gerar configurações e scripts com base nos parâmetros fornecidos.
+ * Classe responsável por gerar configurações e scripts com base nos parâmetros
+ * fornecidos.
  * Estende a classe Config8820Plus para herdar as configurações básicas.
  */
 public class ConfigGenerator8820Plus extends Config {
@@ -23,22 +24,24 @@ public class ConfigGenerator8820Plus extends Config {
     private final String defaultCpe;
     private final String[] interfaceGpon;
     private final String[] defaultCpeType;
+    private final String[] uplinkType;
     private final String bridgeInterfaceUplink;
     private final String bridgeInterfaceUplinkVlanMode;
 
     /**
      * Construtor da classe ConfigGenerator8820Plus.
      *
-     * @param vlans                    Lista de VLANs.
-     * @param interfaceEthernet        Nome da interface Ethernet.
-     * @param deviceType               Lista de tipos de dispositivo.
-     * @param modelConfiguration              Tipo de VLAN da PON.
-     * @param vlanType                 Lista de tipos de VLAN.
-     * @param defaultCpe               Tipo padrão da CPE.
-     * @param interfaceGpon            Lista de interfaces GPON.
-     * @param defaultCpeType           Lista de tipos padrão de CPE.
-     * @param bridgeInterfaceUplink    Interface de uplink para a ponte.
-     * @param bridgeInterfaceUplinkVlanMode Modo de VLAN para a interface de uplink da ponte.
+     * @param vlans                         Lista de VLANs.
+     * @param interfaceEthernet             Nome da interface Ethernet.
+     * @param deviceType                    Lista de tipos de dispositivo.
+     * @param modelConfiguration            Tipo de VLAN da PON.
+     * @param vlanType                      Lista de tipos de VLAN.
+     * @param defaultCpe                    Tipo padrão da CPE.
+     * @param interfaceGpon                 Lista de interfaces GPON.
+     * @param defaultCpeType                Lista de tipos padrão de CPE.
+     * @param bridgeInterfaceUplink         Interface de uplink para a ponte.
+     * @param bridgeInterfaceUplinkVlanMode Modo de VLAN para a interface de uplink
+     *                                      da ponte.
      */
     public ConfigGenerator8820Plus(final List<String> vlans, final String interfaceEthernet,
             final String[] deviceType, final String modelConfiguration,
@@ -53,6 +56,16 @@ public class ConfigGenerator8820Plus extends Config {
         this.defaultCpeType = defaultCpeType;
         this.bridgeInterfaceUplink = bridgeInterfaceUplink;
         this.bridgeInterfaceUplinkVlanMode = bridgeInterfaceUplinkVlanMode;
+        this.uplinkType = new String;
+    }
+
+    /**
+     * Obtém a interface de uplink.
+     *
+     * @return A interface de uplink.
+     */
+    public String[] getUplinkType() {
+        return this.uplinkType;
     }
 
     /**
@@ -121,13 +134,18 @@ public class ConfigGenerator8820Plus extends Config {
     /**
      * Método para escrever o script em um arquivo.
      *
-     * @param script               Arquivo de script.
-     * @param autoConfig           Lista de comandos de autoconfiguração.
-     * @param bridgeUplink         Lista de comandos para configurar a interface de uplink da bridge.
-     * @param bridgeProfile        Lista de comandos para configurar o perfil da bridge.
-     * @param bridgeProfileRouter  Lista de comandos para configurar o perfil do roteador da bridge.
-     * @param bridgeProfileBind    Lista de comandos para vincular o perfil da bridge.
-     * @param bridgeProfileBindRouter Lista de comandos para vincular o perfil do roteador da bridge.
+     * @param script                  Arquivo de script.
+     * @param autoConfig              Lista de comandos de autoconfiguração.
+     * @param bridgeUplink            Lista de comandos para configurar a interface
+     *                                de uplink da bridge.
+     * @param bridgeProfile           Lista de comandos para configurar o perfil da
+     *                                bridge.
+     * @param bridgeProfileRouter     Lista de comandos para configurar o perfil do
+     *                                roteador da bridge.
+     * @param bridgeProfileBind       Lista de comandos para vincular o perfil da
+     *                                bridge.
+     * @param bridgeProfileBindRouter Lista de comandos para vincular o perfil do
+     *                                roteador da bridge.
      * @return true se a escrita for bem-sucedida, false caso contrário.
      */
     public boolean writeScript(final File script, List<String> autoConfig, List<String> bridgeUplink,
@@ -208,8 +226,8 @@ public class ConfigGenerator8820Plus extends Config {
         if (getPonVlanType().equals(getVlanType()[1])) {
             bridgeUplink.add(oltGpon.bridgeUplink(getVlans().get(0),
                     getInterfaceEthernet(), getBridgeInterfaceUplink()));
-            bridgeProfile.add(oltGpon.bridgeProfile(getVlans().get(0)));
-            bridgeProfileRouter.add(oltGpon.bridgeProfileRouter(getVlans().get(0)));
+            bridgeProfile.add(oltGpon.bridgeProfile(getVlans().get(0), getBridgeInterfaceUplink()));
+            bridgeProfileRouter.add(oltGpon.bridgeProfileRouter(getVlans().get(0), getBridgeInterfaceUplink()));
 
             for (int i = 0; i < getDeviceType().length - 1; i++) {
                 if (i <= 3) {
@@ -228,23 +246,24 @@ public class ConfigGenerator8820Plus extends Config {
             int j = 0;
             for (String vlans : getVlans()) {
                 bridgeUplink.add(oltGpon.bridgeUplink(vlans, getInterfaceEthernet(), getBridgeInterfaceUplink()));
-                bridgeProfile.add(oltGpon.bridgeProfile(vlans, Integer.toString(j+1)));
-                bridgeProfileRouter.add(oltGpon.bridgeProfileRouter(vlans, Integer.toString(j+1)));
+                bridgeProfile.add(oltGpon.bridgeProfile(vlans, Integer.toString(j + 1), getBridgeInterfaceUplink()));
+                bridgeProfileRouter.add(oltGpon.bridgeProfileRouter(vlans, Integer.toString(j + 1),
+                        getBridgeInterfaceUplink()));
                 for (int i = 0; i < getDeviceType().length - 1; i++) {
                     if (i <= 3) {
-                        bridgeProfileBind.add(oltGpon.bridgeProfileBind(Integer.toString(j+1), getDeviceType()[i],
+                        bridgeProfileBind.add(oltGpon.bridgeProfileBind(Integer.toString(j + 1), getDeviceType()[i],
                                 getInterfaceGpon()[j]));
                     } else {
-                        bridgeProfileBindRouter.add(oltGpon.bridgeProfileBindRouter(Integer.toString(j+1),
+                        bridgeProfileBindRouter.add(oltGpon.bridgeProfileBindRouter(Integer.toString(j + 1),
                                 getDeviceType()[i], getInterfaceGpon()[j]));
                     }
                 }
                 if (getDefaultCpe().equals(getDefaultCpeType()[0])) {
-                    bridgeProfileBind.add(oltGpon.bridgeProfileBind(Integer.toString(j+1),
+                    bridgeProfileBind.add(oltGpon.bridgeProfileBind(Integer.toString(j + 1),
                             getDeviceType()[getDeviceType().length - 1], getInterfaceGpon()[j]));
                 } else {
                     bridgeProfileBindRouter
-                            .add(oltGpon.bridgeProfileBindRouter(Integer.toString(j+1),
+                            .add(oltGpon.bridgeProfileBindRouter(Integer.toString(j + 1),
                                     getDeviceType()[getDeviceType().length - 1], getInterfaceGpon()[j]));
                 }
                 j++;

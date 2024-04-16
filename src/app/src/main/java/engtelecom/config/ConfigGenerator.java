@@ -32,6 +32,7 @@ public class ConfigGenerator extends Config {
     private final String defaultCpe;
     private final String[] interfaceGpon;
     private final String[] defaultCpeType;
+    private final String[] deviceTypeName;
     private final List<String> aimProfileVlan;
     private final List<String> aimProfileLine;
 
@@ -52,7 +53,7 @@ public class ConfigGenerator extends Config {
     public ConfigGenerator(final List<String> vlans, final List<String> aimProfileVlan, final String interfaceEthernet,
             final List<String> aimProfileLine, final String[] deviceType, final String ponVlanType,
             final String[] vlanType, final String defaultCpe, final String[] interfaceGpon,
-            final String[] defaultCpeType) {
+            final String[] defaultCpeType, final String[] deviceTypeName) {
         super(vlans, interfaceEthernet, deviceType);
         this.ponVlanType = ponVlanType;
         this.vlanType = vlanType;
@@ -61,6 +62,11 @@ public class ConfigGenerator extends Config {
         this.defaultCpeType = defaultCpeType;
         this.aimProfileLine = aimProfileLine;
         this.aimProfileVlan = aimProfileVlan;
+        this.deviceTypeName = deviceTypeName;
+    }
+
+    public String[] getDeviceTypeName() {
+        return deviceTypeName;
     }
 
     public List<String> getAimProfileVlan() {
@@ -300,9 +306,11 @@ public class ConfigGenerator extends Config {
         if (getPonVlanType() == getVlanType()[1]) {
             for (int i = 0; i < getDeviceType().length; i++) {
                 if (i < 5) {
-                    ontAutoConfig.add(oltGpon.ontAutoConfigUmaVlanPon(getAimProfileLine().get(0), getDeviceType()[i]));
+                    ontAutoConfig.add(oltGpon.ontAutoConfigUmaVlanPon(getAimProfileLine().get(0), getDeviceType()[i],
+                            getDeviceTypeName()[i]));
                 } else {
-                    ontAutoConfig.add(oltGpon.ontAutoConfigUmaVlanPon(getAimProfileLine().get(1), getDeviceType()[i]));
+                    ontAutoConfig.add(oltGpon.ontAutoConfigUmaVlanPon(getAimProfileLine().get(1), getDeviceType()[i],
+                            getDeviceTypeName()[i]));
                 }
             }
 
@@ -318,11 +326,13 @@ public class ConfigGenerator extends Config {
                 for (int j = 0; j < getAimProfileVlan().size(); j++) {
                     if (i < 5) {
                         ontAutoConfig.add(oltGpon.ontAutoConfigUmaVlanPorPon(getAimProfileLine().get(j), getVlans().get(j),
-                                getDeviceType()[i], getInterfaceGpon()[j]));
+                                getDeviceType()[i], getInterfaceGpon()[j],
+                                getDeviceTypeName()[i]));
                     } else {
                         ontAutoConfig
                                 .add(oltGpon.ontAutoConfigUmaVlanPorPon(getAimProfileLine().get(j + slotLength), getVlans().get(j),
-                                        getDeviceType()[i], getInterfaceGpon()[j]));
+                                        getDeviceType()[i], getInterfaceGpon()[j],
+                                        getDeviceTypeName()[i]));
                     }
                 }
             }
