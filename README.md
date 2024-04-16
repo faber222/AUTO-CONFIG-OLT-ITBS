@@ -10,14 +10,7 @@ Este programa funciona solicitando algumas informações referentes a configura�
 
 ## COMO USAR
 
-Para usar a ferramenta, será necessário apenas fazer o download do java8, o mesmo java que é utilizado para executar o resettools.
-Mas nos primeiros releases, a ferramenta será compativel apenas com o JDK 21.
-
-## PLANOS FUTUROS
-
-O objetivo da aplicação é possuir uma interface gráfica simples, semelhante a um putty, usando o JOptionPane, mas o objetivo é que futuramente, seja possivel fornecer uma interface mais avançada, com opções de seleção, igual a um software convencional.
-
-Também terá a implementação de uma instalação unificada para windows, visando criar um executavel .exe na maquina do cliente.
+Basta baixar a nova release presente e executar conforme o arquivo LEIAME.txt
 
 ### FEATURES
 
@@ -33,5 +26,5 @@ Também terá a implementação de uma instalação unificada para windows, visa
 - [X] Compativel com OLT G08 Intelbras
 - [X] Compativel com OLt 8820i Intelbras
 - [X] Compatibilidade com grupo de vlan separados por ","
-- [ ] Possibilidade de rollback
-- [ ] Finalizado
+- [-] Possibilidade de rollback
+- [-] Finalizado
