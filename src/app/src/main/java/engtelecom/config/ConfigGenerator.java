@@ -238,14 +238,14 @@ public class ConfigGenerator extends Config {
     /**
      * Cria o script de configuração com base nos parâmetros e opções escolhidos.
      * 
-     * @param nomeArq Representa o nome do arquivo da olt
+     * @param nomeArq    Representa o nome do arquivo da olt
      * @param slotLength Representa o tamanho do slot que a olt tem
      * 
      * @return true se a criação do script foi bem-sucedida, false caso contrário.
      */
     public boolean createScript(String nomeArq, int slotLength) {
-        // Caminho do novo script
-        final File newScript = new File(nomeArq);
+        // // Caminho do novo script
+        // final File newScript = new File(nomeArq);
 
         // Inicialização de variáveis
         String vlan = new String();
@@ -293,8 +293,9 @@ public class ConfigGenerator extends Config {
 
                 // Verificação do tamanho da lista para evitar índices fora dos limites
                 if (getVlans().size() == 1) {
-                    profileLineRouter.add(oltGpon.profileLineRouterTagged(getVlans().get(i), getAimProfileLine().get(i + 1),
-                            getAimProfileVlan().get(i), getDeviceType()[7]));
+                    profileLineRouter
+                            .add(oltGpon.profileLineRouterTagged(getVlans().get(i), getAimProfileLine().get(i + 1),
+                                    getAimProfileVlan().get(i), getDeviceType()[7]));
                 } else {
                     profileLineRouter.add(oltGpon.profileLineRouterTagged(getVlans().get(i),
                             getAimProfileLine().get(i + slotLength), getAimProfileVlan().get(i), getDeviceType()[7]));
@@ -325,12 +326,14 @@ public class ConfigGenerator extends Config {
             for (int i = 0; i < getDeviceType().length; i++) {
                 for (int j = 0; j < getAimProfileVlan().size(); j++) {
                     if (i < 5) {
-                        ontAutoConfig.add(oltGpon.ontAutoConfigUmaVlanPorPon(getAimProfileLine().get(j), getVlans().get(j),
-                                getDeviceType()[i], getInterfaceGpon()[j],
-                                getDeviceTypeName()[i]));
+                        ontAutoConfig
+                                .add(oltGpon.ontAutoConfigUmaVlanPorPon(getAimProfileLine().get(j), getVlans().get(j),
+                                        getDeviceType()[i], getInterfaceGpon()[j],
+                                        getDeviceTypeName()[i]));
                     } else {
                         ontAutoConfig
-                                .add(oltGpon.ontAutoConfigUmaVlanPorPon(getAimProfileLine().get(j + slotLength), getVlans().get(j),
+                                .add(oltGpon.ontAutoConfigUmaVlanPorPon(getAimProfileLine().get(j + slotLength),
+                                        getVlans().get(j),
                                         getDeviceType()[i], getInterfaceGpon()[j],
                                         getDeviceTypeName()[i]));
                     }
@@ -341,7 +344,8 @@ public class ConfigGenerator extends Config {
                 // Definindo se é default bridge
                 if (getDefaultCpe() == getDefaultCpeType()[0]) {
                     ontAutoConfig.add(
-                            oltGpon.ontAutoConfigDefaultUmaVlanPorPon(getAimProfileLine().get(i), getInterfaceGpon()[i]));
+                            oltGpon.ontAutoConfigDefaultUmaVlanPorPon(getAimProfileLine().get(i),
+                                    getInterfaceGpon()[i]));
                 } else {
                     ontAutoConfig.add(oltGpon.ontAutoConfigDefaultUmaVlanPorPon(getAimProfileLine().get(i + slotLength),
                             getInterfaceGpon()[i]));
@@ -350,7 +354,7 @@ public class ConfigGenerator extends Config {
         }
 
         // Se o código chegar aqui, significa que a escrita foi bem-sucedida
-        return writeScript(newScript, accessLevel, dba, mgrInterface, vlan, profileVlan, profileLineBridge,
+        return writeScript(new File(nomeArq), accessLevel, dba, mgrInterface, vlan, profileVlan, profileLineBridge,
                 profileLineRouter, autoConfig, ontAutoConfig);
     }
 

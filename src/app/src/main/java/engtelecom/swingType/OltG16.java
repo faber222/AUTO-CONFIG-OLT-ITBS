@@ -5,6 +5,9 @@
 package engtelecom.swingType;
 
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -27,6 +30,25 @@ public class OltG16 extends javax.swing.JInternalFrame {
                 this.slotLength = 16;
                 initComponents();
                 oltGpon = new OltGpon();
+        }
+
+        public void previewText() {
+                // Tente abrir e ler o arquivo
+
+                try (BufferedReader br = new BufferedReader(new FileReader(this.nomeArq))) {
+                        StringBuilder content = new StringBuilder();
+                        String line;
+
+                        // Lê linha por linha até o final do arquivo
+                        while ((line = br.readLine()) != null) {
+                                content.append(line).append("\n");
+                        }
+
+                        // Define o texto do JTextArea com o conteúdo lido
+                        jTextAreaPreviewCode.setText(content.toString());
+                } catch (IOException e) {
+                        e.printStackTrace();
+                }
         }
 
         public void saida() {
@@ -165,14 +187,12 @@ public class OltG16 extends javax.swing.JInternalFrame {
                 jLabel10.setFont(new java.awt.Font("JetBrains Mono ExtraBold", 0, 12)); // NOI18N
                 jLabel10.setText("Senha");
 
-                jPasswordFieldOltPasswd.setText("jPasswordField1");
                 jPasswordFieldOltPasswd.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 jPasswordFieldOltPasswdActionPerformed(evt);
                         }
                 });
 
-                jTextFieldOltUser.setText("John");
                 jTextFieldOltUser.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 jTextFieldOltUserActionPerformed(evt);
@@ -721,11 +741,13 @@ public class OltG16 extends javax.swing.JInternalFrame {
         private void jButtonFileChooserActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonFileChooserActionPerformed
                 JFileChooser fileChooser = new JFileChooser();
 
-                FileNameExtensionFilter filter = new FileNameExtensionFilter(null, "txt");
+                // Adiciona um filtro para aceitar apenas arquivos de texto e derivados
+                FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                                "Arquivos de Texto", "txt", "md", "csv", "log", "java", "xml", "html", "json");
+                fileChooser.setFileFilter(filter);
                 // Exibe o seletor de arquivo e obtém a resposta do usuário
                 int returnValue = fileChooser.showOpenDialog(this);
                 fileChooser.setDialogTitle("Selecione o arquivo:");
-                fileChooser.setFileFilter(filter);
                 fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
                 // Verifica se o usuário escolheu um arquivo
@@ -736,13 +758,16 @@ public class OltG16 extends javax.swing.JInternalFrame {
                         System.out.println("Arquivo selecionado: " + selectedFile.getAbsolutePath());
                         this.nomeArq = selectedFile.getAbsolutePath();
                         jButtonFileChooser.setText(selectedFile.getName());
+                        previewText();
                 } else {
                         this.fileChooserIsSelected = false;
                         JOptionPane.showMessageDialog(null,
                                         "Nenhum arquivo selecionado.", "Error!",
                                         JOptionPane.ERROR_MESSAGE, this.errorIcon);
                         jButtonFileChooser.setText("File");
+                        jTextAreaPreviewCode.setText("");
                 }
+
         }// GEN-LAST:event_jButtonFileChooserActionPerformed
 
         private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonEnviarActionPerformed
@@ -786,6 +811,7 @@ public class OltG16 extends javax.swing.JInternalFrame {
                                         JOptionPane.ERROR_MESSAGE, this.successIcon);
                         this.fileChooserIsSelected = true;
                         jButtonFileChooser.setText(this.nomeArq);
+                        previewText();
 
                 } else {
                         JOptionPane.showMessageDialog(null,
