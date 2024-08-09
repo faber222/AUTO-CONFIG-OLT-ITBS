@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "OltGponMenu2",
+      "request": "launch",
+      "mainClass": "engtelecom.swingType.OltGponMenu2",
+      "projectName": "app"
+    },
+    {
+      "type": "java",
       "name": "DarkModeExample",
       "request": "launch",
       "mainClass": "engtelecom.swingType.DarkModeExample",
