@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import engtelecom.product.OltGpon;
 import engtelecom.swingType.InfoFrame;
 import engtelecom.swingType.Olt8820;
+import engtelecom.swingType.OltAN5k;
 import engtelecom.swingType.OltG08;
 import engtelecom.swingType.OltG16;
 
@@ -32,6 +33,7 @@ public class App extends javax.swing.JFrame {
         this.olt8820Icon = new ImageIcon(classLoader.getResource("OLT_8820.png"));
         this.oltG16Icon = new ImageIcon(classLoader.getResource("OLT_G08.png"));
         this.oltG08Icon = new ImageIcon(classLoader.getResource("OLT_G08.png"));
+        this.oltAN6KIcon = new ImageIcon(classLoader.getResource("OLT_AN6000.png"));
         this.terminalIcon = new ImageIcon(classLoader.getResource("icons/application_xp_terminal.png"));
         this.infoIcon = new ImageIcon(classLoader.getResource("icons/information.png"));
         this.infoMainIcon = new ImageIcon(classLoader.getResource("icons/help.png"));
@@ -54,6 +56,7 @@ public class App extends javax.swing.JFrame {
         jDesktopPane = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuAN5k = new javax.swing.JMenuItem();
         jMenuG16 = new javax.swing.JMenuItem();
         jMenuG08 = new javax.swing.JMenuItem();
         jMenu8820i = new javax.swing.JMenuItem();
@@ -75,6 +78,15 @@ public class App extends javax.swing.JFrame {
 
         jMenu1.setIcon(terminalIcon); // NOI18N
         jMenu1.setText("OLT");
+
+        jMenuAN5k.setIcon(oltAN6KIcon); // NOI18N
+        jMenuAN5k.setText("AN5000");
+        jMenuAN5k.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuAN5kActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuAN5k);
 
         jMenuG16.setIcon(oltG16Icon); // NOI18N
         jMenuG16.setText("G16");
@@ -166,6 +178,12 @@ public class App extends javax.swing.JFrame {
         new InfoFrame().setVisible(true);
     }
 
+    private void jMenuAN5kActionPerformed(java.awt.event.ActionEvent evt) {
+        OltAN5k telaAN5000 = new OltAN5k();
+        jDesktopPane.add(telaAN5000);
+        telaAN5000.setVisible(true);
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -214,6 +232,7 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuItem jMenu8820i;
+    private javax.swing.JMenuItem jMenuAN5k;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuG08;
     private javax.swing.JMenuItem jMenuG16;
@@ -224,6 +243,7 @@ public class App extends javax.swing.JFrame {
     private ImageIcon olt8820Icon;
     private ImageIcon oltG16Icon;
     private ImageIcon oltG08Icon;
+    private ImageIcon oltAN6KIcon;
     private ImageIcon mainIcon;
 
     // End of variables declaration//GEN-END:variables
