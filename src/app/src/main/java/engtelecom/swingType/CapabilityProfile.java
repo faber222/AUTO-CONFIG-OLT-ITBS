@@ -13,7 +13,10 @@ public class CapabilityProfile extends javax.swing.JFrame {
     /**
      * Creates new form CapabilityProfile2
      */
-    public CapabilityProfile() {
+    public CapabilityProfile(String[] cpeType, String[] ponType, String[] wifiNumber) {
+        this.cpeType = cpeType;
+        this.ponType = ponType;
+        this.wifiNumber = wifiNumber;
         initComponents();
     }
 
@@ -52,7 +55,7 @@ public class CapabilityProfile extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Create a ONU Capability Profile");
-        setAlwaysOnTop(true);
+        setAlwaysOnTop(false);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
 
@@ -75,14 +78,12 @@ public class CapabilityProfile extends javax.swing.JFrame {
         jLabel3.setText("CPE EQ ID");
 
         jComboBoxCPEType.setModel(
-                new javax.swing.DefaultComboBoxModel<>(new String[] { "SFU", "HGU", "BOX MDU", "CARD MDU", "DPU" }));
+                new javax.swing.DefaultComboBoxModel<>(this.cpeType));
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jLabel4.setText("PON Type(X):");
 
-        jComboBoxPONType.setModel(new javax.swing.DefaultComboBoxModel<>(
-                new String[] { "1G EPON", "10G EPON 10G/10G", "10G EPON 1G/10G", "1G GPON", "10 GPON 2.5G/10G",
-                        "10GPON 10G/10G", "GPON/XGPON/XGSPON auto", "EPON/10GEPON auto", "25G PON 25G/25G" }));
+        jComboBoxPONType.setModel(new javax.swing.DefaultComboBoxModel<>(this.ponType));
         jComboBoxPONType.setSelectedIndex(3);
 
         jTextFieldEquipamentID.setText("HG6145D2");
@@ -95,11 +96,13 @@ public class CapabilityProfile extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jLabel5.setText("Wifi Number:");
 
-        jComboBoxWifiNumber.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3", "4" }));
+        jComboBoxWifiNumber.setModel(
+                new javax.swing.DefaultComboBoxModel<>(this.wifiNumber));
         jComboBoxWifiNumber.setSelectedIndex(2);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Port Setting",
-                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION,
+                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+                javax.swing.border.TitledBorder.DEFAULT_POSITION,
                 new java.awt.Font("Dialog", 1, 11))); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
@@ -144,28 +147,40 @@ public class CapabilityProfile extends javax.swing.JFrame {
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createParallelGroup(
+                                        javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel6)
                                         .addComponent(jLabel7))
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createParallelGroup(
+                                        javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jTextFieldPOTSNumber)
-                                        .addComponent(jTextField1GPort, javax.swing.GroupLayout.PREFERRED_SIZE, 135,
+                                        .addComponent(jTextField1GPort,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                135,
                                                 javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addPreferredGap(
+                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        Short.MAX_VALUE)
+                                .addGroup(jPanel2Layout.createParallelGroup(
+                                        javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
                                                 jPanel2Layout.createSequentialGroup()
                                                         .addComponent(jLabel8)
                                                         .addPreferredGap(
                                                                 javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout
+                                                .createSequentialGroup()
                                                 .addComponent(jLabel9)
                                                 .addGap(17, 17, 17)))
                                 .addGroup(jPanel2Layout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jTextFieldUSBNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 135,
+                                        .createParallelGroup(
+                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                false)
+                                        .addComponent(jTextFieldUSBNumber,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                135,
                                                 Short.MAX_VALUE)
                                         .addComponent(jTextField10GPort))
                                 .addContainerGap()));
@@ -173,28 +188,37 @@ public class CapabilityProfile extends javax.swing.JFrame {
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createParallelGroup(
+                                        javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel2Layout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .createParallelGroup(
+                                                        javax.swing.GroupLayout.Alignment.BASELINE)
                                                 .addComponent(jLabel6)
-                                                .addComponent(jTextField1GPort, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                .addComponent(jTextField1GPort,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
                                                         javax.swing.GroupLayout.DEFAULT_SIZE,
                                                         javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addComponent(jLabel8)
-                                        .addComponent(jTextField10GPort, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        .addComponent(jTextField10GPort,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE,
                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
                                                 javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextFieldUSBNumber, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                .addPreferredGap(
+                                        javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(
+                                        javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jTextFieldUSBNumber,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE,
                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel9)
                                         .addComponent(jLabel7)
-                                        .addComponent(jTextFieldPOTSNumber, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        .addComponent(jTextFieldPOTSNumber,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE,
                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
                                                 javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        Short.MAX_VALUE)));
 
         jButtonONUCapaCancel.setText("Cancel");
 
@@ -210,35 +234,49 @@ public class CapabilityProfile extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(
+                                        javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout
+                                                .createSequentialGroup()
+                                                .addContainerGap(
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        Short.MAX_VALUE)
                                                 .addGroup(jPanel1Layout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                                                .addGroup(jPanel1Layout.createParallelGroup(
-                                                                        javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .createParallelGroup(
+                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jPanel2,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                Short.MAX_VALUE)
+                                                        .addGroup(jPanel1Layout
+                                                                .createSequentialGroup()
+                                                                .addGroup(jPanel1Layout
+                                                                        .createParallelGroup(
+                                                                                javax.swing.GroupLayout.Alignment.LEADING)
                                                                         .addComponent(jLabel1)
                                                                         .addComponent(jLabel3)
                                                                         .addComponent(jLabel2))
                                                                 .addPreferredGap(
                                                                         javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                .addGroup(jPanel1Layout.createParallelGroup(
-                                                                        javax.swing.GroupLayout.Alignment.LEADING)
-                                                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                                .addGroup(jPanel1Layout
+                                                                        .createParallelGroup(
+                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addGroup(jPanel1Layout
+                                                                                .createSequentialGroup()
                                                                                 .addGroup(jPanel1Layout
                                                                                         .createParallelGroup(
                                                                                                 javax.swing.GroupLayout.Alignment.LEADING,
                                                                                                 false)
                                                                                         .addComponent(jComboBoxCPEType,
-                                                                                                0, 200, Short.MAX_VALUE)
+                                                                                                0,
+                                                                                                200,
+                                                                                                Short.MAX_VALUE)
                                                                                         .addComponent(
                                                                                                 jTextFieldEquipamentID))
                                                                                 .addPreferredGap(
                                                                                         javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                                                                        45, Short.MAX_VALUE)
+                                                                                        45,
+                                                                                        Short.MAX_VALUE)
                                                                                 .addGroup(jPanel1Layout
                                                                                         .createParallelGroup(
                                                                                                 javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,67 +291,92 @@ public class CapabilityProfile extends javax.swing.JFrame {
                                                                                                 javax.swing.GroupLayout.Alignment.LEADING,
                                                                                                 false)
                                                                                         .addComponent(
-                                                                                                jComboBoxWifiNumber, 0,
-                                                                                                200, Short.MAX_VALUE)
+                                                                                                jComboBoxWifiNumber,
+                                                                                                0,
+                                                                                                200,
+                                                                                                Short.MAX_VALUE)
                                                                                         .addComponent(jComboBoxPONType,
                                                                                                 0,
                                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
                                                                                                 Short.MAX_VALUE)))
                                                                         .addComponent(jTextFieldProfileName)))))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout
-                                                .createSequentialGroup()
-                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jButtonONUCapaAplicar)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(jButtonONUCapaCancel)))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+                                                jPanel1Layout
+                                                        .createSequentialGroup()
+                                                        .addContainerGap(
+                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                Short.MAX_VALUE)
+                                                        .addComponent(jButtonONUCapaAplicar)
+                                                        .addPreferredGap(
+                                                                javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                        .addComponent(jButtonONUCapaCancel)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        Short.MAX_VALUE)));
         jPanel1Layout.setVerticalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(
+                                        javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel1)
-                                        .addComponent(jTextFieldProfileName, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        .addComponent(jTextFieldProfileName,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE,
                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
                                                 javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addPreferredGap(
+                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(
+                                        javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel2)
-                                        .addComponent(jComboBoxCPEType, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        .addComponent(jComboBoxCPEType,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE,
                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jComboBoxPONType, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        .addComponent(jComboBoxPONType,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE,
                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel4))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(
+                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .createParallelGroup(
+                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                false)
                                         .addComponent(jLabel3)
-                                        .addComponent(jComboBoxWifiNumber, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        .addComponent(jComboBoxWifiNumber,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE,
                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jTextFieldEquipamentID)
                                         .addComponent(jLabel5))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(
+                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel2,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(12, 12, 12)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(jPanel1Layout.createParallelGroup(
+                                        javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jButtonONUCapaCancel)
                                         .addComponent(jButtonONUCapaAplicar))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        Short.MAX_VALUE)));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE));
+                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.PREFERRED_SIZE));
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE));
+                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.PREFERRED_SIZE));
 
         jPanel1.getAccessibleContext().setAccessibleName("Create a ONU Capability Profile");
 
@@ -349,50 +412,6 @@ public class CapabilityProfile extends javax.swing.JFrame {
         // TODO add your handling code here:
     }// GEN-LAST:event_jButtonONUCapaAplicarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
-        // (optional) ">
-        /*
-         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
-         * look and feel.
-         * For details see
-         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CapabilityProfile.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CapabilityProfile.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CapabilityProfile.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CapabilityProfile.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
-        }
-        // </editor-fold>
-        // </editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CapabilityProfile().setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonONUCapaAplicar;
     private javax.swing.JButton jButtonONUCapaCancel;
@@ -416,5 +435,9 @@ public class CapabilityProfile extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldPOTSNumber;
     private javax.swing.JTextField jTextFieldProfileName;
     private javax.swing.JTextField jTextFieldUSBNumber;
+
+    private String[] cpeType;
+    private String[] ponType;
+    private String[] wifiNumber;
     // End of variables declaration//GEN-END:variables
 }
