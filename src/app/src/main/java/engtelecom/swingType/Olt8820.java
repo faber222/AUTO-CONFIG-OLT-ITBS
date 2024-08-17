@@ -46,6 +46,7 @@ public class Olt8820 extends javax.swing.JInternalFrame {
 
                         // Define o texto do JTextArea com o conteúdo lido
                         jTextAreaPreviewCode.setText(content.toString());
+                        br.close();
                 } catch (IOException e) {
                         e.printStackTrace();
                         jTextAreaPreviewCode.setText(null);

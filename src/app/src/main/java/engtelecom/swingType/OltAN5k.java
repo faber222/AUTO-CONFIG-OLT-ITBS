@@ -11,6 +11,7 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import engtelecom.access.Telnet;
@@ -21,7 +22,7 @@ import engtelecom.product.OltGponAN5k;
  *
  * @author faber222
  */
-public class OltAN5k extends javax.swing.JInternalFrame {
+public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityProfileListener {
 
 	/**
 	 * Creates new form OltG16
@@ -29,6 +30,7 @@ public class OltAN5k extends javax.swing.JInternalFrame {
 	public OltAN5k() {
 		initComponents();
 		oltGponAN5k = new OltGponAN5k();
+		capa = new CapabilityProfile(this.cpeType, this.ponType, this.wifiNumber);
 	}
 
 	public void previewText() {
@@ -45,6 +47,7 @@ public class OltAN5k extends javax.swing.JInternalFrame {
 
 			// Define o texto do JTextArea com o conteúdo lido
 			jTextAreaPreviewCode.setText(content.toString());
+			br.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -1088,10 +1091,39 @@ public class OltAN5k extends javax.swing.JInternalFrame {
 	}
 
 	private void jButtonCriarONUCapabilityActionPerformed(java.awt.event.ActionEvent evt) {
-		CapabilityProfile capa = new CapabilityProfile(this.cpeType, this.ponType, this.wifiNumber);
+		// capa.setVisible(true);
+		// capa.setListener(this); // Define o OltAN5k como o listener
+		JPanel glassPane = (JPanel) this.getRootPane().getGlassPane();
+		glassPane.setVisible(true);
+		glassPane.setOpaque(false);
+		glassPane.addMouseListener(new java.awt.event.MouseAdapter() {
+		});
 
+		capa.setListener(this);
+		capa.addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosed(java.awt.event.WindowEvent e) {
+				glassPane.setVisible(false); // Desbloqueia a interação
+			}
+		});
 		capa.setVisible(true);
+	}
 
+	@Override
+	public void onProfileCreated(String cpeType, String ponType, String wifiNumber,
+			String tenGPort, String oneGPort, String equipamentID,
+			String potsNumber, String profileName, String usbNumber) {
+		// Aqui você pode atualizar os componentes ou processar os dados recebidos
+		System.out.println("Dados recebidos:");
+		System.out.println("CPE Type: " + cpeType);
+		System.out.println("PON Type: " + ponType);
+		System.out.println("WiFi Number: " + wifiNumber);
+		System.out.println("10G Port: " + tenGPort);
+		System.out.println("1G Port: " + oneGPort);
+		System.out.println("Equipament ID: " + equipamentID);
+		System.out.println("POTS Number: " + potsNumber);
+		System.out.println("Profile Name: " + profileName);
+		System.out.println("USB Number: " + usbNumber);
 	}
 
 	private void jCheckBoxFlagONUCapabilityActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1109,6 +1141,7 @@ public class OltAN5k extends javax.swing.JInternalFrame {
 	private void jTextFieldPhyIdCPEActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
 	}
+	// TODO add your handling code here:
 
 	private void jTextFieldSlotPONActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
@@ -1119,7 +1152,6 @@ public class OltAN5k extends javax.swing.JInternalFrame {
 	}
 
 	private void jRadioButtonBridgeActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
 	}
 
 	private void jRadioButtonRouterActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1179,6 +1211,7 @@ public class OltAN5k extends javax.swing.JInternalFrame {
 	private javax.swing.JTextField jTextFieldUserPPPOE;
 	private javax.swing.JTextField jTextFieldVlanPPPOE;
 
+	private CapabilityProfile capa;
 	private String[] cpeType;
 	private String[] ponType;
 	private String[] wifiNumber;
