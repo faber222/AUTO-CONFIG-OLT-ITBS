@@ -13,6 +13,8 @@ import java.io.IOException;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -206,37 +208,10 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		jLabel10.setFont(new java.awt.Font("JetBrains Mono ExtraBold", 0, 12)); // NOI18N
 		jLabel10.setText("Senha");
 
-		jPasswordFieldOltPasswd.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jPasswordFieldOltPasswdActionPerformed(evt);
-			}
-		});
-
-		jTextFieldOltUser.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jTextFieldOltUserActionPerformed(evt);
-			}
-		});
-
-		jTextFieldIpOlt.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jTextFieldIpOltActionPerformed(evt);
-			}
-		});
-
 		jFormattedTextFieldPortOlt.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(
 				new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#####"))));
 		jFormattedTextFieldPortOlt.setToolTipText("porta");
 		jFormattedTextFieldPortOlt.setName("porta"); // NOI18N
-		jFormattedTextFieldPortOlt.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jFormattedTextFieldPortOltActionPerformed(evt);
-			}
-		});
 
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 		jPanel1.setLayout(jPanel1Layout);
@@ -322,38 +297,15 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		jLabel4.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
 		jLabel4.setText("Porta PON:");
 
-		// jSpinnerPortaPon.addActionListener(new java.awt.event.ActionListener() {
-		// public void actionPerformed(java.awt.event.ActionEvent evt) {
-		// jTextFieldPortaPonActionPerformed(evt);
-		// }
-		// });
-
 		jLabel5.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
 		jLabel5.setText("Slot GPON:");
-
-		// jSpinnerSlotPON.addActionListener(new java.awt.event.ActionListener() {
-		// public void actionPerformed(java.awt.event.ActionEvent evt) {
-		// jTextFieldSlotPONActionPerformed(evt);
-		// }
-		// });
 
 		jTextFieldPhyIdCPE.setText("FHTT12345678");
 		jTextFieldPhyIdCPE.setToolTipText("FHTT12345678");
 		jTextFieldPhyIdCPE.setName("FHTT12345678"); // NOI18N
-		jTextFieldPhyIdCPE.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jTextFieldPhyIdCPEActionPerformed(evt);
-			}
-		});
 
 		jLabel7.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
 		jLabel7.setText("Slot CPE:");
-
-		// jSpinnerSlotCpe.addActionListener(new java.awt.event.ActionListener() {
-		// public void actionPerformed(java.awt.event.ActionEvent evt) {
-		// jTextFieldPortaPon1ActionPerformed(evt);
-		// }
-		// });
 
 		jLabel6.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
 		jLabel6.setText("Modelo CPE:");
@@ -361,27 +313,13 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		jTextFieldModeloONU.setText("HG6145F3");
 		jTextFieldModeloONU.setToolTipText("FHTT12345678");
 		jTextFieldModeloONU.setName("FHTT12345678"); // NOI18N
-		jTextFieldModeloONU.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jTextFieldModeloONUActionPerformed(evt);
-			}
-		});
 
 		jCheckBoxFlagONUCapability.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
 		jCheckBoxFlagONUCapability.setText("Criar ONU Capability");
 		jCheckBoxFlagONUCapability.setVisible(true);
-		jCheckBoxFlagONUCapability.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jCheckBoxFlagONUCapabilityActionPerformed(evt);
-			}
-		});
 
 		jButtonCriarONUCapability.setText("Criar");
-		jButtonCriarONUCapability.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButtonCriarONUCapabilityActionPerformed(evt);
-			}
-		});
+		jButtonCriarONUCapability.addActionListener(this::jButtonCriarONUCapabilityActionPerformed);
 
 		jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados para WAN Service",
 				javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
@@ -391,31 +329,8 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		jLabel16.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
 		jLabel16.setText("SSID 2.4Ghz:");
 
-		jTextFieldSSID5.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jTextFieldSSID5ActionPerformed(evt);
-			}
-		});
-
-		jTextFieldPassPPPOE.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jTextFieldPassPPPOEActionPerformed(evt);
-			}
-		});
-
-		jTextFieldUserPPPOE.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jTextFieldUserPPPOEActionPerformed(evt);
-			}
-		});
-
 		jTextFieldVlanPPPOE.setToolTipText("FHTT12345678");
 		jTextFieldVlanPPPOE.setName("FHTT12345678"); // NOI18N
-		jTextFieldVlanPPPOE.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jTextFieldVlanPPPOEActionPerformed(evt);
-			}
-		});
 
 		jLabel14.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
 		jLabel14.setText("SSID 5Ghz:");
@@ -429,29 +344,11 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		jLabel11.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
 		jLabel11.setText("Vlan PPPOE:");
 
-		jTextFieldSSIDPass5.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jTextFieldSSIDPass5ActionPerformed(evt);
-			}
-		});
-
 		jLabel18.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
 		jLabel18.setText("Senha 5Ghz:");
 
-		jTextFieldSSIDPass2.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jTextFieldSSIDPass2ActionPerformed(evt);
-			}
-		});
-
 		jLabel17.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
 		jLabel17.setText("Senha 2.4Ghz:");
-
-		jTextFieldSSID2.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jTextFieldSSID2ActionPerformed(evt);
-			}
-		});
 
 		jLabel8.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
 		jLabel8.setText("CPE em:");
@@ -461,21 +358,11 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		jRadioButtonBridge.setText("VEIP");
 		jRadioButtonBridge.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		jRadioButtonBridge.setMargin(new java.awt.Insets(0, 0, 0, 0));
-		jRadioButtonBridge.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jRadioButtonBridgeActionPerformed(evt);
-			}
-		});
 
 		buttonGroup1.add(jRadioButtonRouter);
 		jRadioButtonRouter.setText("WAN-SERVICE");
 		jRadioButtonRouter.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		jRadioButtonRouter.setMargin(new java.awt.Insets(0, 0, 0, 0));
-		jRadioButtonRouter.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jRadioButtonRouterActionPerformed(evt);
-			}
-		});
 
 		javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
 		jPanel6.setLayout(jPanel6Layout);
@@ -808,11 +695,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		jLabel15.setText("Importar Script");
 
 		jButtonFileChooser.setText("File");
-		jButtonFileChooser.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButtonFileChooserActionPerformed(evt);
-			}
-		});
+		jButtonFileChooser.addActionListener(this::jButtonFileChooserActionPerformed);
 
 		javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
 		jPanel3.setLayout(jPanel3Layout);
@@ -843,25 +726,13 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		jPanel4.setVerifyInputWhenFocusTarget(false);
 
 		jButtonEnviar.setText("Enviar");
-		jButtonEnviar.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButtonEnviarActionPerformed(evt);
-			}
-		});
+		jButtonEnviar.addActionListener(this::jButtonEnviarActionPerformed);
 
 		jButtonCriar.setText("Criar");
-		jButtonCriar.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButtonCriarActionPerformed(evt);
-			}
-		});
+		jButtonCriar.addActionListener(this::jButtonCriarActionPerformed);
 
 		jButtonCancel.setText("Cancel");
-		jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButtonCancelActionPerformed(evt);
-			}
-		});
+		jButtonCancel.addActionListener(this::jButtonCancelActionPerformed);
 
 		javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
 		jPanel4.setLayout(jPanel4Layout);
@@ -991,19 +862,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		pack();
 	}// </editor-fold>
 
-	private void jPasswordFieldOltPasswdActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
-	}
-
-	private void jTextFieldIpOltActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
-	}
-
-	private void jFormattedTextFieldPortOltActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
-	}
-
-	private void jButtonFileChooserActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonFileChooserActionPerformed
+	private void jButtonFileChooserActionPerformed(java.awt.event.ActionEvent evt) {
 		JFileChooser fileChooser = new JFileChooser();
 
 		// Adiciona um filtro para aceitar apenas arquivos de texto e derivados
@@ -1076,41 +935,9 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		}
 	}
 
-	private void jTextFieldOltUserActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
-	}
-
 	private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {
 		dispose();
 		capa.dispose();
-	}
-
-	private void jTextFieldSSIDPass5ActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
-	}
-
-	private void jTextFieldSSIDPass2ActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
-	}
-
-	private void jTextFieldSSID2ActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
-	}
-
-	private void jTextFieldSSID5ActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
-	}
-
-	private void jTextFieldPassPPPOEActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
-	}
-
-	private void jTextFieldUserPPPOEActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
-	}
-
-	private void jTextFieldVlanPPPOEActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
 	}
 
 	private void jButtonCriarONUCapabilityActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1141,13 +968,13 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 
 	private void playAlertSound() {
 		try {
-			AudioInputStream audioInputStream = AudioSystem
-					.getAudioInputStream(getClass().getResource("/sounds/error1.wav"));
-			Clip clip = AudioSystem.getClip();
-			clip.open(audioInputStream);
-			clip.start();
-			audioInputStream.close();
-		} catch (Exception e) {
+			try (AudioInputStream audioInputStream = AudioSystem
+					.getAudioInputStream(getClass().getResource("/sounds/error1.wav"))) {
+				Clip clip = AudioSystem.getClip();
+				clip.open(audioInputStream);
+				clip.start();
+			}
+		} catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
 			e.printStackTrace();
 		}
 	}
@@ -1173,38 +1000,6 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 			System.out.println("USB Number: " + usbNumber);
 
 		}
-	}
-
-	private void jCheckBoxFlagONUCapabilityActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
-	}
-
-	private void jTextFieldModeloONUActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
-	}
-
-	private void jTextFieldPortaPon1ActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
-	}
-
-	private void jTextFieldPhyIdCPEActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
-	}
-	// TODO add your handling code here:
-
-	private void jTextFieldSlotPONActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
-	}
-
-	private void jTextFieldPortaPonActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
-	}
-
-	private void jRadioButtonBridgeActionPerformed(java.awt.event.ActionEvent evt) {
-	}
-
-	private void jRadioButtonRouterActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
 	}
 
 	// Variables declaration - do not modify
