@@ -4,10 +4,15 @@
  */
 package engtelecom.swingType;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -1096,6 +1101,13 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		JPanel glassPane = (JPanel) this.getRootPane().getGlassPane();
 		glassPane.setVisible(true);
 		glassPane.setOpaque(false);
+
+		glassPane.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				playAlertSound();
+			}
+		});
 		glassPane.addMouseListener(new java.awt.event.MouseAdapter() {
 		});
 
@@ -1109,11 +1121,26 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		capa.setVisible(true);
 	}
 
+	private void playAlertSound() {
+		try {
+			AudioInputStream audioInputStream = AudioSystem
+					.getAudioInputStream(getClass().getResource("/sounds/error1.wav"));
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+			clip.start();
+			audioInputStream.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	@Override
 	public void onProfileCreated(String cpeType, String ponType, String wifiNumber,
 			String tenGPort, String oneGPort, String equipamentID,
 			String potsNumber, String profileName, String usbNumber) {
 		// Aqui você pode atualizar os componentes ou processar os dados recebidos
+		this.jTextFieldModeloONU.setText(profileName);
+
 		System.out.println("Dados recebidos:");
 		System.out.println("CPE Type: " + cpeType);
 		System.out.println("PON Type: " + ponType);
@@ -1212,6 +1239,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 	private javax.swing.JTextField jTextFieldVlanPPPOE;
 
 	private CapabilityProfile capa;
+
 	private String[] cpeType;
 	private String[] ponType;
 	private String[] wifiNumber;
