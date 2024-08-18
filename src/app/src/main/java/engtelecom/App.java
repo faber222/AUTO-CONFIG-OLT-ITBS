@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -12,6 +13,7 @@ import engtelecom.swingType.Olt8820;
 import engtelecom.swingType.OltAN5k;
 import engtelecom.swingType.OltG08;
 import engtelecom.swingType.OltG16;
+
 
 /**
  *
@@ -187,6 +189,7 @@ public class App extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code

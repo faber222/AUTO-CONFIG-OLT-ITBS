@@ -105,9 +105,6 @@ public class Olt8820Plus extends Olt {
         return false;
     }
 
-
-
-
     /**
      * Método responsável por iniciar o processo de configuração da OLT 8820I.
      * Aqui é onde a "magia" acontece, guiando o usuário através da configuração.
@@ -154,8 +151,10 @@ public class Olt8820Plus extends Olt {
         };
 
         final String[] uplinkType = {
+
             "tls",
             "downlink"
+
         };
 
         int rangeNumVlan = 1;

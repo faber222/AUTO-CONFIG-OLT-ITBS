@@ -215,6 +215,7 @@ public class Scripts {
      */
     public String ontAutoConfigUmaVlanPorPon(final String idProfileLine, final String vlanRange,
             final String deviceType,
+
             final String interfaceGpon, final String deviceTypeName) {
         return String.format("ont auto-config name %s-%s-VLAN-%s device-type %s line %s interface gpon %s",
                 deviceType, deviceTypeName, vlanRange, deviceType, idProfileLine, interfaceGpon);

@@ -336,6 +336,7 @@ public class ConfigGenerator extends Config {
                                         getVlans().get(j),
                                         getDeviceType()[i], getInterfaceGpon()[j],
                                         getDeviceTypeName()[i]));
+
                     }
                 }
             }

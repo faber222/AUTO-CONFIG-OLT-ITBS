@@ -139,6 +139,7 @@ public class OltGpon extends Olt {
         final ImageIcon erroIcon = new ImageIcon(classLoader.getResource("erro.png"));
 
         final String[] deviceType = {
+
                 "i10-100", // [0] 110 zhone
                 "i40-100-v2", // [1] R1v2
                 "i30-100", // [2] 110gi
@@ -155,6 +156,7 @@ public class OltGpon extends Olt {
                 "i41-201", // [12] 1200r
                 "i41-211", // [13] 121ac
                 "i41-421" // [14] 142ng
+
         };
 
         final String[] deviceTypeName = {
