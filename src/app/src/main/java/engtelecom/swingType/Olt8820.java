@@ -4,7 +4,6 @@
  */
 package engtelecom.swingType;
 
-import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -146,7 +145,7 @@ public class Olt8820 extends javax.swing.JInternalFrame {
                 jTextAreaPreviewCode = new javax.swing.JTextArea();
 
                 setBackground(new java.awt.Color(204, 204, 204));
-                setClosable(true);
+                setClosable(false);
                 setForeground(java.awt.Color.black);
                 setIconifiable(true);
                 setMaximizable(true);
@@ -155,21 +154,9 @@ public class Olt8820 extends javax.swing.JInternalFrame {
                 setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
                 setMinimumSize(new java.awt.Dimension(745, 705));
                 setPreferredSize(new java.awt.Dimension(733, 705));
-                try {
-                        setSelected(true);
-                } catch (java.beans.PropertyVetoException e1) {
-                        e1.printStackTrace();
-                }
-                setVisible(true);
-                addKeyListener(new java.awt.event.KeyAdapter() {
-                        public void keyPressed(java.awt.event.KeyEvent evt) {
-                                formKeyPressed(evt);
-                        }
+                setRequestFocusEnabled(false);
 
-                        public void keyTyped(java.awt.event.KeyEvent evt) {
-                                formKeyTyped(evt);
-                        }
-                });
+                setVisible(true);
 
                 jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Dados de acesso da OLT ",
                                 javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
@@ -833,7 +820,7 @@ public class Olt8820 extends javax.swing.JInternalFrame {
         }// GEN-LAST:event_jTextFieldOltUserActionPerformed
 
         private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonCancelActionPerformed
-                // TODO add your handling code here:
+                this.dispose();
         }// GEN-LAST:event_jButtonCancelActionPerformed
 
         private void jRadioButtonBridge1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jRadioButtonBridge1ActionPerformed
@@ -863,16 +850,6 @@ public class Olt8820 extends javax.swing.JInternalFrame {
         private void jComboBoxBridgeUplinkActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jComboBoxBridgeUplinkActionPerformed
                 // TODO add your handling code here:
         }// GEN-LAST:event_jComboBoxBridgeUplinkActionPerformed
-
-        private void formKeyPressed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_formKeyPressed
-                if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                        this.dispose(); // Fecha o JInternalFrame
-                }
-        }// GEN-LAST:event_formKeyPressed
-
-        private void formKeyTyped(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_formKeyTyped
-                // TODO add your handling code here:
-        }// GEN-LAST:event_formKeyTyped
 
         // Variables declaration - do not modify//GEN-BEGIN:variables
         private javax.swing.ButtonGroup buttonGroup1;

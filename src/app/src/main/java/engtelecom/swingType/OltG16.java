@@ -153,7 +153,7 @@ public class OltG16 extends javax.swing.JInternalFrame {
                 jTextAreaPreviewCode = new javax.swing.JTextArea();
 
                 setBackground(new java.awt.Color(204, 204, 204));
-                setClosable(true);
+                setClosable(false);
                 setForeground(java.awt.Color.darkGray);
                 setIconifiable(true);
                 setMaximizable(true);
@@ -162,12 +162,8 @@ public class OltG16 extends javax.swing.JInternalFrame {
                 setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
                 setMinimumSize(new java.awt.Dimension(812, 700));
                 setPreferredSize(new java.awt.Dimension(812, 700));
+                setRequestFocusEnabled(false);
 
-                addKeyListener(new java.awt.event.KeyAdapter() {
-                        public void keyPressed(java.awt.event.KeyEvent evt) {
-                                formKeyPressed(evt);
-                        }
-                });
 
                 jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Dados de acesso da OLT ",
                                 javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
@@ -833,7 +829,7 @@ public class OltG16 extends javax.swing.JInternalFrame {
         }// GEN-LAST:event_formKeyPressed
 
         private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonCancelActionPerformed
-                dispose();
+                this.dispose();
         }// GEN-LAST:event_jButtonCancelActionPerformed
 
         // Variables declaration - do not modify//GEN-BEGIN:variables

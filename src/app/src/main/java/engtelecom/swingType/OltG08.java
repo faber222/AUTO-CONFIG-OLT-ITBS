@@ -4,7 +4,6 @@
  */
 package engtelecom.swingType;
 
-import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -49,14 +48,6 @@ public class OltG08 extends javax.swing.JInternalFrame {
                 } catch (IOException e) {
                         e.printStackTrace();
                 }
-        }
-
-        public void saida() {
-                // Exibe uma caixa de diálogo com uma mensagem de aviso indicando que o programa
-                // será encerrado.
-                JOptionPane.showMessageDialog(null,
-                                "Voce pressionou o botao 'Cancelar'. O programa sera encerrado.",
-                                null, JOptionPane.WARNING_MESSAGE, this.saidaIcon);
         }
 
         private void olt() {
@@ -144,7 +135,7 @@ public class OltG08 extends javax.swing.JInternalFrame {
                 jTextAreaPreviewCode = new javax.swing.JTextArea();
 
                 setBackground(new java.awt.Color(204, 204, 204));
-                setClosable(true);
+                setClosable(false);
                 setForeground(java.awt.Color.darkGray);
                 setIconifiable(true);
                 setMaximizable(true);
@@ -153,12 +144,7 @@ public class OltG08 extends javax.swing.JInternalFrame {
                 setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
                 setMinimumSize(new java.awt.Dimension(812, 700));
                 setPreferredSize(new java.awt.Dimension(812, 700));
-
-                addKeyListener(new java.awt.event.KeyAdapter() {
-                        public void keyPressed(java.awt.event.KeyEvent evt) {
-                                formKeyPressed(evt);
-                        }
-                });
+                setRequestFocusEnabled(false);
 
                 jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Dados de acesso da OLT ",
                                 javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
@@ -812,16 +798,8 @@ public class OltG08 extends javax.swing.JInternalFrame {
                 // TODO add your handling code here:
         }// GEN-LAST:event_jTextFieldOltUserActionPerformed
 
-        private void formKeyPressed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_formKeyPressed
-                if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                        this.dispose(); // Fecha o JInternalFrame
-                }
-        }// GEN-LAST:event_formKeyPressed
-
         private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonCancelActionPerformed
-                saida();
-                dispose();
-                System.exit(0);
+                this.dispose();
         }// GEN-LAST:event_jButtonCancelActionPerformed
 
         // Variables declaration - do not modify//GEN-BEGIN:variables
