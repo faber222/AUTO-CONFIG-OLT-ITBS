@@ -206,14 +206,16 @@ public class Scripts {
      * Retorna o comando para a configuração automática de uma ONT com uma VLAN por
      * PON.
      *
-     * @param idProfileLine id do profile line
-     * @param vlanRange     id da vlan
-     * @param deviceType    device type da ont em questão
-     * @param interfaceGpon interface GPON da ONT
+     * @param idProfileLine  id do profile line
+     * @param vlanRange      id da vlan
+     * @param deviceType     device type da ont em questão
+     * @param interfaceGpon  interface GPON da ONT
      * @param deviceTypeName no do deviceType da ont para identificação
      * @return Comando para a configuração automática.
      */
-    public String ontAutoConfigUmaVlanPorPon(final String idProfileLine, final String vlanRange, final String deviceType,
+    public String ontAutoConfigUmaVlanPorPon(final String idProfileLine, final String vlanRange,
+            final String deviceType,
+
             final String interfaceGpon, final String deviceTypeName) {
         return String.format("ont auto-config name %s-%s-VLAN-%s device-type %s line %s interface gpon %s",
                 deviceType, deviceTypeName, vlanRange, deviceType, idProfileLine, interfaceGpon);
@@ -230,7 +232,8 @@ public class Scripts {
      */
     public String ontAutoConfigUmaVlanPon(final String idProfileLine, final String deviceType,
             final String deviceTypeName) {
-        return String.format("ont auto-config name CPE_%s_%s device-type %s line %s", deviceType, deviceTypeName, deviceType,
+        return String.format("ont auto-config name CPE_%s_%s device-type %s line %s", deviceType, deviceTypeName,
+                deviceType,
                 idProfileLine);
     }
 

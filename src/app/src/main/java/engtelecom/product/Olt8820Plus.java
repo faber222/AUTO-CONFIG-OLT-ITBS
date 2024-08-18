@@ -151,8 +151,10 @@ public class Olt8820Plus extends Olt {
         };
 
         final String[] uplinkType = {
-                "tls",
-                "downlink"
+
+            "tls",
+            "downlink"
+
         };
 
         int rangeNumVlan = 1;

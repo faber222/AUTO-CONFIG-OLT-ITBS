@@ -14,7 +14,8 @@ import java.util.List;
 import engtelecom.scripts.Scripts8820Plus;
 
 /**
- * Classe responsável por gerar configurações e scripts com base nos parâmetros fornecidos.
+ * Classe responsável por gerar configurações e scripts com base nos parâmetros
+ * fornecidos.
  * Estende a classe Config8820Plus para herdar as configurações básicas.
  */
 public class ConfigGenerator8820Plus extends Config {
@@ -134,13 +135,18 @@ public class ConfigGenerator8820Plus extends Config {
     /**
      * Método para escrever o script em um arquivo.
      *
-     * @param script               Arquivo de script.
-     * @param autoConfig           Lista de comandos de autoconfiguração.
-     * @param bridgeUplink         Lista de comandos para configurar a interface de uplink da bridge.
-     * @param bridgeProfile        Lista de comandos para configurar o perfil da bridge.
-     * @param bridgeProfileRouter  Lista de comandos para configurar o perfil do roteador da bridge.
-     * @param bridgeProfileBind    Lista de comandos para vincular o perfil da bridge.
-     * @param bridgeProfileBindRouter Lista de comandos para vincular o perfil do roteador da bridge.
+     * @param script                  Arquivo de script.
+     * @param autoConfig              Lista de comandos de autoconfiguração.
+     * @param bridgeUplink            Lista de comandos para configurar a interface
+     *                                de uplink da bridge.
+     * @param bridgeProfile           Lista de comandos para configurar o perfil da
+     *                                bridge.
+     * @param bridgeProfileRouter     Lista de comandos para configurar o perfil do
+     *                                roteador da bridge.
+     * @param bridgeProfileBind       Lista de comandos para vincular o perfil da
+     *                                bridge.
+     * @param bridgeProfileBindRouter Lista de comandos para vincular o perfil do
+     *                                roteador da bridge.
      * @return true se a escrita for bem-sucedida, false caso contrário.
      */
     public boolean writeScript(final File script, List<String> autoConfig, List<String> bridgeUplink,

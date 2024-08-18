@@ -25,4 +25,6 @@ Basta baixar a nova release presente e executar conforme o arquivo LEIAME.txt
 - [X] Compativel com OLT G16 Intelbras
 - [X] Compativel com OLT G08 Intelbras
 - [X] Compativel com OLt 8820i Intelbras
-- [X] Compatibilidade com grupo de vlan separados por ","
+- [X] Compativel com grupo de vlan
+- [ ] Possibilidade de rollback
+- [ ] Finalizado
