@@ -64,7 +64,7 @@ public class App extends javax.swing.JFrame {
         jMenuInfo = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("OLT-AUTO-CONFIG");
+        setTitle("HefForge OLT - Script tools");
         setFont(new java.awt.Font("JetBrains Mono", 0, 10)); // NOI18N
 
         javax.swing.GroupLayout jDesktopPaneLayout = new javax.swing.GroupLayout(jDesktopPane);
