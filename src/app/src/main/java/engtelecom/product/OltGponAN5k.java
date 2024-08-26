@@ -14,7 +14,9 @@ public class OltGponAN5k extends Olt {
 
     }
 
-    public boolean start(String nomeArq) {
+    public boolean start(String nomeArq, String phyIdCpe, String portaUplink, String slotUplink, String portaPon,
+            String slotCpe, String slotPon, String vlan,
+            String onuModel, String userPpp, String passPpp, String ssid2, String ssid5, String pass2, String pass5) {
         // Carrega os ícones necessários para o diálogo
         final ClassLoader classLoader = OltGpon.class.getClassLoader();
         final ImageIcon erroIcon = new ImageIcon(classLoader.getResource("erro.png"));
