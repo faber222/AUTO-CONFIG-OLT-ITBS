@@ -39,7 +39,7 @@ public class App extends javax.swing.JFrame {
         this.terminalIcon = new ImageIcon(classLoader.getResource("icons/application_xp_terminal.png"));
         this.infoIcon = new ImageIcon(classLoader.getResource("icons/information.png"));
         this.infoMainIcon = new ImageIcon(classLoader.getResource("icons/help.png"));
-        this.mainIcon = new ImageIcon(classLoader.getResource("icons/bricks.png"));
+        this.mainIcon = new ImageIcon(classLoader.getResource("malicious-script.png"));
 
     }
 

@@ -91,7 +91,9 @@ public class Telnet8820Plus implements Runnable {
             readCommandsFromFile(nomeArq);
 
             finalMessage();
-
+            telnetClient.disconnect();
+            in.close();
+            out.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
