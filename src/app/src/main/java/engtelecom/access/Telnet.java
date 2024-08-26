@@ -36,8 +36,10 @@ import javax.swing.JOptionPane;
  * </p>
  *
  * <p>
- * Mas esse código fornece apenas um acesso ao socket telnet, e não uma conexão real.
- * Portanto, caso seu produto só forneça usando um acesso real, deve ser usado o Telnet8820Plus
+ * Mas esse código fornece apenas um acesso ao socket telnet, e não uma conexão
+ * real.
+ * Portanto, caso seu produto só forneça usando um acesso real, deve ser usado o
+ * Telnet8820Plus
  * </p>
  * 
  * @see <a href="https://en.wikipedia.org/wiki/Telnet">Telnet - Wikipedia</a>
@@ -96,9 +98,12 @@ public class Telnet implements Runnable {
             // Ler comandos do arquivo
             readCommandsFromFile(nomeArq);
 
-            // Mostra a mensagem que deu tudo certo e alerta o usuario para salvar as configurações
+            // Mostra a mensagem que deu tudo certo e alerta o usuario para salvar as
+            // configurações
             finalMessage();
-
+            socket.close();
+            in.close();
+            out.close();
         } catch (final UnknownHostException exception) {
             System.err.println("Host " + host + " desconhecido");
             JOptionPane.showMessageDialog(null, "Host " + host
@@ -107,7 +112,7 @@ public class Telnet implements Runnable {
             System.exit(1);
         } catch (final IOException exception) {
             System.err.println("Erro na entrada.");
-            JOptionPane.showMessageDialog(null, 
+            JOptionPane.showMessageDialog(null,
                     "Erro na entrada.", "Aviso!",
                     JOptionPane.INFORMATION_MESSAGE);
             System.exit(1);
@@ -115,11 +120,11 @@ public class Telnet implements Runnable {
 
         // // Interatividade opcional para inserir comandos adicionais
         // while (true) {
-        //     final String command = getUserInput();
-        //     if ("Bye.".equals(command)) {
-        //         System.exit(0);
-        //     }
-        //     out.println(command);
+        // final String command = getUserInput();
+        // if ("Bye.".equals(command)) {
+        // System.exit(0);
+        // }
+        // out.println(command);
         // }
     }
 
@@ -173,7 +178,7 @@ public class Telnet implements Runnable {
             }
         } catch (final IOException exception) {
             System.err.println("Erro de comunicacao.");
-            JOptionPane.showMessageDialog(null, 
+            JOptionPane.showMessageDialog(null,
                     "Erro de comunicacao.", "Aviso!",
                     JOptionPane.INFORMATION_MESSAGE);
             System.exit(1);
@@ -181,12 +186,13 @@ public class Telnet implements Runnable {
     }
 
     // /**
-    //  * Método auxiliar para obter a entrada do usuário por meio de uma janela de
-    //  * diálogo.
-    //  * 
-    //  * @return O comando inserido pelo usuário.
-    //  */
+    // * Método auxiliar para obter a entrada do usuário por meio de uma janela de
+    // * diálogo.
+    // *
+    // * @return O comando inserido pelo usuário.
+    // */
     // private static String getUserInput() {
-    //     return JOptionPane.showInputDialog(null,"Digite um comando:", "Para sair, digite Bye.", JOptionPane.OK_OPTION);
+    // return JOptionPane.showInputDialog(null,"Digite um comando:", "Para sair,
+    // digite Bye.", JOptionPane.OK_OPTION);
     // }
 }
