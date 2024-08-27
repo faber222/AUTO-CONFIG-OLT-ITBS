@@ -32,6 +32,125 @@ import engtelecom.product.OltGponAN5k;
  */
 public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityProfileListener {
 
+	// Variables declaration - do not modify//GEN-BEGIN:variables
+	// Botoes de ação do código
+	private javax.swing.JButton jButtonCancel;
+
+	private javax.swing.JButton jButtonCriar;
+
+	private javax.swing.JButton jButtonCriarONUCapability;
+
+	private javax.swing.JButton jButtonEnviar;
+
+	private javax.swing.JButton jButtonFileChooser;
+
+	// Dados campo de acesso telnet
+	private javax.swing.JTextField jTextFieldIpOlt;
+
+	private javax.swing.JFormattedTextField jFormattedTextFieldPortOlt;
+
+	private javax.swing.JTextField jTextFieldOltUser;
+
+	private javax.swing.JPasswordField jPasswordFieldOltPasswd;
+
+	// Botões de seleção de objetos e seus grupos
+	private javax.swing.ButtonGroup buttonGroup1;
+
+	private javax.swing.JRadioButton jRadioButtonWanService;
+
+	private javax.swing.JRadioButton jRadioButtonVeip;
+	private javax.swing.JCheckBox jCheckBoxFlagONUCapability;
+	// Apenas textos
+	private javax.swing.JLabel jLabel1;
+	private javax.swing.JLabel jLabel2;
+	private javax.swing.JLabel jLabel3;
+
+	private javax.swing.JLabel jLabel4;
+	private javax.swing.JLabel jLabel5;
+	private javax.swing.JLabel jLabel6;
+	private javax.swing.JLabel jLabel7;
+
+	private javax.swing.JLabel jLabel8;
+	private javax.swing.JLabel jLabel9;
+	private javax.swing.JLabel jLabel10;
+	private javax.swing.JLabel jLabel11;
+
+	private javax.swing.JLabel jLabel12;
+	private javax.swing.JLabel jLabel13;
+	private javax.swing.JLabel jLabel14;
+	private javax.swing.JLabel jLabel15;
+	private javax.swing.JLabel jLabel16;
+	private javax.swing.JLabel jLabel17;
+	private javax.swing.JLabel jLabel18;
+	private javax.swing.JLabel jLabel19;
+	private javax.swing.JLabel jLabel20;
+	private javax.swing.JLabel jLabel21;
+	// Paineis que montam os componentes da tela
+	private javax.swing.JPanel jPanel1;
+	private javax.swing.JPanel jPanel2;
+	private javax.swing.JPanel jPanel3;
+	private javax.swing.JPanel jPanel4;
+	private javax.swing.JPanel jPanel5;
+	private javax.swing.JPanel jPanel6;
+	private javax.swing.JPanel jPanel7;
+	// Variaveis auxiliares
+	private javax.swing.JScrollPane jScrollPanel;
+	private javax.swing.JTabbedPane jTabbedPane1;
+	private javax.swing.JTextArea jTextAreaPreviewCode;
+	// Dados inteiros da OLT
+	private javax.swing.JSpinner jSpinnerPortaUplink;
+
+	private javax.swing.JSpinner jSpinnerSlotUplink;
+	private javax.swing.JSpinner jSpinnerVlanPPPOE;
+	private javax.swing.JSpinner jSpinnerVlanVeip;
+	private javax.swing.JSpinner jSpinnerPortaPon;
+	private javax.swing.JSpinner jSpinnerSlotCpe;
+	private javax.swing.JSpinner jSpinnerSlotPON;
+	// Dados de string da OLT
+	private javax.swing.JTextField jTextFieldModeloONU;
+
+	private javax.swing.JTextField jTextFieldPassPPPOE;
+	private javax.swing.JTextField jTextFieldPhyIdCPE;
+	private javax.swing.JTextField jTextFieldSSID2;
+
+	private javax.swing.JTextField jTextFieldSSID5;
+	private javax.swing.JTextField jTextFieldSSIDPass2;
+	private javax.swing.JTextField jTextFieldSSIDPass5;
+	private javax.swing.JTextField jTextFieldUserPPPOE;
+	// Delimitadores dos spinners
+	private final SpinnerNumberModel modelChassiPon;
+	private final SpinnerNumberModel modelChassiUp;
+	private final SpinnerNumberModel modelPortaPon;
+
+	private final SpinnerNumberModel modelPortaUp;
+	private final SpinnerNumberModel modelCpe;
+	private final SpinnerNumberModel modelVlanVeip;
+	private final SpinnerNumberModel modelVlanWan;
+	// Atributos filhos do OltCapa
+	private String capaCpeType;
+	private String capaPonType;
+	private String capaWifiNumber;
+	private String capaTenGPortNumber;
+
+	private String capaOneGPortNumber;
+	private String capaEquipamentId;
+	private String capaPotsNumber;
+	private String capaProfileName;
+	private String capaUsbNumber;
+	// Dados usados para repasse de contexto
+	private String[] cpeType;
+	private String[] ponType;
+
+	private String[] wifiNumber;
+	private boolean fileChooserIsSelected;
+	private String nomeArq;
+	private ImageIcon oltIcon;
+	private ImageIcon errorIcon;
+	private ImageIcon successIcon;
+	private final CapabilityProfile capa;
+	private final OltGponAN5k oltGponAN5k;
+
+	// End of variables declaration
 	/**
 	 * Creates new form OltG16
 	 */
@@ -48,11 +167,171 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		capa = new CapabilityProfile(this.cpeType, this.ponType, this.wifiNumber);
 	}
 
-	public void previewText() {
+	public ImageIcon getOltIcon() {
+		return oltIcon;
+	}
+
+	public ImageIcon getErrorIcon() {
+		return errorIcon;
+	}
+
+	public ImageIcon getSuccessIcon() {
+		return successIcon;
+	}
+
+	public javax.swing.JRadioButton getjRadioButtonWanService() {
+		return jRadioButtonWanService;
+	}
+
+	public javax.swing.JRadioButton getjRadioButtonVeip() {
+		return jRadioButtonVeip;
+	}
+
+	public javax.swing.JCheckBox getjCheckBoxFlagONUCapability() {
+		return jCheckBoxFlagONUCapability;
+	}
+
+	public javax.swing.JSpinner getjSpinnerPortaUplink() {
+		return jSpinnerPortaUplink;
+	}
+
+	public javax.swing.JSpinner getjSpinnerSlotUplink() {
+		return jSpinnerSlotUplink;
+	}
+
+	public javax.swing.JSpinner getjSpinnerVlanPPPOE() {
+		return jSpinnerVlanPPPOE;
+	}
+
+	public javax.swing.JSpinner getjSpinnerVlanVeip() {
+		return jSpinnerVlanVeip;
+	}
+
+	public javax.swing.JSpinner getjSpinnerPortaPon() {
+		return jSpinnerPortaPon;
+	}
+
+	public javax.swing.JSpinner getjSpinnerSlotCpe() {
+		return jSpinnerSlotCpe;
+	}
+
+	public javax.swing.JSpinner getjSpinnerSlotPON() {
+		return jSpinnerSlotPON;
+	}
+
+	public javax.swing.JTextField getjTextFieldModeloONU() {
+		return jTextFieldModeloONU;
+	}
+
+	public javax.swing.JTextField getjTextFieldPassPPPOE() {
+		return jTextFieldPassPPPOE;
+	}
+
+	public javax.swing.JTextField getjTextFieldPhyIdCPE() {
+		return jTextFieldPhyIdCPE;
+	}
+
+	public javax.swing.JTextField getjTextFieldSSID2() {
+		return jTextFieldSSID2;
+	}
+
+	public javax.swing.JTextField getjTextFieldSSID5() {
+		return jTextFieldSSID5;
+	}
+
+	public javax.swing.JTextField getjTextFieldSSIDPass2() {
+		return jTextFieldSSIDPass2;
+	}
+
+	public javax.swing.JTextField getjTextFieldSSIDPass5() {
+		return jTextFieldSSIDPass5;
+	}
+
+	public javax.swing.JTextField getjTextFieldUserPPPOE() {
+		return jTextFieldUserPPPOE;
+	}
+
+	public String getNomeArq() {
+		return nomeArq;
+	}
+
+	public String getCapaCpeType() {
+		return capaCpeType;
+	}
+
+	public String getCapaPonType() {
+		return capaPonType;
+	}
+
+	public String getCapaWifiNumber() {
+		return capaWifiNumber;
+	}
+
+	public String getCapaTenGPortNumber() {
+		return capaTenGPortNumber;
+	}
+
+	public String getCapaOneGPortNumber() {
+		return capaOneGPortNumber;
+	}
+
+	public String getCapaEquipamentId() {
+		return capaEquipamentId;
+	}
+
+	public String getCapaPotsNumber() {
+		return capaPotsNumber;
+	}
+
+	public String getCapaProfileName() {
+		return capaProfileName;
+	}
+
+	public String getCapaUsbNumber() {
+		return capaUsbNumber;
+	}
+
+	public void printDadosCapa() {
+		System.err.println("");
+		System.out.println("Dados recebidos Capability Profile:");
+		System.out.println("CPE Type: " + this.capaCpeType);
+		System.out.println("PON Type: " + this.capaPonType);
+		System.out.println("WiFi Number: " + this.capaWifiNumber);
+		System.out.println("10G Port: " + this.capaTenGPortNumber);
+		System.out.println("1G Port: " + this.capaOneGPortNumber);
+		System.out.println("Equipament ID: " + this.capaEquipamentId);
+		System.out.println("POTS Number: " + this.capaPotsNumber);
+		System.out.println("Profile Name: " + this.capaProfileName);
+		System.out.println("USB Number: " + this.capaUsbNumber);
+	}
+
+	@Override
+	public void onProfileCreated(final String cpeType, final String ponType, final String wifiNumber,
+			final String tenGPort, final String oneGPort, final String equipamentID,
+			final String potsNumber, final String profileName, final String usbNumber) {
+
+		if (this.jCheckBoxFlagONUCapability.isSelected()) {
+			// Aqui você pode atualizar os componentes ou processar os dados recebidos
+			this.jTextFieldModeloONU.setText(profileName);
+
+			this.capaCpeType = cpeType;
+			this.capaPonType = ponType;
+			this.capaWifiNumber = wifiNumber;
+			this.capaTenGPortNumber = tenGPort;
+			this.capaOneGPortNumber = oneGPort;
+			this.capaEquipamentId = equipamentID;
+			this.capaPotsNumber = potsNumber;
+			this.capaProfileName = profileName;
+			this.capaUsbNumber = usbNumber;
+			printDadosCapa();
+		}
+	}
+
+	private void previewText() {
 		// Tente abrir e ler o arquivo
 
 		try (BufferedReader br = new BufferedReader(new FileReader(this.nomeArq))) {
-			StringBuilder content = new StringBuilder();
+			final StringBuilder content = new StringBuilder();
 			String line;
 
 			// Lê linha por linha até o final do arquivo
@@ -63,7 +342,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 			// Define o texto do JTextArea com o conteúdo lido
 			jTextAreaPreviewCode.setText(content.toString());
 			br.close();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -73,7 +352,6 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		final ClassLoader classLoader = OltGpon.class.getClassLoader();
 		this.errorIcon = new ImageIcon(classLoader.getResource("erro.png"));
 		this.successIcon = new ImageIcon(classLoader.getResource("success.png"));
-		this.saidaIcon = new ImageIcon(classLoader.getResource("saida.png"));
 		this.oltIcon = new ImageIcon(classLoader.getResource("AN6000_15.png"));
 		this.nomeArq = "scriptAN5k.txt";
 		this.fileChooserIsSelected = false;
@@ -219,7 +497,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		jFormattedTextFieldPortOlt.setToolTipText("porta");
 		jFormattedTextFieldPortOlt.setName("porta"); // NOI18N
 
-		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+		final javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 		jPanel1.setLayout(jPanel1Layout);
 		jPanel1Layout.setHorizontalGroup(
 				jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,7 +582,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 
 		jButtonCriarONUCapability.setText("Criar");
 		jButtonCriarONUCapability.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+			public void actionPerformed(final java.awt.event.ActionEvent evt) {
 				jButtonCriarONUCapabilityActionPerformed(evt);
 			}
 		});
@@ -335,7 +613,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		jLabel17.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
 		jLabel17.setText("Senha 2.4Ghz:");
 
-		javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+		final javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
 		jPanel6.setLayout(jPanel6Layout);
 		jPanel6Layout.setHorizontalGroup(
 				jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -431,7 +709,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		jLabel21.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
 		jLabel21.setText("Vlan PPPOE:");
 
-		javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+		final javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
 		jPanel7.setLayout(jPanel7Layout);
 		jPanel7Layout.setHorizontalGroup(
 				jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -481,7 +759,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		jLabel20.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
 		jLabel20.setText("Porta Uplink:");
 
-		javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+		final javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
 		jPanel2.setLayout(jPanel2Layout);
 		jPanel2Layout.setHorizontalGroup(
 				jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -640,12 +918,12 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 
 		jButtonFileChooser.setText("File");
 		jButtonFileChooser.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+			public void actionPerformed(final java.awt.event.ActionEvent evt) {
 				jButtonFileChooserActionPerformed(evt);
 			}
 		});
 
-		javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+		final javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
 		jPanel3.setLayout(jPanel3Layout);
 		jPanel3Layout.setHorizontalGroup(
 				jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -671,26 +949,26 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 
 		jButtonEnviar.setText("Enviar");
 		jButtonEnviar.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+			public void actionPerformed(final java.awt.event.ActionEvent evt) {
 				jButtonEnviarActionPerformed(evt);
 			}
 		});
 
 		jButtonCriar.setText("Criar");
 		jButtonCriar.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+			public void actionPerformed(final java.awt.event.ActionEvent evt) {
 				jButtonCriarActionPerformed(evt);
 			}
 		});
 
 		jButtonCancel.setText("Cancel");
 		jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+			public void actionPerformed(final java.awt.event.ActionEvent evt) {
 				jButtonCancelActionPerformed(evt);
 			}
 		});
 
-		javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+		final javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
 		jPanel4.setLayout(jPanel4Layout);
 		jPanel4Layout.setHorizontalGroup(
 				jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -720,7 +998,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		jTextAreaPreviewCode.setRows(5);
 		jScrollPanel.setViewportView(jTextAreaPreviewCode);
 
-		javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+		final javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
 		jPanel5.setLayout(jPanel5Layout);
 		jPanel5Layout.setHorizontalGroup(
 				jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -733,7 +1011,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 						.addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 250,
 								javax.swing.GroupLayout.PREFERRED_SIZE));
 
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+		final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		layout.setHorizontalGroup(
 				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -782,15 +1060,15 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
 
-	private void jButtonFileChooserActionPerformed(java.awt.event.ActionEvent evt) {
-		JFileChooser fileChooser = new JFileChooser();
+	private void jButtonFileChooserActionPerformed(final java.awt.event.ActionEvent evt) {
+		final JFileChooser fileChooser = new JFileChooser();
 
 		// Adiciona um filtro para aceitar apenas arquivos de texto e derivados
-		FileNameExtensionFilter filter = new FileNameExtensionFilter(
+		final FileNameExtensionFilter filter = new FileNameExtensionFilter(
 				"Arquivos de Texto", "txt", "md", "csv", "log", "java", "xml", "html", "json");
 		fileChooser.setFileFilter(filter);
 		// Exibe o seletor de arquivo e obtém a resposta do usuário
-		int returnValue = fileChooser.showOpenDialog(this);
+		final int returnValue = fileChooser.showOpenDialog(this);
 		fileChooser.setDialogTitle("Selecione o arquivo:");
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
@@ -798,7 +1076,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		if (returnValue == JFileChooser.APPROVE_OPTION) {
 			this.fileChooserIsSelected = true;
 			// Obtém o arquivo selecionado
-			java.io.File selectedFile = fileChooser.getSelectedFile();
+			final java.io.File selectedFile = fileChooser.getSelectedFile();
 			System.out.println("Arquivo selecionado: " + selectedFile.getAbsolutePath());
 			this.nomeArq = selectedFile.getAbsolutePath();
 			jButtonFileChooser.setText(selectedFile.getName());
@@ -814,7 +1092,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 
 	}// GEN-LAST:event_jButtonFileChooserActionPerformed
 
-	private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonEnviarActionPerformed
+	private void jButtonEnviarActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonEnviarActionPerformed
 		if (this.fileChooserIsSelected) {
 			if (this.oltGponAN5k.checkTelnet(jTextFieldIpOlt.getText(), jFormattedTextFieldPortOlt.getText(),
 					jTextFieldOltUser.getText(), jPasswordFieldOltPasswd.getPassword(),
@@ -823,7 +1101,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 						"Valores validos!", "Sucesso!",
 						JOptionPane.ERROR_MESSAGE, this.successIcon);
 
-				Telnet acessoOlt = new Telnet(jTextFieldIpOlt.getText(),
+				final Telnet acessoOlt = new Telnet(jTextFieldIpOlt.getText(),
 						Integer.parseInt(jFormattedTextFieldPortOlt.getText()),
 						jTextFieldOltUser.getText(),
 						new String(jPasswordFieldOltPasswd.getPassword()));
@@ -836,10 +1114,10 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		}
 	}// GEN-LAST:event_jButtonEnviarActionPerformed
 
-	private void jButtonCriarActionPerformed(java.awt.event.ActionEvent evt) {
+	private void jButtonCriarActionPerformed(final java.awt.event.ActionEvent evt) {
 		this.nomeArq = "scriptAN5k.txt";
 
-		if (this.oltGponAN5k.start(nomeArq, nomeArq, nomeArq, nomeArq, nomeArq, nomeArq, nomeArq, nomeArq, nomeArq, nomeArq, nomeArq, nomeArq, nomeArq, nomeArq, nomeArq)) {
+		if (this.oltGponAN5k.start(this)) {
 			// Cria um objeto ConfigGenerator para gerar o script de configuração
 			JOptionPane.showMessageDialog(null,
 					"Script criado com sucesso!", "Sucesso!",
@@ -854,21 +1132,20 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		}
 	}
 
-	private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {
+	private void jButtonCancelActionPerformed(final java.awt.event.ActionEvent evt) {
 		dispose();
 		capa.dispose();
 	}
 
-	private void jButtonCriarONUCapabilityActionPerformed(java.awt.event.ActionEvent evt) {
-		// capa.setVisible(true);
-		// capa.setListener(this); // Define o OltAN5k como o listener
-		JPanel glassPane = (JPanel) this.getRootPane().getGlassPane();
+	private void jButtonCriarONUCapabilityActionPerformed(final java.awt.event.ActionEvent evt) {
+
+		final JPanel glassPane = (JPanel) this.getRootPane().getGlassPane();
 		glassPane.setVisible(true);
 		glassPane.setOpaque(false);
 
 		glassPane.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(final MouseEvent e) {
 				playAlertSound();
 			}
 		});
@@ -878,7 +1155,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		capa.setListener(this);
 		capa.addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
-			public void windowClosed(java.awt.event.WindowEvent e) {
+			public void windowClosed(final java.awt.event.WindowEvent e) {
 				glassPane.setVisible(false); // Desbloqueia a interação
 			}
 		});
@@ -889,7 +1166,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		try {
 			try (AudioInputStream audioInputStream = AudioSystem
 					.getAudioInputStream(getClass().getResource("/sounds/error1.wav"))) {
-				Clip clip = AudioSystem.getClip();
+				final Clip clip = AudioSystem.getClip();
 				clip.open(audioInputStream);
 				clip.start();
 			}
@@ -897,111 +1174,4 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 			e.printStackTrace();
 		}
 	}
-
-	@Override
-	public void onProfileCreated(String cpeType, String ponType, String wifiNumber,
-			String tenGPort, String oneGPort, String equipamentID,
-			String potsNumber, String profileName, String usbNumber) {
-
-		if (this.jCheckBoxFlagONUCapability.isSelected()) {
-			// Aqui você pode atualizar os componentes ou processar os dados recebidos
-			this.jTextFieldModeloONU.setText(profileName);
-
-			System.out.println("Dados recebidos:");
-			System.out.println("CPE Type: " + cpeType);
-			System.out.println("PON Type: " + ponType);
-			System.out.println("WiFi Number: " + wifiNumber);
-			System.out.println("10G Port: " + tenGPort);
-			System.out.println("1G Port: " + oneGPort);
-			System.out.println("Equipament ID: " + equipamentID);
-			System.out.println("POTS Number: " + potsNumber);
-			System.out.println("Profile Name: " + profileName);
-			System.out.println("USB Number: " + usbNumber);
-
-		}
-	}
-
-	// Variables declaration - do not modify//GEN-BEGIN:variables
-	private javax.swing.ButtonGroup buttonGroup1;
-	private javax.swing.JButton jButtonCancel;
-	private javax.swing.JButton jButtonCriar;
-	private javax.swing.JButton jButtonCriarONUCapability;
-	private javax.swing.JButton jButtonEnviar;
-	private javax.swing.JButton jButtonFileChooser;
-	private javax.swing.JCheckBox jCheckBoxFlagONUCapability;
-	private javax.swing.JFormattedTextField jFormattedTextFieldPortOlt;
-	private javax.swing.JLabel jLabel1;
-	private javax.swing.JLabel jLabel10;
-	private javax.swing.JLabel jLabel11;
-	private javax.swing.JLabel jLabel12;
-	private javax.swing.JLabel jLabel13;
-	private javax.swing.JLabel jLabel14;
-	private javax.swing.JLabel jLabel15;
-	private javax.swing.JLabel jLabel16;
-	private javax.swing.JLabel jLabel17;
-	private javax.swing.JLabel jLabel18;
-	private javax.swing.JLabel jLabel19;
-	private javax.swing.JLabel jLabel2;
-	private javax.swing.JLabel jLabel20;
-	private javax.swing.JLabel jLabel21;
-	private javax.swing.JLabel jLabel3;
-	private javax.swing.JLabel jLabel4;
-	private javax.swing.JLabel jLabel5;
-	private javax.swing.JLabel jLabel6;
-	private javax.swing.JLabel jLabel7;
-	private javax.swing.JLabel jLabel8;
-	private javax.swing.JLabel jLabel9;
-	private javax.swing.JPanel jPanel1;
-	private javax.swing.JPanel jPanel2;
-	private javax.swing.JPanel jPanel3;
-	private javax.swing.JPanel jPanel4;
-	private javax.swing.JPanel jPanel5;
-	private javax.swing.JPanel jPanel6;
-	private javax.swing.JPanel jPanel7;
-	private javax.swing.JPasswordField jPasswordFieldOltPasswd;
-	private javax.swing.JRadioButton jRadioButtonVeip;
-	private javax.swing.JRadioButton jRadioButtonWanService;
-	private javax.swing.JScrollPane jScrollPanel;
-	private javax.swing.JSpinner jSpinnerPortaUplink;
-	private javax.swing.JSpinner jSpinnerSlotUplink;
-	private javax.swing.JSpinner jSpinnerVlanPPPOE;
-	private javax.swing.JSpinner jSpinnerVlanVeip;
-	private javax.swing.JTabbedPane jTabbedPane1;
-	private javax.swing.JTextArea jTextAreaPreviewCode;
-	private javax.swing.JTextField jTextFieldIpOlt;
-	private javax.swing.JTextField jTextFieldModeloONU;
-	private javax.swing.JTextField jTextFieldOltUser;
-	private javax.swing.JTextField jTextFieldPassPPPOE;
-	private javax.swing.JTextField jTextFieldPhyIdCPE;
-	private javax.swing.JTextField jTextFieldSSID2;
-	private javax.swing.JTextField jTextFieldSSID5;
-	private javax.swing.JTextField jTextFieldSSIDPass2;
-	private javax.swing.JTextField jTextFieldSSIDPass5;
-	private javax.swing.JTextField jTextFieldUserPPPOE;
-
-	private final SpinnerNumberModel modelChassiPon;
-	private final SpinnerNumberModel modelChassiUp;
-	private final SpinnerNumberModel modelPortaPon;
-	private final SpinnerNumberModel modelPortaUp;
-	private final SpinnerNumberModel modelCpe;
-	private final SpinnerNumberModel modelVlanVeip;
-	private final SpinnerNumberModel modelVlanWan;
-
-	private javax.swing.JSpinner jSpinnerPortaPon;
-	private javax.swing.JSpinner jSpinnerSlotCpe;
-	private javax.swing.JSpinner jSpinnerSlotPON;
-
-	private CapabilityProfile capa;
-
-	private String[] cpeType;
-	private String[] ponType;
-	private String[] wifiNumber;
-	private boolean fileChooserIsSelected;
-	private String nomeArq;
-	private ImageIcon oltIcon;
-	private ImageIcon errorIcon;
-	private ImageIcon successIcon;
-	private ImageIcon saidaIcon;
-	private final OltGponAN5k oltGponAN5k;
-	// End of variables declaration
 }
