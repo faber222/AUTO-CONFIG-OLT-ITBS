@@ -1,11 +1,10 @@
 package engtelecom.config;
 
-import java.util.List;
+import engtelecom.product.OltGponAN5k;
 
-public class ConfigGeneratorAN5k extends Config {
+public class ConfigGeneratorAN5k {
 
-    public ConfigGeneratorAN5k(List<String> vlans, String interfaceEthernet, String[] produtos) {
-        super(vlans, interfaceEthernet, produtos);
+    public ConfigGeneratorAN5k(OltGponAN5k olt) {
         //TODO Auto-generated constructor stub
     }
 
