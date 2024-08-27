@@ -7,39 +7,268 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import engtelecom.config.ConfigGeneratorAN5k;
+import engtelecom.swingType.OltAN5k;
 
 public class OltGponAN5k extends Olt {
+    private String portaUplink;
+    private String slotUplink;
+    private String vlanPppoe;
+    private String vlanVeip;
+    private String slotPon;
+    private String portaPon;
+    private String slotCpe;
+
+    private String phyIdCpe;
+    private String modeloCpe;
+    private String userPppoe;
+    private String senhaPppoe;
+    private String ssid2;
+    private String ssid5;
+    private String ssidPass2;
+    private String ssidPass5;
+
+    private String capaCpeType;
+    private String capaPonType;
+    private String capaWifiNumber;
+    private String capaTenGPortNumber;
+    private String capaOneGPortNumber;
+    private String capaEquipamentId;
+    private String capaPotsNumber;
+    private String capaProfileName;
+    private String capaUsbNumber;
+
+    private boolean isWanService;
+    private boolean isOnuCapability;
 
     public OltGponAN5k() {
 
     }
 
-    public boolean start(String nomeArq, String phyIdCpe, String portaUplink, String slotUplink, String portaPon,
-            String slotCpe, String slotPon, String vlan,
-            String onuModel, String userPpp, String passPpp, String ssid2, String ssid5, String pass2, String pass5) {
-        // Carrega os ícones necessários para o diálogo
-        final ClassLoader classLoader = OltGpon.class.getClassLoader();
-        final ImageIcon erroIcon = new ImageIcon(classLoader.getResource("erro.png"));
+    public String getPortaUplink() {
+        return portaUplink;
+    }
 
-        final ConfigGeneratorAN5k configGeneratorAN5k = new ConfigGeneratorAN5k(null, null, null);
+    public String getSlotUplink() {
+        return slotUplink;
+    }
+
+    public String getVlanPppoe() {
+        return vlanPppoe;
+    }
+
+    public String getVlanVeip() {
+        return vlanVeip;
+    }
+
+    public String getSlotPon() {
+        return slotPon;
+    }
+
+    public String getPortaPon() {
+        return portaPon;
+    }
+
+    public String getSlotCpe() {
+        return slotCpe;
+    }
+
+    public String getPhyIdCpe() {
+        return phyIdCpe;
+    }
+
+    public String getModeloCpe() {
+        return modeloCpe;
+    }
+
+    public String getUserPppoe() {
+        return userPppoe;
+    }
+
+    public String getSenhaPppoe() {
+        return senhaPppoe;
+    }
+
+    public String getSsid2() {
+        return ssid2;
+    }
+
+    public String getSsid5() {
+        return ssid5;
+    }
+
+    public String getSsidPass2() {
+        return ssidPass2;
+    }
+
+    public String getSsidPass5() {
+        return ssidPass5;
+    }
+
+    public String getCapaCpeType() {
+        return capaCpeType;
+    }
+
+    public String getCapaPonType() {
+        return capaPonType;
+    }
+
+    public String getCapaWifiNumber() {
+        return capaWifiNumber;
+    }
+
+    public String getCapaTenGPortNumber() {
+        return capaTenGPortNumber;
+    }
+
+    public String getCapaOneGPortNumber() {
+        return capaOneGPortNumber;
+    }
+
+    public String getCapaEquipamentId() {
+        return capaEquipamentId;
+    }
+
+    public String getCapaPotsNumber() {
+        return capaPotsNumber;
+    }
+
+    public String getCapaProfileName() {
+        return capaProfileName;
+    }
+
+    public String getCapaUsbNumber() {
+        return capaUsbNumber;
+    }
+
+    public boolean isWanService() {
+        return isWanService;
+    }
+
+    public boolean isOnuCapability() {
+        return isOnuCapability;
+    }
+
+    public boolean start(OltAN5k oltData) {
+        // Valores inteiros
+        this.portaUplink = (String) oltData.getjSpinnerPortaUplink().getValue().toString();
+        this.slotUplink = (String) oltData.getjSpinnerSlotUplink().getValue().toString();
+        this.slotPon = (String) oltData.getjSpinnerSlotPON().getValue().toString();
+        this.portaPon = (String) oltData.getjSpinnerPortaPon().getValue().toString();
+        this.slotCpe = (String) oltData.getjSpinnerSlotCpe().getValue().toString();
+        this.vlanPppoe = null;
+        this.vlanVeip = null;
+
+        // Valores String
+        this.modeloCpe = oltData.getjTextFieldModeloONU().getText();
+        this.phyIdCpe = oltData.getjTextFieldPhyIdCPE().getText();
+        this.userPppoe = null;
+        this.senhaPppoe = null;
+        this.ssid2 = null;
+        this.ssid5 = null;
+        this.ssidPass2 = null;
+        this.ssidPass5 = null;
+
+        // Valores Strings Capability
+        this.capaCpeType = null;
+        this.capaPonType = null;
+        this.capaWifiNumber = null;
+        this.capaTenGPortNumber = null;
+        this.capaOneGPortNumber = null;
+        this.capaEquipamentId = null;
+        this.capaPotsNumber = null;
+        this.capaProfileName = null;
+        this.capaUsbNumber = null;
+
+        // Valores booleanos
+        this.isOnuCapability = oltData.getjCheckBoxFlagONUCapability().isSelected();
+        this.isWanService = oltData.getjRadioButtonWanService().isSelected();
+
+        if (!checkPhyId(this.phyIdCpe)) {
+            JOptionPane.showMessageDialog(null,
+                    "PhyId invalido. Por favor, insira um phy-id valido (FHTT12345678).", "Erro",
+                    JOptionPane.ERROR_MESSAGE, oltData.getErrorIcon());
+            return false;
+        }
+
+        printUplinkPonCpeValues();
+
+        if (isOnuCapability) {
+            this.capaCpeType = oltData.getCapaCpeType();
+            this.capaPonType = oltData.getCapaPonType();
+            this.capaWifiNumber = oltData.getCapaWifiNumber();
+            this.capaTenGPortNumber = oltData.getCapaTenGPortNumber();
+            this.capaOneGPortNumber = oltData.getCapaOneGPortNumber();
+            this.capaEquipamentId = oltData.getCapaEquipamentId();
+            this.capaPotsNumber = oltData.getCapaPotsNumber();
+            this.capaProfileName = oltData.getCapaProfileName();
+            this.capaUsbNumber = oltData.getCapaUsbNumber();
+            printCapabilityValues();
+        }
+        if (isWanService) {
+            this.vlanPppoe = (String) oltData.getjSpinnerVlanPPPOE().getValue().toString();
+            this.userPppoe = oltData.getjTextFieldUserPPPOE().getText();
+            this.senhaPppoe = oltData.getjTextFieldPassPPPOE().getText();
+            this.ssid2 = oltData.getjTextFieldSSID2().getText();
+            this.ssid5 = oltData.getjTextFieldSSID5().getText();
+            this.ssidPass2 = oltData.getjTextFieldSSIDPass2().getText();
+            this.ssidPass5 = oltData.getjTextFieldSSIDPass5().getText();
+            printPppoeAndSsidValues();
+        } else {
+            this.vlanVeip = (String) oltData.getjSpinnerVlanVeip().getValue().toString();
+            printVeip();
+        }
+
+        final ConfigGeneratorAN5k configGeneratorAN5k = new ConfigGeneratorAN5k(this);
         configGeneratorAN5k.createScript();
         return false;
     }
 
-    public boolean checkSlotCpe() {
-        return false;
+    public void printUplinkPonCpeValues() {
+        System.err.println("");
+        System.err.println("Dados Uplink e PON");
+        System.out.println("PHY IdCpe: " + this.phyIdCpe);
+        System.out.println("MODELO Cpe: " + this.modeloCpe);
+        System.out.println("PORTA Uplink: " + this.portaUplink);
+        System.out.println("SLOT Uplink: " + this.slotUplink);
+        System.out.println("SLOT Pon: " + this.slotPon);
+        System.out.println("PORT Pon: " + this.portaPon);
+        System.out.println("SLOT Cpe: " + this.slotCpe);
     }
 
-    public boolean checkPonPort() {
-        return false;
+    public void printCapabilityValues() {
+        System.err.println("");
+        System.err.println("Dados Recursivos Capability Profile");
+        System.out.println("CPE Type: " + this.capaCpeType);
+        System.out.println("PON Type: " + this.capaPonType);
+        System.out.println("WIFI Number: " + this.capaWifiNumber);
+        System.out.println("TEN GPort Number: " + this.capaTenGPortNumber);
+        System.out.println("ONE GPort Number: " + this.capaOneGPortNumber);
+        System.out.println("EQUIPAMENT Id: " + this.capaEquipamentId);
+        System.out.println("POTS Number: " + this.capaPotsNumber);
+        System.out.println("PROFILE Name: " + this.capaProfileName);
+        System.out.println("USB Number: " + this.capaUsbNumber);
     }
 
-    public boolean checkSlotGpon() {
-        return false;
+    public void printPppoeAndSsidValues() {
+        System.err.println("");
+        System.err.println("Dados WanService");
+        System.out.println("VLAN Pppoe: " + this.vlanPppoe);
+        System.out.println("USER Pppoe: " + this.userPppoe);
+        System.out.println("SENHA Pppoe: " + this.senhaPppoe);
+        System.out.println("SSID2: " + this.ssid2);
+        System.out.println("SSID5: " + this.ssid5);
+        System.out.println("SSID Pass2: " + this.ssidPass2);
+        System.out.println("SSID Pass5: " + this.ssidPass5);
     }
 
-    public boolean checkPhyId() {
-        return false;
+    public void printVeip() {
+        System.err.println("");
+        System.err.println("Dados Veip");
+        System.out.println("VLAN Veip: " + this.vlanVeip);
+    }
+
+    public boolean checkPhyId(String phyId) {
+        return (phyId.matches("^[A-Za-z0-9]{4}[A-Fa-f0-9]{8}$"));
     }
 
     public boolean checkTelnet(String ipAddress, String port, String user, char[] pwd, final ImageIcon erroIcon) {
@@ -67,11 +296,7 @@ public class OltGponAN5k extends Olt {
 
     @Override
     public void saida(ImageIcon saidaIcon) {
-        // Exibe uma caixa de diálogo com uma mensagem de aviso indicando que o programa
-        // será encerrado.
-        JOptionPane.showMessageDialog(null,
-                "Voce pressionou o botao 'Cancelar'. O programa sera encerrado.",
-                null, JOptionPane.WARNING_MESSAGE, saidaIcon);
+        throw new UnsupportedOperationException("Unimplemented method 'saida'");
     }
 
     @Override
