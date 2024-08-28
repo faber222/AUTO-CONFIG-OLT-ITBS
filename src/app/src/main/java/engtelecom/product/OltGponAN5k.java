@@ -226,8 +226,7 @@ public class OltGponAN5k extends Olt {
         }
 
         final ConfigGeneratorAN5k configGeneratorAN5k = new ConfigGeneratorAN5k(this);
-        configGeneratorAN5k.createScript();
-        return false;
+        return configGeneratorAN5k.createScript();
     }
 
     public void printUplinkPonCpeValues() {
@@ -278,7 +277,8 @@ public class OltGponAN5k extends Olt {
         return (phyId.matches("^[A-Za-z0-9]{4}[A-Fa-f0-9]{8}$"));
     }
 
-    public boolean checkTelnet(final String ipAddress, final String port, final String user, final char[] pwd, final ImageIcon erroIcon) {
+    public boolean checkTelnet(final String ipAddress, final String port, final String user, final char[] pwd,
+            final ImageIcon erroIcon) {
         // Verifica se o endereço IP inserido é válido.
         if (!isValidIPv4Address(ipAddress)) {
             JOptionPane.showMessageDialog(null,
