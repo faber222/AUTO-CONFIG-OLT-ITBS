@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import engtelecom.product.OltGponAN5k;
@@ -45,23 +46,23 @@ public class ConfigGeneratorAN5k {
             }
             writer.newLine();
 
-            for (final String lines : this.capaD2) {
-                writer.write(lines);
-                writer.newLine();
-            }
-            writer.newLine();
+            // for (final String lines : this.capaD2) {
+            //     writer.write(lines);
+            //     writer.newLine();
+            // }
+            // writer.newLine();
 
-            for (final String lines : this.capaF) {
-                writer.write(lines);
-                writer.newLine();
-            }
-            writer.newLine();
+            // for (final String lines : this.capaF) {
+            //     writer.write(lines);
+            //     writer.newLine();
+            // }
+            // writer.newLine();
 
-            for (final String lines : this.capaF3) {
-                writer.write(lines);
-                writer.newLine();
-            }
-            writer.newLine();
+            // for (final String lines : this.capaF3) {
+            //     writer.write(lines);
+            //     writer.newLine();
+            // }
+            // writer.newLine();
 
             for (final String lines : this.cpeAuth) {
                 writer.write(lines);
@@ -107,23 +108,28 @@ public class ConfigGeneratorAN5k {
 
             return true;
         } catch (final IOException e) {
-            e.printStackTrace();
             return false;
         }
     }
 
-    public void createScript() {
+    public boolean createScript() {
         final ScriptsAN5k scriptsOltAn5k = new ScriptsAN5k();
         String vlan = objAN5k.getVlanVeip();
         this.ponAuth = scriptsOltAn5k.setPonAuth(objAN5k.getSlotPon(), objAN5k.getSlotPortaPon());
-        this.capaD2 = scriptsOltAn5k.comandoOnuCapaD2();
-        this.capaF = scriptsOltAn5k.comandoOnuCapaF();
-        this.capaF3 = scriptsOltAn5k.comandoOnuCapaF3();
+        // this.capaD2 = scriptsOltAn5k.comandoOnuCapaD2();
+        // this.capaF = scriptsOltAn5k.comandoOnuCapaF();
+        // this.capaF3 = scriptsOltAn5k.comandoOnuCapaF3();
+        this.capabilityProfiles = new ArrayList<>();
 
-        this.capabilityProfiles = scriptsOltAn5k.comandoOnuCapa(objAN5k.getCapaProfileName(),
-                objAN5k.getCapaPonType(), objAN5k.getCapaCpeType(), objAN5k.getCapaOneGPortNumber(),
-                objAN5k.getCapaTenGPortNumber(), objAN5k.getCapaPotsNumber(),
-                objAN5k.getCapaWifiNumber(), objAN5k.getCapaUsbNumber(), objAN5k.getCapaEquipamentId());
+        if (objAN5k.isOnuCapability()) {
+            this.capabilityProfiles = scriptsOltAn5k.comandoOnuCapa(objAN5k.getCapaProfileName(),
+                    objAN5k.getCapaPonType(), objAN5k.getCapaCpeType(), objAN5k.getCapaOneGPortNumber(),
+                    objAN5k.getCapaTenGPortNumber(), objAN5k.getCapaPotsNumber(),
+                    objAN5k.getCapaWifiNumber(), objAN5k.getCapaUsbNumber(), objAN5k.getCapaEquipamentId());
+            this.capaD2 = new ArrayList<>();
+            this.capaF = new ArrayList<>();
+            this.capaF3 = new ArrayList<>();
+        }
 
         this.cpeAuth = scriptsOltAn5k.provisionaCPE(objAN5k.getPhyIdCpe(), objAN5k.getSlotPon(),
                 objAN5k.getSlotPortaPon(), objAN5k.getSlotCpe(), objAN5k.getCpeCapaProfile());
@@ -133,9 +139,9 @@ public class ConfigGeneratorAN5k {
         this.veipCommands = scriptsOltAn5k.configVeip(objAN5k.getSlotPon(), objAN5k.getSlotPortaPon(),
                 objAN5k.getSlotCpe(), objAN5k.getVlanVeip());
 
-        this.pppoeCommands = null;
-        this.wifi2Commands = null;
-        this.wifi5Commands = null;
+        this.pppoeCommands = new ArrayList<>();
+        this.wifi2Commands = new ArrayList<>();
+        this.wifi5Commands = new ArrayList<>();
 
         if (objAN5k.isWanService()) {
             String wifiStandard2;
@@ -143,7 +149,8 @@ public class ConfigGeneratorAN5k {
             this.pppoeCommands = scriptsOltAn5k.comandoPpoe(objAN5k.getSlotPon(), objAN5k.getSlotPortaPon(),
                     objAN5k.getSlotCpe(), objAN5k.getVlanPppoe(), objAN5k.getUserPppoe(), objAN5k.getSenhaPppoe());
             vlan = objAN5k.getVlanPppoe();
-            this.veipCommands = null;
+            this.veipCommands = new ArrayList<>();
+            this.profileServMode = new ArrayList<>();
 
             switch (objAN5k.getCpeCapaProfile()) {
                 case "HG6145D2" -> {
@@ -168,7 +175,7 @@ public class ConfigGeneratorAN5k {
         }
         this.uplinkVlanConfigs = scriptsOltAn5k.addVlanToUplink(vlan, objAN5k.getSlotUplink(),
                 objAN5k.getSlotPortaUplink());
-
+        return writeScript();
     }
 
 }
