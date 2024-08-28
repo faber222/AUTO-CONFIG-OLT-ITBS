@@ -135,7 +135,7 @@ public class OltG08 extends javax.swing.JInternalFrame {
                 jTextAreaPreviewCode = new javax.swing.JTextArea();
 
                 setBackground(new java.awt.Color(204, 204, 204));
-                setClosable(false);
+                setClosable(true);
                 setForeground(java.awt.Color.darkGray);
                 setIconifiable(true);
                 setMaximizable(true);
