@@ -216,28 +216,28 @@ public class ScriptsAN5k {
                 return scriptOnuCapa;
         }
 
-        public List<String> comandoOnuCapaF3() {
-                final List<String> scriptOnuCapa = new ArrayList<>();
-                scriptOnuCapa.add("add cs onu profile name HG6145F3 pontype 712 onucapa 0 lan1g 4 lan10g 0 pots 1");
-                scriptOnuCapa.add("add cs onu profile option wifi 2 end");
-                scriptOnuCapa.add("modify cs onu profile name HG6145F3 eid HG6145F3 end");
-                return scriptOnuCapa;
-        }
+        // public List<String> comandoOnuCapaF3() {
+        //         final List<String> scriptOnuCapa = new ArrayList<>();
+        //         scriptOnuCapa.add("add cs onu profile name HG6145F3 pontype 712 onucapa 0 lan1g 4 lan10g 0 pots 1");
+        //         scriptOnuCapa.add("add cs onu profile option wifi 2 end");
+        //         scriptOnuCapa.add("modify cs onu profile name HG6145F3 eid HG6145F3 end");
+        //         return scriptOnuCapa;
+        // }
 
-        public List<String> comandoOnuCapaF() {
-                final List<String> scriptOnuCapa = new ArrayList<>();
-                scriptOnuCapa.add("add cs onu profile name HG6145F pontype 712 onucapa 0 lan1g 4 lan10g 0 pots 1");
-                scriptOnuCapa.add("add cs onu profile option wifi 2 usb 2 end");
-                scriptOnuCapa.add("modify cs onu profile name HG6145F eid HG6145F end");
-                return scriptOnuCapa;
-        }
+        // public List<String> comandoOnuCapaF() {
+        //         final List<String> scriptOnuCapa = new ArrayList<>();
+        //         scriptOnuCapa.add("add cs onu profile name HG6145F pontype 712 onucapa 0 lan1g 4 lan10g 0 pots 1");
+        //         scriptOnuCapa.add("add cs onu profile option wifi 2 usb 2 end");
+        //         scriptOnuCapa.add("modify cs onu profile name HG6145F eid HG6145F end");
+        //         return scriptOnuCapa;
+        // }
 
-        public List<String> comandoOnuCapaD2() {
-                final List<String> scriptOnuCapa = new ArrayList<>();
-                scriptOnuCapa.add("add cs onu profile name HG6145D2 pontype 712 onucapa 0 lan1g 4 lan10g 0 pots 1");
-                scriptOnuCapa.add("add cs onu profile option wifi 2 end");
-                scriptOnuCapa.add("modify cs onu profile name HG6145D2 eid HG6145D2 end");
-                return scriptOnuCapa;
-        }
+        // public List<String> comandoOnuCapaD2() {
+        //         final List<String> scriptOnuCapa = new ArrayList<>();
+        //         scriptOnuCapa.add("add cs onu profile name HG6145D2 pontype 712 onucapa 0 lan1g 4 lan10g 0 pots 1");
+        //         scriptOnuCapa.add("add cs onu profile option wifi 2 end");
+        //         scriptOnuCapa.add("modify cs onu profile name HG6145D2 eid HG6145D2 end");
+        //         return scriptOnuCapa;
+        // }
 
 }
