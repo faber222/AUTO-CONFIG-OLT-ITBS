@@ -20,7 +20,7 @@ public class ScriptsAN5k {
      * @param slotPortaPon Porta pon onde a cpe se encontra
      * @return Lista de Strings contendo todo o script de autorização das portas
      */
-    public List<String> setPonAuth(String slotGpon, String slotPortaPon) {
+    public List<String> setPonAuth(final String slotGpon, final String slotPortaPon) {
         final List<String> ponAuth = new ArrayList<>();
         ponAuth.add("cd card");
         ponAuth.add(String.format("set pon_auth slot %s pon %s mode phy_id", slotGpon, slotPortaPon));
@@ -37,8 +37,8 @@ public class ScriptsAN5k {
      * @param cpeType         Capability da CPE
      * @return Lista de strings contendo todo o script de provisionamento de cpes
      */
-    public List<String> provisionaCPE(String serialNumberCpe, String slotGpon, String slotPortaPon,
-            String slotCpe, String cpeType) {
+    public List<String> provisionaCPE(final String serialNumberCpe, final String slotGpon, final String slotPortaPon,
+            final String slotCpe, final String cpeType) {
         final List<String> scriptProvisionaCpe = new ArrayList<>();
         // final StringBuilder mgrStringBuilder = new StringBuilder();
         scriptProvisionaCpe.add("cd onu");
@@ -59,9 +59,9 @@ public class ScriptsAN5k {
      * @param passPPP      Senha do pppoe
      * @return Lista de strings contendo todo o script para configurar pppoe
      */
-    public List<String> comandoPpoe(String slotGpon, String slotPortaPon, String slotCpe, String vlan,
-            String userPPP,
-            String passPPP) {
+    public List<String> comandoPpoe(final String slotGpon, final String slotPortaPon, final String slotCpe, final String vlan,
+            final String userPPP,
+            final String passPPP) {
         final List<String> scriptComandoPpoe = new ArrayList<>();
         scriptComandoPpoe.add("cd onu");
         scriptComandoPpoe.add("cd lan");
@@ -98,7 +98,7 @@ public class ScriptsAN5k {
      * @param vlan         Vlan do VEIP
      * @return Lista de strings contendo todo o script para configuração de veip
      */
-    public List<String> configVeip(String slotGpon, String slotPortaPon, String slotCpe, String vlan) {
+    public List<String> configVeip(final String slotGpon, final String slotPortaPon, final String slotCpe, final String vlan) {
         final List<String> scriptVeip = new ArrayList<>();
         scriptVeip.add("cd onu");
         scriptVeip.add("cd lan");
@@ -116,7 +116,7 @@ public class ScriptsAN5k {
      * @param slotPortaUplink Slot da porta uplink no chassi
      * @return Lista de strings contendo todo o script para add vlan na uplink
      */
-    public List<String> addVlanToUplink(String vlan, String slotUplink, String slotPortaUplink) {
+    public List<String> addVlanToUplink(final String vlan, final String slotUplink, final String slotPortaUplink) {
         final List<String> uplink = new ArrayList<>();
         uplink.add("cd vlan");
         uplink.add(String.format("add vlan vlan_begin %s vlan_end %s tag uplink slot %s port %s", vlan, vlan,
@@ -136,8 +136,8 @@ public class ScriptsAN5k {
      * @param wifiVersion  Versão do IEEE da 2.4Ghz
      * @return Lista de strings contendo todo o script para configurar a rede 2.4Ghz
      */
-    public List<String> comandoWifi2(String slotGpon, String slotPortaPon, String slotCpe, String ssidName2,
-            String passName2, String wifiVersion) {
+    public List<String> comandoWifi2(final String slotGpon, final String slotPortaPon, final String slotCpe, final String ssidName2,
+            final String passName2, final String wifiVersion) {
         final List<String> scriptComandoWifi = new ArrayList<>();
         scriptComandoWifi.add("cd onu");
         scriptComandoWifi.add("cd lan");
@@ -161,8 +161,8 @@ public class ScriptsAN5k {
      * @param wifiVersion  Versão do IEEE da 5Ghz
      * @return Lista de strings contendo todo o script para configurar a rede 5Ghz
      */
-    public List<String> comandoWifi5(String slotGpon, String slotPortaPon, String slotCpe, String ssidName5,
-            String passName5, String wifiVersion) {
+    public List<String> comandoWifi5(final String slotGpon, final String slotPortaPon, final String slotCpe, final String ssidName5,
+            final String passName5, final String wifiVersion) {
         final List<String> scriptComandoWifi = new ArrayList<>();
         scriptComandoWifi.add("cd onu");
         scriptComandoWifi.add("cd lan");
@@ -188,13 +188,13 @@ public class ScriptsAN5k {
      * @return Lista de strings contendo o script completo de criação de onu
      *         capability
      */
-    public List<String> comandoOnuCapa(String name, String ponType, String lan1g, String lan10g, String pots,
-            String wifi, String usb) {
+    public List<String> comandoOnuCapa(final String name, final String ponType, final String onuCapa, final String lan1g, final String lan10g, final String pots,
+            final String wifi, final String usb, final String eid) {
         final List<String> scriptOnuCapa = new ArrayList<>();
-        scriptOnuCapa.add(String.format("add cs onu profile name %s pontype %s onucapa 1 lan1g %s lan10g %s pots %s",
-                name, ponType, lan1g, lan10g, pots));
+        scriptOnuCapa.add(String.format("add cs onu profile name %s pontype %s onucapa %s lan1g %s lan10g %s pots %s",
+                name, ponType, onuCapa, lan1g, lan10g, pots));
         scriptOnuCapa.add(String.format("add cs onu profile option wifi %s usb %s end", wifi, usb));
-        scriptOnuCapa.add(String.format("modify cs onu profile name %s eid %s", name, name));
+        scriptOnuCapa.add(String.format("modify cs onu profile name %s eid %s", name, eid));
         return scriptOnuCapa;
     }
 

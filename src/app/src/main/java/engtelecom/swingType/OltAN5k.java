@@ -140,6 +140,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 	// Dados usados para repasse de contexto
 	private String[] cpeType;
 	private String[] ponType;
+	private String[] indexPonType;
 
 	private String[] wifiNumber;
 	private boolean fileChooserIsSelected;
@@ -164,7 +165,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		this.modelVlanWan = new SpinnerNumberModel(1, 1, 4095, 1);
 		initComponents();
 		oltGponAN5k = new OltGponAN5k();
-		capa = new CapabilityProfile(this.cpeType, this.ponType, this.wifiNumber);
+		capa = new CapabilityProfile(this.cpeType, this.ponType, this.indexPonType, this.wifiNumber);
 	}
 
 	public ImageIcon getOltIcon() {
@@ -374,6 +375,18 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 				"GPON/XGPON/XGSPON auto",
 				"EPON/10GEPON auto",
 				"25G PON 25G/25G"
+		};
+
+		this.indexPonType = new String[] {
+				"263",
+				"807",
+				"808",
+				"712",
+				"813",
+				"650",
+				"824",
+				"829",
+				"826"
 		};
 
 		this.wifiNumber = new String[] {
