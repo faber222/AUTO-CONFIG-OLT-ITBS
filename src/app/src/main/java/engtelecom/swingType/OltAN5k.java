@@ -140,6 +140,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 	// Dados usados para repasse de contexto
 	private String[] cpeType;
 	private String[] ponType;
+	private String[] indexPonType;
 
 	private String[] wifiNumber;
 	private boolean fileChooserIsSelected;
@@ -164,7 +165,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		this.modelVlanWan = new SpinnerNumberModel(1, 1, 4095, 1);
 		initComponents();
 		oltGponAN5k = new OltGponAN5k();
-		capa = new CapabilityProfile(this.cpeType, this.ponType, this.wifiNumber);
+		capa = new CapabilityProfile(this.cpeType, this.ponType, this.indexPonType, this.wifiNumber);
 	}
 
 	public ImageIcon getOltIcon() {
@@ -376,6 +377,18 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 				"25G PON 25G/25G"
 		};
 
+		this.indexPonType = new String[] {
+				"263",
+				"807",
+				"808",
+				"712",
+				"813",
+				"650",
+				"824",
+				"829",
+				"826"
+		};
+
 		this.wifiNumber = new String[] {
 				"0",
 				"1",
@@ -462,7 +475,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		jButtonCancel = new javax.swing.JButton();
 
 		setBackground(new java.awt.Color(204, 204, 204));
-		setClosable(false);
+		setClosable(true);
 		setForeground(java.awt.Color.darkGray);
 		setIconifiable(true);
 		setMaximizable(true);

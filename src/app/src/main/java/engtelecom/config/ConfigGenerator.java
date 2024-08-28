@@ -11,14 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
- */
 import engtelecom.scripts.Scripts;
 
 /**
@@ -215,7 +207,7 @@ public class ConfigGenerator extends Config {
             writer.newLine();
 
             // Escreve os comandos de autoconfiguração ONT
-            for (String ontAuto : ontAutoConfig) {
+            for (final String ontAuto : ontAutoConfig) {
                 writer.write(ontAuto);
                 writer.newLine();
             }
@@ -243,7 +235,7 @@ public class ConfigGenerator extends Config {
      * 
      * @return true se a criação do script foi bem-sucedida, false caso contrário.
      */
-    public boolean createScript(String nomeArq, int slotLength) {
+    public boolean createScript(final String nomeArq, final int slotLength) {
         // // Caminho do novo script
         // final File newScript = new File(nomeArq);
 

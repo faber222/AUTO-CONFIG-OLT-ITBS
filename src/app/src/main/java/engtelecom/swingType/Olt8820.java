@@ -145,7 +145,7 @@ public class Olt8820 extends javax.swing.JInternalFrame {
                 jTextAreaPreviewCode = new javax.swing.JTextArea();
 
                 setBackground(new java.awt.Color(204, 204, 204));
-                setClosable(false);
+                setClosable(true);
                 setForeground(java.awt.Color.black);
                 setIconifiable(true);
                 setMaximizable(true);
@@ -156,7 +156,7 @@ public class Olt8820 extends javax.swing.JInternalFrame {
                 setPreferredSize(new java.awt.Dimension(733, 705));
                 setRequestFocusEnabled(false);
 
-                setVisible(true);
+                // setVisible(true);
 
                 jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Dados de acesso da OLT ",
                                 javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,

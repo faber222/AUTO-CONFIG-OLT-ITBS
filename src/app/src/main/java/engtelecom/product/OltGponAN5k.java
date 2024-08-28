@@ -40,11 +40,13 @@ public class OltGponAN5k extends Olt {
     private boolean isWanService;
     private boolean isOnuCapability;
 
+    private String nomeArq;
+
     public OltGponAN5k() {
 
     }
 
-    public String getPortaUplink() {
+    public String getSlotPortaUplink() {
         return portaUplink;
     }
 
@@ -64,7 +66,7 @@ public class OltGponAN5k extends Olt {
         return slotPon;
     }
 
-    public String getPortaPon() {
+    public String getSlotPortaPon() {
         return portaPon;
     }
 
@@ -76,7 +78,7 @@ public class OltGponAN5k extends Olt {
         return phyIdCpe;
     }
 
-    public String getModeloCpe() {
+    public String getCpeCapaProfile() {
         return modeloCpe;
     }
 
@@ -140,6 +142,10 @@ public class OltGponAN5k extends Olt {
         return capaUsbNumber;
     }
 
+    public String getNomeArq() {
+        return nomeArq;
+    }
+
     public boolean isWanService() {
         return isWanService;
     }
@@ -148,7 +154,7 @@ public class OltGponAN5k extends Olt {
         return isOnuCapability;
     }
 
-    public boolean start(OltAN5k oltData) {
+    public boolean start(final OltAN5k oltData) {
         // Valores inteiros
         this.portaUplink = (String) oltData.getjSpinnerPortaUplink().getValue().toString();
         this.slotUplink = (String) oltData.getjSpinnerSlotUplink().getValue().toString();
@@ -161,6 +167,7 @@ public class OltGponAN5k extends Olt {
         // Valores String
         this.modeloCpe = oltData.getjTextFieldModeloONU().getText();
         this.phyIdCpe = oltData.getjTextFieldPhyIdCPE().getText();
+        this.nomeArq = oltData.getNomeArq();
         this.userPppoe = null;
         this.senhaPppoe = null;
         this.ssid2 = null;
@@ -219,8 +226,7 @@ public class OltGponAN5k extends Olt {
         }
 
         final ConfigGeneratorAN5k configGeneratorAN5k = new ConfigGeneratorAN5k(this);
-        configGeneratorAN5k.createScript();
-        return false;
+        return configGeneratorAN5k.createScript();
     }
 
     public void printUplinkPonCpeValues() {
@@ -267,11 +273,12 @@ public class OltGponAN5k extends Olt {
         System.out.println("VLAN Veip: " + this.vlanVeip);
     }
 
-    public boolean checkPhyId(String phyId) {
+    public boolean checkPhyId(final String phyId) {
         return (phyId.matches("^[A-Za-z0-9]{4}[A-Fa-f0-9]{8}$"));
     }
 
-    public boolean checkTelnet(String ipAddress, String port, String user, char[] pwd, final ImageIcon erroIcon) {
+    public boolean checkTelnet(final String ipAddress, final String port, final String user, final char[] pwd,
+            final ImageIcon erroIcon) {
         // Verifica se o endereço IP inserido é válido.
         if (!isValidIPv4Address(ipAddress)) {
             JOptionPane.showMessageDialog(null,
@@ -295,12 +302,12 @@ public class OltGponAN5k extends Olt {
     }
 
     @Override
-    public void saida(ImageIcon saidaIcon) {
+    public void saida(final ImageIcon saidaIcon) {
         throw new UnsupportedOperationException("Unimplemented method 'saida'");
     }
 
     @Override
-    public boolean isValidIPv4Address(String ipAddress) {
+    public boolean isValidIPv4Address(final String ipAddress) {
         // Expressão regular para validar um endereço IPv4
         final String regex = "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
         // Compila a expressão regular
@@ -313,7 +320,7 @@ public class OltGponAN5k extends Olt {
     }
 
     @Override
-    public boolean checkVlanClient(String rangeVlan, ImageIcon erroIcon, int range) {
+    public boolean checkVlanClient(final String rangeVlan, final ImageIcon erroIcon, final int range) {
         throw new UnsupportedOperationException("Unimplemented method 'checkVlanClient'");
     }
 
