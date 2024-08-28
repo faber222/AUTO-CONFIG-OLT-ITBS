@@ -40,6 +40,8 @@ public class OltGponAN5k extends Olt {
     private boolean isWanService;
     private boolean isOnuCapability;
 
+    private String nomeArq;
+
     public OltGponAN5k() {
 
     }
@@ -76,7 +78,7 @@ public class OltGponAN5k extends Olt {
         return phyIdCpe;
     }
 
-    public String getModeloCpe() {
+    public String getCpeCapaProfile() {
         return modeloCpe;
     }
 
@@ -140,6 +142,10 @@ public class OltGponAN5k extends Olt {
         return capaUsbNumber;
     }
 
+    public String getNomeArq() {
+        return nomeArq;
+    }
+
     public boolean isWanService() {
         return isWanService;
     }
@@ -161,6 +167,7 @@ public class OltGponAN5k extends Olt {
         // Valores String
         this.modeloCpe = oltData.getjTextFieldModeloONU().getText();
         this.phyIdCpe = oltData.getjTextFieldPhyIdCPE().getText();
+        this.nomeArq = oltData.getNomeArq();
         this.userPppoe = null;
         this.senhaPppoe = null;
         this.ssid2 = null;
