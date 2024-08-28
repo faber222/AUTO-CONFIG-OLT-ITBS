@@ -475,7 +475,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		jButtonCancel = new javax.swing.JButton();
 
 		setBackground(new java.awt.Color(204, 204, 204));
-		setClosable(false);
+		setClosable(true);
 		setForeground(java.awt.Color.darkGray);
 		setIconifiable(true);
 		setMaximizable(true);
