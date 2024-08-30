@@ -76,6 +76,12 @@ public class ConfigGeneratorAN5k {
             }
             writer.newLine();
 
+            for (final String lines : this.uplinkVlanConfigs) {
+                writer.write(lines);
+                writer.newLine();
+            }
+            writer.newLine();
+            
             for (final String lines : this.veipCommands) {
                 writer.write(lines);
                 writer.newLine();
@@ -88,11 +94,6 @@ public class ConfigGeneratorAN5k {
             }
             writer.newLine();
 
-            for (final String lines : this.uplinkVlanConfigs) {
-                writer.write(lines);
-                writer.newLine();
-            }
-            writer.newLine();
 
             for (final String lines : this.wifi2Commands) {
                 writer.write(lines);
