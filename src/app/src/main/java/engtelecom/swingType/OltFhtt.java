@@ -24,7 +24,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import engtelecom.access.Telnet;
 import engtelecom.product.OltGpon;
-import engtelecom.product.OltGponAN5k;
+import engtelecom.product.OltGponFhtt;
 
 /**
  *
@@ -151,7 +151,7 @@ public class OltFhtt extends javax.swing.JInternalFrame implements CapabilityPro
 	private ImageIcon successIcon;
 	private final String oltName;
 	private final CapabilityProfile capa;
-	private final OltGponAN5k oltGponAN5k;
+	private final OltGponFhtt oltGponFhtt;
 
 	// End of variables declaration
 	/**
@@ -167,7 +167,7 @@ public class OltFhtt extends javax.swing.JInternalFrame implements CapabilityPro
 		this.modelVlanWan = new SpinnerNumberModel(1, 1, 4095, 1);
 		this.oltName = oltName;
 		initComponents();
-		oltGponAN5k = new OltGponAN5k();
+		oltGponFhtt = new OltGponFhtt();
 		capa = new CapabilityProfile(this.cpeType, this.ponType, this.indexPonType, this.wifiNumber);
 	}
 
@@ -257,6 +257,10 @@ public class OltFhtt extends javax.swing.JInternalFrame implements CapabilityPro
 
 	public String getNomeArq() {
 		return nomeArq;
+	}
+
+	public String getOltName() {
+		return oltName;
 	}
 
 	public String getCapaCpeType() {
@@ -1108,7 +1112,7 @@ public class OltFhtt extends javax.swing.JInternalFrame implements CapabilityPro
 
 	private void jButtonEnviarActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonEnviarActionPerformed
 		if (this.fileChooserIsSelected) {
-			if (this.oltGponAN5k.checkTelnet(jTextFieldIpOlt.getText(), jFormattedTextFieldPortOlt.getText(),
+			if (this.oltGponFhtt.checkTelnet(jTextFieldIpOlt.getText(), jFormattedTextFieldPortOlt.getText(),
 					jTextFieldOltUser.getText(), jPasswordFieldOltPasswd.getPassword(),
 					this.errorIcon)) {
 				JOptionPane.showMessageDialog(null,
@@ -1131,7 +1135,7 @@ public class OltFhtt extends javax.swing.JInternalFrame implements CapabilityPro
 	private void jButtonCriarActionPerformed(final java.awt.event.ActionEvent evt) {
 		this.fileName = this.nomeArq;
 
-		if (this.oltGponAN5k.start(this)) {
+		if (this.oltGponFhtt.start(this)) {
 			// Cria um objeto ConfigGenerator para gerar o script de configuração
 			JOptionPane.showMessageDialog(null,
 					"Script criado com sucesso!", "Sucesso!",
