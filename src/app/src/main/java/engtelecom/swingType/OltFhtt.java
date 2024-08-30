@@ -158,10 +158,10 @@ public class OltFhtt extends javax.swing.JInternalFrame implements CapabilityPro
 	 * Creates new form OltG16
 	 */
 	public OltFhtt(String oltName) {
-		this.modelChassiPon = new SpinnerNumberModel(1, 1, 50, 1);
-		this.modelChassiUp = new SpinnerNumberModel(1, 1, 17, 1);
-		this.modelPortaPon = new SpinnerNumberModel(1, 1, 50, 1);
-		this.modelPortaUp = new SpinnerNumberModel(1, 1, 16, 1);
+		this.modelChassiPon = new SpinnerNumberModel(1, 1, 100, 1);
+		this.modelChassiUp = new SpinnerNumberModel(1, 1, 100, 1);
+		this.modelPortaPon = new SpinnerNumberModel(1, 1, 100, 1);
+		this.modelPortaUp = new SpinnerNumberModel(1, 1, 100, 1);
 		this.modelCpe = new SpinnerNumberModel(1, 1, 128, 1);
 		this.modelVlanVeip = new SpinnerNumberModel(1, 1, 4095, 1);
 		this.modelVlanWan = new SpinnerNumberModel(1, 1, 4095, 1);
