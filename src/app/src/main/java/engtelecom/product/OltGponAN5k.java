@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import engtelecom.config.ConfigGeneratorAN5k;
-import engtelecom.swingType.OltAN5k;
+import engtelecom.swingType.OltFhtt;
 
 public class OltGponAN5k extends Olt {
     private String portaUplink;
@@ -154,7 +154,7 @@ public class OltGponAN5k extends Olt {
         return isOnuCapability;
     }
 
-    public boolean start(final OltAN5k oltData) {
+    public boolean start(final OltFhtt oltData) {
         // Valores inteiros
         this.portaUplink = (String) oltData.getjSpinnerPortaUplink().getValue().toString();
         this.slotUplink = (String) oltData.getjSpinnerSlotUplink().getValue().toString();
