@@ -11,6 +11,7 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import engtelecom.access.Telnet;
@@ -752,12 +753,20 @@ public class OltG08 extends javax.swing.JInternalFrame {
                                 JOptionPane.showMessageDialog(null,
                                                 "Valores validos!", "Sucesso!",
                                                 JOptionPane.ERROR_MESSAGE, this.successIcon);
+                                SwingWorker<Void, Void> worker = new SwingWorker<>() {
+                                        @Override
+                                        protected Void doInBackground() throws Exception {
+                                                Telnet acessoOlt = new Telnet(jTextFieldIpOlt.getText(),
+                                                                Integer.parseInt(jFormattedTextFieldPortOlt.getText()),
+                                                                jTextFieldOltUser.getText(),
+                                                                new String(jPasswordFieldOltPasswd.getPassword()));
+                                                acessoOlt.oltAccess(nomeArq);
+                                                return null;
+                                        }
 
-                                Telnet acessoOlt = new Telnet(jTextFieldIpOlt.getText(),
-                                                Integer.parseInt(jFormattedTextFieldPortOlt.getText()),
-                                                jTextFieldOltUser.getText(),
-                                                new String(jPasswordFieldOltPasswd.getPassword()));
-                                acessoOlt.oltAccess(this.nomeArq);
+                                };
+                                worker.execute();
+
                         }
                 } else {
                         JOptionPane.showMessageDialog(null,

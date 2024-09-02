@@ -20,6 +20,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import engtelecom.access.TelnetFhtt;
@@ -1110,31 +1111,41 @@ public class OltFhtt extends javax.swing.JInternalFrame implements CapabilityPro
 
 	}// GEN-LAST:event_jButtonFileChooserActionPerformed
 
-	private void jButtonEnviarActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonEnviarActionPerformed
+	private void jButtonEnviarActionPerformed(final java.awt.event.ActionEvent evt) {
 		if (this.fileChooserIsSelected) {
 			if (this.oltGponFhtt.checkTelnet(jTextFieldIpOlt.getText(), jFormattedTextFieldPortOlt.getText(),
 					jTextFieldOltUser.getText(), jPasswordFieldOltPasswd.getPassword(),
 					this.errorIcon)) {
 				JOptionPane.showMessageDialog(null,
-						"Valores validos!", "Sucesso!",
-						JOptionPane.ERROR_MESSAGE, this.successIcon);
+						"Valores válidos!", "Sucesso!",
+						JOptionPane.INFORMATION_MESSAGE, this.successIcon);
 
-				final TelnetFhtt acessoOlt = new TelnetFhtt(jTextFieldIpOlt.getText(),
-						Integer.parseInt(jFormattedTextFieldPortOlt.getText()),
-						jTextFieldOltUser.getText(),
-						new String(jPasswordFieldOltPasswd.getPassword()));
-				try {
-					acessoOlt.oltAccess(this.fileName);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				// Cria um SwingWorker para executar a tarefa em uma thread separada
+				SwingWorker<Void, Void> worker = new SwingWorker<>() {
+					@Override
+					protected Void doInBackground() throws Exception {
+						final TelnetFhtt acessoOlt = new TelnetFhtt(jTextFieldIpOlt.getText(),
+								Integer.parseInt(jFormattedTextFieldPortOlt.getText()),
+								jTextFieldOltUser.getText(),
+								new String(jPasswordFieldOltPasswd.getPassword()));
+						try {
+							acessoOlt.oltAccess(fileName);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						return null;
+					}
+				};
+
+				// Inicia a execução da tarefa em uma thread separada
+				worker.execute();
 			}
 		} else {
 			JOptionPane.showMessageDialog(null,
-					"Nenhum arquivo selecionado ou criado!", "Error",
+					"Nenhum arquivo selecionado ou criado!", "Erro",
 					JOptionPane.ERROR_MESSAGE, this.errorIcon);
 		}
-	}// GEN-LAST:event_jButtonEnviarActionPerformed
+	}
 
 	private void jButtonCriarActionPerformed(final java.awt.event.ActionEvent evt) {
 		this.fileName = this.nomeArq;

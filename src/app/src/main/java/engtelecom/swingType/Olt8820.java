@@ -11,6 +11,7 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import engtelecom.access.Telnet8820Plus;
@@ -774,12 +775,21 @@ public class Olt8820 extends javax.swing.JInternalFrame {
                                 JOptionPane.showMessageDialog(null,
                                                 "Valores validos!", "Sucesso",
                                                 JOptionPane.ERROR_MESSAGE, this.successIcon);
+                                SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+                                        @Override
+                                        protected Void doInBackground() throws Exception {
+                                                final Telnet8820Plus acessoOlt = new Telnet8820Plus(
+                                                                jTextFieldIpOlt.getText(),
+                                                                Integer.parseInt(jFormattedTextFieldPortOlt.getText()),
+                                                                jTextFieldOltUser.getText(),
+                                                                new String(jPasswordFieldOltPasswd.getPassword()));
 
-                                Telnet8820Plus acessoOlt = new Telnet8820Plus(jTextFieldIpOlt.getText(),
-                                                Integer.parseInt(jFormattedTextFieldPortOlt.getText()),
-                                                jTextFieldOltUser.getText(),
-                                                new String(jPasswordFieldOltPasswd.getPassword()));
-                                acessoOlt.oltAccess(this.nomeArq);
+                                                acessoOlt.oltAccess(nomeArq);
+                                                return null;
+                                        }
+
+                                };
+                                worker.execute();
                         }
                 } else {
                         JOptionPane.showMessageDialog(null,
