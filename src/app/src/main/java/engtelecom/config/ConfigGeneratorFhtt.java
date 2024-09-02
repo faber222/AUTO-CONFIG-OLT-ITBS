@@ -171,12 +171,12 @@ public class ConfigGeneratorFhtt {
                         wifiStandard5 = "802.11ac";
                     }
                     case "HG6145F" -> {
-                        wifiStandard2 = "801.11ax";
+                        wifiStandard2 = "802.11b/g/n/ax";
                         wifiStandard5 = "802.11ac";
                     }
                     default -> {
-                        wifiStandard2 = "801.11ax";
-                        wifiStandard5 = "801.11ax";
+                        wifiStandard2 = "802.11b/g/n/ax";
+                        wifiStandard5 = "802.11a/n/ac/ax";
                     }
                 }
 
@@ -234,12 +234,12 @@ public class ConfigGeneratorFhtt {
                         wifiStandard5 = "802.11ac";
                     }
                     case "HG6145F" -> {
-                        wifiStandard2 = "801.11ax";
+                        wifiStandard2 = "802.11b/g/n/ax";
                         wifiStandard5 = "802.11ac";
                     }
                     default -> {
-                        wifiStandard2 = "801.11ax";
-                        wifiStandard5 = "801.11ax";
+                        wifiStandard2 = "802.11b/g/n/ax";
+                        wifiStandard5 = "802.11a/n/ac/ax";
                     }
                 }
 

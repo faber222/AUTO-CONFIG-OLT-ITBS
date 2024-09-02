@@ -127,7 +127,7 @@ public class ScriptsAN6k {
                                 "onu wifi connection %s serv-no 1 index 1 ssid enable %s hide disable authmode wpa-psk/wpa2psk encrypt-type aes wpakey %s interval 86400 wifi-connect-num 32",
                                 slotCpe, ssidName2, passName2));
                 scriptComandoWifi.add(String.format(
-                                "onu wifi attribute %s serv-no 1 wifi enable district brazil channel 6 standard %s txpower 20 frequency 2.4ghz freq-bandwidth 20/40mhz",
+                                "onu wifi attribute %s serv-no 1 wifi enable district brazil channel 6 standard %s txpower 20 frequency 2.4ghz freq-bandwidth 20mhz/40mhz",
                                 slotCpe, wifiVersion));
                 scriptComandoWifi.add("exit");
                 return scriptComandoWifi;
@@ -150,7 +150,7 @@ public class ScriptsAN6k {
                 final List<String> scriptComandoWifi = new ArrayList<>();
                 scriptComandoWifi.add(String.format("interface pon 1/%s/%s", slotGpon, slotPortaPon));
                 scriptComandoWifi.add(String.format(
-                                "onu wifi connection %s serv-no 2 index 1 ssid enable %s hide disable authmode wpa-psk/wpa2psk encrypt-type aes wpakey %s interval 86400 wifi_connect_num 32",
+                                "onu wifi connection %s serv-no 2 index 1 ssid enable %s hide disable authmode wpa-psk/wpa2psk encrypt-type aes wpakey %s interval 86400 wifi-connect-num 32",
                                 slotCpe, ssidName5, passName5));
                 scriptComandoWifi.add(String.format(
                                 "onu wifi attribute %s serv-no 2 wifi enable district brazil channel 161 standard %s txpower 20 frequency 5.8ghz freq-bandwidth 80mhz",
@@ -181,7 +181,7 @@ public class ScriptsAN6k {
                                 "onu caps-profile add name %s pontype %s onucapa %s lan1g %s lan10g %s pots %s",
                                 name, ponType, onuCapa, lan1g, lan10g, pots));
                 scriptOnuCapa.add(String.format("onu caps-profile add option wifi %s usb %s end", wifi, usb));
-                scriptOnuCapa.add(String.format("modify caps profile name %s eid %s", name, eid));
+                scriptOnuCapa.add(String.format("onu caps-profile modify name %s eid %s", name, eid));
                 return scriptOnuCapa;
         }
 }
