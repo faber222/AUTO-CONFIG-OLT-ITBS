@@ -5,7 +5,9 @@
 package engtelecom.access;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -83,7 +85,7 @@ public class Telnet8820Plus implements Runnable {
 
             try {
                 // Adiciona um atraso de 8s
-                Thread.sleep(8000);
+                Thread.sleep(6000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -91,8 +93,6 @@ public class Telnet8820Plus implements Runnable {
             readCommandsFromFile(nomeArq);
 
             finalMessage();
-            // telnetClient.disconnect();
-            // thread.interrupt();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -111,7 +111,7 @@ public class Telnet8820Plus implements Runnable {
                 writeToTelnet(command);
                 try {
                     // Adiciona um atraso de 1s após cada out.println
-                    Thread.sleep(2000);
+                    Thread.sleep(1500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -143,11 +143,13 @@ public class Telnet8820Plus implements Runnable {
      * Telnet.
      */
     public void run() {
-        try {
+        try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter("log8820Telnet.txt", true))) {
             String answer;
             while (active) {
-                while ((answer = in.readLine()) != null) {
+                if ((answer = in.readLine()) != null) {
+                    fileWriter.write(answer);
                     System.out.println(answer);
+                    fileWriter.newLine(); // Adiciona uma nova linha após cada resposta
                 }
             }
         } catch (IOException exception) {

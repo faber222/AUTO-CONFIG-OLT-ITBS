@@ -5,7 +5,9 @@
 package engtelecom.access;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -167,11 +169,12 @@ public class Telnet implements Runnable {
      * em tempo real das respostas do dispositivo de rede.
      */
     public void run() {
-        try {
+        try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter("logG08-G16-Telnet.txt", true))) {
             String answer;
-            while (active && !Thread.currentThread().isInterrupted()) { // Verifica se a thread foi interrompida
+            while (active && !Thread.currentThread().isInterrupted()) {
                 if ((answer = in.readLine()) != null) {
-                    System.out.println(answer);
+                    fileWriter.write(answer);
+                    fileWriter.newLine(); // Adiciona uma nova linha após cada resposta
                 }
             }
         } catch (final IOException exception) {
