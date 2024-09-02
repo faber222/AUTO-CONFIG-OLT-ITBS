@@ -24,7 +24,7 @@ public class ScriptsAN5k {
                 final List<String> ponAuth = new ArrayList<>();
                 ponAuth.add("cd card");
                 ponAuth.add(String.format("set pon_auth slot %s pon %s mode phy_id", slotGpon, slotPortaPon));
-                ponAuth.add("exit");
+                ponAuth.add("cd ..");
                 return ponAuth;
         }
 
@@ -47,7 +47,7 @@ public class ScriptsAN5k {
                 scriptProvisionaCpe.add(String.format(
                                 "set whitelist phy_addr address %s password null action add slot %s pon %s onu %s type %s",
                                 serialNumberCpe, slotGpon, slotPortaPon, slotCpe, cpeCapaProfile));
-                scriptProvisionaCpe.add("exit");
+                scriptProvisionaCpe.add("cd ..");
                 return scriptProvisionaCpe;
         }
 
@@ -74,11 +74,11 @@ public class ScriptsAN5k {
                                 slotGpon, slotPortaPon, slotCpe, vlan, userPPP, passPPP));
                 scriptComandoPpoe.add(String.format("apply wancfg slot %s %s %s", slotGpon, slotPortaPon, slotCpe));
                 scriptComandoPpoe.add(String.format(
-                                "set wancfg slot %s %s %s indes 1 ip-stack-mode both ipv6-src-type slaac prefix-src-type delegate",
+                                "set wancfg slot %s %s %s index 1 ip-stack-mode both ipv6-src-type slaac prefix-src-type delegate",
                                 slotGpon, slotPortaPon, slotCpe));
                 scriptComandoPpoe.add(String.format("apply wancfg slot %s %s %s", slotGpon, slotPortaPon, slotCpe));
-                scriptComandoPpoe.add("exit");
-                scriptComandoPpoe.add("exit");
+                scriptComandoPpoe.add("cd ..");
+                scriptComandoPpoe.add("cd ..");
                 return scriptComandoPpoe;
         }
 
@@ -92,7 +92,7 @@ public class ScriptsAN5k {
                 scriptServMode.add("cd profile");
                 scriptServMode.add(
                                 "add servmode profile index 30 name ITBS_ROUTER_PROF type unicast cvlan transparent translate disable qinq disable null");
-                scriptServMode.add("exit");
+                scriptServMode.add("cd ..");
                 return scriptServMode;
         }
 
@@ -113,8 +113,8 @@ public class ScriptsAN5k {
                 scriptVeip.add(String.format(
                                 "set epon slot %s pon %s onu %s port 1 onuveip 1 33024 %s 65535 33024 65535 65535 33024 65535 65535 0 INTELBRAS_ROUTER 65535",
                                 slotGpon, slotPortaPon, slotCpe, vlan));
-                scriptVeip.add("exit");
-                scriptVeip.add("exit");
+                scriptVeip.add("cd ..");
+                scriptVeip.add("cd ..");
                 return scriptVeip;
         }
 
@@ -132,7 +132,7 @@ public class ScriptsAN5k {
                 uplink.add(String.format("add vlan vlan_begin %s vlan_end %s tag uplink slot %s port %s", vlan, vlan,
                                 slotUplink, slotPortaUplink));
                 uplink.add(String.format("add vlan vlan_begin %s vlan_end %s tag allslot 0", vlan, vlan));
-                uplink.add("exit");
+                uplink.add("cd ..");
                 return uplink;
         }
 
@@ -158,8 +158,8 @@ public class ScriptsAN5k {
                 scriptComandoWifi.add(String.format(
                                 "set wifi_serv_cfg slot %s pon %s onu %s serv_no 1 wifi enable district brazil channel 6 standard %s txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz",
                                 slotGpon, slotPortaPon, slotCpe, wifiVersion));
-                scriptComandoWifi.add("exit");
-                scriptComandoWifi.add("exit");
+                scriptComandoWifi.add("cd ..");
+                scriptComandoWifi.add("cd ..");
                 return scriptComandoWifi;
         }
 
@@ -186,8 +186,8 @@ public class ScriptsAN5k {
                 scriptComandoWifi.add(String.format(
                                 "set wifi_serv_cfg slot %s pon %s onu %s serv_no 2 wifi enable district brazil channel 161 standard %s txpower 20 frequency 5.8ghz freq_bandwidth 80mhz",
                                 slotGpon, slotPortaPon, slotCpe, wifiVersion));
-                scriptComandoWifi.add("exit");
-                scriptComandoWifi.add("exit");
+                scriptComandoWifi.add("cd ..");
+                scriptComandoWifi.add("cd ..");
                 return scriptComandoWifi;
         }
 

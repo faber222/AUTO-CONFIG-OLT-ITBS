@@ -14,43 +14,13 @@ import java.net.UnknownHostException;
 
 import javax.swing.JOptionPane;
 
-/**
- * Esta classe implementa uma conexão Telnet para acessar um dispositivo de
- * rede,
- * como uma OLT (Optical Line Terminal).
- * 
- * <p>
- * Os atributos padrão são configurados para acesso a uma OLT, mas podem ser
- * personalizados conforme necessário.
- * </p>
- * 
- * <p>
- * Os comandos padrão executados na OLT incluem a ativação, exibição de
- * interfaces,
- * exibição de informações de IP e exibição de rotas IP.
- * </p>
- * 
- * <p>
- * O acesso Telnet é realizado por meio de um socket, e a leitura das respostas
- * é feita em uma thread separada para permitir a leitura em tempo real.
- * </p>
- *
- * <p>
- * Mas esse código fornece apenas um acesso ao socket telnet, e não uma conexão
- * real.
- * Portanto, caso seu produto só forneça usando um acesso real, deve ser usado o
- * Telnet8820Plus
- * </p>
- * 
- * @see <a href="https://en.wikipedia.org/wiki/Telnet">Telnet - Wikipedia</a>
- */
-public class Telnet implements Runnable {
+public class TelnetFhtt implements Runnable {
 
     private Socket socket;
     private BufferedReader in;
     private PrintWriter out;
     private Thread thread;
-    private boolean active;
+    private volatile boolean active;
 
     // Atributos para oltAccess
     private final String host;
@@ -58,42 +28,36 @@ public class Telnet implements Runnable {
     private final String username;
     private final String password;
 
-    /**
-     * Construtor padrão que inicializa os atributos com os valores fornecidos.
-     *
-     * @param host O endereço IP ou nome do host para a conexão Telnet.
-     * @param port A porta para a conexão Telnet.
-     * @param user O nome de usuário para autenticação Telnet.
-     * @param pwd  A senha para autenticação Telnet.
-     */
-    public Telnet(String host, int port, String user, String pwd) {
-        // Inicialização dos atributos com os valores fornecidos
+    public TelnetFhtt(String host, int port, String user, String pwd) {
         this.host = host;
         this.port = port;
         this.username = user;
         this.password = pwd;
     }
 
-    /**
-     * Método principal para realizar o acesso Telnet à OLT.
-     * 
-     * @param nomeArq Nome do script gerado
-     */
-    public void oltAccess(final String nomeArq) {
+    public void oltAccess(final String nomeArq) throws InterruptedException {
         try {
             // Configuração do socket e streams de entrada/saída
+            thread = new Thread(this);
             socket = new Socket(host, port);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
 
+            thread.start();
             // Início da Leitura em tempo real
             active = true;
-            thread = new Thread(this);
-            thread.start();
 
             // Login
             out.println(username);
+            Thread.sleep(100);
             out.println(password);
+            Thread.sleep(100);
+            out.println("enable");
+            Thread.sleep(100);
+            out.println(password);
+            Thread.sleep(100);
+            out.println("config");
+            Thread.sleep(100);
 
             // Ler comandos do arquivo
             readCommandsFromFile(nomeArq);
@@ -116,12 +80,6 @@ public class Telnet implements Runnable {
         }
     }
 
-    /**
-     * Método para ler comandos de um arquivo.
-     * 
-     * @param filename O nome do arquivo contendo os comandos.
-     * @throws IOException Se houver um erro de leitura do arquivo.
-     */
     private void readCommandsFromFile(final String filename) throws IOException {
         try (BufferedReader fileReader = new BufferedReader(new FileReader(filename))) {
             String command;
@@ -131,16 +89,12 @@ public class Telnet implements Runnable {
                     // Adiciona um atraso de 100ms após cada out.println
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
-                    // Lida com exceção de interrupção (se necessário)
-                    e.printStackTrace();
+                    Thread.currentThread().interrupt(); // Respeita a interrupção
                 }
             }
         }
     }
 
-    /**
-     * Mensagem de alerta ao usuário
-     */
     private void finalMessage() {
         JOptionPane.showMessageDialog(null, "Comandos aplicados com sucesso!", "Aviso!",
                 JOptionPane.INFORMATION_MESSAGE);
@@ -161,11 +115,6 @@ public class Telnet implements Runnable {
         }
     }
 
-    /**
-     * Implementação do método run() da interface Runnable.
-     * Este método é executado em uma thread separada para permitir a leitura
-     * em tempo real das respostas do dispositivo de rede.
-     */
     public void run() {
         try {
             String answer;

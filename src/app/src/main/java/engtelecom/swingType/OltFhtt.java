@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import engtelecom.access.Telnet;
+import engtelecom.access.TelnetFhtt;
 import engtelecom.product.OltGpon;
 import engtelecom.product.OltGponFhtt;
 
@@ -44,7 +44,7 @@ public class OltFhtt extends javax.swing.JInternalFrame implements CapabilityPro
 
 	private javax.swing.JButton jButtonFileChooser;
 
-	// Dados campo de acesso telnet
+	// Dados campo de acesso telnetFhtt
 	private javax.swing.JTextField jTextFieldIpOlt;
 
 	private javax.swing.JFormattedTextField jFormattedTextFieldPortOlt;
@@ -1119,11 +1119,15 @@ public class OltFhtt extends javax.swing.JInternalFrame implements CapabilityPro
 						"Valores validos!", "Sucesso!",
 						JOptionPane.ERROR_MESSAGE, this.successIcon);
 
-				final Telnet acessoOlt = new Telnet(jTextFieldIpOlt.getText(),
+				final TelnetFhtt acessoOlt = new TelnetFhtt(jTextFieldIpOlt.getText(),
 						Integer.parseInt(jFormattedTextFieldPortOlt.getText()),
 						jTextFieldOltUser.getText(),
 						new String(jPasswordFieldOltPasswd.getPassword()));
-				acessoOlt.oltAccess(this.fileName);
+				try {
+					acessoOlt.oltAccess(this.fileName);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		} else {
 			JOptionPane.showMessageDialog(null,

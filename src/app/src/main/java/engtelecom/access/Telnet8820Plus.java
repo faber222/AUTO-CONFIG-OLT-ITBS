@@ -91,9 +91,8 @@ public class Telnet8820Plus implements Runnable {
             readCommandsFromFile(nomeArq);
 
             finalMessage();
-            telnetClient.disconnect();
-            in.close();
-            out.close();
+            // telnetClient.disconnect();
+            // thread.interrupt();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -148,9 +147,6 @@ public class Telnet8820Plus implements Runnable {
             String answer;
             while (active) {
                 while ((answer = in.readLine()) != null) {
-                    if (answer.equals("Bye.")) {
-                        System.exit(0);
-                    }
                     System.out.println(answer);
                 }
             }
@@ -159,7 +155,6 @@ public class Telnet8820Plus implements Runnable {
             JOptionPane.showMessageDialog(null,
                     "Erro de comunicacao.", "Aviso!",
                     JOptionPane.INFORMATION_MESSAGE);
-            System.exit(1);
         }
     }
 }
