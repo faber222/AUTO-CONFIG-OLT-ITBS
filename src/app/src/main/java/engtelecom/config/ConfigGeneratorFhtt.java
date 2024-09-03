@@ -302,18 +302,19 @@ public class ConfigGeneratorFhtt {
                 setProfileServMode(null);
 
                 switch (objFhtt.getCpeCapaProfile()) {
-                    case "HG6145D2" -> {
+                    case "HG6145D2":
                         wifiStandard2 = "802.11bgn";
                         wifiStandard5 = "802.11ac";
-                    }
-                    case "HG6145F" -> {
+                        break;
+                    case "HG6145F":
                         wifiStandard2 = "802.11b/g/n/ax";
                         wifiStandard5 = "802.11ac";
-                    }
-                    default -> {
+                        break;
+
+                    default:
                         wifiStandard2 = "802.11b/g/n/ax";
                         wifiStandard5 = "802.11a/n/ac/ax";
-                    }
+                        break;
                 }
                 setWifi2Commands(ScriptsAN6k.comandoWifi2(objFhtt.getSlotPon(), objFhtt.getSlotPortaPon(),
                         objFhtt.getSlotCpe(), objFhtt.getSsid2(), objFhtt.getSsidPass2(), wifiStandard2));
