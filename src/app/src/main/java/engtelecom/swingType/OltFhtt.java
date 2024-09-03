@@ -1127,7 +1127,7 @@ public class OltFhtt extends javax.swing.JInternalFrame implements CapabilityPro
 						final TelnetFhtt acessoOlt = new TelnetFhtt(jTextFieldIpOlt.getText(),
 								Integer.parseInt(jFormattedTextFieldPortOlt.getText()),
 								jTextFieldOltUser.getText(),
-								new String(jPasswordFieldOltPasswd.getPassword()));
+								new String(jPasswordFieldOltPasswd.getPassword()), getOltName());
 						try {
 							acessoOlt.oltAccess(fileName);
 						} catch (InterruptedException e) {
