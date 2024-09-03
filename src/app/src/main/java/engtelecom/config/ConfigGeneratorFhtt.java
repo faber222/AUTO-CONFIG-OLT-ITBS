@@ -32,6 +32,78 @@ public class ConfigGeneratorFhtt {
         this.script = new File(objFhtt.getNomeArq());
     }
 
+    public List<String> getPonAuth() {
+        return ponAuth;
+    }
+
+    public void setPonAuth(final List<String> ponAuth) {
+        this.ponAuth = ponAuth;
+    }
+
+    public List<String> getCapabilityProfiles() {
+        return capabilityProfiles;
+    }
+
+    public void setCapabilityProfiles(final List<String> capabilityProfiles) {
+        this.capabilityProfiles = capabilityProfiles;
+    }
+
+    public List<String> getCpeAuth() {
+        return cpeAuth;
+    }
+
+    public void setCpeAuth(final List<String> cpeAuth) {
+        this.cpeAuth = cpeAuth;
+    }
+
+    public List<String> getProfileServMode() {
+        return profileServMode;
+    }
+
+    public void setProfileServMode(final List<String> profileServMode) {
+        this.profileServMode = profileServMode;
+    }
+
+    public List<String> getVeipCommands() {
+        return veipCommands;
+    }
+
+    public void setVeipCommands(final List<String> veipCommands) {
+        this.veipCommands = veipCommands;
+    }
+
+    public List<String> getPppoeCommands() {
+        return pppoeCommands;
+    }
+
+    public void setPppoeCommands(final List<String> pppoeCommands) {
+        this.pppoeCommands = pppoeCommands;
+    }
+
+    public List<String> getUplinkVlanConfigs() {
+        return uplinkVlanConfigs;
+    }
+
+    public void setUplinkVlanConfigs(final List<String> uplinkVlanConfigs) {
+        this.uplinkVlanConfigs = uplinkVlanConfigs;
+    }
+
+    public List<String> getWifi2Commands() {
+        return wifi2Commands;
+    }
+
+    public void setWifi2Commands(final List<String> wifi2Commands) {
+        this.wifi2Commands = wifi2Commands;
+    }
+
+    public List<String> getWifi5Commands() {
+        return wifi5Commands;
+    }
+
+    public void setWifi5Commands(final List<String> wifi5Commands) {
+        this.wifi5Commands = wifi5Commands;
+    }
+
     public boolean writeScript() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(this.script))) {
             if (this.ponAuth != null) {
@@ -128,105 +200,106 @@ public class ConfigGeneratorFhtt {
         if (("AN5000").matches(objFhtt.getOltType())) {
             final ScriptsAN5k scriptsOltAn5k = new ScriptsAN5k();
             String vlan = objFhtt.getVlanVeip();
-            this.ponAuth = scriptsOltAn5k.setPonAuth(objFhtt.getSlotPon(), objFhtt.getSlotPortaPon());
+            setPonAuth(scriptsOltAn5k.setPonAuth(objFhtt.getSlotPon(), objFhtt.getSlotPortaPon()));
             // this.capaD2 = scriptsOltAn5k.comandoOnuCapaD2();
             // this.capaF = scriptsOltAn5k.comandoOnuCapaF();
             // this.capaF3 = scriptsOltAn5k.comandoOnuCapaF3();
-            this.capabilityProfiles = null;
 
+            setCapabilityProfiles(null);
             if (objFhtt.isOnuCapability()) {
-                this.capabilityProfiles = scriptsOltAn5k.comandoOnuCapa(objFhtt.getCapaProfileName(),
+                setCapabilityProfiles(scriptsOltAn5k.comandoOnuCapa(objFhtt.getCapaProfileName(),
                         objFhtt.getCapaPonType(), objFhtt.getCapaCpeType(), objFhtt.getCapaOneGPortNumber(),
                         objFhtt.getCapaTenGPortNumber(), objFhtt.getCapaPotsNumber(),
-                        objFhtt.getCapaWifiNumber(), objFhtt.getCapaUsbNumber(), objFhtt.getCapaEquipamentId());
-                this.capaD2 = null;
-                this.capaF = null;
-                this.capaF3 = null;
+                        objFhtt.getCapaWifiNumber(), objFhtt.getCapaUsbNumber(), objFhtt.getCapaEquipamentId()));
+                // this.capaD2 = null;
+                // this.capaF = null;
+                // this.capaF3 = null;
             }
 
-            this.cpeAuth = scriptsOltAn5k.provisionaCPE(objFhtt.getPhyIdCpe(), objFhtt.getSlotPon(),
-                    objFhtt.getSlotPortaPon(), objFhtt.getSlotCpe(), objFhtt.getCpeCapaProfile());
+            setCpeAuth(scriptsOltAn5k.provisionaCPE(objFhtt.getPhyIdCpe(), objFhtt.getSlotPon(),
+                    objFhtt.getSlotPortaPon(), objFhtt.getSlotCpe(), objFhtt.getCpeCapaProfile()));
 
-            this.profileServMode = scriptsOltAn5k.configProfileServMode();
+            setProfileServMode(scriptsOltAn5k.configProfileServMode());
 
-            this.veipCommands = scriptsOltAn5k.configVeip(objFhtt.getSlotPon(), objFhtt.getSlotPortaPon(),
-                    objFhtt.getSlotCpe(), objFhtt.getVlanVeip());
+            setVeipCommands(scriptsOltAn5k.configVeip(objFhtt.getSlotPon(), objFhtt.getSlotPortaPon(),
+                    objFhtt.getSlotCpe(), objFhtt.getVlanVeip()));
 
-            this.pppoeCommands = null;
-            this.wifi2Commands = null;
-            this.wifi5Commands = null;
+            setPppoeCommands(null);
+            setWifi2Commands(null);
+            setWifi5Commands(null);
 
             if (objFhtt.isWanService()) {
                 String wifiStandard2;
                 String wifiStandard5;
-                this.pppoeCommands = scriptsOltAn5k.comandoPpoe(objFhtt.getSlotPon(), objFhtt.getSlotPortaPon(),
-                        objFhtt.getSlotCpe(), objFhtt.getVlanPppoe(), objFhtt.getUserPppoe(), objFhtt.getSenhaPppoe());
+                setPppoeCommands(scriptsOltAn5k.comandoPpoe(objFhtt.getSlotPon(), objFhtt.getSlotPortaPon(),
+                        objFhtt.getSlotCpe(), objFhtt.getVlanPppoe(), objFhtt.getUserPppoe(), objFhtt.getSenhaPppoe()));
                 vlan = objFhtt.getVlanPppoe();
-                this.veipCommands = null;
-                this.profileServMode = null;
+                setVeipCommands(null);
+                setProfileServMode(null);
 
                 switch (objFhtt.getCpeCapaProfile()) {
-                    case "HG6145D2" -> {
+                    case "HG6145D2":
                         wifiStandard2 = "802.11bgn";
                         wifiStandard5 = "802.11ac";
-                    }
-                    case "HG6145F" -> {
+                        break;
+                    case "HG6145F":
                         wifiStandard2 = "802.11b/g/n/ax";
                         wifiStandard5 = "802.11ac";
-                    }
-                    default -> {
+                        break;
+
+                    default:
                         wifiStandard2 = "802.11b/g/n/ax";
                         wifiStandard5 = "802.11a/n/ac/ax";
-                    }
+                        break;
                 }
 
-                this.wifi2Commands = scriptsOltAn5k.comandoWifi2(objFhtt.getSlotPon(), objFhtt.getSlotPortaPon(),
-                        objFhtt.getSlotCpe(), objFhtt.getSsid2(), objFhtt.getSsidPass2(), wifiStandard2);
+                setWifi2Commands(scriptsOltAn5k.comandoWifi2(objFhtt.getSlotPon(), objFhtt.getSlotPortaPon(),
+                        objFhtt.getSlotCpe(), objFhtt.getSsid2(), objFhtt.getSsidPass2(), wifiStandard2));
 
-                this.wifi5Commands = scriptsOltAn5k.comandoWifi5(objFhtt.getSlotPon(), objFhtt.getSlotPortaPon(),
-                        objFhtt.getSlotCpe(), objFhtt.getSsid5(), objFhtt.getSsidPass5(), wifiStandard5);
+                setWifi5Commands(scriptsOltAn5k.comandoWifi5(objFhtt.getSlotPon(), objFhtt.getSlotPortaPon(),
+                        objFhtt.getSlotCpe(), objFhtt.getSsid5(), objFhtt.getSsidPass5(), wifiStandard5));
             }
-            this.uplinkVlanConfigs = scriptsOltAn5k.addVlanToUplink(vlan, objFhtt.getSlotUplink(),
-                    objFhtt.getSlotPortaUplink());
+            setUplinkVlanConfigs(scriptsOltAn5k.addVlanToUplink(vlan, objFhtt.getSlotUplink(),
+                    objFhtt.getSlotPortaUplink()));
         } else {
             final ScriptsAN6k ScriptsAN6k = new ScriptsAN6k();
             String vlan = objFhtt.getVlanVeip();
-            this.ponAuth = null;
+            setPonAuth(null);
             // this.capaD2 = ScriptsAN6k.comandoOnuCapaD2();
             // this.capaF = ScriptsAN6k.comandoOnuCapaF();
             // this.capaF3 = ScriptsAN6k.comandoOnuCapaF3();
-            this.capabilityProfiles = null;
+            setCapabilityProfiles(null);
 
             if (objFhtt.isOnuCapability()) {
-                this.capabilityProfiles = ScriptsAN6k.comandoOnuCapa(objFhtt.getCapaProfileName(),
+                setCapabilityProfiles(ScriptsAN6k.comandoOnuCapa(objFhtt.getCapaProfileName(),
                         objFhtt.getCapaPonType(), objFhtt.getCapaCpeType(), objFhtt.getCapaOneGPortNumber(),
                         objFhtt.getCapaTenGPortNumber(), objFhtt.getCapaPotsNumber(),
-                        objFhtt.getCapaWifiNumber(), objFhtt.getCapaUsbNumber(), objFhtt.getCapaEquipamentId());
-                this.capaD2 = null;
-                this.capaF = null;
-                this.capaF3 = null;
+                        objFhtt.getCapaWifiNumber(), objFhtt.getCapaUsbNumber(), objFhtt.getCapaEquipamentId()));
+                // this.capaD2 = null;
+                // this.capaF = null;
+                // this.capaF3 = null;
             }
 
-            this.cpeAuth = ScriptsAN6k.provisionaCPE(objFhtt.getPhyIdCpe(), objFhtt.getSlotPon(),
-                    objFhtt.getSlotPortaPon(), objFhtt.getSlotCpe(), objFhtt.getCpeCapaProfile());
+            setCpeAuth(ScriptsAN6k.provisionaCPE(objFhtt.getPhyIdCpe(), objFhtt.getSlotPon(),
+                    objFhtt.getSlotPortaPon(), objFhtt.getSlotCpe(), objFhtt.getCpeCapaProfile()));
 
-            this.profileServMode = ScriptsAN6k.configProfileServMode();
+            setProfileServMode(ScriptsAN6k.configProfileServMode());
 
-            this.veipCommands = ScriptsAN6k.configVeip(objFhtt.getSlotPon(), objFhtt.getSlotPortaPon(),
-                    objFhtt.getSlotCpe(), objFhtt.getVlanVeip());
+            setVeipCommands(ScriptsAN6k.configVeip(objFhtt.getSlotPon(), objFhtt.getSlotPortaPon(),
+                    objFhtt.getSlotCpe(), objFhtt.getVlanVeip()));
 
-            this.pppoeCommands = null;
-            this.wifi2Commands = null;
-            this.wifi5Commands = null;
+            setPppoeCommands(null);
+            setWifi2Commands(null);
+            setWifi5Commands(null);
 
             if (objFhtt.isWanService()) {
                 String wifiStandard2;
                 String wifiStandard5;
-                this.pppoeCommands = ScriptsAN6k.comandoPpoe(objFhtt.getSlotPon(), objFhtt.getSlotPortaPon(),
-                        objFhtt.getSlotCpe(), objFhtt.getVlanPppoe(), objFhtt.getUserPppoe(), objFhtt.getSenhaPppoe());
+                setPppoeCommands(ScriptsAN6k.comandoPpoe(objFhtt.getSlotPon(), objFhtt.getSlotPortaPon(),
+                        objFhtt.getSlotCpe(), objFhtt.getVlanPppoe(), objFhtt.getUserPppoe(), objFhtt.getSenhaPppoe()));
                 vlan = objFhtt.getVlanPppoe();
-                this.veipCommands = null;
-                this.profileServMode = null;
+                setVeipCommands(null);
+                setProfileServMode(null);
 
                 switch (objFhtt.getCpeCapaProfile()) {
                     case "HG6145D2" -> {
@@ -242,15 +315,14 @@ public class ConfigGeneratorFhtt {
                         wifiStandard5 = "802.11a/n/ac/ax";
                     }
                 }
+                setWifi2Commands(ScriptsAN6k.comandoWifi2(objFhtt.getSlotPon(), objFhtt.getSlotPortaPon(),
+                        objFhtt.getSlotCpe(), objFhtt.getSsid2(), objFhtt.getSsidPass2(), wifiStandard2));
 
-                this.wifi2Commands = ScriptsAN6k.comandoWifi2(objFhtt.getSlotPon(), objFhtt.getSlotPortaPon(),
-                        objFhtt.getSlotCpe(), objFhtt.getSsid2(), objFhtt.getSsidPass2(), wifiStandard2);
-
-                this.wifi5Commands = ScriptsAN6k.comandoWifi5(objFhtt.getSlotPon(), objFhtt.getSlotPortaPon(),
-                        objFhtt.getSlotCpe(), objFhtt.getSsid5(), objFhtt.getSsidPass5(), wifiStandard5);
+                setWifi5Commands(ScriptsAN6k.comandoWifi5(objFhtt.getSlotPon(), objFhtt.getSlotPortaPon(),
+                        objFhtt.getSlotCpe(), objFhtt.getSsid5(), objFhtt.getSsidPass5(), wifiStandard5));
             }
-            this.uplinkVlanConfigs = ScriptsAN6k.addVlanToUplink(vlan, objFhtt.getSlotUplink(),
-                    objFhtt.getSlotPortaUplink());
+            setUplinkVlanConfigs(ScriptsAN6k.addVlanToUplink(vlan, objFhtt.getSlotUplink(),
+                    objFhtt.getSlotPortaUplink()));
         }
         return writeScript();
     }
