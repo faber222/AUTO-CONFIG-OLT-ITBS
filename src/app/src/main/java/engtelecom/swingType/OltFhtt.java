@@ -1121,7 +1121,7 @@ public class OltFhtt extends javax.swing.JInternalFrame implements CapabilityPro
 						JOptionPane.INFORMATION_MESSAGE, this.successIcon);
 
 				// Cria um SwingWorker para executar a tarefa em uma thread separada
-				SwingWorker<Void, Void> worker = new SwingWorker<>() {
+				SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
 					@Override
 					protected Void doInBackground() throws Exception {
 						final TelnetFhtt acessoOlt = new TelnetFhtt(jTextFieldIpOlt.getText(),

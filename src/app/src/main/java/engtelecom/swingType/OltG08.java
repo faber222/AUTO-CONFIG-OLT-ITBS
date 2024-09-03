@@ -825,7 +825,7 @@ public class OltG08 extends javax.swing.JInternalFrame {
                                 JOptionPane.showMessageDialog(null,
                                                 "Valores validos!", "Sucesso!",
                                                 JOptionPane.ERROR_MESSAGE, this.successIcon);
-                                final SwingWorker<Void, Void> worker = new SwingWorker<>() {
+                                final SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
                                         @Override
                                         protected Void doInBackground() throws Exception {
                                                 final Telnet acessoOlt = new Telnet(jTextFieldIpOlt.getText(),
