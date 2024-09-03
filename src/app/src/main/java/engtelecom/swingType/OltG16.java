@@ -12,6 +12,7 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import engtelecom.access.Telnet;
@@ -23,20 +24,94 @@ import engtelecom.product.OltGpon;
  */
 public class OltG16 extends javax.swing.JInternalFrame {
 
+        // Variables declaration - do not modify//GEN-BEGIN:variables
+        private javax.swing.ButtonGroup buttonGroup1;
+
+        private javax.swing.JButton jButtonCancel;
+
+        private javax.swing.JButton jButtonCriar;
+
+        private javax.swing.JButton jButtonEnviar;
+
+        private javax.swing.JButton jButtonFileChooser;
+
+        private javax.swing.JComboBox<String> jComboBoxInterfaceUplink;
+
+        private javax.swing.JComboBox<String> jComboBoxModoAutoConfig;
+
+        private javax.swing.JFormattedTextField jFormattedTextFieldPortOlt;
+
+        private javax.swing.JLabel jLabel1;
+
+        private javax.swing.JLabel jLabel10;
+
+        private javax.swing.JLabel jLabel15;
+
+        private javax.swing.JLabel jLabel2;
+
+        private javax.swing.JLabel jLabel3;
+
+        private javax.swing.JLabel jLabel4;
+
+        private javax.swing.JLabel jLabel5;
+
+        private javax.swing.JLabel jLabel6;
+
+        private javax.swing.JLabel jLabel7;
+
+        private javax.swing.JLabel jLabel8;
+
+        private javax.swing.JLabel jLabel9;
+
+        private javax.swing.JPanel jPanel1;
+
+        private javax.swing.JPanel jPanel2;
+
+        private javax.swing.JPanel jPanel3;
+        private javax.swing.JPanel jPanel4;
+        private javax.swing.JPanel jPanel5;
+        private javax.swing.JPasswordField jPasswordFieldOltPasswd;
+        private javax.swing.JRadioButton jRadioButtonBridge;
+        private javax.swing.JRadioButton jRadioButtonRouter;
+        private javax.swing.JScrollPane jScrollPanel;
+        private javax.swing.JTextArea jTextAreaPreviewCode;
+        private javax.swing.JTextField jTextFieldIpOlt;
+        private javax.swing.JTextField jTextFieldOltUser;
+        private javax.swing.JTextField jTextFieldRangeProfileLine;
+        private javax.swing.JTextField jTextFieldRangeProfileVlan;
+        private javax.swing.JTextField jTextFieldRangeVlan;
+        private String[] modelosInterface;
+        private String[] configuracoes;
+        private String[] interfaceGpon;
+        private boolean fileChooserIsSelected;
+        private String nomeArq;
+        private final String oltName;
+        private ImageIcon errorIcon;
+        private ImageIcon successIcon;
+        private ImageIcon saidaIcon;
+        private final OltGpon oltGpon;
+        private final int slotLength;
+
+        // End of variables declaration//GEN-END:variables
         /**
          * Creates new form OltG16
          */
-        public OltG16() {
+        public OltG16(final String oltName) {
                 this.slotLength = 16;
+                this.oltName = oltName;
                 initComponents();
                 oltGpon = new OltGpon();
+        }
+
+        public String getOltName() {
+                return oltName;
         }
 
         public void previewText() {
                 // Tente abrir e ler o arquivo
 
                 try (BufferedReader br = new BufferedReader(new FileReader(this.nomeArq))) {
-                        StringBuilder content = new StringBuilder();
+                        final StringBuilder content = new StringBuilder();
                         String line;
 
                         // Lê linha por linha até o final do arquivo
@@ -47,7 +122,7 @@ public class OltG16 extends javax.swing.JInternalFrame {
                         // Define o texto do JTextArea com o conteúdo lido
                         jTextAreaPreviewCode.setText(content.toString());
                         br.close();
-                } catch (IOException e) {
+                } catch (final IOException e) {
                         e.printStackTrace();
                 }
         }
@@ -164,7 +239,6 @@ public class OltG16 extends javax.swing.JInternalFrame {
                 setPreferredSize(new java.awt.Dimension(812, 700));
                 setRequestFocusEnabled(false);
 
-
                 jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Dados de acesso da OLT ",
                                 javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
                                 javax.swing.border.TitledBorder.DEFAULT_POSITION,
@@ -185,19 +259,19 @@ public class OltG16 extends javax.swing.JInternalFrame {
                 jLabel10.setText("Senha");
 
                 jPasswordFieldOltPasswd.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        public void actionPerformed(final java.awt.event.ActionEvent evt) {
                                 jPasswordFieldOltPasswdActionPerformed(evt);
                         }
                 });
 
                 jTextFieldOltUser.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        public void actionPerformed(final java.awt.event.ActionEvent evt) {
                                 jTextFieldOltUserActionPerformed(evt);
                         }
                 });
 
                 jTextFieldIpOlt.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        public void actionPerformed(final java.awt.event.ActionEvent evt) {
                                 jTextFieldIpOltActionPerformed(evt);
                         }
                 });
@@ -207,12 +281,12 @@ public class OltG16 extends javax.swing.JInternalFrame {
                 jFormattedTextFieldPortOlt.setToolTipText("porta");
                 jFormattedTextFieldPortOlt.setName("porta"); // NOI18N
                 jFormattedTextFieldPortOlt.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        public void actionPerformed(final java.awt.event.ActionEvent evt) {
                                 jFormattedTextFieldPortOltActionPerformed(evt);
                         }
                 });
 
-                javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+                final javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                 jPanel1.setLayout(jPanel1Layout);
                 jPanel1Layout.setHorizontalGroup(
                                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,7 +377,7 @@ public class OltG16 extends javax.swing.JInternalFrame {
                 jRadioButtonBridge.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
                 jRadioButtonBridge.setMargin(new java.awt.Insets(0, 0, 0, 0));
                 jRadioButtonBridge.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        public void actionPerformed(final java.awt.event.ActionEvent evt) {
                                 jRadioButtonBridgeActionPerformed(evt);
                         }
                 });
@@ -313,7 +387,7 @@ public class OltG16 extends javax.swing.JInternalFrame {
                 jRadioButtonRouter.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
                 jRadioButtonRouter.setMargin(new java.awt.Insets(0, 0, 0, 0));
                 jRadioButtonRouter.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        public void actionPerformed(final java.awt.event.ActionEvent evt) {
                                 jRadioButtonRouterActionPerformed(evt);
                         }
                 });
@@ -322,7 +396,7 @@ public class OltG16 extends javax.swing.JInternalFrame {
                 jComboBoxInterfaceUplink.setModel(new javax.swing.DefaultComboBoxModel<>(this.modelosInterface));
                 jComboBoxInterfaceUplink.setMinimumSize(new java.awt.Dimension(65, 23));
                 jComboBoxInterfaceUplink.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        public void actionPerformed(final java.awt.event.ActionEvent evt) {
                                 jComboBoxInterfaceUplinkActionPerformed(evt);
                         }
                 });
@@ -335,7 +409,7 @@ public class OltG16 extends javax.swing.JInternalFrame {
                 jComboBoxModoAutoConfig.setModel(new javax.swing.DefaultComboBoxModel<>(this.configuracoes));
                 jComboBoxModoAutoConfig.setToolTipText("");
                 jComboBoxModoAutoConfig.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        public void actionPerformed(final java.awt.event.ActionEvent evt) {
                                 jComboBoxModoAutoConfigActionPerformed(evt);
                         }
                 });
@@ -345,13 +419,13 @@ public class OltG16 extends javax.swing.JInternalFrame {
                 jLabel8.setText("Profile Vlan");
 
                 jTextFieldRangeProfileVlan.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        public void actionPerformed(final java.awt.event.ActionEvent evt) {
                                 jTextFieldRangeProfileVlanActionPerformed(evt);
                         }
                 });
 
                 jTextFieldRangeProfileLine.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        public void actionPerformed(final java.awt.event.ActionEvent evt) {
                                 jTextFieldRangeProfileLineActionPerformed(evt);
                         }
                 });
@@ -359,12 +433,12 @@ public class OltG16 extends javax.swing.JInternalFrame {
                 jLabel5.setText("Vlan");
 
                 jTextFieldRangeVlan.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        public void actionPerformed(final java.awt.event.ActionEvent evt) {
                                 jTextFieldRangeVlanActionPerformed(evt);
                         }
                 });
 
-                javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+                final javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
                 jPanel2.setLayout(jPanel2Layout);
                 jPanel2Layout.setHorizontalGroup(
                                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -516,12 +590,12 @@ public class OltG16 extends javax.swing.JInternalFrame {
 
                 jButtonFileChooser.setText("File");
                 jButtonFileChooser.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        public void actionPerformed(final java.awt.event.ActionEvent evt) {
                                 jButtonFileChooserActionPerformed(evt);
                         }
                 });
 
-                javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+                final javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
                 jPanel3.setLayout(jPanel3Layout);
                 jPanel3Layout.setHorizontalGroup(
                                 jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -551,26 +625,26 @@ public class OltG16 extends javax.swing.JInternalFrame {
 
                 jButtonEnviar.setText("Enviar");
                 jButtonEnviar.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        public void actionPerformed(final java.awt.event.ActionEvent evt) {
                                 jButtonEnviarActionPerformed(evt);
                         }
                 });
 
                 jButtonCriar.setText("Criar");
                 jButtonCriar.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        public void actionPerformed(final java.awt.event.ActionEvent evt) {
                                 jButtonCriarActionPerformed(evt);
                         }
                 });
 
                 jButtonCancel.setText("Cancel");
                 jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        public void actionPerformed(final java.awt.event.ActionEvent evt) {
                                 jButtonCancelActionPerformed(evt);
                         }
                 });
 
-                javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+                final javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
                 jPanel4.setLayout(jPanel4Layout);
                 jPanel4Layout.setHorizontalGroup(
                                 jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -603,7 +677,7 @@ public class OltG16 extends javax.swing.JInternalFrame {
                 jTextAreaPreviewCode.setRows(5);
                 jScrollPanel.setViewportView(jTextAreaPreviewCode);
 
-                javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+                final javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
                 jPanel5.setLayout(jPanel5Layout);
                 jPanel5Layout.setHorizontalGroup(
                                 jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -616,7 +690,7 @@ public class OltG16 extends javax.swing.JInternalFrame {
                                                 .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 250,
                                                                 javax.swing.GroupLayout.PREFERRED_SIZE));
 
-                javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+                final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
                 getContentPane().setLayout(layout);
                 layout.setHorizontalGroup(
                                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -695,55 +769,55 @@ public class OltG16 extends javax.swing.JInternalFrame {
 
         }// </editor-fold>//GEN-END:initComponents
 
-        private void jPasswordFieldOltPasswdActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jPasswordFieldOltPasswdActionPerformed
+        private void jPasswordFieldOltPasswdActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jPasswordFieldOltPasswdActionPerformed
                 // TODO add your handling code here:
         }// GEN-LAST:event_jPasswordFieldOltPasswdActionPerformed
 
-        private void jTextFieldIpOltActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jTextFieldIpOltActionPerformed
+        private void jTextFieldIpOltActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jTextFieldIpOltActionPerformed
                 // TODO add your handling code here:
         }// GEN-LAST:event_jTextFieldIpOltActionPerformed
 
-        private void jFormattedTextFieldPortOltActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jFormattedTextFieldPortOltActionPerformed
+        private void jFormattedTextFieldPortOltActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jFormattedTextFieldPortOltActionPerformed
                 // TODO add your handling code here:
         }// GEN-LAST:event_jFormattedTextFieldPortOltActionPerformed
 
-        private void jRadioButtonBridgeActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jRadioButtonBridgeActionPerformed
+        private void jRadioButtonBridgeActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jRadioButtonBridgeActionPerformed
                 // TODO add your handling code here:
         }// GEN-LAST:event_jRadioButtonBridgeActionPerformed
 
-        private void jRadioButtonRouterActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jRadioButtonRouterActionPerformed
+        private void jRadioButtonRouterActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jRadioButtonRouterActionPerformed
                 // TODO add your handling code here:
         }// GEN-LAST:event_jRadioButtonRouterActionPerformed
 
-        private void jComboBoxInterfaceUplinkActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jComboBoxInterfaceUplinkActionPerformed
+        private void jComboBoxInterfaceUplinkActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jComboBoxInterfaceUplinkActionPerformed
                 // TODO add your handling code here:
         }// GEN-LAST:event_jComboBoxInterfaceUplinkActionPerformed
 
-        private void jComboBoxModoAutoConfigActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jComboBoxModoAutoConfigActionPerformed
+        private void jComboBoxModoAutoConfigActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jComboBoxModoAutoConfigActionPerformed
                 // TODO add your handling code here:
         }// GEN-LAST:event_jComboBoxModoAutoConfigActionPerformed
 
-        private void jTextFieldRangeProfileVlanActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jTextFieldRangeProfileVlanActionPerformed
+        private void jTextFieldRangeProfileVlanActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jTextFieldRangeProfileVlanActionPerformed
                 // TODO add your handling code here:
         }// GEN-LAST:event_jTextFieldRangeProfileVlanActionPerformed
 
-        private void jTextFieldRangeProfileLineActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jTextFieldRangeProfileLineActionPerformed
+        private void jTextFieldRangeProfileLineActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jTextFieldRangeProfileLineActionPerformed
                 // TODO add your handling code here:
         }// GEN-LAST:event_jTextFieldRangeProfileLineActionPerformed
 
-        private void jTextFieldRangeVlanActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jTextFieldRangeVlanActionPerformed
+        private void jTextFieldRangeVlanActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jTextFieldRangeVlanActionPerformed
                 // TODO add your handling code here:
         }// GEN-LAST:event_jTextFieldRangeVlanActionPerformed
 
-        private void jButtonFileChooserActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonFileChooserActionPerformed
-                JFileChooser fileChooser = new JFileChooser();
+        private void jButtonFileChooserActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonFileChooserActionPerformed
+                final JFileChooser fileChooser = new JFileChooser();
 
                 // Adiciona um filtro para aceitar apenas arquivos de texto e derivados
-                FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                final FileNameExtensionFilter filter = new FileNameExtensionFilter(
                                 "Arquivos de Texto", "txt", "md", "csv", "log", "java", "xml", "html", "json");
                 fileChooser.setFileFilter(filter);
                 // Exibe o seletor de arquivo e obtém a resposta do usuário
-                int returnValue = fileChooser.showOpenDialog(this);
+                final int returnValue = fileChooser.showOpenDialog(this);
                 fileChooser.setDialogTitle("Selecione o arquivo:");
                 fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
@@ -751,7 +825,7 @@ public class OltG16 extends javax.swing.JInternalFrame {
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
                         this.fileChooserIsSelected = true;
                         // Obtém o arquivo selecionado
-                        java.io.File selectedFile = fileChooser.getSelectedFile();
+                        final java.io.File selectedFile = fileChooser.getSelectedFile();
                         System.out.println("Arquivo selecionado: " + selectedFile.getAbsolutePath());
                         this.nomeArq = selectedFile.getAbsolutePath();
                         jButtonFileChooser.setText(selectedFile.getName());
@@ -767,7 +841,7 @@ public class OltG16 extends javax.swing.JInternalFrame {
 
         }// GEN-LAST:event_jButtonFileChooserActionPerformed
 
-        private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonEnviarActionPerformed
+        private void jButtonEnviarActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonEnviarActionPerformed
                 if (this.fileChooserIsSelected) {
                         if (this.oltGpon.checkTelnet(jTextFieldIpOlt.getText(), jFormattedTextFieldPortOlt.getText(),
                                         jTextFieldOltUser.getText(), jPasswordFieldOltPasswd.getPassword(),
@@ -775,12 +849,21 @@ public class OltG16 extends javax.swing.JInternalFrame {
                                 JOptionPane.showMessageDialog(null,
                                                 "Valores validos!", "Sucesso!",
                                                 JOptionPane.ERROR_MESSAGE, this.successIcon);
+                                final SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+                                        @Override
+                                        protected Void doInBackground() throws Exception {
+                                                final Telnet acessoOlt = new Telnet(jTextFieldIpOlt.getText(),
+                                                                Integer.parseInt(jFormattedTextFieldPortOlt.getText()),
+                                                                jTextFieldOltUser.getText(),
+                                                                new String(jPasswordFieldOltPasswd.getPassword()),
+                                                                getOltName());
+                                                acessoOlt.oltAccess(nomeArq);
+                                                return null;
+                                        }
 
-                                Telnet acessoOlt = new Telnet(jTextFieldIpOlt.getText(),
-                                                Integer.parseInt(jFormattedTextFieldPortOlt.getText()),
-                                                jTextFieldOltUser.getText(),
-                                                new String(jPasswordFieldOltPasswd.getPassword()));
-                                acessoOlt.oltAccess(this.nomeArq);
+                                };
+                                worker.execute();
+
                         }
                 } else {
                         JOptionPane.showMessageDialog(null,
@@ -789,7 +872,7 @@ public class OltG16 extends javax.swing.JInternalFrame {
                 }
         }// GEN-LAST:event_jButtonEnviarActionPerformed
 
-        private void jButtonCriarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonCriarActionPerformed
+        private void jButtonCriarActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonCriarActionPerformed
                 this.nomeArq = "scriptG16.txt";
 
                 String terceiros = "router";
@@ -817,66 +900,18 @@ public class OltG16 extends javax.swing.JInternalFrame {
                 }
         }// GEN-LAST:event_jButtonCriarActionPerformed
 
-        private void jTextFieldOltUserActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jTextFieldOltUserActionPerformed
+        private void jTextFieldOltUserActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jTextFieldOltUserActionPerformed
                 // TODO add your handling code here:
         }// GEN-LAST:event_jTextFieldOltUserActionPerformed
 
-        private void formKeyPressed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_formKeyPressed
+        private void formKeyPressed(final java.awt.event.KeyEvent evt) {// GEN-FIRST:event_formKeyPressed
                 if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
                         saida();
                         dispose();
                 }
         }// GEN-LAST:event_formKeyPressed
 
-        private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonCancelActionPerformed
+        private void jButtonCancelActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonCancelActionPerformed
                 this.dispose();
         }// GEN-LAST:event_jButtonCancelActionPerformed
-
-        // Variables declaration - do not modify//GEN-BEGIN:variables
-        private javax.swing.ButtonGroup buttonGroup1;
-        private javax.swing.JButton jButtonCancel;
-        private javax.swing.JButton jButtonCriar;
-        private javax.swing.JButton jButtonEnviar;
-        private javax.swing.JButton jButtonFileChooser;
-        private javax.swing.JComboBox<String> jComboBoxInterfaceUplink;
-        private javax.swing.JComboBox<String> jComboBoxModoAutoConfig;
-        private javax.swing.JFormattedTextField jFormattedTextFieldPortOlt;
-        private javax.swing.JLabel jLabel1;
-        private javax.swing.JLabel jLabel10;
-        private javax.swing.JLabel jLabel15;
-        private javax.swing.JLabel jLabel2;
-        private javax.swing.JLabel jLabel3;
-        private javax.swing.JLabel jLabel4;
-        private javax.swing.JLabel jLabel5;
-        private javax.swing.JLabel jLabel6;
-        private javax.swing.JLabel jLabel7;
-        private javax.swing.JLabel jLabel8;
-        private javax.swing.JLabel jLabel9;
-        private javax.swing.JPanel jPanel1;
-        private javax.swing.JPanel jPanel2;
-        private javax.swing.JPanel jPanel3;
-        private javax.swing.JPanel jPanel4;
-        private javax.swing.JPanel jPanel5;
-        private javax.swing.JPasswordField jPasswordFieldOltPasswd;
-        private javax.swing.JRadioButton jRadioButtonBridge;
-        private javax.swing.JRadioButton jRadioButtonRouter;
-        private javax.swing.JScrollPane jScrollPanel;
-        private javax.swing.JTextArea jTextAreaPreviewCode;
-        private javax.swing.JTextField jTextFieldIpOlt;
-        private javax.swing.JTextField jTextFieldOltUser;
-        private javax.swing.JTextField jTextFieldRangeProfileLine;
-        private javax.swing.JTextField jTextFieldRangeProfileVlan;
-        private javax.swing.JTextField jTextFieldRangeVlan;
-
-        private String[] modelosInterface;
-        private String[] configuracoes;
-        private String[] interfaceGpon;
-        private boolean fileChooserIsSelected;
-        private String nomeArq;
-        private ImageIcon errorIcon;
-        private ImageIcon successIcon;
-        private ImageIcon saidaIcon;
-        private OltGpon oltGpon;
-        private int slotLength;
-        // End of variables declaration//GEN-END:variables
 }

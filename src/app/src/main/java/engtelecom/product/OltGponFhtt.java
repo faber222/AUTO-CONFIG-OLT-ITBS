@@ -6,10 +6,10 @@ import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-import engtelecom.config.ConfigGeneratorAN5k;
-import engtelecom.swingType.OltAN5k;
+import engtelecom.config.ConfigGeneratorFhtt;
+import engtelecom.swingType.OltFhtt;
 
-public class OltGponAN5k extends Olt {
+public class OltGponFhtt extends Olt {
     private String portaUplink;
     private String slotUplink;
     private String vlanPppoe;
@@ -41,8 +41,9 @@ public class OltGponAN5k extends Olt {
     private boolean isOnuCapability;
 
     private String nomeArq;
+    private String oltType;
 
-    public OltGponAN5k() {
+    public OltGponFhtt() {
 
     }
 
@@ -154,13 +155,18 @@ public class OltGponAN5k extends Olt {
         return isOnuCapability;
     }
 
-    public boolean start(final OltAN5k oltData) {
+    public String getOltType() {
+        return oltType;
+    }
+
+    public boolean start(final OltFhtt oltData) {
         // Valores inteiros
         this.portaUplink = (String) oltData.getjSpinnerPortaUplink().getValue().toString();
         this.slotUplink = (String) oltData.getjSpinnerSlotUplink().getValue().toString();
         this.slotPon = (String) oltData.getjSpinnerSlotPON().getValue().toString();
         this.portaPon = (String) oltData.getjSpinnerPortaPon().getValue().toString();
         this.slotCpe = (String) oltData.getjSpinnerSlotCpe().getValue().toString();
+        this.oltType = oltData.getOltName();
         this.vlanPppoe = null;
         this.vlanVeip = null;
 
@@ -225,8 +231,8 @@ public class OltGponAN5k extends Olt {
             printVeip();
         }
 
-        final ConfigGeneratorAN5k configGeneratorAN5k = new ConfigGeneratorAN5k(this);
-        return configGeneratorAN5k.createScript();
+        final ConfigGeneratorFhtt ConfigGeneratorFhtt = new ConfigGeneratorFhtt(this);
+        return ConfigGeneratorFhtt.createScript();
     }
 
     public void printUplinkPonCpeValues() {

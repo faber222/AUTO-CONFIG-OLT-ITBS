@@ -20,17 +20,18 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import engtelecom.access.Telnet;
+import engtelecom.access.TelnetFhtt;
 import engtelecom.product.OltGpon;
-import engtelecom.product.OltGponAN5k;
+import engtelecom.product.OltGponFhtt;
 
 /**
  *
  * @author faber222
  */
-public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityProfileListener {
+public class OltFhtt extends javax.swing.JInternalFrame implements CapabilityProfileListener {
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	// Botoes de ação do código
@@ -44,7 +45,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 
 	private javax.swing.JButton jButtonFileChooser;
 
-	// Dados campo de acesso telnet
+	// Dados campo de acesso telnetFhtt
 	private javax.swing.JTextField jTextFieldIpOlt;
 
 	private javax.swing.JFormattedTextField jFormattedTextFieldPortOlt;
@@ -145,26 +146,29 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 	private String[] wifiNumber;
 	private boolean fileChooserIsSelected;
 	private String nomeArq;
+	private String fileName;
 	private ImageIcon oltIcon;
 	private ImageIcon errorIcon;
 	private ImageIcon successIcon;
+	private final String oltName;
 	private final CapabilityProfile capa;
-	private final OltGponAN5k oltGponAN5k;
+	private final OltGponFhtt oltGponFhtt;
 
 	// End of variables declaration
 	/**
 	 * Creates new form OltG16
 	 */
-	public OltAN5k() {
-		this.modelChassiPon = new SpinnerNumberModel(1, 1, 50, 1);
-		this.modelChassiUp = new SpinnerNumberModel(1, 1, 17, 1);
-		this.modelPortaPon = new SpinnerNumberModel(1, 1, 50, 1);
-		this.modelPortaUp = new SpinnerNumberModel(1, 1, 16, 1);
+	public OltFhtt(String oltName) {
+		this.modelChassiPon = new SpinnerNumberModel(1, 1, 100, 1);
+		this.modelChassiUp = new SpinnerNumberModel(1, 1, 100, 1);
+		this.modelPortaPon = new SpinnerNumberModel(1, 1, 100, 1);
+		this.modelPortaUp = new SpinnerNumberModel(1, 1, 100, 1);
 		this.modelCpe = new SpinnerNumberModel(1, 1, 128, 1);
 		this.modelVlanVeip = new SpinnerNumberModel(1, 1, 4095, 1);
 		this.modelVlanWan = new SpinnerNumberModel(1, 1, 4095, 1);
+		this.oltName = oltName;
 		initComponents();
-		oltGponAN5k = new OltGponAN5k();
+		oltGponFhtt = new OltGponFhtt();
 		capa = new CapabilityProfile(this.cpeType, this.ponType, this.indexPonType, this.wifiNumber);
 	}
 
@@ -256,6 +260,10 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		return nomeArq;
 	}
 
+	public String getOltName() {
+		return oltName;
+	}
+
 	public String getCapaCpeType() {
 		return capaCpeType;
 	}
@@ -330,8 +338,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 
 	private void previewText() {
 		// Tente abrir e ler o arquivo
-
-		try (BufferedReader br = new BufferedReader(new FileReader(this.nomeArq))) {
+		try (BufferedReader br = new BufferedReader(new FileReader(this.fileName))) {
 			final StringBuilder content = new StringBuilder();
 			String line;
 
@@ -354,7 +361,8 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		this.errorIcon = new ImageIcon(classLoader.getResource("erro.png"));
 		this.successIcon = new ImageIcon(classLoader.getResource("success.png"));
 		this.oltIcon = new ImageIcon(classLoader.getResource("AN6000_15.png"));
-		this.nomeArq = "scriptAN5k.txt";
+		this.nomeArq = "script" + this.oltName + ".txt";
+		this.fileName = this.nomeArq;
 		this.fileChooserIsSelected = false;
 
 		this.cpeType = new String[] {
@@ -480,7 +488,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		setIconifiable(true);
 		setMaximizable(true);
 		setResizable(true);
-		setTitle("AN5000");
+		setTitle(this.oltName);
 		setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 		setFrameIcon(oltIcon); //
 		setMinimumSize(new java.awt.Dimension(932, 812));
@@ -510,7 +518,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		jFormattedTextFieldPortOlt.setToolTipText("porta");
 		jFormattedTextFieldPortOlt.setName("porta"); // NOI18N
 
-		final javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 		jPanel1.setLayout(jPanel1Layout);
 		jPanel1Layout.setHorizontalGroup(
 				jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -595,7 +603,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 
 		jButtonCriarONUCapability.setText("Criar");
 		jButtonCriarONUCapability.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(final java.awt.event.ActionEvent evt) {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jButtonCriarONUCapabilityActionPerformed(evt);
 			}
 		});
@@ -626,7 +634,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		jLabel17.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
 		jLabel17.setText("Senha 2.4Ghz:");
 
-		final javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+		javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
 		jPanel6.setLayout(jPanel6Layout);
 		jPanel6Layout.setHorizontalGroup(
 				jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -722,7 +730,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		jLabel21.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
 		jLabel21.setText("Vlan PPPOE:");
 
-		final javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+		javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
 		jPanel7.setLayout(jPanel7Layout);
 		jPanel7Layout.setHorizontalGroup(
 				jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -772,7 +780,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		jLabel20.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
 		jLabel20.setText("Porta Uplink:");
 
-		final javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+		javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
 		jPanel2.setLayout(jPanel2Layout);
 		jPanel2Layout.setHorizontalGroup(
 				jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -815,9 +823,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 										.addGroup(jPanel2Layout.createSequentialGroup()
 												.addGroup(jPanel2Layout
 														.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-														.addGroup(jPanel2Layout.createSequentialGroup()
-																.addComponent(jLabel8)
-																.addGap(99, 99, 99))
+														.addComponent(jLabel8)
 														.addGroup(jPanel2Layout.createSequentialGroup()
 																.addGap(12, 12, 12)
 																.addComponent(jRadioButtonVeip)
@@ -931,12 +937,12 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 
 		jButtonFileChooser.setText("File");
 		jButtonFileChooser.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(final java.awt.event.ActionEvent evt) {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jButtonFileChooserActionPerformed(evt);
 			}
 		});
 
-		final javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+		javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
 		jPanel3.setLayout(jPanel3Layout);
 		jPanel3Layout.setHorizontalGroup(
 				jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -962,26 +968,26 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 
 		jButtonEnviar.setText("Enviar");
 		jButtonEnviar.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(final java.awt.event.ActionEvent evt) {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jButtonEnviarActionPerformed(evt);
 			}
 		});
 
 		jButtonCriar.setText("Criar");
 		jButtonCriar.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(final java.awt.event.ActionEvent evt) {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jButtonCriarActionPerformed(evt);
 			}
 		});
 
 		jButtonCancel.setText("Cancel");
 		jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(final java.awt.event.ActionEvent evt) {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jButtonCancelActionPerformed(evt);
 			}
 		});
 
-		final javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+		javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
 		jPanel4.setLayout(jPanel4Layout);
 		jPanel4Layout.setHorizontalGroup(
 				jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1011,7 +1017,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 		jTextAreaPreviewCode.setRows(5);
 		jScrollPanel.setViewportView(jTextAreaPreviewCode);
 
-		final javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+		javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
 		jPanel5.setLayout(jPanel5Layout);
 		jPanel5Layout.setHorizontalGroup(
 				jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1024,7 +1030,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 						.addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 250,
 								javax.swing.GroupLayout.PREFERRED_SIZE));
 
-		final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		layout.setHorizontalGroup(
 				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1091,7 +1097,7 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 			// Obtém o arquivo selecionado
 			final java.io.File selectedFile = fileChooser.getSelectedFile();
 			System.out.println("Arquivo selecionado: " + selectedFile.getAbsolutePath());
-			this.nomeArq = selectedFile.getAbsolutePath();
+			this.fileName = selectedFile.getAbsolutePath();
 			jButtonFileChooser.setText(selectedFile.getName());
 			previewText();
 		} else {
@@ -1105,38 +1111,52 @@ public class OltAN5k extends javax.swing.JInternalFrame implements CapabilityPro
 
 	}// GEN-LAST:event_jButtonFileChooserActionPerformed
 
-	private void jButtonEnviarActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonEnviarActionPerformed
+	private void jButtonEnviarActionPerformed(final java.awt.event.ActionEvent evt) {
 		if (this.fileChooserIsSelected) {
-			if (this.oltGponAN5k.checkTelnet(jTextFieldIpOlt.getText(), jFormattedTextFieldPortOlt.getText(),
+			if (this.oltGponFhtt.checkTelnet(jTextFieldIpOlt.getText(), jFormattedTextFieldPortOlt.getText(),
 					jTextFieldOltUser.getText(), jPasswordFieldOltPasswd.getPassword(),
 					this.errorIcon)) {
 				JOptionPane.showMessageDialog(null,
-						"Valores validos!", "Sucesso!",
-						JOptionPane.ERROR_MESSAGE, this.successIcon);
+						"Valores válidos!", "Sucesso!",
+						JOptionPane.INFORMATION_MESSAGE, this.successIcon);
 
-				final Telnet acessoOlt = new Telnet(jTextFieldIpOlt.getText(),
-						Integer.parseInt(jFormattedTextFieldPortOlt.getText()),
-						jTextFieldOltUser.getText(),
-						new String(jPasswordFieldOltPasswd.getPassword()));
-				acessoOlt.oltAccess(this.nomeArq);
+				// Cria um SwingWorker para executar a tarefa em uma thread separada
+				SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+					@Override
+					protected Void doInBackground() throws Exception {
+						final TelnetFhtt acessoOlt = new TelnetFhtt(jTextFieldIpOlt.getText(),
+								Integer.parseInt(jFormattedTextFieldPortOlt.getText()),
+								jTextFieldOltUser.getText(),
+								new String(jPasswordFieldOltPasswd.getPassword()), getOltName());
+						try {
+							acessoOlt.oltAccess(fileName);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						return null;
+					}
+				};
+
+				// Inicia a execução da tarefa em uma thread separada
+				worker.execute();
 			}
 		} else {
 			JOptionPane.showMessageDialog(null,
-					"Nenhum arquivo selecionado ou criado!", "Error",
+					"Nenhum arquivo selecionado ou criado!", "Erro",
 					JOptionPane.ERROR_MESSAGE, this.errorIcon);
 		}
-	}// GEN-LAST:event_jButtonEnviarActionPerformed
+	}
 
 	private void jButtonCriarActionPerformed(final java.awt.event.ActionEvent evt) {
-		this.nomeArq = "scriptAN5k.txt";
+		this.fileName = this.nomeArq;
 
-		if (this.oltGponAN5k.start(this)) {
+		if (this.oltGponFhtt.start(this)) {
 			// Cria um objeto ConfigGenerator para gerar o script de configuração
 			JOptionPane.showMessageDialog(null,
 					"Script criado com sucesso!", "Sucesso!",
 					JOptionPane.ERROR_MESSAGE, this.successIcon);
 			this.fileChooserIsSelected = true;
-			jButtonFileChooser.setText(this.nomeArq);
+			jButtonFileChooser.setText(this.fileName);
 			previewText();
 		} else {
 			JOptionPane.showMessageDialog(null,

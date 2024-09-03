@@ -6,26 +6,11 @@ import java.util.List;
 /**
  * Classe que fornece scripts relacionados à configuração de uma OLT AN5000
  */
-public class ScriptsAN5k {
+public class ScriptsAN6k {
         /**
          * Construtor padrão
          */
-        public ScriptsAN5k() {
-        }
-
-        /**
-         * Função usada para selecionar o modo de autorização das portas Pon
-         * 
-         * @param slotGpon     Slot da placa no chassi
-         * @param slotPortaPon Porta pon onde a cpe se encontra
-         * @return Lista de Strings contendo todo o script de autorização das portas
-         */
-        public List<String> setPonAuth(final String slotGpon, final String slotPortaPon) {
-                final List<String> ponAuth = new ArrayList<>();
-                ponAuth.add("cd card");
-                ponAuth.add(String.format("set pon_auth slot %s pon %s mode phy_id", slotGpon, slotPortaPon));
-                ponAuth.add("cd ..");
-                return ponAuth;
+        public ScriptsAN6k() {
         }
 
         /**
@@ -39,15 +24,13 @@ public class ScriptsAN5k {
          * @return Lista de strings contendo todo o script de provisionamento de cpes
          */
         public List<String> provisionaCPE(final String serialNumberCpe, final String slotGpon,
-                        final String slotPortaPon,
-                        final String slotCpe, final String cpeCapaProfile) {
+                        final String slotPortaPon, final String slotCpe, final String cpeCapaProfile) {
                 final List<String> scriptProvisionaCpe = new ArrayList<>();
                 // final StringBuilder mgrStringBuilder = new StringBuilder();
-                scriptProvisionaCpe.add("cd onu");
-                scriptProvisionaCpe.add(String.format(
-                                "set whitelist phy_addr address %s password null action add slot %s pon %s onu %s type %s",
-                                serialNumberCpe, slotGpon, slotPortaPon, slotCpe, cpeCapaProfile));
-                scriptProvisionaCpe.add("cd ..");
+                // scriptProvisionaCpe.add("cd onu");
+                scriptProvisionaCpe.add(String.format("whitelist add phy-id %s type %s slot %s pon %s onuid %s",
+                                serialNumberCpe, cpeCapaProfile, slotGpon, slotPortaPon, slotCpe));
+                // scriptProvisionaCpe.add("exit");
                 return scriptProvisionaCpe;
         }
 
@@ -67,18 +50,14 @@ public class ScriptsAN5k {
                         final String userPPP,
                         final String passPPP) {
                 final List<String> scriptComandoPpoe = new ArrayList<>();
-                scriptComandoPpoe.add("cd onu");
-                scriptComandoPpoe.add("cd lan");
+                scriptComandoPpoe.add(String.format("interface pon 1/%s/%s", slotGpon, slotPortaPon));
                 scriptComandoPpoe.add(String.format(
-                                "set wancfg slot %s %s %s index 1 mode internet type route %s 0 nat enable qos disable dsp pppoe proxy disable %s %s null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5",
-                                slotGpon, slotPortaPon, slotCpe, vlan, userPPP, passPPP));
-                scriptComandoPpoe.add(String.format("apply wancfg slot %s %s %s", slotGpon, slotPortaPon, slotCpe));
+                                "onu wan-cfg %s index 1 mode inter type route %s 7 nat enable qos disable dsp pppoe pro disable %s %s null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5",
+                                slotCpe, vlan, userPPP, passPPP));
                 scriptComandoPpoe.add(String.format(
-                                "set wancfg slot %s %s %s index 1 ip-stack-mode both ipv6-src-type slaac prefix-src-type delegate",
-                                slotGpon, slotPortaPon, slotCpe));
-                scriptComandoPpoe.add(String.format("apply wancfg slot %s %s %s", slotGpon, slotPortaPon, slotCpe));
-                scriptComandoPpoe.add("cd ..");
-                scriptComandoPpoe.add("cd ..");
+                                "onu ipv6-wan-cfg %s ind 1 ip-stack-mode both ipv6-src-type slaac prefix-src-type delegate",
+                                slotCpe));
+                scriptComandoPpoe.add("exit");
                 return scriptComandoPpoe;
         }
 
@@ -89,10 +68,8 @@ public class ScriptsAN5k {
          */
         public List<String> configProfileServMode() {
                 final List<String> scriptServMode = new ArrayList<>();
-                scriptServMode.add("cd profile");
                 scriptServMode.add(
-                                "add servmode profile index 30 name ITBS_ROUTER_PROF type unicast cvlan transparent translate disable qinq disable null");
-                scriptServMode.add("cd ..");
+                                "port-service-mode-profile add index 30 name INTELBRAS_ROUTER type unicast cvlan transparent translate disable qinq disable null");
                 return scriptServMode;
         }
 
@@ -108,13 +85,11 @@ public class ScriptsAN5k {
         public List<String> configVeip(final String slotGpon, final String slotPortaPon, final String slotCpe,
                         final String vlan) {
                 final List<String> scriptVeip = new ArrayList<>();
-                scriptVeip.add("cd onu");
-                scriptVeip.add("cd lan");
+                scriptVeip.add(String.format("interface pon 1/%s/%s", slotGpon, slotPortaPon));
                 scriptVeip.add(String.format(
-                                "set epon slot %s pon %s onu %s port 1 onuveip 1 33024 %s 65535 33024 65535 65535 33024 65535 65535 0 INTELBRAS_ROUTER 65535",
-                                slotGpon, slotPortaPon, slotCpe, vlan));
-                scriptVeip.add("cd ..");
-                scriptVeip.add("cd ..");
+                                "onu veip %s cvlan-tpid  33024 cvlan-id %s cvlan-cos 65535 trans-vlan-tpid 33024 trans-vlan-id 65535 trans-vlan-cos 65535 svlan-tpid 33024 svlan-vid 65535 svlan-cos 65535 tls 0 service-mode-profile INTELBRAS_ROUTER svlan-profile 65535 service-type 1",
+                                slotCpe, vlan));
+                scriptVeip.add("exit");
                 return scriptVeip;
         }
 
@@ -128,11 +103,8 @@ public class ScriptsAN5k {
          */
         public List<String> addVlanToUplink(final String vlan, final String slotUplink, final String slotPortaUplink) {
                 final List<String> uplink = new ArrayList<>();
-                uplink.add("cd vlan");
-                uplink.add(String.format("add vlan vlan_begin %s vlan_end %s tag uplink slot %s port %s", vlan, vlan,
+                uplink.add(String.format("port vlan %s to %s tag 1/%s %s", vlan, vlan,
                                 slotUplink, slotPortaUplink));
-                uplink.add(String.format("add vlan vlan_begin %s vlan_end %s tag allslot 0", vlan, vlan));
-                uplink.add("cd ..");
                 return uplink;
         }
 
@@ -150,16 +122,14 @@ public class ScriptsAN5k {
                         final String ssidName2,
                         final String passName2, final String wifiVersion) {
                 final List<String> scriptComandoWifi = new ArrayList<>();
-                scriptComandoWifi.add("cd onu");
-                scriptComandoWifi.add("cd lan");
+                scriptComandoWifi.add(String.format("interface pon 1/%s/%s", slotGpon, slotPortaPon));
                 scriptComandoWifi.add(String.format(
-                                "set wifi_serv_wlan slot %s pon %s onu %s serv_no 1 index 1 ssid enable %s hide disable authmode wpa2psk encrypt_type aes wpakey %s interval 86400 wifi_connect_num 32",
-                                slotGpon, slotPortaPon, slotCpe, ssidName2, passName2));
+                                "onu wifi connection %s serv-no 1 index 1 ssid enable %s hide disable authmode wpa-psk/wpa2psk encrypt-type aes wpakey %s interval 86400 wifi-connect-num 32",
+                                slotCpe, ssidName2, passName2));
                 scriptComandoWifi.add(String.format(
-                                "set wifi_serv_cfg slot %s pon %s onu %s serv_no 1 wifi enable district brazil channel 6 standard %s txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz",
-                                slotGpon, slotPortaPon, slotCpe, wifiVersion));
-                scriptComandoWifi.add("cd ..");
-                scriptComandoWifi.add("cd ..");
+                                "onu wifi attribute %s serv-no 1 wifi enable district brazil channel 6 standard %s txpower 20 frequency 2.4ghz freq-bandwidth 20mhz/40mhz",
+                                slotCpe, wifiVersion));
+                scriptComandoWifi.add("exit");
                 return scriptComandoWifi;
         }
 
@@ -178,16 +148,14 @@ public class ScriptsAN5k {
                         final String ssidName5,
                         final String passName5, final String wifiVersion) {
                 final List<String> scriptComandoWifi = new ArrayList<>();
-                scriptComandoWifi.add("cd onu");
-                scriptComandoWifi.add("cd lan");
+                scriptComandoWifi.add(String.format("interface pon 1/%s/%s", slotGpon, slotPortaPon));
                 scriptComandoWifi.add(String.format(
-                                "set wifi_serv_wlan slot %s pon %s onu %s serv_no 2 index 1 ssid enable %s hide disable authmode wpa2psk encrypt_type aes wpakey %s interval 86400 wifi_connect_num 32",
-                                slotGpon, slotPortaPon, slotCpe, ssidName5, passName5));
+                                "onu wifi connection %s serv-no 2 index 1 ssid enable %s hide disable authmode wpa-psk/wpa2psk encrypt-type aes wpakey %s interval 86400 wifi-connect-num 32",
+                                slotCpe, ssidName5, passName5));
                 scriptComandoWifi.add(String.format(
-                                "set wifi_serv_cfg slot %s pon %s onu %s serv_no 2 wifi enable district brazil channel 161 standard %s txpower 20 frequency 5.8ghz freq_bandwidth 80mhz",
-                                slotGpon, slotPortaPon, slotCpe, wifiVersion));
-                scriptComandoWifi.add("cd ..");
-                scriptComandoWifi.add("cd ..");
+                                "onu wifi attribute %s serv-no 2 wifi enable district brazil channel 161 standard %s txpower 20 frequency 5.8ghz freq-bandwidth 80mhz",
+                                slotCpe, wifiVersion));
+                scriptComandoWifi.add("exit");
                 return scriptComandoWifi;
         }
 
@@ -201,6 +169,7 @@ public class ScriptsAN5k {
          * @param pots    Quantidade de portas de telefonia
          * @param wifi    Quantidade de frequencias Wireless
          * @param usb     Quantidade de portas usb
+         * @param eid     Identificador da CPE na OLT
          * @return Lista de strings contendo o script completo de criação de onu
          *         capability
          */
@@ -209,35 +178,10 @@ public class ScriptsAN5k {
                         final String wifi, final String usb, final String eid) {
                 final List<String> scriptOnuCapa = new ArrayList<>();
                 scriptOnuCapa.add(String.format(
-                                "add cs onu profile name %s pontype %s onucapa %s lan1g %s lan10g %s pots %s",
+                                "onu caps-profile add name %s pontype %s onucapa %s lan1g %s lan10g %s pots %s",
                                 name, ponType, onuCapa, lan1g, lan10g, pots));
-                scriptOnuCapa.add(String.format("add cs onu profile option wifi %s usb %s end", wifi, usb));
-                scriptOnuCapa.add(String.format("modify cs onu profile name %s eid %s end", name, eid));
+                scriptOnuCapa.add(String.format("onu caps-profile add option wifi %s usb %s end", wifi, usb));
+                scriptOnuCapa.add(String.format("onu caps-profile modify name %s eid %s", name, eid));
                 return scriptOnuCapa;
         }
-
-        // public List<String> comandoOnuCapaF3() {
-        //         final List<String> scriptOnuCapa = new ArrayList<>();
-        //         scriptOnuCapa.add("add cs onu profile name HG6145F3 pontype 712 onucapa 0 lan1g 4 lan10g 0 pots 1");
-        //         scriptOnuCapa.add("add cs onu profile option wifi 2 end");
-        //         scriptOnuCapa.add("modify cs onu profile name HG6145F3 eid HG6145F3 end");
-        //         return scriptOnuCapa;
-        // }
-
-        // public List<String> comandoOnuCapaF() {
-        //         final List<String> scriptOnuCapa = new ArrayList<>();
-        //         scriptOnuCapa.add("add cs onu profile name HG6145F pontype 712 onucapa 0 lan1g 4 lan10g 0 pots 1");
-        //         scriptOnuCapa.add("add cs onu profile option wifi 2 usb 2 end");
-        //         scriptOnuCapa.add("modify cs onu profile name HG6145F eid HG6145F end");
-        //         return scriptOnuCapa;
-        // }
-
-        // public List<String> comandoOnuCapaD2() {
-        //         final List<String> scriptOnuCapa = new ArrayList<>();
-        //         scriptOnuCapa.add("add cs onu profile name HG6145D2 pontype 712 onucapa 0 lan1g 4 lan10g 0 pots 1");
-        //         scriptOnuCapa.add("add cs onu profile option wifi 2 end");
-        //         scriptOnuCapa.add("modify cs onu profile name HG6145D2 eid HG6145D2 end");
-        //         return scriptOnuCapa;
-        // }
-
 }
