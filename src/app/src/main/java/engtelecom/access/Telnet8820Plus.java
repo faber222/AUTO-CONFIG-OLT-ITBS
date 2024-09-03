@@ -6,6 +6,7 @@ package engtelecom.access;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -32,6 +33,7 @@ public class Telnet8820Plus implements Runnable {
     private final int port;
     private final String username;
     private final String password;
+    private final String oltName;
 
     /**
      * Construtor da classe Telnet8820Plus.
@@ -41,11 +43,13 @@ public class Telnet8820Plus implements Runnable {
      * @param user O nome de usuário para autenticação.
      * @param pwd  A senha para autenticação.
      */
-    public Telnet8820Plus(String host, int port, String user, String pwd) {
+    public Telnet8820Plus(final String host, final int port, final String user, final String pwd,
+            final String oltName) {
         this.host = host;
         this.port = port;
         this.username = user;
         this.password = pwd;
+        this.oltName = oltName;
     }
 
     /**
@@ -68,7 +72,7 @@ public class Telnet8820Plus implements Runnable {
             try {
                 // Adiciona um atraso de 100ms para o usuário
                 Thread.sleep(100);
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException e) {
                 e.printStackTrace();
             }
 
@@ -77,7 +81,7 @@ public class Telnet8820Plus implements Runnable {
             try {
                 // Adiciona um atraso de 1s para a senha
                 Thread.sleep(1000);
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException e) {
                 e.printStackTrace();
             }
 
@@ -86,15 +90,40 @@ public class Telnet8820Plus implements Runnable {
             try {
                 // Adiciona um atraso de 8s
                 Thread.sleep(6000);
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException e) {
                 e.printStackTrace();
             }
 
             readCommandsFromFile(nomeArq);
 
             finalMessage();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Método run da interface Runnable para processar as mensagens recebidas do
+     * Telnet.
+     */
+    public void run() {
+        try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter(
+                "log" + this.oltName + "Telnet.txt", true))) {
+            String answer;
+            while (active && !Thread.currentThread().isInterrupted()) {
+                if ((answer = in.readLine()) != null) {
+                    fileWriter.write(answer);
+                    // System.out.println(answer);
+                    fileWriter.newLine(); // Adiciona uma nova linha após cada resposta
+                }
+            }
+        } catch (final IOException exception) {
+            if (active) {
+                System.err.println("Erro de comunicacao.");
+                JOptionPane.showMessageDialog(null,
+                        "Erro de comunicacao.", "Aviso!",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
         }
     }
 
@@ -105,18 +134,31 @@ public class Telnet8820Plus implements Runnable {
      * @throws IOException Exceção lançada em caso de erro na leitura do arquivo.
      */
     private void readCommandsFromFile(final String filename) throws IOException {
+        final File file = new File(filename);
+        final long totalBytes = file.length();
+        long bytesRead = 0;
+
         try (BufferedReader fileReader = new BufferedReader(new FileReader(filename))) {
             String command;
             while ((command = fileReader.readLine()) != null) {
                 writeToTelnet(command);
+
+                // Atualiza bytes lidos
+                bytesRead += command.getBytes().length + System.lineSeparator().getBytes().length;
+
+                // Exibe a barra de progresso
+                final int progressPercentage = (int) (((double) bytesRead / totalBytes) * 100);
+                System.out.print("Progresso " + this.oltName + ": " + progressPercentage + "%\r");
+
                 try {
-                    // Adiciona um atraso de 1s após cada out.println
+                    // Adiciona um atraso de 1,5s após cada comando
                     Thread.sleep(1500);
-                } catch (InterruptedException e) {
+                } catch (final InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         }
+        System.out.println("\nTodos os comandos da OLT " + this.oltName + " foram enviados!");
     }
 
     /**
@@ -136,27 +178,14 @@ public class Telnet8820Plus implements Runnable {
     private void finalMessage() {
         JOptionPane.showMessageDialog(null, "Comandos aplicados com sucesso!", "Aviso!",
                 JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    /**
-     * Método run da interface Runnable para processar as mensagens recebidas do
-     * Telnet.
-     */
-    public void run() {
-        try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter("log8820Telnet.txt", true))) {
-            String answer;
-            while (active) {
-                if ((answer = in.readLine()) != null) {
-                    fileWriter.write(answer);
-                    System.out.println(answer);
-                    fileWriter.newLine(); // Adiciona uma nova linha após cada resposta
-                }
+        if (thread != null) {
+            try {
+                active = false;
+                telnetClient.disconnect();
+            } catch (final IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException exception) {
-            System.err.println("Erro de comunicação.");
-            JOptionPane.showMessageDialog(null,
-                    "Erro de comunicacao.", "Aviso!",
-                    JOptionPane.INFORMATION_MESSAGE);
+            thread.interrupt();
         }
     }
 }

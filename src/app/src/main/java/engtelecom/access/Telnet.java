@@ -6,6 +6,7 @@ package engtelecom.access;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -59,6 +60,7 @@ public class Telnet implements Runnable {
     private final int port;
     private final String username;
     private final String password;
+    private final String oltName;
 
     /**
      * Construtor padrão que inicializa os atributos com os valores fornecidos.
@@ -68,12 +70,13 @@ public class Telnet implements Runnable {
      * @param user O nome de usuário para autenticação Telnet.
      * @param pwd  A senha para autenticação Telnet.
      */
-    public Telnet(String host, int port, String user, String pwd) {
+    public Telnet(final String host, final int port, final String user, final String pwd, final String oltName) {
         // Inicialização dos atributos com os valores fornecidos
         this.host = host;
         this.port = port;
         this.username = user;
         this.password = pwd;
+        this.oltName = oltName;
     }
 
     /**
@@ -108,13 +111,36 @@ public class Telnet implements Runnable {
             JOptionPane.showMessageDialog(null, "Host " + host
                     + " desconhecido", "Aviso!",
                     JOptionPane.INFORMATION_MESSAGE);
-            System.exit(1);
         } catch (final IOException exception) {
             System.err.println("Erro na entrada.");
             JOptionPane.showMessageDialog(null,
                     "Erro na entrada.", "Aviso!",
                     JOptionPane.INFORMATION_MESSAGE);
-            System.exit(1);
+        }
+    }
+
+    /**
+     * Implementação do método run() da interface Runnable.
+     * Este método é executado em uma thread separada para permitir a leitura
+     * em tempo real das respostas do dispositivo de rede.
+     */
+    public void run() {
+        try (BufferedWriter fileWriter = new BufferedWriter(
+                new FileWriter("log" + this.oltName + "Telnet.txt", true))) {
+            String answer;
+            while (active && !Thread.currentThread().isInterrupted()) {
+                if ((answer = in.readLine()) != null) {
+                    fileWriter.write(answer);
+                    fileWriter.newLine(); // Adiciona uma nova linha após cada resposta
+                }
+            }
+        } catch (final IOException exception) {
+            if (active) {
+                System.err.println("Erro de comunicacao.");
+                JOptionPane.showMessageDialog(null,
+                        "Erro de comunicacao.", "Aviso!",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
         }
     }
 
@@ -125,19 +151,30 @@ public class Telnet implements Runnable {
      * @throws IOException Se houver um erro de leitura do arquivo.
      */
     private void readCommandsFromFile(final String filename) throws IOException {
+        final File file = new File(filename);
+        final long totalBytes = file.length();
+        long bytesRead = 0;
         try (BufferedReader fileReader = new BufferedReader(new FileReader(filename))) {
             String command;
             while ((command = fileReader.readLine()) != null) {
                 out.println(command);
+
+                // Atualiza bytes lidos
+                bytesRead += command.getBytes().length + System.lineSeparator().getBytes().length;
+
+                // Exibe a barra de progresso
+                final int progressPercentage = (int) (((double) bytesRead / totalBytes) * 100);
+                System.out.print("Progresso " + this.oltName + ": " + progressPercentage + "%\r");
                 try {
                     // Adiciona um atraso de 100ms após cada out.println
                     Thread.sleep(100);
-                } catch (InterruptedException e) {
+                } catch (final InterruptedException e) {
                     // Lida com exceção de interrupção (se necessário)
                     e.printStackTrace();
                 }
             }
         }
+        System.out.println("\nTodos os comandos da OLT " + this.oltName + " foram enviados!");
     }
 
     /**
@@ -156,34 +193,10 @@ public class Telnet implements Runnable {
         if (thread != null) {
             try {
                 socket.close();
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 e.printStackTrace();
             }
             thread.interrupt();
-        }
-    }
-
-    /**
-     * Implementação do método run() da interface Runnable.
-     * Este método é executado em uma thread separada para permitir a leitura
-     * em tempo real das respostas do dispositivo de rede.
-     */
-    public void run() {
-        try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter("logG08-G16-Telnet.txt", true))) {
-            String answer;
-            while (active && !Thread.currentThread().isInterrupted()) {
-                if ((answer = in.readLine()) != null) {
-                    fileWriter.write(answer);
-                    fileWriter.newLine(); // Adiciona uma nova linha após cada resposta
-                }
-            }
-        } catch (final IOException exception) {
-            if (active) {
-                System.err.println("Erro de comunicacao.");
-                JOptionPane.showMessageDialog(null,
-                        "Erro de comunicacao.", "Aviso!",
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
         }
     }
 }
