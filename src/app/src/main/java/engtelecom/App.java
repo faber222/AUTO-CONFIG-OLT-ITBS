@@ -10,10 +10,10 @@ import javax.swing.ImageIcon;
 import engtelecom.product.OltGpon;
 import engtelecom.swingType.InfoFrame;
 import engtelecom.swingType.Olt8820;
+import engtelecom.swingType.OltCutover;
 import engtelecom.swingType.OltFhtt;
 import engtelecom.swingType.OltG08;
 import engtelecom.swingType.OltG16;
-
 
 /**
  *
@@ -30,6 +30,7 @@ public class App extends javax.swing.JFrame {
         this.olt8820 = "8820i";
         this.oltG16 = "G16";
         this.oltG08 = "G08";
+        this.oltCutover = "OLT-CUTOVER";
         initComponents();
         this.setIconImage(this.mainIcon.getImage());
     }
@@ -66,6 +67,7 @@ public class App extends javax.swing.JFrame {
         jMenuG16 = new javax.swing.JMenuItem();
         jMenuG08 = new javax.swing.JMenuItem();
         jMenu8820i = new javax.swing.JMenuItem();
+        jMenuCutover = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuInfo = new javax.swing.JMenuItem();
 
@@ -107,6 +109,10 @@ public class App extends javax.swing.JFrame {
         jMenu1.add(jMenuG16);
 
         jMenuG08.setIcon(oltG08Icon); // NOI18N
+        if (jMenuG08.getIcon().equals(oltG08Icon)) {
+
+        }
+
         jMenuG08.setText(this.oltG08);
         jMenuG08.addActionListener((java.awt.event.ActionEvent evt) -> {
             jMenuG08ActionPerformed(evt);
@@ -119,6 +125,12 @@ public class App extends javax.swing.JFrame {
             jMenu8820iActionPerformed(evt);
         });
         jMenu1.add(jMenu8820i);
+
+        jMenuCutover.setText(this.oltCutover);
+        jMenuCutover.addActionListener((java.awt.event.ActionEvent evt) -> {
+            jMenuCutoverActionPerformed(evt);
+        });
+        jMenu1.add(jMenuCutover);
 
         jMenuBar1.add(jMenu1);
 
@@ -168,7 +180,13 @@ public class App extends javax.swing.JFrame {
         jDesktopPane.add(tela8820);
         tela8820.setVisible(true);
     }// GEN-LAST:event_jMenu8820iActionPerformed
-    
+
+    private void jMenuCutoverActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenu8820iActionPerformed
+        OltCutover telaCutover = new OltCutover();
+        jDesktopPane.add(telaCutover);
+        telaCutover.setVisible(true);
+    }// GEN-LAST:event_jMenu8820iActionPerformed
+
     private void jMenuAN5kActionPerformed(java.awt.event.ActionEvent evt) {
         OltFhtt telaAN5000 = new OltFhtt(this.oltAn5k);
         jDesktopPane.add(telaAN5000);
@@ -189,7 +207,6 @@ public class App extends javax.swing.JFrame {
     private void jMenuInfoActionPerformed(java.awt.event.ActionEvent evt) {
         new InfoFrame().setVisible(true);
     }
-
 
     /**
      * @param args the command line arguments
@@ -212,11 +229,14 @@ public class App extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(App.class.getName()).log(java.util.logging.Level.SEVERE, null,
                     ex);
         }
-
+        // FlatDarkLaf.setup();
+        // FlatMacDarkLaf.setup();
+        // FlatMacLightLaf.setup();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             new App().setVisible(true);
@@ -232,6 +252,7 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuG08;
     private javax.swing.JMenuItem jMenuG16;
+    private javax.swing.JMenuItem jMenuCutover;
     private javax.swing.JMenuItem jMenuInfo;
     private ImageIcon infoIcon;
     private ImageIcon infoMainIcon;
@@ -246,6 +267,7 @@ public class App extends javax.swing.JFrame {
     private String oltG16;
     private String oltG08;
     private String olt8820;
+    private String oltCutover;
 
     // End of variables declaration//GEN-END:variables
 }
