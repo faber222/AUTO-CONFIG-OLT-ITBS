@@ -166,23 +166,6 @@ public class OltCutover extends javax.swing.JInternalFrame {
                 jLabel10.setFont(new java.awt.Font("JetBrains Mono ExtraBold", 0, 12)); // NOI18N
                 jLabel10.setText("Senha");
 
-                // jPasswordFieldOltPasswdOrigem.addActionListener(new java.awt.event.ActionListener() {
-                //         public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                //                 jPasswordFieldOltPasswdOrigemActionPerformed(evt);
-                //         }
-                // });
-
-                // jTextFieldOltUserOrigem.addActionListener(new java.awt.event.ActionListener() {
-                //         public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                //                 jTextFieldOltUserOrigemActionPerformed(evt);
-                //         }
-                // });
-
-                // jTextFieldIpOltOrigem.addActionListener(new java.awt.event.ActionListener() {
-                //         public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                //                 jTextFieldIpOltOrigemActionPerformed(evt);
-                //         }
-                // });
 
                 jLabel11.setText("Acesso:");
 
@@ -190,22 +173,14 @@ public class OltCutover extends javax.swing.JInternalFrame {
                 jRadioButtonTELNETOrigem.setText("TELNET");
                 jRadioButtonTELNETOrigem.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
                 jRadioButtonTELNETOrigem.setMargin(new java.awt.Insets(0, 0, 0, 0));
-                // jRadioButtonTELNETOrigem.addActionListener(new java.awt.event.ActionListener() {
-                //         public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                //                 jRadioButtonTELNETOrigemActionPerformed(evt);
-                //         }
-                // });
+
 
                 buttonGroup1.add(jRadioButtonSSHOrigem);
                 jRadioButtonSSHOrigem.setSelected(true);
                 jRadioButtonSSHOrigem.setText("SSH");
                 jRadioButtonSSHOrigem.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
                 jRadioButtonSSHOrigem.setMargin(new java.awt.Insets(0, 0, 0, 0));
-                // jRadioButtonSSHOrigem.addActionListener(new java.awt.event.ActionListener() {
-                //         public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                //                 jRadioButtonSSHOrigemActionPerformed(evt);
-                //         }
-                // });
+
 
                 final javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                 jPanel1.setLayout(jPanel1Layout);
@@ -407,33 +382,11 @@ public class OltCutover extends javax.swing.JInternalFrame {
                 jLabel25.setFont(new java.awt.Font("JetBrains Mono ExtraBold", 0, 12)); // NOI18N
                 jLabel25.setText("Senha");
 
-                jPasswordFieldOltPasswdDestino.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                                jPasswordFieldOltPasswdDestinoActionPerformed(evt);
-                        }
-                });
-
-                jTextFieldOltUserDestino.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                                jTextFieldOltUserDestinoActionPerformed(evt);
-                        }
-                });
-
-                jTextFieldIpOltDestino.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                                jTextFieldIpOltDestinoActionPerformed(evt);
-                        }
-                });
 
                 buttonGroup2.add(jRadioButtonTELNELDestino);
                 jRadioButtonTELNELDestino.setText("TELNET");
                 jRadioButtonTELNELDestino.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
                 jRadioButtonTELNELDestino.setMargin(new java.awt.Insets(0, 0, 0, 0));
-                jRadioButtonTELNELDestino.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                                jRadioButtonTELNELDestinoActionPerformed(evt);
-                        }
-                });
 
                 jLabel12.setText("Acesso:");
 
@@ -442,11 +395,6 @@ public class OltCutover extends javax.swing.JInternalFrame {
                 jRadioButtonSSHDestino.setText("SSH");
                 jRadioButtonSSHDestino.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
                 jRadioButtonSSHDestino.setMargin(new java.awt.Insets(0, 0, 0, 0));
-                jRadioButtonSSHDestino.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                                jRadioButtonSSHDestinoActionPerformed(evt);
-                        }
-                });
 
                 final javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
                 jPanel8.setLayout(jPanel8Layout);
@@ -732,14 +680,6 @@ public class OltCutover extends javax.swing.JInternalFrame {
                 pack();
         }// </editor-fold>
 
-        private void jPasswordFieldOltPasswdOrigemActionPerformed(final java.awt.event.ActionEvent evt) {
-                // TODO add your handling code here:
-        }
-
-        private void jTextFieldIpOltOrigemActionPerformed(final java.awt.event.ActionEvent evt) {
-                // TODO add your handling code here:
-        }
-
         private void jButtonTesteTelnetActionPerformed(final java.awt.event.ActionEvent evt) {
                 // TODO add your handling code here:
         }
@@ -748,39 +688,8 @@ public class OltCutover extends javax.swing.JInternalFrame {
                 // TODO add your handling code here:
         }
 
-        private void jTextFieldOltUserOrigemActionPerformed(final java.awt.event.ActionEvent evt) {
-                // TODO add your handling code here:
-        }
-
         private void jButtonCancelActionPerformed(final java.awt.event.ActionEvent evt) {
                 // TODO add your handling code here:
         }
 
-        private void jPasswordFieldOltPasswdDestinoActionPerformed(final java.awt.event.ActionEvent evt) {
-                // TODO add your handling code here:
-        }
-
-        private void jTextFieldOltUserDestinoActionPerformed(final java.awt.event.ActionEvent evt) {
-                // TODO add your handling code here:
-        }
-
-        private void jTextFieldIpOltDestinoActionPerformed(final java.awt.event.ActionEvent evt) {
-                // TODO add your handling code here:
-        }
-
-        private void jRadioButtonTELNETOrigemActionPerformed(final java.awt.event.ActionEvent evt) {
-                // TODO add your handling code here:
-        }
-
-        private void jRadioButtonSSHOrigemActionPerformed(final java.awt.event.ActionEvent evt) {
-                // TODO add your handling code here:
-        }
-
-        private void jRadioButtonSSHDestinoActionPerformed(final java.awt.event.ActionEvent evt) {
-                // TODO add your handling code here:
-        }
-
-        private void jRadioButtonTELNELDestinoActionPerformed(final java.awt.event.ActionEvent evt) {
-                // TODO add your handling code here:
-        }
 }
