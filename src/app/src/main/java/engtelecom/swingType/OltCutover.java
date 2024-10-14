@@ -166,7 +166,6 @@ public class OltCutover extends javax.swing.JInternalFrame {
                 jLabel10.setFont(new java.awt.Font("JetBrains Mono ExtraBold", 0, 12)); // NOI18N
                 jLabel10.setText("Senha");
 
-
                 jLabel11.setText("Acesso:");
 
                 buttonGroup1.add(jRadioButtonTELNETOrigem);
@@ -174,13 +173,11 @@ public class OltCutover extends javax.swing.JInternalFrame {
                 jRadioButtonTELNETOrigem.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
                 jRadioButtonTELNETOrigem.setMargin(new java.awt.Insets(0, 0, 0, 0));
 
-
                 buttonGroup1.add(jRadioButtonSSHOrigem);
                 jRadioButtonSSHOrigem.setSelected(true);
                 jRadioButtonSSHOrigem.setText("SSH");
                 jRadioButtonSSHOrigem.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
                 jRadioButtonSSHOrigem.setMargin(new java.awt.Insets(0, 0, 0, 0));
-
 
                 final javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                 jPanel1.setLayout(jPanel1Layout);
@@ -292,24 +289,18 @@ public class OltCutover extends javax.swing.JInternalFrame {
                 jPanel4.setVerifyInputWhenFocusTarget(false);
 
                 jButtonTesteTelnet.setText("Criar Script");
-                jButtonTesteTelnet.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                                jButtonTesteTelnetActionPerformed(evt);
-                        }
+                jButtonTesteTelnet.addActionListener((final java.awt.event.ActionEvent evt) -> {
+                        jButtonTesteTelnetActionPerformed(evt);
                 });
 
                 jButtonIniciar.setText("Enviar Script");
-                jButtonIniciar.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                                jButtonIniciarActionPerformed(evt);
-                        }
+                jButtonIniciar.addActionListener((final java.awt.event.ActionEvent evt) -> {
+                        jButtonIniciarActionPerformed(evt);
                 });
 
                 jButtonCancel.setText("Cancel");
-                jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                                jButtonCancelActionPerformed(evt);
-                        }
+                jButtonCancel.addActionListener((final java.awt.event.ActionEvent evt) -> {
+                        jButtonCancelActionPerformed(evt);
                 });
 
                 final javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -381,7 +372,6 @@ public class OltCutover extends javax.swing.JInternalFrame {
 
                 jLabel25.setFont(new java.awt.Font("JetBrains Mono ExtraBold", 0, 12)); // NOI18N
                 jLabel25.setText("Senha");
-
 
                 buttonGroup2.add(jRadioButtonTELNELDestino);
                 jRadioButtonTELNELDestino.setText("TELNET");
