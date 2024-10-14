@@ -16,14 +16,19 @@ repositories {
 }
 
 dependencies {
+    // Use JUnit Jupiter for testing.
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.3")
+
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
+    // This dependency is used by the application.
     implementation("com.google.guava:guava:32.1.1-jre")
     implementation("com.jtattoo:JTattoo:1.6.13")
+
     implementation("org.xerial:sqlite-jdbc:3.43.0.0")
     implementation("com.google.zxing:core:3.5.0")
     implementation("commons-net:commons-net:3.8.0")
+    // implementation("com.jcraft:jsch:0.1.55")
 
     // // FlatLaf core library
     // implementation("com.formdev:flatlaf:3.5.1")
@@ -39,7 +44,8 @@ dependencies {
     // implementation("com.formdev:flatlaf:3.5.1:windows-x86@dll")
     // implementation("com.formdev:flatlaf:3.5.1:windows-arm64@dll")
 
-    implementation fileTree(dir: './src/main/libs', include: ['flatlaf-3.5.1.jar'])
+    // implementation fileTree(dir: './src/main/libs', include: ['flatlaf-3.5.1.jar'])
+    implementation fileTree(dir: './src/main/libs', include: ['jsch-0.1.55.jar'])
 }
 
 java {
