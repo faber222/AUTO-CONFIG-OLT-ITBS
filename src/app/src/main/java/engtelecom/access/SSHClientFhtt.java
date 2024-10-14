@@ -1,12 +1,19 @@
 package engtelecom.access;
 
+import static java.lang.Thread.sleep;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Properties;
+
+import javax.swing.JOptionPane;
 
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
@@ -26,6 +33,7 @@ public class SSHClientFhtt implements Runnable {
     private final int port;
     private final String username;
     private final String password;
+    private final String oltName;
 
     /**
      * Construtor padrão que inicializa os atributos com os valores fornecidos.
@@ -35,22 +43,23 @@ public class SSHClientFhtt implements Runnable {
      * @param user O nome de usuário para autenticação SSH.
      * @param pwd  A senha para autenticação SSH.
      */
-    public SSHClientFhtt(final String host, final int port, final String user, final String pwd) {
+    public SSHClientFhtt(final String host, final int port, final String user, final String pwd, final String oltName) {
         this.host = host;
         this.port = port;
         this.username = user;
         this.password = pwd;
+        this.oltName = oltName;
     }
 
-    public void oltAccess() {
+    public void oltAccess(final String nomeArq) {
         try {
             // Configura a sessão SSH
-            JSch jsch = new JSch();
+            final JSch jsch = new JSch();
             session = jsch.getSession(username, host, port);
             session.setPassword(password);
 
             // Desativa a verificação de chave de host
-            Properties config = new Properties();
+            final Properties config = new Properties();
             config.put("StrictHostKeyChecking", "no");
             session.setConfig(config);
 
@@ -63,7 +72,7 @@ public class SSHClientFhtt implements Runnable {
             channelExec = (ChannelExec) session.openChannel("exec");
 
             // Configuração de leitura de dados
-            OutputStream inputStream = channelExec.getOutputStream();
+            final OutputStream inputStream = channelExec.getOutputStream();
             out = new PrintWriter(inputStream, true);
 
             // Início da Leitura em tempo real
@@ -71,24 +80,20 @@ public class SSHClientFhtt implements Runnable {
             thread = new Thread(this);
             thread.start();
 
-            // Login e envio de comandos
             applyCommands();
 
-            // // Espera até que o processamento dos comandos esteja completo
-            thread.join(); // Aguarda o término da thread de leitura (run)
+            readCommandsFromFile(nomeArq);
+            // Espera até que o processamento dos comandos esteja completo
+            // thread.join(); // Aguarda o término da thread de leitura (run)
 
             // Finaliza a conexão
             finalMessage();
-        } catch (JSchException e) {
+        } catch (final JSchException e) {
             System.err.println("Erro na conexão SSH.");
-            // JOptionPane.showMessageDialog(null, "Erro ao tentar conectar via SSH.",
-            // "Aviso!",
-            // JOptionPane.INFORMATION_MESSAGE);
-            System.exit(0);
+
             e.printStackTrace();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
-            System.exit(0);
         }
     }
 
@@ -98,57 +103,77 @@ public class SSHClientFhtt implements Runnable {
      * em tempo real das respostas do dispositivo de rede.
      */
     public void run() {
-        String prompt = "(config)#"; // Prompt que indica o fim da saída
-        try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter("dados.txt", true))) {
-            BufferedReader in = new BufferedReader(new InputStreamReader(channelExec.getInputStream()));
+        try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter(
+                "log" + this.oltName + "Telnet.txt", true))) {
+            final BufferedReader in = new BufferedReader(new InputStreamReader(channelExec.getInputStream()));
             String answer;
             while (active && !Thread.currentThread().isInterrupted()) {
                 if ((answer = in.readLine()) != null) {
                     fileWriter.write(answer);
                     fileWriter.newLine();
-                    // System.out.println(answer); // Mostra o retorno no console
-                    // Verifica se o prompt final foi recebido
-                    if (answer.trim().endsWith(prompt)) {
-                        active = false; // Termina a leitura
-                        break;
-                    }
+                    System.out.println(answer);
                 }
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             if (active) {
                 System.err.println("Erro de comunicação.");
             }
         }
     }
 
-    /**
-     * Envia os comandos para o servidor SSH
-     * 
-     * @throws JSchException
-     */
+    private void readCommandsFromFile(final String filename) throws IOException {
+        final File file = new File(filename);
+        final long totalBytes = file.length();
+        long bytesRead = 0;
+
+        try (BufferedReader fileReader = new BufferedReader(new FileReader(filename))) {
+            String command;
+
+            while ((command = fileReader.readLine()) != null) {
+                out.println(command);
+
+                // Atualiza bytes lidos
+                bytesRead += command.getBytes().length + System.lineSeparator().getBytes().length;
+
+                // Exibe a barra de progresso
+                final int progressPercentage = (int) (((double) bytesRead / totalBytes) * 100);
+                System.out.print("Progresso " + this.oltName + ": " + progressPercentage + "%\r");
+                sleep(100);
+                // Adiciona um atraso de 100ms após cada out.println
+            }
+        } catch (final InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("\nTodos os comandos da OLT " + this.oltName + " foram enviados!");
+    }
+
     private void applyCommands() throws InterruptedException, JSchException {
         channelExec.connect(1000);
+
         out.println(password);
-        Thread.sleep(100);
-        out.println("en");
-        Thread.sleep(100);
-        out.println("conf t");
-        Thread.sleep(100);
-        out.println("screen-rows per-page 0");
-        Thread.sleep(100);
-        out.println("sh run");
-        Thread.sleep(100);
+        sleep(100);
+        out.println("enable");
+        sleep(100);
+        out.println(password);
+        sleep(100);
+        out.println("config");
+        sleep(100);
         out.println(""); // Envia um enter para finalizar o comando
-        Thread.sleep(100);
     }
 
     /**
      * Finaliza a sessão e fecha o canal.
      */
     private void finalMessage() {
+        JOptionPane.showMessageDialog(null, "Comandos aplicados com sucesso!", "Aviso!",
+                JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "NAO ESQUECA DE VALIDAR E SALVAR AS CONFIGURACOES!", "Aviso!",
+                JOptionPane.INFORMATION_MESSAGE);
         // Interrompe a thread, caso esteja esperando
         if (thread != null) {
             thread.interrupt();
+            active = false;
+
         }
         if (channelExec != null && channelExec.isConnected()) {
             channelExec.disconnect();
