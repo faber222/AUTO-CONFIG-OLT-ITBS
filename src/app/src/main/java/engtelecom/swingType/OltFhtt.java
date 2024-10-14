@@ -1128,11 +1128,7 @@ public class OltFhtt extends javax.swing.JInternalFrame implements CapabilityPro
 								Integer.parseInt(jFormattedTextFieldPortOlt.getText()),
 								jTextFieldOltUser.getText(),
 								new String(jPasswordFieldOltPasswd.getPassword()), getOltName());
-						try {
-							acessoOlt.oltAccess(fileName);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
+						acessoOlt.oltAccess(fileName);
 						return null;
 					}
 				};

@@ -87,11 +87,9 @@ public class SSHClient implements Runnable {
             System.err.println("Erro na conexão SSH.");
             JOptionPane.showMessageDialog(null, "Erro ao tentar conectar via SSH.", "Aviso!",
                     JOptionPane.INFORMATION_MESSAGE);
-            System.exit(0);
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
-            System.exit(0);
         }
     }
 

@@ -36,13 +36,13 @@ public class TelnetFhtt implements Runnable {
         this.oltName = oltName;
     }
 
-    public void oltAccess(final String nomeArq) throws InterruptedException {
+    public void oltAccess(final String nomeArq) {
         try {
             // Configuração do socket e streams de entrada/saída
             socket = new Socket(host, port);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
-            
+
             active = true;
             thread = new Thread(this);
             thread.start();
@@ -76,6 +76,8 @@ public class TelnetFhtt implements Runnable {
             JOptionPane.showMessageDialog(null,
                     "Erro na entrada.", "Aviso!",
                     JOptionPane.INFORMATION_MESSAGE);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 

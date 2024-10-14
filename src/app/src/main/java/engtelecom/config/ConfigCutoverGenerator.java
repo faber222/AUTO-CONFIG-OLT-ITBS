@@ -140,10 +140,6 @@ public class ConfigCutoverGenerator {
     }
 
     private void createScript() {
-
-        for (String teste : this.data) {
-            // System.out.println(teste);
-        }
         final ScriptsAN5kCutover scriptsAN5k = new ScriptsAN5kCutover();
         final ScriptsAN6kCutover scriptsAN6k = new ScriptsAN6kCutover();
 
@@ -277,6 +273,10 @@ public class ConfigCutoverGenerator {
                 }
             }
         }
-        writeScript();
+        if (writeScript()) {
+            System.out.println("Script criado com sucesso!");
+        } else {
+            System.out.println("Script não foi criado, ocorreu algum erro!");
+        }
     }
 }

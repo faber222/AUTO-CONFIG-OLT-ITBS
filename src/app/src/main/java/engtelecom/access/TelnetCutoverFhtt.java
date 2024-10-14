@@ -32,7 +32,8 @@ public class TelnetCutoverFhtt implements Runnable {
     private final String password;
     private final String oltName;
 
-    public TelnetCutoverFhtt(final String host, final int port, final String user, final String pwd, final String oltName) {
+    public TelnetCutoverFhtt(final String host, final int port, final String user, final String pwd,
+            final String oltName) {
         this.host = host;
         this.port = port;
         this.username = user;
@@ -40,7 +41,7 @@ public class TelnetCutoverFhtt implements Runnable {
         this.oltName = oltName;
     }
 
-    public void oltAccess(final String nomeArq){
+    public void oltAccess(final String nomeArq) {
         try {
             // Configuração do socket e streams de entrada/saída
             int timeout = 5000; // 5 segundos
@@ -113,9 +114,6 @@ public class TelnetCutoverFhtt implements Runnable {
         } catch (final IOException exception) {
             if (active) {
                 System.err.println("Erro de comunicacao.");
-                // JOptionPane.showMessageDialog(null,
-                // "Erro de comunicacao.", "Aviso!",
-                // JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }
@@ -163,5 +161,6 @@ public class TelnetCutoverFhtt implements Runnable {
             thread.interrupt();
             active = false;
         }
+        System.out.println("Socket desconectado com sucesso ao host " + host + " na porta " + port);
     }
 }
