@@ -7,7 +7,9 @@ package engtelecom.swingType;
 import javax.swing.SpinnerNumberModel;
 
 import engtelecom.access.SSHClient;
+import engtelecom.access.SSHClientFhtt;
 import engtelecom.access.TelnetCutover;
+import engtelecom.access.TelnetFhtt;
 import engtelecom.analytics.DataAnaliser;
 import engtelecom.config.ConfigCutoverGenerator;
 
@@ -758,7 +760,23 @@ public class OltCutover extends javax.swing.JInternalFrame {
     }
 
     private void jButtonEnviarScriptActionPerformed(java.awt.event.ActionEvent evt) {
-
+        String oltType = "AN5000";
+        if (jRadioButtonAN6k.isSelected()) {
+            oltType = "AN6000";
+        }
+        if (jRadioButtonTELNELDestino.isSelected()) {
+            TelnetFhtt tesTelnetFhtt = new TelnetFhtt(jTextFieldIpOltDestino.getText(),
+                    (Integer) jSpinnerPortOltDestino.getValue(), jTextFieldOltUserDestino.getText(),
+                    new String(jPasswordFieldOltPasswdDestino.getPassword()),
+                    oltType);
+            tesTelnetFhtt.oltAccess("scriptMigracao.txt");
+        } else {
+            SSHClientFhtt sshClient = new SSHClientFhtt(
+                    jTextFieldIpOltDestino.getText(),
+                    (Integer) jSpinnerPortOltDestino.getValue(), jTextFieldOltUserDestino.getText(),
+                    new String(jPasswordFieldOltPasswdDestino.getPassword()), oltType);
+            sshClient.oltAccess("scriptMigracao.txt");
+        }
     }
 
     private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {
