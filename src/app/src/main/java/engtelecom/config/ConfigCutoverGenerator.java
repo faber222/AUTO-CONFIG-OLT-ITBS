@@ -25,19 +25,16 @@ public class ConfigCutoverGenerator {
     private final List<List<String>> configProv;
     private final List<List<String>> configUplinkVlan;
 
-    private final ArrayList<String> rangePortaDestino;
     private final String slotChassiGpon;
     private final String slotChassiUplink;
     private final String slotPortaUplink;
     private final String oltType;
 
     public ConfigCutoverGenerator(final ArrayList<String> data, final String oltType,
-            final ArrayList<String> rangePortaDestino,
             final String slotChassiGpon, final String slotChassiUplink, final String slotPortaUplink) {
         // ITBS5f72cb27;0/9/1;58;1005;veip;TRUE;null;1;1005;1005
         this.data = data;
         this.oltType = oltType;
-        this.rangePortaDestino = rangePortaDestino;
         this.slotChassiGpon = slotChassiGpon;
         this.slotChassiUplink = slotChassiUplink;
         this.slotPortaUplink = slotPortaUplink;
