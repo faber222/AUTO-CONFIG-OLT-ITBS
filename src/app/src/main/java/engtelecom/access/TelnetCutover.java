@@ -24,6 +24,7 @@ public class TelnetCutover implements Runnable {
     private PrintWriter out;
     private Thread thread;
     private boolean active;
+    private boolean isFinal;
 
     // Atributos para oltAccess
     private final String host;
@@ -67,6 +68,7 @@ public class TelnetCutover implements Runnable {
 
             // Início da Leitura em tempo real
             active = true;
+            isFinal = false;
             thread = new Thread(this);
             thread.start();
 
@@ -113,7 +115,7 @@ public class TelnetCutover implements Runnable {
                     fileWriter.write(answer);
                     fileWriter.newLine();
                     // Verifique se o prompt final foi recebido
-                    if (answer.trim().endsWith(prompt)) {
+                    if (answer.trim().endsWith(prompt) && isFinal) {
                         active = false; // Termina a leitura
                         break;
                     }
@@ -135,23 +137,29 @@ public class TelnetCutover implements Runnable {
         Thread.sleep(100);
         out.println("sh run ");
         Thread.sleep(100);
+        isFinal = true;
         out.println("");
         Thread.sleep(100);
     }
 
     /**
      * Mensagem de alerta ao usuário
+     * 
+     * @throws IOException
      */
-    private void finalMessage() {
+    private void finalMessage() throws IOException {
 
         // Interrompe a thread, caso esteja esperando
+
         if (thread != null) {
+
+            thread.interrupt();
             try {
                 socket.close();
             } catch (final IOException e) {
                 e.printStackTrace();
             }
-            thread.interrupt();
         }
+        System.out.println("Socket desconectado com sucesso ao host " + host + " na porta " + port);
     }
 }
