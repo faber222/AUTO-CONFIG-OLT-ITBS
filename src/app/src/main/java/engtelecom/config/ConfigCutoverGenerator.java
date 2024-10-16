@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
 import engtelecom.scripts.ScriptsAN5kCutover;
 import engtelecom.scripts.ScriptsAN6kCutover;
 
@@ -52,7 +54,7 @@ public class ConfigCutoverGenerator {
         this.vlansUplink = vlans;
     }
 
-    public void start() {
+    public boolean start() {
         final HashSet<String> vlansUnicas = new HashSet<>();
         final HashSet<String> newVlanUnica = new HashSet<>();
         // System.out.println(data);
@@ -75,7 +77,7 @@ public class ConfigCutoverGenerator {
                 vlansUplink.add(newVlan);
             }
         }
-        createScript();
+        return createScript();
         // System.out.println(this.data);
     }
 
@@ -139,7 +141,7 @@ public class ConfigCutoverGenerator {
         }
     }
 
-    private void createScript() {
+    private boolean  createScript() {
         final ScriptsAN5kCutover scriptsAN5k = new ScriptsAN5kCutover();
         final ScriptsAN6kCutover scriptsAN6k = new ScriptsAN6kCutover();
 
@@ -256,9 +258,9 @@ public class ConfigCutoverGenerator {
                 } else {
                     // configVeip = null;
                     this.profileServMode = null;
-                    System.out.println(tagging);
+                    // System.out.println(tagging);
                     final String downStreamVlan = tagging.equals("TRUE") ? "transparent" : "tag";
-                    System.out.println("downStream: " + downStreamVlan);
+                    // System.out.println("downStream: " + downStreamVlan);
                     configEth.add(scriptsAN5k.configEth(
                             this.slotChassiGpon, slotPortaPon, slotCpe, port,
                             downStreamVlan, index, vlan));
@@ -275,8 +277,16 @@ public class ConfigCutoverGenerator {
         }
         if (writeScript()) {
             System.out.println("Script criado com sucesso!");
+            JOptionPane.showMessageDialog(null,
+                    "Script de migração criado com sucesso!.", null,
+                    JOptionPane.WARNING_MESSAGE, null);
+            return true;
         } else {
             System.out.println("Script não foi criado, ocorreu algum erro!");
+            JOptionPane.showMessageDialog(null,
+                    "Script de migração não foi criado!.", null,
+                    JOptionPane.ERROR_MESSAGE, null);
+            return false;
         }
     }
 }

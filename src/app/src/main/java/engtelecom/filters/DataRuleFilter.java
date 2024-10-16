@@ -13,10 +13,10 @@ public class DataRuleFilter {
     private HashMap<Integer, ArrayList<String>> dataMap;
     private final String path;
 
-    public DataRuleFilter() {
+    public DataRuleFilter(String fileName) {
         this.dataMap = new HashMap<>();
         // this.path = "dadosRules.txt";
-        this.path = "dados.txt";
+        this.path = fileName;
     }
 
     public void start() {
@@ -39,7 +39,8 @@ public class DataRuleFilter {
                         .compile("([A-Za-z0-9]{4}-[0-9a-fA-F]{8})\\s+line\\s+(\\d+)");
                 final Matcher hexMatcher = hexPattern.matcher(line);
                 if (hexMatcher.find()) {
-                    final String stringHex = hexMatcher.group(1).replace("-", ""); // Captura o valor do string-hex (XXXX-XXXXXXXX)
+                    final String stringHex = hexMatcher.group(1).replace("-", ""); // Captura o valor do string-hex
+                                                                                   // (XXXX-XXXXXXXX)
                     final int lineKey = Integer.parseInt(hexMatcher.group(2)); // Captura o valor do line como chave
 
                     // Formata o valor como "XXXX-XXXXXXXX;0/x/y"
@@ -62,5 +63,4 @@ public class DataRuleFilter {
         this.dataMap = dataMap;
     }
 
-    
 }
