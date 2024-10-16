@@ -19,17 +19,21 @@ public class DataAnaliser {
     private HashMap<Integer, ArrayList<String>> dataMapLines;
     private HashMap<Integer, ArrayList<String>> dataMapVlans;
 
-    public DataAnaliser() {
+    private String fileName;
+
+    public DataAnaliser(String fileName) {
         this.vlans = new ArrayList<>();
         this.lines = new ArrayList<>();
         this.rules = new ArrayList<>();
         this.data = new ArrayList<>();
+        this.fileName = fileName;
     }
 
     public void start() {
-        DataRuleFilter ruleFilter = new DataRuleFilter();
-        DataLineFilter lineFilter = new DataLineFilter();
-        DataVlanFilter vlanFilter = new DataVlanFilter();
+        System.out.println(this.fileName);
+        DataRuleFilter ruleFilter = new DataRuleFilter(this.fileName);
+        DataLineFilter lineFilter = new DataLineFilter(this.fileName);
+        DataVlanFilter vlanFilter = new DataVlanFilter(this.fileName);
 
         ruleFilter.start();
         lineFilter.start();

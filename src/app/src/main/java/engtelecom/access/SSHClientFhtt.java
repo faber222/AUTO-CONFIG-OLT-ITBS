@@ -51,7 +51,7 @@ public class SSHClientFhtt implements Runnable {
         this.oltName = oltName;
     }
 
-    public void oltAccess(final String nomeArq) {
+    public boolean oltAccess(final String nomeArq) {
         try {
             // Configura a sessão SSH
             final JSch jsch = new JSch();
@@ -88,6 +88,7 @@ public class SSHClientFhtt implements Runnable {
 
             // Finaliza a conexão
             finalMessage();
+            return true;
         } catch (final JSchException e) {
             System.err.println("Erro na conexão SSH.");
 
@@ -95,6 +96,7 @@ public class SSHClientFhtt implements Runnable {
         } catch (final Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     /**

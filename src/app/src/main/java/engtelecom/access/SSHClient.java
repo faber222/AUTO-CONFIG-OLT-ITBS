@@ -29,6 +29,7 @@ public class SSHClient implements Runnable {
     private final int port;
     private final String username;
     private final String password;
+    private String fileName;
 
     /**
      * Construtor padrão que inicializa os atributos com os valores fornecidos.
@@ -38,14 +39,15 @@ public class SSHClient implements Runnable {
      * @param user O nome de usuário para autenticação SSH.
      * @param pwd  A senha para autenticação SSH.
      */
-    public SSHClient(final String host, final int port, final String user, final String pwd) {
+    public SSHClient(final String host, final int port, final String user, final String pwd, String fileName) {
         this.host = host;
         this.port = port;
         this.username = user;
         this.password = pwd;
+        this.fileName = fileName;
     }
 
-    public void oltAccess() {
+    public boolean  oltAccess() {
         try {
             // Configura a sessão SSH
             JSch jsch = new JSch();
@@ -83,6 +85,7 @@ public class SSHClient implements Runnable {
 
             // Finaliza a conexão
             finalMessage();
+            return true;
         } catch (JSchException e) {
             System.err.println("Erro na conexão SSH.");
             JOptionPane.showMessageDialog(null, "Erro ao tentar conectar via SSH.", "Aviso!",
@@ -91,6 +94,7 @@ public class SSHClient implements Runnable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     /**
@@ -100,7 +104,7 @@ public class SSHClient implements Runnable {
      */
     public void run() {
         String prompt = "(config)#"; // Prompt que indica o fim da saída
-        try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter("dados.txt", false))) {
+        try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter(this.fileName, false))) {
             BufferedReader in = new BufferedReader(new InputStreamReader(channelExec.getInputStream()));
             String answer;
             while (active && !Thread.currentThread().isInterrupted()) {

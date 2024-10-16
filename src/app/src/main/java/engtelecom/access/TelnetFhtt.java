@@ -36,7 +36,7 @@ public class TelnetFhtt implements Runnable {
         this.oltName = oltName;
     }
 
-    public void oltAccess(final String nomeArq) {
+    public boolean  oltAccess(final String nomeArq) {
         try {
             // Configuração do socket e streams de entrada/saída
             socket = new Socket(host, port);
@@ -66,6 +66,7 @@ public class TelnetFhtt implements Runnable {
             // Mostra a mensagem que deu tudo certo e alerta o usuario para salvar as
             // configurações
             finalMessage();
+            return true;
         } catch (final UnknownHostException exception) {
             System.err.println("Host " + host + " desconhecido");
             JOptionPane.showMessageDialog(null, "Host " + host
@@ -79,6 +80,7 @@ public class TelnetFhtt implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public void run() {

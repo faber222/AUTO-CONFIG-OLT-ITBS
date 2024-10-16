@@ -12,10 +12,10 @@ public class DataVlanFilter {
     private final HashMap<Integer, ArrayList<String>> dataMap2;
     private final String path;
 
-    public DataVlanFilter() {
+    public DataVlanFilter(String fileName) {
         this.dataMap2 = new HashMap<>();
         // this.path = "dadosVlan.txt";
-        this.path = "dados.txt";
+        this.path = fileName;
     }
 
     public void start() {

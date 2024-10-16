@@ -24,13 +24,14 @@ public class TelnetCutover implements Runnable {
     private PrintWriter out;
     private Thread thread;
     private boolean active;
-    private boolean isFinal;
 
     // Atributos para oltAccess
     private final String host;
     private final int port;
     private final String username;
     private final String password;
+
+    private final String fileName;
 
     /**
      * Construtor padrão que inicializa os atributos com os valores fornecidos.
@@ -40,19 +41,21 @@ public class TelnetCutover implements Runnable {
      * @param user O nome de usuário para autenticação Telnet.
      * @param pwd  A senha para autenticação Telnet.
      */
-    public TelnetCutover(final String host, final int port, final String user, final String pwd) {
+    public TelnetCutover(final String host, final int port, final String user, final String pwd,
+            final String fileName) {
         // Inicialização dos atributos com os valores fornecidos
         this.host = host;
         this.port = port;
         this.username = user;
         this.password = pwd;
+        this.fileName = fileName;
     }
 
-    public void oltAccess() {
+    public boolean oltAccess() {
         try {
             // Configuração do socket e streams de entrada/saída
-            int timeout = 5000; // 5 segundos
-            SocketAddress socketAddress = new InetSocketAddress(host, port);
+            final int timeout = 5000; // 5 segundos
+            final SocketAddress socketAddress = new InetSocketAddress(host, port);
             socket = new Socket();
 
             // Tenta conectar dentro do tempo limite especificado
@@ -68,7 +71,6 @@ public class TelnetCutover implements Runnable {
 
             // Início da Leitura em tempo real
             active = true;
-            isFinal = false;
             thread = new Thread(this);
             thread.start();
 
@@ -85,6 +87,7 @@ public class TelnetCutover implements Runnable {
 
             // Somente após a leitura completa, finalMessage é chamado
             finalMessage();
+            return true;
         } catch (final UnknownHostException exception) {
             System.err.println("Erro na entrada.");
             JOptionPane.showMessageDialog(null,
@@ -96,8 +99,9 @@ public class TelnetCutover implements Runnable {
             JOptionPane.showMessageDialog(null, "Erro de I/O ao tentar conectar ao host " + host + " na porta "
                     + port, "Aviso!",
                     JOptionPane.INFORMATION_MESSAGE);
-        } catch (InterruptedException ex) {
+        } catch (final InterruptedException ex) {
         }
+        return false;
     }
 
     /**
@@ -106,16 +110,16 @@ public class TelnetCutover implements Runnable {
      * em tempo real das respostas do dispositivo de rede.
      */
     public void run() {
-        String prompt = "(config)#"; // Prompt que indica o fim da saída
+        final String prompt = "(config)#"; // Prompt que indica o fim da saída
         try (BufferedWriter fileWriter = new BufferedWriter(
-                new FileWriter("dados.txt", false))) {
+                new FileWriter(this.fileName, false))) {
             String answer;
             while (active && !Thread.currentThread().isInterrupted()) {
                 if ((answer = in.readLine()) != null) {
                     fileWriter.write(answer);
                     fileWriter.newLine();
                     // Verifique se o prompt final foi recebido
-                    if (answer.trim().endsWith(prompt) && isFinal) {
+                    if (answer.trim().endsWith(prompt)) {
                         active = false; // Termina a leitura
                         break;
                     }
@@ -137,29 +141,23 @@ public class TelnetCutover implements Runnable {
         Thread.sleep(100);
         out.println("sh run ");
         Thread.sleep(100);
-        isFinal = true;
         out.println("");
         Thread.sleep(100);
     }
 
     /**
      * Mensagem de alerta ao usuário
-     * 
-     * @throws IOException
      */
-    private void finalMessage() throws IOException {
+    private void finalMessage() {
 
         // Interrompe a thread, caso esteja esperando
-
         if (thread != null) {
-
-            thread.interrupt();
             try {
                 socket.close();
             } catch (final IOException e) {
                 e.printStackTrace();
             }
+            thread.interrupt();
         }
-        System.out.println("Socket desconectado com sucesso ao host " + host + " na porta " + port);
     }
 }
