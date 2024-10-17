@@ -42,9 +42,12 @@ public class DataRuleFilter {
                     final String stringHex = hexMatcher.group(1).replace("-", ""); // Captura o valor do string-hex
                                                                                    // (XXXX-XXXXXXXX)
                     final int lineKey = Integer.parseInt(hexMatcher.group(2)); // Captura o valor do line como chave
+                    // Transformar a partir do 5º caractere para minúsculo
+                    String formattedStringHex = stringHex.substring(0, 4)
+                            + stringHex.substring(4).toLowerCase();
 
                     // Formata o valor como "XXXX-XXXXXXXX;0/x/y"
-                    final String value = stringHex + ";" + aim;
+                    final String value = formattedStringHex + ";" + aim;
 
                     // Adiciona o valor na hashMap, agrupando por chave (line)
                     this.dataMap.computeIfAbsent(lineKey, k -> new ArrayList<>()).add(value);
