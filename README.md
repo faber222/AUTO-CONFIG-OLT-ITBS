@@ -1,8 +1,9 @@
-# AUTO-CONFIG G16
+# AUTO CONFIG OLT's ITBS
 
-Este programa serve para fazer o auto-config da olt G16 e G08 da intelbras, tanto para uma vlan por pon, quanto para uma vlan para todas as pon.
+Este programa serve para fazer gerar scripts para as olts 8820i, G08, G16, AN5k e AN6k da intelbras.
 
 Utilizando do mesmo script da ferramenta de auto-config feita pelo @felipegcoutinho.
+E com alguns outros incrementos para os produtos AN5k e AN6k.
 
 ## COMO FUNCIONA
 
@@ -22,9 +23,13 @@ Basta baixar a nova release presente e executar conforme o arquivo LEIAME.txt
 - [X] Auto-config uma vlan por pon
 - [X] Auto-config uma vlan para todas as pon
 - [X] Auto-config uma vlan por pon untagged
+- [X] Compativel com grupo de vlan
 - [X] Compativel com OLT G16 Intelbras
 - [X] Compativel com OLT G08 Intelbras
 - [X] Compativel com OLt 8820i Intelbras
-- [X] Compativel com grupo de vlan
-- [ ] Possibilidade de rollback
-- [ ] Finalizado
+- [X] Compatível com OLT AN5k
+- [X] Compatível com OLT AN6k
+- [X] Migração de OLTs 8820i para AN5k
+- [X] Migração de OLTs 8820i para AN6k
+- [X] Migração de OLTs G08/G16 para AN5k
+- [X] Migração de OLTs G08/G16 para AN6k
