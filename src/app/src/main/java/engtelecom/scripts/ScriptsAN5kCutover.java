@@ -110,6 +110,7 @@ public class ScriptsAN5kCutover {
                                 slotPortaPon, slotCpe, port, index));
                 scriptEth.add(String.format("set slot %s pon %s onu %s port %s service %s vlan_mode %s 0 33024 %s",
                                 slotGpon, slotPortaPon, slotCpe, port, index, mode, vlan));
+                scriptEth.add(String.format("apply onu %s %s %s vlan", slotGpon, slotPortaPon, slotCpe));
                 scriptEth.add("cd ..");
                 scriptEth.add("cd ..");
                 return scriptEth;
