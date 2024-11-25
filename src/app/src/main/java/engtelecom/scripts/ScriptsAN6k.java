@@ -69,7 +69,7 @@ public class ScriptsAN6k {
         public List<String> configProfileServMode() {
                 final List<String> scriptServMode = new ArrayList<>();
                 scriptServMode.add(
-                                "port-service-mode-profile add index 30 name INTELBRAS_ROUTER type unicast cvlan transparent translate disable qinq disable null");
+                                "port-service-mode-profile add index 30 name ITBS_ROUTER_PROF type unicast cvlan transparent translate disable qinq disable null");
                 return scriptServMode;
         }
 
@@ -87,7 +87,7 @@ public class ScriptsAN6k {
                 final List<String> scriptVeip = new ArrayList<>();
                 scriptVeip.add(String.format("interface pon 1/%s/%s", slotGpon, slotPortaPon));
                 scriptVeip.add(String.format(
-                                "onu veip %s cvlan-tpid  33024 cvlan-id %s cvlan-cos 65535 trans-vlan-tpid 33024 trans-vlan-id 65535 trans-vlan-cos 65535 svlan-tpid 33024 svlan-vid 65535 svlan-cos 65535 tls 0 service-mode-profile INTELBRAS_ROUTER svlan-profile 65535 service-type 1",
+                                "onu veip %s cvlan-tpid  33024 cvlan-id %s cvlan-cos 65535 trans-vlan-tpid 33024 trans-vlan-id 65535 trans-vlan-cos 65535 svlan-tpid 33024 svlan-vid 65535 svlan-cos 65535 tls 0 service-mode-profile 30 svlan-profile 65535 service-type 1",
                                 slotCpe, vlan));
                 scriptVeip.add("exit");
                 return scriptVeip;

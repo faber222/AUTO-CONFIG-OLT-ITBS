@@ -111,7 +111,7 @@ public class ScriptsAN5k {
                 scriptVeip.add("cd onu");
                 scriptVeip.add("cd lan");
                 scriptVeip.add(String.format(
-                                "set epon slot %s pon %s onu %s port 1 onuveip 1 33024 %s 65535 33024 65535 65535 33024 65535 65535 0 INTELBRAS_ROUTER 65535",
+                                "set epon slot %s pon %s onu %s port 1 onuveip 1 33024 %s 65535 33024 65535 65535 33024 65535 65535 0 30 65535",
                                 slotGpon, slotPortaPon, slotCpe, vlan));
                 scriptVeip.add("cd ..");
                 scriptVeip.add("cd ..");
