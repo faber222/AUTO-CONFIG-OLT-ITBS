@@ -86,6 +86,7 @@ public class App extends javax.swing.JFrame {
     private ImageIcon oltG08Icon;
     private ImageIcon oltAN6KIcon;
     private ImageIcon mainIcon;
+    private ImageIcon oltCutoverIcon;
 
     private ImageIcon ipIcon;
     private ImageIcon portIcon;
@@ -105,6 +106,7 @@ public class App extends javax.swing.JFrame {
     private String oltG08;
     private String olt8820;
     private String oltCutover;
+
     /**
      * Creates new form OltGponMenu
      */
@@ -118,30 +120,39 @@ public class App extends javax.swing.JFrame {
         initComponents();
         this.setIconImage(this.mainIcon.getImage());
     }
+
     public ImageIcon getIpIcon() {
         return ipIcon;
     }
+
     public ImageIcon getPortIcon() {
         return portIcon;
     }
+
     public ImageIcon getUserIcon() {
         return userIcon;
     }
+
     public ImageIcon getPassIcon() {
         return passIcon;
     }
+
     public ImageIcon getOltIcon() {
         return oltIcon;
     }
+
     public ImageIcon getCollectIcon() {
         return collectIcon;
     }
+
     public ImageIcon getFileIcon() {
         return fileIcon;
     }
+
     public ImageIcon getFileHoverIcon() {
         return fileHoverIcon;
     }
+
     public ImageIcon getCriarIcon() {
         return criarIcon;
     }
@@ -149,9 +160,11 @@ public class App extends javax.swing.JFrame {
     public ImageIcon getEnviarIcon() {
         return enviarIcon;
     }
+
     public ImageIcon getSairIcon() {
         return sairIcon;
     }
+
     private void olt() {
         // Carrega os ícones necessários para o diálogo
         final ClassLoader classLoader = OltGpon.class.getClassLoader();
@@ -162,7 +175,8 @@ public class App extends javax.swing.JFrame {
         this.terminalIcon = new ImageIcon(classLoader.getResource("icons/application_xp_terminal.png"));
         this.infoIcon = new ImageIcon(classLoader.getResource("icons/information.png"));
         this.infoMainIcon = new ImageIcon(classLoader.getResource("icons/help.png"));
-        this.mainIcon = new ImageIcon(classLoader.getResource("malicious-script.png"));
+        this.mainIcon = new ImageIcon(classLoader.getResource("provedor.png"));
+        this.oltCutoverIcon = new ImageIcon(classLoader.getResource("script.png"));
 
         this.ipIcon = new ImageIcon(classLoader.getResource("icons/server.png"));
         this.portIcon = new ImageIcon(classLoader.getResource("icons/sitemap.png"));
@@ -177,6 +191,7 @@ public class App extends javax.swing.JFrame {
         this.sairIcon = new ImageIcon(classLoader.getResource("icons/cross.png"));
 
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -254,6 +269,7 @@ public class App extends javax.swing.JFrame {
         });
         jMenu1.add(jMenu8820i);
 
+        jMenuCutover.setIcon(oltCutoverIcon);
         jMenuCutover.setText(this.oltCutover);
         jMenuCutover.addActionListener((java.awt.event.ActionEvent evt) -> {
             jMenuCutoverActionPerformed(evt);
@@ -290,45 +306,51 @@ public class App extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
     private void jMenuG16ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuG16ActionPerformed
         OltG16 telaG16 = new OltG16(this.oltG16);
         jDesktopPane.add(telaG16);
         telaG16.setVisible(true);
     }// GEN-LAST:event_jMenuG16ActionPerformed
+
     private void jMenuG08ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenuG08ActionPerformed
         OltG08 telaG08 = new OltG08(this.oltG08);
         jDesktopPane.add(telaG08);
         telaG08.setVisible(true);
     }// GEN-LAST:event_jMenuG08ActionPerformed
+
     private void jMenu8820iActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenu8820iActionPerformed
         Olt8820 tela8820 = new Olt8820(this.olt8820);
         jDesktopPane.add(tela8820);
         tela8820.setVisible(true);
     }// GEN-LAST:event_jMenu8820iActionPerformed
+
     private void jMenuCutoverActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenu8820iActionPerformed
         OltCutover telaCutover = new OltCutover(this);
         jDesktopPane.add(telaCutover);
         telaCutover.setVisible(true);
     }// GEN-LAST:event_jMenu8820iActionPerformed
+
     private void jMenuAN5kActionPerformed(java.awt.event.ActionEvent evt) {
         OltFhtt telaAN5000 = new OltFhtt(this.oltAn5k);
         jDesktopPane.add(telaAN5000);
         telaAN5000.setVisible(true);
     }
+
     private void jMenuAN6kActionPerformed(java.awt.event.ActionEvent evt) {
         OltFhtt telaAN6000 = new OltFhtt(this.oltAn6k);
         jDesktopPane.add(telaAN6000);
         telaAN6000.setVisible(true);
     }
+
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {
         InfoFrame info = new InfoFrame();
         info.setVisible(true);
     }
+
     private void jMenuInfoActionPerformed(java.awt.event.ActionEvent evt) {
         new InfoFrame().setVisible(true);
     }
-    
-    
 
     // End of variables declaration//GEN-END:variables
 }

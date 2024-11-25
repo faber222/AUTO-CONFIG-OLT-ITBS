@@ -16,7 +16,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import engtelecom.App;
 import engtelecom.access.SSHClient;
-import engtelecom.access.SSHClientFhtt;
 import engtelecom.access.TelnetCutover;
 import engtelecom.access.TelnetFhtt;
 import engtelecom.analytics.DataAnaliser;
@@ -77,7 +76,7 @@ public class OltCutover extends javax.swing.JInternalFrame {
         private javax.swing.JPasswordField jPasswordFieldOltPasswdOrigem;
         private javax.swing.JRadioButton jRadioButtonAN6k;
         private javax.swing.JRadioButton jRadioButtonAn5k;
-        private javax.swing.JRadioButton jRadioButtonSSHDestino;
+        // private javax.swing.JRadioButton jRadioButtonSSHDestino;
         private javax.swing.JRadioButton jRadioButtonSSHOrigem;
         private javax.swing.JRadioButton jRadioButtonTELNELDestino;
         private javax.swing.JRadioButton jRadioButtonTELNETOrigem;
@@ -188,7 +187,7 @@ public class OltCutover extends javax.swing.JInternalFrame {
                 jSpinnerPortOltDestino = new javax.swing.JSpinner(this.modelPortaTelnet2);
                 jRadioButtonTELNELDestino = new javax.swing.JRadioButton();
                 jLabel12 = new javax.swing.JLabel();
-                jRadioButtonSSHDestino = new javax.swing.JRadioButton();
+                // jRadioButtonSSHDestino = new javax.swing.JRadioButton();
                 jRadioButtonAn5k = new javax.swing.JRadioButton();
                 jRadioButtonAN6k = new javax.swing.JRadioButton();
                 jLabel26 = new javax.swing.JLabel();
@@ -479,17 +478,19 @@ public class OltCutover extends javax.swing.JInternalFrame {
                 jLabel25.setText("Senha");
 
                 buttonGroup2.add(jRadioButtonTELNELDestino);
+                jRadioButtonTELNELDestino.setSelected(true);
                 jRadioButtonTELNELDestino.setText("TELNET");
                 jRadioButtonTELNELDestino.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
                 jRadioButtonTELNELDestino.setMargin(new java.awt.Insets(0, 0, 0, 0));
 
                 jLabel12.setText("Acesso:");
 
-                buttonGroup2.add(jRadioButtonSSHDestino);
-                jRadioButtonSSHDestino.setSelected(true);
-                jRadioButtonSSHDestino.setText("SSH");
-                jRadioButtonSSHDestino.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-                jRadioButtonSSHDestino.setMargin(new java.awt.Insets(0, 0, 0, 0));
+                // buttonGroup2.add(jRadioButtonSSHDestino);
+                // jRadioButtonSSHDestino.setSelected(true);
+                // jRadioButtonSSHDestino.setText("SSH");
+                // jRadioButtonSSHDestino.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,
+                // 0, 0, 0));
+                // jRadioButtonSSHDestino.setMargin(new java.awt.Insets(0, 0, 0, 0));
 
                 buttonGroup3.add(jRadioButtonAn5k);
                 jRadioButtonAn5k.setSelected(true);
@@ -571,9 +572,9 @@ public class OltCutover extends javax.swing.JInternalFrame {
                                                                                                                 .addGroup(jPanel8Layout
                                                                                                                                 .createSequentialGroup()
                                                                                                                                 .addGap(12, 12, 12)
-                                                                                                                                .addComponent(jRadioButtonSSHDestino)
-                                                                                                                                .addPreferredGap(
-                                                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                                                                // .addComponent(jRadioButtonSSHDestino)
+                                                                                                                                // .addPreferredGap(
+                                                                                                                                // javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                                                                                                 .addComponent(jRadioButtonTELNELDestino))
                                                                                                                 .addComponent(jLabel12)))
                                                                                 .addGroup(jPanel8Layout
@@ -597,7 +598,7 @@ public class OltCutover extends javax.swing.JInternalFrame {
                                                                                                 .addGroup(jPanel8Layout
                                                                                                                 .createParallelGroup(
                                                                                                                                 javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                                                                .addComponent(jRadioButtonSSHDestino)
+                                                                                                                // .addComponent(jRadioButtonSSHDestino)
                                                                                                                 .addComponent(jRadioButtonTELNELDestino)))
                                                                                 .addGroup(jPanel8Layout
                                                                                                 .createSequentialGroup()
@@ -940,46 +941,46 @@ public class OltCutover extends javax.swing.JInternalFrame {
                         if (jRadioButtonAN6k.isSelected()) {
                                 oltType = "AN6000";
                         }
-                        if (jRadioButtonTELNELDestino.isSelected()) {
-                                final TelnetFhtt tesTelnetFhtt = new TelnetFhtt(jTextFieldIpOltDestino.getText(),
-                                                (Integer) jSpinnerPortOltDestino.getValue(),
-                                                jTextFieldOltUserDestino.getText(),
-                                                new String(jPasswordFieldOltPasswdDestino.getPassword()),
-                                                oltType);
-                                if (tesTelnetFhtt.oltAccess("scriptMigracao.txt")) {
-                                        JOptionPane.showMessageDialog(null,
-                                                        "Script aplicado com sucesso!", null,
-                                                        JOptionPane.INFORMATION_MESSAGE, null);
-                                        JOptionPane.showMessageDialog(null,
-                                                        "NÃO ESQUEÇA DE VALIDAR O LOG GERADO E APLICAR AS CONFIGURAÇÕES!",
-                                                        null,
-                                                        JOptionPane.INFORMATION_MESSAGE, null);
-                                } else {
-                                        JOptionPane.showMessageDialog(null,
-                                                        "Não foi possível aplicar o script!", null,
-                                                        JOptionPane.INFORMATION_MESSAGE, null);
-                                }
-
+                        // if (jRadioButtonTELNELDestino.isSelected()) {
+                        final TelnetFhtt tesTelnetFhtt = new TelnetFhtt(jTextFieldIpOltDestino.getText(),
+                                        (Integer) jSpinnerPortOltDestino.getValue(),
+                                        jTextFieldOltUserDestino.getText(),
+                                        new String(jPasswordFieldOltPasswdDestino.getPassword()),
+                                        oltType);
+                        if (tesTelnetFhtt.oltAccess("scriptMigracao.txt")) {
+                                JOptionPane.showMessageDialog(null,
+                                                "Script aplicado com sucesso!", null,
+                                                JOptionPane.INFORMATION_MESSAGE, null);
+                                JOptionPane.showMessageDialog(null,
+                                                "NÃO ESQUEÇA DE VALIDAR O LOG GERADO E APLICAR AS CONFIGURAÇÕES!",
+                                                null,
+                                                JOptionPane.INFORMATION_MESSAGE, null);
                         } else {
-                                final SSHClientFhtt sshClient = new SSHClientFhtt(
-                                                jTextFieldIpOltDestino.getText(),
-                                                (Integer) jSpinnerPortOltDestino.getValue(),
-                                                jTextFieldOltUserDestino.getText(),
-                                                new String(jPasswordFieldOltPasswdDestino.getPassword()), oltType);
-                                if (sshClient.oltAccess("scriptMigracao.txt")) {
-                                        JOptionPane.showMessageDialog(null,
-                                                        "Script aplicado com sucesso!", null,
-                                                        JOptionPane.INFORMATION_MESSAGE, null);
-                                        JOptionPane.showMessageDialog(null,
-                                                        "NÃO ESQUEÇA DE VALIDAR O LOG GERADO E APLICAR AS CONFIGURAÇÕES!",
-                                                        null,
-                                                        JOptionPane.INFORMATION_MESSAGE, null);
-                                } else {
-                                        JOptionPane.showMessageDialog(null,
-                                                        "Não foi possível aplicar o script!", null,
-                                                        JOptionPane.INFORMATION_MESSAGE, null);
-                                }
+                                JOptionPane.showMessageDialog(null,
+                                                "Não foi possível aplicar o script!", null,
+                                                JOptionPane.INFORMATION_MESSAGE, null);
                         }
+
+                        // } else {
+                        // final SSHClientFhtt sshClient = new SSHClientFhtt(
+                        // jTextFieldIpOltDestino.getText(),
+                        // (Integer) jSpinnerPortOltDestino.getValue(),
+                        // jTextFieldOltUserDestino.getText(),
+                        // new String(jPasswordFieldOltPasswdDestino.getPassword()), oltType);
+                        // if (sshClient.oltAccess("scriptMigracao.txt")) {
+                        // JOptionPane.showMessageDialog(null,
+                        // "Script aplicado com sucesso!", null,
+                        // JOptionPane.INFORMATION_MESSAGE, null);
+                        // JOptionPane.showMessageDialog(null,
+                        // "NÃO ESQUEÇA DE VALIDAR O LOG GERADO E APLICAR AS CONFIGURAÇÕES!",
+                        // null,
+                        // JOptionPane.INFORMATION_MESSAGE, null);
+                        // } else {
+                        // JOptionPane.showMessageDialog(null,
+                        // "Não foi possível aplicar o script!", null,
+                        // JOptionPane.INFORMATION_MESSAGE, null);
+                        // }
+                        // }
 
                 } else {
                         JOptionPane.showMessageDialog(null,
