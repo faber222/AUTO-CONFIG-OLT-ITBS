@@ -188,10 +188,11 @@ public class ConfigCutoverGenerator {
                 String index = String.valueOf(count);
                 String capability = "5506-01-A1";
 
+                this.profileServMode = scriptsAN6k.configProfileServMode();
+
                 if (mode.equals("veip")) {
                     capability = "HG260";
                     // configEth = null;
-                    this.profileServMode = scriptsAN6k.configProfileServMode();
                     if (tagging.equals("TRUE")) {
                         configVeip.add(scriptsAN6k.configVeip(this.slotChassiGpon, slotPortaPon, slotCpe, vlan));
                     } else {
@@ -243,11 +244,11 @@ public class ConfigCutoverGenerator {
                 // Atualiza o valor do index com base na contagem
                 String index = String.valueOf(count);
                 String capability = "5506-01-A1";
-
+                
+                this.profileServMode = scriptsAN5k.configProfileServMode();
                 if (mode.equals("veip")) {
                     capability = "HG260";
                     // configEth = null;
-                    this.profileServMode = scriptsAN5k.configProfileServMode();
                     if (tagging.equals("TRUE")) {
                         configVeip.add(scriptsAN5k.configVeip(this.slotChassiGpon, slotPortaPon, slotCpe, index, vlan));
                     } else {
