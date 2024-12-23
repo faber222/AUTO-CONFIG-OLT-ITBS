@@ -43,7 +43,7 @@ public class DataRuleFilter {
                                                                              // (XXXX-XXXXXXXX)
 
                     // Separa o prefixo (primeiros 4 caracteres) e a parte em hexadecimal
-                    String prefix = stringHex.substring(0, 3);
+                    String prefix = stringHex.substring(0, 4);
                     String hexPart = stringHex.substring(4).toLowerCase(); // Torna os caracteres hexadecimais
                                                                            // minúsculos
 
