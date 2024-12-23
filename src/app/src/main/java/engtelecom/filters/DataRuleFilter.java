@@ -39,8 +39,17 @@ public class DataRuleFilter {
                         .compile("([A-Za-z0-9]{4}-[0-9a-fA-F]{8})\\s+line\\s+(\\d+)");
                 final Matcher hexMatcher = hexPattern.matcher(line);
                 if (hexMatcher.find()) {
-                    final String stringHex = hexMatcher.group(1).replace("-", ""); // Captura o valor do string-hex
-                                                                                   // (XXXX-XXXXXXXX)
+                    String stringHex = hexMatcher.group(1).replace("-", ""); // Captura o valor do string-hex
+                                                                             // (XXXX-XXXXXXXX)
+
+                    // Separa o prefixo (primeiros 4 caracteres) e a parte em hexadecimal
+                    String prefix = stringHex.substring(0, 3);
+                    String hexPart = stringHex.substring(4).toLowerCase(); // Torna os caracteres hexadecimais
+                                                                           // minúsculos
+
+                    // Reconstrói a string com a parte hexadecimal convertida para minúsculas
+                    stringHex = prefix + hexPart;
+
                     final int lineKey = Integer.parseInt(hexMatcher.group(2)); // Captura o valor do line como chave
 
                     // Formata o valor como "XXXX-XXXXXXXX;0/x/y"
