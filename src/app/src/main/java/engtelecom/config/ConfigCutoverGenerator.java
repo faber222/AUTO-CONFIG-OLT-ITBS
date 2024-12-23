@@ -141,12 +141,14 @@ public class ConfigCutoverGenerator {
         }
     }
 
-    private boolean  createScript() {
+    private boolean createScript() {
         final ScriptsAN5kCutover scriptsAN5k = new ScriptsAN5kCutover();
         final ScriptsAN6kCutover scriptsAN6k = new ScriptsAN6kCutover();
 
         final HashSet<String> cpe = new HashSet<>();
         Map<String, Integer> gponSnCountMap = new HashMap<>();
+        boolean hasVeip = false;
+
         if (this.oltType.equals("AN6000")) {
             this.ponAuth = null;
             for (final String each : this.vlansUplink) {
@@ -188,10 +190,9 @@ public class ConfigCutoverGenerator {
                 String index = String.valueOf(count);
                 String capability = "5506-01-A1";
 
-                this.profileServMode = scriptsAN6k.configProfileServMode();
-
                 if (mode.equals("veip")) {
                     capability = "HG260";
+                    hasVeip = true;
                     // configEth = null;
                     if (tagging.equals("TRUE")) {
                         configVeip.add(scriptsAN6k.configVeip(this.slotChassiGpon, slotPortaPon, slotCpe, vlan));
@@ -214,6 +215,10 @@ public class ConfigCutoverGenerator {
                             capability, this.slotChassiGpon, slotPortaPon, slotCpe));
                     cpe.add(gponSn);
                 }
+            }
+
+            if (hasVeip) {
+                this.profileServMode = scriptsAN6k.configProfileServMode();
             }
         } else {
             this.ponAuth = (scriptsAN5k.setPonAuth(this.slotChassiUplink, this.slotPortaUplink));
@@ -244,9 +249,9 @@ public class ConfigCutoverGenerator {
                 // Atualiza o valor do index com base na contagem
                 String index = String.valueOf(count);
                 String capability = "5506-01-A1";
-                
-                this.profileServMode = scriptsAN5k.configProfileServMode();
+
                 if (mode.equals("veip")) {
+                    hasVeip = true;
                     capability = "HG260";
                     // configEth = null;
                     if (tagging.equals("TRUE")) {
@@ -274,6 +279,9 @@ public class ConfigCutoverGenerator {
 
                     cpe.add(gponSn);
                 }
+            }
+            if (hasVeip) {
+                this.profileServMode = scriptsAN5k.configProfileServMode();
             }
         }
         if (writeScript()) {
