@@ -17,13 +17,11 @@ import engtelecom.scripts.ScriptsAN6kCutover;
 public class ConfigCutoverGenerator {
     private final ArrayList<String> data;
     private List<String> vlansUplink;
-    private final List<String> configs;
-    private List<String> scriptFinal;
-    private List<String> ponAuth;
+    private List<List<String>> ponAuth;
     private List<String> profileServMode;
 
-    private List<List<String>> configVeip;
-    private List<List<String>> configEth;
+    private final List<List<String>> configVeip;
+    private final List<List<String>> configEth;
     private final List<List<String>> configProv;
     private final List<List<String>> configUplinkVlan;
 
@@ -41,7 +39,6 @@ public class ConfigCutoverGenerator {
         this.slotChassiUplink = slotChassiUplink;
         this.slotPortaUplink = slotPortaUplink;
         this.vlansUplink = new ArrayList<>(); // Inicializa a lista vlans;
-        this.configs = new ArrayList<>();
         this.ponAuth = new ArrayList<>();
         this.profileServMode = new ArrayList<>();
         this.configVeip = new ArrayList<>();
@@ -84,9 +81,11 @@ public class ConfigCutoverGenerator {
     private boolean writeScript() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("scriptMigracao.txt"))) {
             if (this.ponAuth != null) {
-                for (final String lines : this.ponAuth) {
-                    writer.write(lines);
-                    writer.newLine();
+                for (final List<String> lines : this.ponAuth) {
+                    for (final String string : lines) {
+                        writer.write(string);
+                        writer.newLine();
+                    }
                 }
                 writer.newLine();
             }
@@ -98,15 +97,15 @@ public class ConfigCutoverGenerator {
                 }
                 writer.newLine();
             }
-            for (List<String> list : this.configUplinkVlan) {
-                for (String lines : list) {
+            for (final List<String> list : this.configUplinkVlan) {
+                for (final String lines : list) {
                     writer.write(lines);
                     writer.newLine();
                 }
             }
             writer.newLine();
 
-            for (List<String> list : this.configProv) {
+            for (final List<String> list : this.configProv) {
                 for (final String lines : list) {
                     writer.write(lines);
                     writer.newLine();
@@ -115,8 +114,8 @@ public class ConfigCutoverGenerator {
             writer.newLine();
 
             if (this.configVeip != null) {
-                for (List<String> list : this.configVeip) {
-                    for (String lines : list) {
+                for (final List<String> list : this.configVeip) {
+                    for (final String lines : list) {
                         writer.write(lines);
                         writer.newLine();
                     }
@@ -125,8 +124,8 @@ public class ConfigCutoverGenerator {
             }
 
             if (this.configEth != null) {
-                for (List<String> list : this.configEth) {
-                    for (String lines : list) {
+                for (final List<String> list : this.configEth) {
+                    for (final String lines : list) {
                         writer.write(lines);
                         writer.newLine();
                     }
@@ -146,11 +145,13 @@ public class ConfigCutoverGenerator {
         final ScriptsAN6kCutover scriptsAN6k = new ScriptsAN6kCutover();
 
         final HashSet<String> cpe = new HashSet<>();
-        Map<String, Integer> gponSnCountMap = new HashMap<>();
+        final Map<String, Integer> gponSnCountMap = new HashMap<>();
         boolean hasVeip = false;
 
         if (this.oltType.equals("AN6000")) {
             this.ponAuth = null;
+            this.profileServMode = null;
+
             for (final String each : this.vlansUplink) {
                 configUplinkVlan.add(scriptsAN6k.addVlanToUplink(each, this.slotChassiUplink, this.slotPortaUplink));
             }
@@ -187,13 +188,12 @@ public class ConfigCutoverGenerator {
                 gponSnCountMap.put(gponSn, count); // Atualiza a contagem no mapa
 
                 // Atualiza o valor do index com base na contagem
-                String index = String.valueOf(count);
+                final String index = String.valueOf(count);
                 String capability = "5506-01-A1";
 
                 if (mode.equals("veip")) {
                     capability = "HG260";
                     hasVeip = true;
-                    // configEth = null;
                     if (tagging.equals("TRUE")) {
                         configVeip.add(scriptsAN6k.configVeip(this.slotChassiGpon, slotPortaPon, slotCpe, vlan));
                     } else {
@@ -201,8 +201,6 @@ public class ConfigCutoverGenerator {
                                 scriptsAN6k.configVeip(this.slotChassiGpon, slotPortaPon, slotCpe, oldVlan));
                     }
                 } else {
-                    // configVeip = null;
-                    this.profileServMode = null;
                     final String downStreamVlan = tagging.equals("TRUE") ? "transparent" : "tag";
                     configEth.add(scriptsAN6k.configEth(
                             this.slotChassiGpon, slotPortaPon, slotCpe, port,
@@ -221,7 +219,11 @@ public class ConfigCutoverGenerator {
                 this.profileServMode = scriptsAN6k.configProfileServMode();
             }
         } else {
-            this.ponAuth = (scriptsAN5k.setPonAuth(this.slotChassiUplink, this.slotPortaUplink));
+            this.profileServMode = null;
+
+            for (int i = 1; i <= 16; i++) {
+                this.ponAuth.add(scriptsAN5k.setPonAuth(this.slotChassiGpon, i + ""));
+            }
 
             for (final String each : this.vlansUplink) {
                 configUplinkVlan.add(scriptsAN5k.addVlanToUplink(each, this.slotChassiUplink, this.slotPortaUplink));
@@ -247,13 +249,12 @@ public class ConfigCutoverGenerator {
                 gponSnCountMap.put(gponSn, count); // Atualiza a contagem no mapa
 
                 // Atualiza o valor do index com base na contagem
-                String index = String.valueOf(count);
+                final String index = String.valueOf(count);
                 String capability = "5506-01-A1";
 
                 if (mode.equals("veip")) {
                     hasVeip = true;
                     capability = "HG260";
-                    // configEth = null;
                     if (tagging.equals("TRUE")) {
                         configVeip.add(scriptsAN5k.configVeip(this.slotChassiGpon, slotPortaPon, slotCpe, index, vlan));
                     } else {
@@ -262,11 +263,7 @@ public class ConfigCutoverGenerator {
                                         oldVlan));
                     }
                 } else {
-                    // configVeip = null;
-                    this.profileServMode = null;
-                    // System.out.println(tagging);
                     final String downStreamVlan = tagging.equals("TRUE") ? "transparent" : "tag";
-                    // System.out.println("downStream: " + downStreamVlan);
                     configEth.add(scriptsAN5k.configEth(
                             this.slotChassiGpon, slotPortaPon, slotCpe, port,
                             downStreamVlan, index, vlan));
