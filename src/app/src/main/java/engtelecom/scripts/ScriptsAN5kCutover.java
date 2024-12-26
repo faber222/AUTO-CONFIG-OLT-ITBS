@@ -23,7 +23,7 @@ public class ScriptsAN5kCutover {
         public List<String> setPonAuth(final String slotGpon, final String slotPortaPon) {
                 final List<String> ponAuth = new ArrayList<>();
                 ponAuth.add("cd card");
-                ponAuth.add(String.format("set pon_auth slot %s pon %s mode phy_id", slotGpon, slotPortaPon));
+                ponAuth.add(String.format("set pon_auth slot %s pon %s mode phy_id/loid+psw", slotGpon, slotPortaPon));
                 ponAuth.add("cd ..");
                 return ponAuth;
         }
