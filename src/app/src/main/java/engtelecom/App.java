@@ -99,6 +99,7 @@ public class App extends javax.swing.JFrame {
     private ImageIcon criarIcon;
     private ImageIcon enviarIcon;
     private ImageIcon sairIcon;
+    private ImageIcon previewIcon;
 
     private String oltAn5k;
     private String oltAn6k;
@@ -165,6 +166,10 @@ public class App extends javax.swing.JFrame {
         return sairIcon;
     }
 
+    public ImageIcon getPreviewIcon() {
+        return previewIcon;
+    }
+
     private void olt() {
         // Carrega os ícones necessários para o diálogo
         final ClassLoader classLoader = OltGpon.class.getClassLoader();
@@ -189,7 +194,7 @@ public class App extends javax.swing.JFrame {
         this.criarIcon = new ImageIcon(classLoader.getResource("icons/script_code.png"));
         this.enviarIcon = new ImageIcon(classLoader.getResource("icons/server_connect.png"));
         this.sairIcon = new ImageIcon(classLoader.getResource("icons/cross.png"));
-
+        this.previewIcon = new ImageIcon(classLoader.getResource("icons/eye.png"));
     }
 
     /**
@@ -201,7 +206,7 @@ public class App extends javax.swing.JFrame {
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         olt();
-
+        
         jDesktopPane = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -217,6 +222,18 @@ public class App extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("HefForge OLT - Script tools");
         setFont(new java.awt.Font("JetBrains Mono", 0, 10)); // NOI18N
+        
+//        jDesktopPane.addComponentListener(new java.awt.event.ComponentAdapter() {
+//            @Override
+//            public void componentResized(java.awt.event.ComponentEvent evt) {
+//                // Redimensionar os JInternalFrames proporcionalmente ao tamanho do JDesktopPane
+//                for (javax.swing.JInternalFrame frame : jDesktopPane.getAllFrames()) {
+//                    frame.setSize((int) (jDesktopPane.getWidth() * 0.8), (int) (jDesktopPane.getHeight() * 0.8));
+//                    frame.setLocation((jDesktopPane.getWidth() - frame.getWidth()) / 2, 
+//                                      (jDesktopPane.getHeight() - frame.getHeight()) / 2);
+//                }
+//            }
+//        });
 
         javax.swing.GroupLayout jDesktopPaneLayout = new javax.swing.GroupLayout(jDesktopPane);
         jDesktopPane.setLayout(jDesktopPaneLayout);
@@ -332,13 +349,13 @@ public class App extends javax.swing.JFrame {
     }// GEN-LAST:event_jMenu8820iActionPerformed
 
     private void jMenuAN5kActionPerformed(java.awt.event.ActionEvent evt) {
-        OltFhtt telaAN5000 = new OltFhtt(this.oltAn5k);
+        OltFhtt telaAN5000 = new OltFhtt(this.oltAn5k, this);
         jDesktopPane.add(telaAN5000);
         telaAN5000.setVisible(true);
     }
 
     private void jMenuAN6kActionPerformed(java.awt.event.ActionEvent evt) {
-        OltFhtt telaAN6000 = new OltFhtt(this.oltAn6k);
+        OltFhtt telaAN6000 = new OltFhtt(this.oltAn6k, this);
         jDesktopPane.add(telaAN6000);
         telaAN6000.setVisible(true);
     }

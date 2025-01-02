@@ -14,10 +14,13 @@ public class OltGponFhtt extends Olt {
     private String slotUplink;
     private String vlanPppoe;
     private String vlanVeip;
+    private String vlanEth;
     private String slotPon;
     private String portaPon;
     private String slotCpe;
 
+    private String cVlanMode;
+    private String portEth;
     private String phyIdCpe;
     private String modeloCpe;
     private String userPppoe;
@@ -38,13 +41,28 @@ public class OltGponFhtt extends Olt {
     private String capaUsbNumber;
 
     private boolean isWanService;
+    private boolean isPortService;
     private boolean isOnuCapability;
 
     private String nomeArq;
     private String oltType;
 
+    private String[] boxVlanMode;
+
     public OltGponFhtt() {
 
+    }
+
+    public String getVlanEth() {
+        return vlanEth;
+    }
+
+    public String getcVlanMode() {
+        return cVlanMode;
+    }
+
+    public String getPortEth() {
+        return portEth;
     }
 
     public String getSlotPortaUplink() {
@@ -159,6 +177,14 @@ public class OltGponFhtt extends Olt {
         return oltType;
     }
 
+    public boolean isPortService() {
+        return isPortService;
+    }
+
+    public String[] getBoxVlanMode() {
+        return boxVlanMode;
+    }
+
     public boolean start(final OltFhtt oltData) {
         // Valores inteiros
         this.portaUplink = (String) oltData.getjSpinnerPortaUplink().getValue().toString();
@@ -166,14 +192,18 @@ public class OltGponFhtt extends Olt {
         this.slotPon = (String) oltData.getjSpinnerSlotPON().getValue().toString();
         this.portaPon = (String) oltData.getjSpinnerPortaPon().getValue().toString();
         this.slotCpe = (String) oltData.getjSpinnerSlotCpe().getValue().toString();
+        this.boxVlanMode = oltData.getBoxCvlanMode();
         this.oltType = oltData.getOltName();
         this.vlanPppoe = null;
         this.vlanVeip = null;
+        this.vlanEth = null;
 
         // Valores String
         this.modeloCpe = oltData.getjTextFieldModeloONU().getText();
         this.phyIdCpe = oltData.getjTextFieldPhyIdCPE().getText();
         this.nomeArq = oltData.getNomeArq();
+        this.cVlanMode = null;
+        this.portEth = null;
         this.userPppoe = null;
         this.senhaPppoe = null;
         this.ssid2 = null;
@@ -194,6 +224,7 @@ public class OltGponFhtt extends Olt {
 
         // Valores booleanos
         this.isOnuCapability = oltData.getjCheckBoxFlagONUCapability().isSelected();
+        this.isPortService = oltData.getjRadioButtonEth().isSelected();
         this.isWanService = oltData.getjRadioButtonWanService().isSelected();
 
         if (!checkPhyId(this.phyIdCpe)) {
@@ -217,6 +248,7 @@ public class OltGponFhtt extends Olt {
             this.capaUsbNumber = oltData.getCapaUsbNumber();
             printCapabilityValues();
         }
+
         if (isWanService) {
             this.vlanPppoe = (String) oltData.getjSpinnerVlanPPPOE().getValue().toString();
             this.userPppoe = oltData.getjTextFieldUserPPPOE().getText();
@@ -227,8 +259,15 @@ public class OltGponFhtt extends Olt {
             this.ssidPass5 = oltData.getjTextFieldSSIDPass5().getText();
             printPppoeAndSsidValues();
         } else {
-            this.vlanVeip = (String) oltData.getjSpinnerVlanVeip().getValue().toString();
-            printVeip();
+            if (isPortService) {
+                this.vlanEth = oltData.getjSpinnerVlanEth().getValue().toString();
+                this.portEth = oltData.getjSpinnerPortEth().getValue().toString();
+                this.cVlanMode = oltData.getjComboBoxCvlanMode().getSelectedItem().toString();
+                printEth();
+            } else {
+                this.vlanVeip = (String) oltData.getjSpinnerVlanVeip().getValue().toString();
+                printVeip();
+            }
         }
 
         final ConfigGeneratorFhtt ConfigGeneratorFhtt = new ConfigGeneratorFhtt(this);
@@ -277,6 +316,14 @@ public class OltGponFhtt extends Olt {
         System.err.println("");
         System.err.println("Dados Veip");
         System.out.println("VLAN Veip: " + this.vlanVeip);
+    }
+
+    public void printEth() {
+        System.err.println("");
+        System.err.println("Dados Eth");
+        System.out.println("VLAN eth: " + this.vlanEth);
+        System.out.println("Port eth: " + this.portEth);
+        System.out.println("Mode eth: " + this.cVlanMode);
     }
 
     public boolean checkPhyId(final String phyId) {

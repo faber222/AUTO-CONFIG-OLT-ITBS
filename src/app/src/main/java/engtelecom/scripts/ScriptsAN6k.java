@@ -94,6 +94,29 @@ public class ScriptsAN6k {
         }
 
         /**
+         * Função usada para criar o script eth bridge da CPE
+         * 
+         * @param slotGpon     Slot da placa no chassi
+         * @param slotPortaPon Porta pon onde a CPE se encontra
+         * @param slotCpe      Slot da pon onde a CPE se encontra
+         * @param port         Numero da porta eth mapeada
+         * @param mode         Modo "tag" tira a vlan, "transparent" mantem a vlan
+         * @param vlan         Vlan da eth
+         * @return Lista de strings contendo todo o script para configuração de eth
+         *         bridge
+         */
+        public List<String> configEth(final String slotGpon, final String slotPortaPon, final String slotCpe,
+                        final String port, final String mode, final String vlan) {
+                final List<String> scriptVeip = new ArrayList<>();
+                scriptVeip.add(String.format("interface pon 1/%s/%s", slotGpon, slotPortaPon));
+                scriptVeip.add(String.format("onu port vlan %s eth %s service count 1", slotCpe, port));
+                scriptVeip.add(String.format("onu port vlan %s eth %s service 1 %s priority 0 tpid 33024 vid %s",
+                                slotCpe, port, mode, vlan));
+                scriptVeip.add("exit");
+                return scriptVeip;
+        }
+
+        /**
          * Função usada para criar o script que add a vlan na uplink da olt
          * 
          * @param vlan            Vlan da uplink
