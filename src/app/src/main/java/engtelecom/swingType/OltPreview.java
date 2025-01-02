@@ -65,6 +65,7 @@ public class OltPreview extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Preview" + this.oltName);
+        setMinimumSize(new java.awt.Dimension(838, 480));
         this.setIconImage(this.oltIcon.getImage());
 
         jTextAreaPreview.setEditable(false);
