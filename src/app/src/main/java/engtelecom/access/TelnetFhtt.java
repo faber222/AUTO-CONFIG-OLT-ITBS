@@ -36,7 +36,7 @@ public class TelnetFhtt implements Runnable {
         this.oltName = oltName;
     }
 
-    public boolean  oltAccess(final String nomeArq) {
+    public boolean oltAccess(final String nomeArq) {
         try {
             // Configuração do socket e streams de entrada/saída
             socket = new Socket(host, port);
@@ -75,7 +75,7 @@ public class TelnetFhtt implements Runnable {
         } catch (final IOException exception) {
             System.err.println("Erro na entrada.");
             JOptionPane.showMessageDialog(null,
-                    "Erro na entrada.", "Aviso!",
+                    "Erro na entrada, não foi possível se conectar, verifique os dados de acesso fornecidos!", "Aviso!",
                     JOptionPane.INFORMATION_MESSAGE);
         } catch (InterruptedException e) {
             e.printStackTrace();

@@ -1268,7 +1268,7 @@ public class OltFhtt extends javax.swing.JInternalFrame implements CapabilityPro
 
 	private void jButtonEnviarActionPerformed(final java.awt.event.ActionEvent evt) {
 		if (this.fileChooserIsSelected) {
-			if (this.oltGponFhtt.checkTelnet(jTextFieldIpOlt.getText(), jFormattedTextFieldPortOlt.getText(),
+			if (this.oltGponFhtt.checkTelnet(jTextFieldIpOlt.getText(), jSpinnerPortOlt.getValue().toString(),
 					jTextFieldOltUser.getText(), jPasswordFieldOltPasswd.getPassword(),
 					this.errorIcon)) {
 				JOptionPane.showMessageDialog(null,
@@ -1280,7 +1280,7 @@ public class OltFhtt extends javax.swing.JInternalFrame implements CapabilityPro
 					@Override
 					protected Void doInBackground() throws Exception {
 						final TelnetFhtt acessoOlt = new TelnetFhtt(jTextFieldIpOlt.getText(),
-								Integer.parseInt(jFormattedTextFieldPortOlt.getText()),
+								Integer.parseInt(jSpinnerPortOlt.getValue().toString()),
 								jTextFieldOltUser.getText(),
 								new String(jPasswordFieldOltPasswd.getPassword()), getOltName());
 						acessoOlt.oltAccess(fileName);
