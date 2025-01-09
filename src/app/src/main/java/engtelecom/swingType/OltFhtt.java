@@ -415,7 +415,7 @@ public class OltFhtt extends javax.swing.JInternalFrame implements CapabilityPro
 
 	private void olt() {
 		// Carrega os ícones necessários para o diálogo
-		final ClassLoader classLoader = OltGpon.class.getClassLoader();
+		final ClassLoader classLoader = OltFhtt.class.getClassLoader();
 		this.errorIcon = new ImageIcon(classLoader.getResource("erro.png"));
 		this.successIcon = new ImageIcon(classLoader.getResource("success.png"));
 		this.oltIcon = new ImageIcon(classLoader.getResource("AN6000_15.png"));

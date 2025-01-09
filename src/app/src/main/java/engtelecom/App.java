@@ -172,7 +172,7 @@ public class App extends javax.swing.JFrame {
 
     private void olt() {
         // Carrega os ícones necessários para o diálogo
-        final ClassLoader classLoader = OltGpon.class.getClassLoader();
+        final ClassLoader classLoader = App.class.getClassLoader();
         this.olt8820Icon = new ImageIcon(classLoader.getResource("OLT_8820.png"));
         this.oltG16Icon = new ImageIcon(classLoader.getResource("OLT_G08.png"));
         this.oltG08Icon = new ImageIcon(classLoader.getResource("OLT_G08.png"));

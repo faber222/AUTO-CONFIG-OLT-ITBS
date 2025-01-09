@@ -125,7 +125,7 @@ public class OltG08 extends javax.swing.JInternalFrame {
 
         private void olt() {
                 // Carrega os ícones necessários para o diálogo
-                final ClassLoader classLoader = OltGpon.class.getClassLoader();
+                final ClassLoader classLoader = OltG08.class.getClassLoader();
                 this.errorIcon = new ImageIcon(classLoader.getResource("erro.png"));
                 this.successIcon = new ImageIcon(classLoader.getResource("success.png"));
                 this.saidaIcon = new ImageIcon(classLoader.getResource("saida.png"));

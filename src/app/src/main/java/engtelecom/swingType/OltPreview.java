@@ -31,7 +31,7 @@ public class OltPreview extends javax.swing.JFrame {
      * Creates new form OltPreview
      */
     public OltPreview(String oltName) {
-        final ClassLoader classLoader = OltGpon.class.getClassLoader();
+        final ClassLoader classLoader = OltPreview.class.getClassLoader();
         this.oltIcon = new ImageIcon(classLoader.getResource("AN6000_15.png"));
         this.oltName = oltName;
         initComponents();
