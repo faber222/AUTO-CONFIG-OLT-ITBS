@@ -99,6 +99,7 @@ public class ScriptsAN6kCutover {
                 final List<String> uplink = new ArrayList<>();
                 uplink.add(String.format("port vlan %s to %s tag 1/%s %s", vlan, vlan,
                                 slotUplink, slotPortaUplink));
+                uplink.add(String.format("port vlan %s to %s allslot", vlan, vlan));
                 return uplink;
         }
 }
