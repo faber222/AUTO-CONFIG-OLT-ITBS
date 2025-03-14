@@ -7,10 +7,10 @@ package engtelecom;
 
 import javax.swing.ImageIcon;
 
-import engtelecom.product.OltGpon;
 import engtelecom.swingType.InfoFrame;
 import engtelecom.swingType.Olt8820;
 import engtelecom.swingType.OltCutover;
+import engtelecom.swingType.OltCutover5k;
 import engtelecom.swingType.OltFhtt;
 import engtelecom.swingType.OltG08;
 import engtelecom.swingType.OltG16;
@@ -76,6 +76,8 @@ public class App extends javax.swing.JFrame {
 
     private javax.swing.JMenuItem jMenuCutover;
 
+    private javax.swing.JMenuItem jMenuCutover5k;
+
     private javax.swing.JMenuItem jMenuInfo;
 
     private ImageIcon infoIcon;
@@ -107,6 +109,7 @@ public class App extends javax.swing.JFrame {
     private String oltG08;
     private String olt8820;
     private String oltCutover;
+    private String oltCutover5k;
 
     /**
      * Creates new form OltGponMenu
@@ -118,6 +121,7 @@ public class App extends javax.swing.JFrame {
         this.oltG16 = "G16";
         this.oltG08 = "G08";
         this.oltCutover = "OLT-CUTOVER";
+        this.oltCutover5k = "OLT-CUTOVER-5k";
         initComponents();
         this.setIconImage(this.mainIcon.getImage());
     }
@@ -216,6 +220,7 @@ public class App extends javax.swing.JFrame {
         jMenuG08 = new javax.swing.JMenuItem();
         jMenu8820i = new javax.swing.JMenuItem();
         jMenuCutover = new javax.swing.JMenuItem();
+        jMenuCutover5k = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuInfo = new javax.swing.JMenuItem();
 
@@ -293,6 +298,13 @@ public class App extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuCutover);
 
+        jMenuCutover5k.setIcon(oltCutoverIcon);
+        jMenuCutover5k.setText(this.oltCutover5k);
+        jMenuCutover5k.addActionListener((java.awt.event.ActionEvent evt) -> {
+            jMenuCutover5kActionPerformed(evt);
+        });
+        jMenu1.add(jMenuCutover5k);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setIcon(infoIcon); // NOI18N
@@ -346,6 +358,12 @@ public class App extends javax.swing.JFrame {
         OltCutover telaCutover = new OltCutover(this);
         jDesktopPane.add(telaCutover);
         telaCutover.setVisible(true);
+    }// GEN-LAST:event_jMenu8820iActionPerformed
+
+    private void jMenuCutover5kActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jMenu8820iActionPerformed
+        OltCutover5k telaCutover2 = new OltCutover5k(this);
+        jDesktopPane.add(telaCutover2);
+        telaCutover2.setVisible(true);
     }// GEN-LAST:event_jMenu8820iActionPerformed
 
     private void jMenuAN5kActionPerformed(java.awt.event.ActionEvent evt) {
