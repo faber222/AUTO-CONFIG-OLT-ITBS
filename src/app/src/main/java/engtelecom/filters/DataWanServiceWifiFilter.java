@@ -9,45 +9,66 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DataWanServiceWifiFilter {
-    private String path;
+    private final String path;
+    private final List<String[]> wifiConfigs;
 
-    public DataWanServiceWifiFilter(String path) {
+    public DataWanServiceWifiFilter(final String path) {
         this.path = path;
+        this.wifiConfigs = new ArrayList<>();
     }
 
-    public void start() {
-        List<String[]> wifiConfigs = new ArrayList<>();
+    public List<String[]> getWifiConfigs() {
+        return wifiConfigs;
+    }
 
+    /**
+     * [0]-Slot 
+     * [1]-Pon 
+     * [2]-ONU 
+     * [3]-Número do serviço 
+     * [4]-Índice do Wi-Fi 
+     * [5]-Enable/Disable 
+     * [6]-Nome do SSID 
+     * [7]-SSID oculto ou não 
+     * [8]-Tipo de autenticação (WPA, WPA2, etc.) 
+     * [9]-Tipo de criptografia 
+     * [10]-Senha do Wi-Fi 
+     * [11]-Intervalo de autenticação 
+     * [12]-IP do Radius 
+     * [13]-Porta do Radius 
+     * [14]-Senha do Radius 
+     */
+    public void start() {
         try (BufferedReader br = new BufferedReader(new FileReader(this.path))) {
             String line;
 
             while ((line = br.readLine()) != null) {
                 // Regex para capturar configurações do wifi_serv_wlan
-                Pattern wlanPattern = Pattern.compile(
+                final Pattern wlanPattern = Pattern.compile(
                         "set wifi_serv_wlan slot (\\d+) pon (\\d+) onu (\\d+) serv_no (\\d+) index (\\d+) " +
                                 "ssid (\\S+) ([^\\s]+) hide (\\S+) authmode (\\S+) encrypt_type (\\S+) wpakey (\\S+) " +
                                 "interval (\\d+) radius_serv ipv4 (\\S+) port (\\d+) pswd (\\S+)");
 
-                Matcher wlanMatcher = wlanPattern.matcher(line);
+                final Matcher wlanMatcher = wlanPattern.matcher(line);
 
                 if (wlanMatcher.find()) {
-                    String slot = wlanMatcher.group(1); // Slot
-                    String pon = wlanMatcher.group(2); // Pon
-                    String onu = wlanMatcher.group(3); // ONU
-                    String servNo = wlanMatcher.group(4); // Número do serviço
-                    String index = wlanMatcher.group(5); // Índice do Wi-Fi
-                    String ssidStatus = wlanMatcher.group(6); // Enable/Disable
-                    String ssid = wlanMatcher.group(7); // Nome do SSID
-                    String hideStatus = wlanMatcher.group(8); // SSID oculto ou não
-                    String authmode = wlanMatcher.group(9); // Tipo de autenticação
-                    String encryptType = wlanMatcher.group(10); // Tipo de criptografia
-                    String wpakey = wlanMatcher.group(11).equals("null") ? "N/A" : wlanMatcher.group(11); // Senha do
-                                                                                                          // Wi-Fi
-                    String interval = wlanMatcher.group(12); // Intervalo de autenticação Radius
-                    String radiusIP = wlanMatcher.group(13); // IP do Radius
-                    String radiusPort = wlanMatcher.group(14); // Porta do Radius
-                    String radiusPswd = wlanMatcher.group(15).equals("null") ? "N/A" : wlanMatcher.group(15);// Senha do
-                                                                                                             // Radius
+                    final String slot = wlanMatcher.group(1); // Slot
+                    final String pon = wlanMatcher.group(2); // Pon
+                    final String onu = wlanMatcher.group(3); // ONU
+                    final String servNo = wlanMatcher.group(4); // Número do serviço
+                    final String index = wlanMatcher.group(5); // Índice do Wi-Fi
+                    final String ssidStatus = wlanMatcher.group(6); // Enable/Disable
+                    final String ssid = wlanMatcher.group(7); // Nome do SSID
+                    final String hideStatus = wlanMatcher.group(8); // SSID oculto ou não
+                    final String authmode = wlanMatcher.group(9); // Tipo de autenticação
+                    final String encryptType = wlanMatcher.group(10); // Tipo de criptografia
+                    // Senha do Wi-Fi
+                    final String wpakey = wlanMatcher.group(11).equals("null") ? "N/A" : wlanMatcher.group(11);
+                    final String interval = wlanMatcher.group(12); // Intervalo de autenticação Radius (NÃO USADO)
+                    final String radiusIP = wlanMatcher.group(13); // IP do Radius
+                    final String radiusPort = wlanMatcher.group(14); // Porta do Radius
+                    // Senha do Radius
+                    final String radiusPswd = wlanMatcher.group(15).equals("null") ? "N/A" : wlanMatcher.group(15);
 
                     wifiConfigs.add(new String[] {
                             slot, pon, onu, servNo, index, ssidStatus, ssid, hideStatus, authmode,
@@ -74,11 +95,11 @@ public class DataWanServiceWifiFilter {
 
             // Exibir os resultados (opcional, apenas para conferência)
             System.out.println("Configurações Wi-Fi:");
-            for (String[] config : wifiConfigs) {
+            for (final String[] config : wifiConfigs) {
                 System.out.println(Arrays.toString(config));
             }
 
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
