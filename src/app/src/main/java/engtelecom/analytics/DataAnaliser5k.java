@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import engtelecom.filters.DataVlanUpFilter;
+import engtelecom.filters.DataWanServicePPPFilter;
+import engtelecom.filters.DataWanServiceWifiFilter;
 import engtelecom.filters.DataWhitelistFilter;
 
 public class DataAnaliser5k {
@@ -26,17 +28,26 @@ public class DataAnaliser5k {
     public void start() {
         System.out.println(this.fileName);
 
-        // Fazer a coleta da vlan
+        // Faz a coleta da vlan
         DataVlanUpFilter dataVlanUpFilter = new DataVlanUpFilter(fileName);
-        dataVlanUpFilter.start();
+        // dataVlanUpFilter.start();
 
-        // Fazer a coleta do whitelist
+        // Faz a coleta do whitelist
         DataWhitelistFilter dataWhitelistFilter = new DataWhitelistFilter(fileName);
-        dataWhitelistFilter.start();
+        // dataWhitelistFilter.start();
+
+        // Faz a coleta da config do wan-service
+        // Faz a coleta do pppoe
+        DataWanServicePPPFilter dataWanServiceFilter = new DataWanServicePPPFilter(fileName);
+        // dataWanServiceFilter.start();
+
+        // Fazer a coleta do wifi com senha
+        // Fazer a coleta do wifi com radius
+        DataWanServiceWifiFilter dataWanServiceWifiFilter = new DataWanServiceWifiFilter(fileName);
+        dataWanServiceWifiFilter.start();
 
         // TO-DO
         // Fazer a coleta do veip
-        // Fazer a coleta do wanService{ Fazer a coleta do wifi e pppoe }
         // Fazer a coleta do portEth
         // Fazer a coleta do ngn
         // Fazer a coleta do qinq
