@@ -11,30 +11,32 @@ import java.util.regex.Pattern;
 public class DataWanServicePPPFilter {
     private final String path;
 
-    private List<String[]> wanConfigs;
+    private final List<String[]> wanConfigs;
 
     public DataWanServicePPPFilter(final String path) {
         this.path = path;
         this.wanConfigs = new ArrayList<>();
     }
 
+    /**
+     * [0] slot
+     * [1] pon
+     * [2] onu
+     * [3] index
+     * [4] Mode
+     * [5] Tipo (r/b)
+     * [6] VLAN
+     * [7] NAT (en/dis)
+     * [8] PPPoE (pppoe/null)
+     * [9] Usuário PPPoE (se existir)
+     * [10] Senha PPPoE (se existir)
+     * 
+     * @return ArrayList contendo todos os dados de wanService
+     */
     public List<String[]> getWanConfigs() {
         return wanConfigs;
     }
 
-    /**
-     * [0]; slot
-     * [1]; pon
-     * [2]; onu
-     * [3]; Índice (ind)
-     * [4]; Mode
-     * [5]; Tipo (r/b)
-     * [6]; VLAN
-     * [7]; NAT (en/dis)
-     * [8]; PPPoE (pppoe/null)
-     * [9]; Usuário PPPoE (se existir)
-     * [10]; Senha PPPoE (se existir)
-     */
     public void start() {
         try (BufferedReader br = new BufferedReader(new FileReader(this.path))) {
             String line;
@@ -60,17 +62,17 @@ public class DataWanServicePPPFilter {
                     final String pass = matcher.group(11) != null ? matcher.group(11) : "N/A"; // Senha PPPoE (se
                                                                                                // existir)
 
-                    // [0]; // slot
-                    // [1]; // pon
-                    // [2]; // onu
-                    // [3]; // Índice (ind)
-                    // [4]; // Mode
-                    // [5]; // Tipo (r/b)
-                    // [6]; // VLAN
-                    // [7]; // NAT (en/dis)
-                    // [8]; // PPPoE (pppoe/null)
-                    // [9]; // Usuário PPPoE (se existir)
-                    // [10]; // Senha PPPoE (se existir)
+                    // [0] slot
+                    // [1] pon
+                    // [2] onu
+                    // [3] Índice (ind)
+                    // [4] Mode
+                    // [5] Tipo (r/b)
+                    // [6] VLAN
+                    // [7] NAT (en/dis)
+                    // [8] PPPoE (pppoe/null)
+                    // [9] Usuário PPPoE (se existir)
+                    // [10] Senha PPPoE (se existir)
 
                     // Adiciona os dados como array de strings na lista
                     wanConfigs.add(new String[] { slot, pon, onu, ind, mode, tipo, vlan, nat, pppoe, user, pass });

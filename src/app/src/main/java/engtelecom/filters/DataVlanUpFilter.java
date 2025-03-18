@@ -13,10 +13,10 @@ public class DataVlanUpFilter {
     private final String path;
 
     // Map para armazenar VLANs de uplink: (slot-port) -> [vlans]
-    private Map<String, List<Integer>> uplinkVlans;
+    private final Map<String, List<Integer>> uplinkVlans;
 
     // Map para armazenar VLANs de serviço: (id) -> [nome, tipo, vlans]
-    private Map<Integer, String[]> serviceVlans;
+    private final Map<Integer, String[]> serviceVlans;
 
     public DataVlanUpFilter(final String path) {
         this.path = path;
@@ -24,20 +24,20 @@ public class DataVlanUpFilter {
         this.serviceVlans = new HashMap<>();
     }
 
+    /**
+     * Map para armazenar VLANs de uplink: (slot-port) -> [vlans]
+     * 
+     */
     public Map<String, List<Integer>> getUplinkVlans() {
         return uplinkVlans;
     }
 
-    public void setUplinkVlans(final Map<String, List<Integer>> uplinkVlans) {
-        this.uplinkVlans = uplinkVlans;
-    }
-
+    /**
+     * // Map para armazenar VLANs de serviço: (id) -> [nome, tipo, vlans]
+     * 
+     */
     public Map<Integer, String[]> getServiceVlans() {
         return serviceVlans;
-    }
-
-    public void setServiceVlans(final Map<Integer, String[]> serviceVlans) {
-        this.serviceVlans = serviceVlans;
     }
 
     public void start() {
@@ -69,7 +69,7 @@ public class DataVlanUpFilter {
                 final Matcher serviceCreateMatcher = serviceCreatePattern.matcher(line);
 
                 if (serviceCreateMatcher.find()) {
-                    currentServiceVlan = Integer.parseInt(serviceCreateMatcher.group(1));
+                    currentServiceVlan = Integer.valueOf(serviceCreateMatcher.group(1));
                     serviceVlans.put(currentServiceVlan, new String[] { "", "", "" });
                     continue;
                 }
@@ -121,5 +121,9 @@ public class DataVlanUpFilter {
         } catch (final Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public String getPath() {
+        return path;
     }
 }

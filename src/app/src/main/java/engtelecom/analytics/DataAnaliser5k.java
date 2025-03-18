@@ -1,21 +1,22 @@
 package engtelecom.analytics;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import engtelecom.filters.DataPortEthFilter;
+import engtelecom.filters.DataVeipFilter;
 import engtelecom.filters.DataVlanUpFilter;
 import engtelecom.filters.DataWanServicePPPFilter;
 import engtelecom.filters.DataWanServiceWifiFilter;
 import engtelecom.filters.DataWhitelistFilter;
 
 public class DataAnaliser5k {
-    private List<List<String>> configUplinkVlan;
-    private List<List<String>> whitelist;
-    private List<List<String>> veip;
-    private List<List<String>> wanService;
-    private List<List<String>> portEth;
-    private List<List<String>> ngn;
-    private List<List<String>> qinq;
+    // private List<List<String>> configUplinkVlan;
+    // private List<List<String>> whitelist;
+    // private List<List<String>> veip;
+    // private List<List<String>> wanService;
+    // private List<List<String>> portEth;
+    // private List<List<String>> ngn;
+    // private List<List<String>> qinq;
 
     private String fileName;
     private ArrayList<String> data;
@@ -44,11 +45,17 @@ public class DataAnaliser5k {
         // Fazer a coleta do wifi com senha
         // Fazer a coleta do wifi com radius
         DataWanServiceWifiFilter dataWanServiceWifiFilter = new DataWanServiceWifiFilter(fileName);
-        dataWanServiceWifiFilter.start();
+        // dataWanServiceWifiFilter.start();
+
+        // Fazer a coleta do veip
+        DataVeipFilter dataVeipFilter = new DataVeipFilter(fileName);
+        // dataVeipFilter.start();
+
+        // Fazer a coleta do portEth
+        DataPortEthFilter dataPortEthFilter = new DataPortEthFilter(fileName);
+        // dataPortEthFilter.start();
 
         // TO-DO
-        // Fazer a coleta do veip
-        // Fazer a coleta do portEth
         // Fazer a coleta do ngn
         // Fazer a coleta do qinq
 

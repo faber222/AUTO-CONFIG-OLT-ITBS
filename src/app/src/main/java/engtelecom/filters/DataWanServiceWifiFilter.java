@@ -17,27 +17,29 @@ public class DataWanServiceWifiFilter {
         this.wifiConfigs = new ArrayList<>();
     }
 
+    /**
+     * [0] Slot
+     * [1] Pon
+     * [2] ONU
+     * [3] Index
+     * [4] Índice do Wi-Fi (1-2)
+     * [5] Enable/Disable
+     * [6] Nome do SSID
+     * [7] SSID oculto ou não
+     * [8] Tipo de autenticação (WPA, WPA2, etc.)
+     * [9] Tipo de criptografia
+     * [10] Senha do Wi-Fi
+     * [11] Intervalo de autenticação
+     * [12] IP do Radius
+     * [13] Porta do Radius
+     * [14] Senha do Radius
+     *
+     * @return Retorna um arrayList contendo todos os dados de configuração de wifi
+     */
     public List<String[]> getWifiConfigs() {
         return wifiConfigs;
     }
 
-    /**
-     * [0]-Slot 
-     * [1]-Pon 
-     * [2]-ONU 
-     * [3]-Número do serviço 
-     * [4]-Índice do Wi-Fi 
-     * [5]-Enable/Disable 
-     * [6]-Nome do SSID 
-     * [7]-SSID oculto ou não 
-     * [8]-Tipo de autenticação (WPA, WPA2, etc.) 
-     * [9]-Tipo de criptografia 
-     * [10]-Senha do Wi-Fi 
-     * [11]-Intervalo de autenticação 
-     * [12]-IP do Radius 
-     * [13]-Porta do Radius 
-     * [14]-Senha do Radius 
-     */
     public void start() {
         try (BufferedReader br = new BufferedReader(new FileReader(this.path))) {
             String line;
@@ -75,25 +77,23 @@ public class DataWanServiceWifiFilter {
                             encryptType, wpakey, radiusIP, radiusPort, radiusPswd
                     });
                 }
-                // [0]; // Slot
-                // [1]; // Pon
-                // [2]; // ONU
-                // [3]; // Número do serviço
-                // [4]; // Índice do Wi-Fi
-                // [5]; // Enable/Disable
-                // [6]; // Nome do SSID
-                // [7]; // SSID oculto ou não
-                // [8]; // Tipo de autenticação (WPA, WPA2, etc.)
-                // [9]; // Tipo de criptografia
-                // [10]; // Senha do Wi-Fi
-                // [11]; // Intervalo de autenticação
-                // [12]; // IP do Radius
-                // [13]; // Porta do Radius
-                // [14]; // Senha do Radius
-
             }
+            // [0] Slot
+            // [1] Pon
+            // [2] ONU
+            // [3] Número do serviço
+            // [4] Índice do Wi-Fi
+            // [5] Enable/Disable
+            // [6] Nome do SSID
+            // [7] SSID oculto ou não
+            // [8] Tipo de autenticação (WPA, WPA2, etc.)
+            // [9] Tipo de criptografia
+            // [10] Senha do Wi-Fi
+            // [11] Intervalo de autenticação
+            // [12] IP do Radius
+            // [13] Porta do Radius
+            // [14] Senha do Radius
 
-            // Exibir os resultados (opcional, apenas para conferência)
             System.out.println("Configurações Wi-Fi:");
             for (final String[] config : wifiConfigs) {
                 System.out.println(Arrays.toString(config));

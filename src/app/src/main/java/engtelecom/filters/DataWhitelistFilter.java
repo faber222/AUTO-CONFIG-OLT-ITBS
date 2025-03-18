@@ -12,8 +12,8 @@ public class DataWhitelistFilter {
     private final String path;
 
     // Listas para armazenar os dados processados
-    private List<String[]> whitelist;
-    private List<String[]> authoList;
+    private final List<String[]> whitelist;
+    private final List<String[]> authoList;
 
     public DataWhitelistFilter(final String path) {
         this.path = path;
@@ -21,20 +21,30 @@ public class DataWhitelistFilter {
         this.authoList = new ArrayList<>();
     }
 
+    /**
+     * [0] phy addr
+     * [1] slot
+     * [2] pon
+     * [3] onu
+     * [4] type
+     * 
+     * @return ArrayList contendo os dados do whitelist
+     */
     public List<String[]> getWhitelist() {
         return whitelist;
     }
 
-    public void setWhitelist(final List<String[]> whitelist) {
-        this.whitelist = whitelist;
-    }
-
+    /**
+     * [0] phy addr
+     * [1] slot
+     * [2] pon
+     * [3] onu
+     * [4] type
+     * 
+     * @return ArrayList contendo os dados do auth
+     */
     public List<String[]> getAuthoList() {
         return authoList;
-    }
-
-    public void setAuthoList(final List<String[]> authoList) {
-        this.authoList = authoList;
     }
 
     public void start() {
@@ -76,7 +86,6 @@ public class DataWhitelistFilter {
                 }
             }
 
-            // Exibir os resultados (opcional, apenas para verificação)
             System.out.println("Whitelist:");
             for (final String[] entry : whitelist) {
                 System.out.println(Arrays.toString(entry));
