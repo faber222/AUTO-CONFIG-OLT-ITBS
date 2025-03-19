@@ -47,6 +47,7 @@ public class DataWhitelistFilter {
         return authoList;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public void start() {
         try (BufferedReader br = new BufferedReader(new FileReader(this.path))) {
             String line;

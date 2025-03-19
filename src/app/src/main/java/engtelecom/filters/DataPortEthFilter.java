@@ -33,6 +33,7 @@ public class DataPortEthFilter {
         return ethConfigs;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public void start() {
 
         try (BufferedReader br = new BufferedReader(new FileReader(this.path))) {

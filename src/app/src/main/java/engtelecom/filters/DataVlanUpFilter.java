@@ -40,10 +40,11 @@ public class DataVlanUpFilter {
         return serviceVlans;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public void start() {
         try (BufferedReader br = new BufferedReader(new FileReader(this.path))) {
             String line;
-            Integer currentServiceVlan = null;
+            Integer currentServiceVlan;
 
             while ((line = br.readLine()) != null) {
                 // Regex para capturar VLANs de uplink
