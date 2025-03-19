@@ -81,10 +81,10 @@ public class DataPortEthFilter {
             // [5] VLAN Mode (tag ou tra)
             // [6] VLAN utilizada
 
-            System.out.println("Configurações de Ethernet:");
-            for (final String[] config : ethConfigs) {
-                System.out.println(Arrays.toString(config));
-            }
+            // System.out.println("Configurações de Ethernet:");
+            // for (final String[] config : ethConfigs) {
+            //     System.out.println(Arrays.toString(config));
+            // }
 
         } catch (final Exception e) {
             e.printStackTrace();

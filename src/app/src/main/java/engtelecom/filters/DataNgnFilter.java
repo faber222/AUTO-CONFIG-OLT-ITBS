@@ -3,7 +3,6 @@ package engtelecom.filters;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -244,25 +243,25 @@ public class DataNgnFilter {
                 }
             }
 
-            System.out.println("NGN Interface Config:");
-            ngnInterfaceConfigs.forEach(config -> System.out.println(Arrays.toString(config)));
+            // System.out.println("NGN Interface Config:");
+            // ngnInterfaceConfigs.forEach(config -> System.out.println(Arrays.toString(config)));
 
-            System.out.println("\nNGN User Config:");
-            ngnUserConfigs.forEach(config -> System.out.println(Arrays.toString(config)));
+            // System.out.println("\nNGN User Config:");
+            // ngnUserConfigs.forEach(config -> System.out.println(Arrays.toString(config)));
 
-            System.out.println("\nNGN Keepalive Config:");
-            ngnKeepaliveConfigs.forEach(config -> System.out.println(Arrays.toString(config)));
+            // System.out.println("\nNGN Keepalive Config:");
+            // ngnKeepaliveConfigs.forEach(config -> System.out.println(Arrays.toString(config)));
 
-            System.out.println("\nNGN Reg Para Config:");
-            ngnRegParaConfigs.forEach(config -> System.out.println(Arrays.toString(config)));
+            // System.out.println("\nNGN Reg Para Config:");
+            // ngnRegParaConfigs.forEach(config -> System.out.println(Arrays.toString(config)));
 
-            System.out.println("\nNGN Voice Activation Type: " + ngnVoiceActivation);
+            // System.out.println("\nNGN Voice Activation Type: " + ngnVoiceActivation);
 
-            System.out.println("\nNGN Voice Service Config:");
-            ngnVoiceServiceConfigs.forEach(config -> System.out.println(Arrays.toString(config)));
+            // System.out.println("\nNGN Voice Service Config:");
+            // ngnVoiceServiceConfigs.forEach(config -> System.out.println(Arrays.toString(config)));
 
-            System.out.println("\nNGN Private Subnet Config:");
-            ngnPrivateSubnetConfigs.forEach(config -> System.out.println(Arrays.toString(config)));
+            // System.out.println("\nNGN Private Subnet Config:");
+            // ngnPrivateSubnetConfigs.forEach(config -> System.out.println(Arrays.toString(config)));
 
         } catch (Exception e) {
             e.printStackTrace();

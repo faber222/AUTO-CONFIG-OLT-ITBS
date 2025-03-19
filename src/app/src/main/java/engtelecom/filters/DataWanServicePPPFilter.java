@@ -3,7 +3,6 @@ package engtelecom.filters;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -80,11 +79,11 @@ public class DataWanServicePPPFilter {
                 }
             }
 
-            // Exibir os resultados (opcional, apenas para conferência)
-            System.out.println("Configurações WAN:");
-            for (final String[] config : wanConfigs) {
-                System.out.println(Arrays.toString(config));
-            }
+            // // Exibir os resultados (opcional, apenas para conferência)
+            // System.out.println("Configurações WAN:");
+            // for (final String[] config : wanConfigs) {
+            //     System.out.println(Arrays.toString(config));
+            // }
 
         } catch (final Exception e) {
             e.printStackTrace();

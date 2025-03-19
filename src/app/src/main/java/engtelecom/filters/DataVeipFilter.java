@@ -99,10 +99,10 @@ public class DataVeipFilter {
             // [5] VLAN usada
             // [6] Perfil associado
 
-            System.out.println("\nConfigurações veip:");
-            for (final String[] config : veipConfigs) {
-                System.out.println(Arrays.toString(config));
-            }
+            // System.out.println("\nConfigurações veip:");
+            // for (final String[] config : veipConfigs) {
+            //     System.out.println(Arrays.toString(config));
+            // }
 
         } catch (final Exception e) {
             e.printStackTrace();

@@ -3,7 +3,6 @@ package engtelecom.filters;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -87,15 +86,15 @@ public class DataWhitelistFilter {
                 }
             }
 
-            System.out.println("Whitelist:");
-            for (final String[] entry : whitelist) {
-                System.out.println(Arrays.toString(entry));
-            }
+            // System.out.println("Whitelist:");
+            // for (final String[] entry : whitelist) {
+            //     System.out.println(Arrays.toString(entry));
+            // }
 
-            System.out.println("\nAutorização:");
-            for (final String[] entry : authoList) {
-                System.out.println(Arrays.toString(entry));
-            }
+            // System.out.println("\nAutorização:");
+            // for (final String[] entry : authoList) {
+            //     System.out.println(Arrays.toString(entry));
+            // }
 
         } catch (final Exception e) {
             e.printStackTrace();
