@@ -40,6 +40,7 @@ public class DataWanServiceWifiFilter {
         return wifiConfigs;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public void start() {
         try (BufferedReader br = new BufferedReader(new FileReader(this.path))) {
             String line;
@@ -66,6 +67,8 @@ public class DataWanServiceWifiFilter {
                     final String encryptType = wlanMatcher.group(10); // Tipo de criptografia
                     // Senha do Wi-Fi
                     final String wpakey = wlanMatcher.group(11).equals("null") ? "N/A" : wlanMatcher.group(11);
+                    
+                    @SuppressWarnings("unused")
                     final String interval = wlanMatcher.group(12); // Intervalo de autenticação Radius (NÃO USADO)
                     final String radiusIP = wlanMatcher.group(13); // IP do Radius
                     final String radiusPort = wlanMatcher.group(14); // Porta do Radius
