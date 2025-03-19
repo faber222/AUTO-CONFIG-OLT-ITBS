@@ -3,128 +3,138 @@ package engtelecom.filters;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DataVlanUpFilter {
     private final String path;
-
-    // Map para armazenar VLANs de uplink: (slot-port) -> [vlans]
-    private final Map<String, List<Integer>> uplinkVlans;
-
-    // Map para armazenar VLANs de serviço: (id) -> [nome, tipo, vlans]
-    private final Map<Integer, String[]> serviceVlans;
+    private final List<String[]> uplinkVlans;
+    private final List<String[]> serviceVlans;
 
     public DataVlanUpFilter(final String path) {
         this.path = path;
-        this.uplinkVlans = new HashMap<>();
-        this.serviceVlans = new HashMap<>();
+        this.uplinkVlans = new ArrayList<>();
+        this.serviceVlans = new ArrayList<>();
     }
 
     /**
-     * Map para armazenar VLANs de uplink: (slot-port) -> [vlans]
+     * [0] Slot
+     * [1] Porta
+     * [2] VLAN inicial
+     * [3] VLAN final
      * 
+     * @return
      */
-    public Map<String, List<Integer>> getUplinkVlans() {
+    public List<String[]> getUplinkVlans() {
         return uplinkVlans;
     }
 
     /**
-     * // Map para armazenar VLANs de serviço: (id) -> [nome, tipo, vlans]
+     * [0] ID da VLAN de serviço
+     * [1] Nome do serviço
+     * [2] Tipo de serviço
+     * [3] VLAN inicial
+     * [4] VLAN final
      * 
+     * @return
      */
-    public Map<Integer, String[]> getServiceVlans() {
+    public List<String[]> getServiceVlans() {
         return serviceVlans;
     }
 
-    @SuppressWarnings("CallToPrintStackTrace")
     public void start() {
         try (BufferedReader br = new BufferedReader(new FileReader(this.path))) {
             String line;
-            Integer currentServiceVlan;
+            String currentServiceId = "", currentServiceName = "", currentServiceType = "";
+            String currentVlanBegin = "", currentVlanEnd = "";
 
             while ((line = br.readLine()) != null) {
                 // Regex para capturar VLANs de uplink
-                final Pattern uplinkPattern = Pattern.compile(
+                Pattern uplinkPattern = Pattern.compile(
                         "add vlan vlan_begin (\\d+) vlan_end (\\d+) tag uplink slot (\\d+) port (\\d+)");
-                final Matcher uplinkMatcher = uplinkPattern.matcher(line);
+                Matcher uplinkMatcher = uplinkPattern.matcher(line);
 
                 if (uplinkMatcher.find()) {
-                    final int vlanStart = Integer.parseInt(uplinkMatcher.group(1));
-                    final int vlanEnd = Integer.parseInt(uplinkMatcher.group(2));
-                    final String slotPort = uplinkMatcher.group(3) + "-" + uplinkMatcher.group(4);
-
-                    // Adiciona VLANs ao slot-port correspondente
-                    uplinkVlans.putIfAbsent(slotPort, new ArrayList<>());
-                    for (int vlan = vlanStart; vlan <= vlanEnd; vlan++) {
-                        uplinkVlans.get(slotPort).add(vlan);
-                    }
+                    String vlanBegin = uplinkMatcher.group(1); // Slot
+                    String vlanEnd = uplinkMatcher.group(2); // Porta
+                    String slot = uplinkMatcher.group(3); // VLAN inicial
+                    String port = uplinkMatcher.group(4); // VLAN final
+ 
+                    uplinkVlans.add(new String[] { slot, port, vlanBegin, vlanEnd });
                     continue;
                 }
 
                 // Regex para capturar criação de VLANs de serviço
-                final Pattern serviceCreatePattern = Pattern.compile("create service_vlan (\\d+)");
-                final Matcher serviceCreateMatcher = serviceCreatePattern.matcher(line);
+                Pattern serviceCreatePattern = Pattern.compile("create service_vlan (\\d+)");
+                Matcher serviceCreateMatcher = serviceCreatePattern.matcher(line);
 
                 if (serviceCreateMatcher.find()) {
-                    currentServiceVlan = Integer.valueOf(serviceCreateMatcher.group(1));
-                    serviceVlans.put(currentServiceVlan, new String[] { "", "", "" });
+                    // Se já temos um serviço VLAN anterior, adicionamos ele na lista
+                    if (!currentServiceId.isEmpty()) {
+                        serviceVlans.add(new String[] { currentServiceId, currentServiceName, currentServiceType,
+                                currentVlanBegin, currentVlanEnd });
+                    }
+
+                    // Inicia nova VLAN de serviço
+                    currentServiceId = serviceCreateMatcher.group(1); // ID da VLAN de serviço
+                    currentServiceName = "";
+                    currentServiceType = "";
+                    currentVlanBegin = "";
+                    currentVlanEnd = "";
                     continue;
                 }
 
                 // Regex para capturar nome e tipo de VLAN de serviço
-                final Pattern serviceNameTypePattern = Pattern.compile("set service_vlan (\\d+) (\\S+) type (\\S+)");
-                final Matcher serviceNameTypeMatcher = serviceNameTypePattern.matcher(line);
+                Pattern serviceNameTypePattern = Pattern.compile("set service_vlan (\\d+) (\\S+) type (\\S+)");
+                Matcher serviceNameTypeMatcher = serviceNameTypePattern.matcher(line);
 
-                if (serviceNameTypeMatcher.find()) {
-                    final int vlanId = Integer.parseInt(serviceNameTypeMatcher.group(1));
-                    final String name = serviceNameTypeMatcher.group(2);
-                    final String type = serviceNameTypeMatcher.group(3);
-
-                    if (serviceVlans.containsKey(vlanId)) {
-                        serviceVlans.get(vlanId)[0] = name;
-                        serviceVlans.get(vlanId)[1] = type;
-                    }
+                if (serviceNameTypeMatcher.find() && serviceNameTypeMatcher.group(1).equals(currentServiceId)) {
+                    currentServiceName = serviceNameTypeMatcher.group(2); // Nome do serviço
+                    currentServiceType = serviceNameTypeMatcher.group(3); // Tipo de serviço
                     continue;
                 }
 
                 // Regex para capturar VLANs associadas a uma VLAN de serviço
-                final Pattern serviceVlanPattern = Pattern
+                Pattern serviceVlanPattern = Pattern
                         .compile("set service_vlan (\\d+) vlan_begin (\\d+) vlan_end (\\d+)");
-                final Matcher serviceVlanMatcher = serviceVlanPattern.matcher(line);
+                Matcher serviceVlanMatcher = serviceVlanPattern.matcher(line);
 
-                if (serviceVlanMatcher.find()) {
-                    final int vlanId = Integer.parseInt(serviceVlanMatcher.group(1));
-                    final int vlanStart = Integer.parseInt(serviceVlanMatcher.group(2));
-                    final int vlanEnd = Integer.parseInt(serviceVlanMatcher.group(3));
-
-                    if (serviceVlans.containsKey(vlanId)) {
-                        final List<Integer> vlans = new ArrayList<>();
-                        for (int vlan = vlanStart; vlan <= vlanEnd; vlan++) {
-                            vlans.add(vlan);
-                        }
-                        serviceVlans.get(vlanId)[2] = vlans.toString().replaceAll("[\\[\\]]", "");
-                    }
+                if (serviceVlanMatcher.find() && serviceVlanMatcher.group(1).equals(currentServiceId)) {
+                    currentVlanBegin = serviceVlanMatcher.group(2); // VLAN inicial
+                    currentVlanEnd = serviceVlanMatcher.group(3); // VLAN final
                 }
             }
 
-            // Exibir os resultados
-            System.out.println("VLANs de Uplink:");
-            uplinkVlans.forEach((key, value) -> System.out.println("Slot-Port: " + key + " VLANs: " + value));
+            // Adiciona a última VLAN de serviço, se houver
+            if (!currentServiceId.isEmpty()) {
+                serviceVlans.add(new String[] { currentServiceId, currentServiceName, currentServiceType,
+                        currentVlanBegin, currentVlanEnd });
+            }
 
-            System.out.println("\nVLANs de Serviço:");
-            serviceVlans.forEach((key, value) -> System.out
-                    .println("ID: " + key + ", Nome: " + value[0] + ", Tipo: " + value[1] + ", VLANs: " + value[2]));
+            // [0] Slot
+            // [1] Porta
+            // [2] VLAN inicial
+            // [3] VLAN final
+
+            // System.out.println("VLANs de Uplink:");
+            // for (String[] entry : uplinkVlans) {
+            // System.out.println(Arrays.toString(entry));
+            // }
+
+            // [0] ID da VLAN de serviço
+            // [1] Nome do serviço
+            // [2] Tipo de serviço
+            // [3] VLAN inicial do serviço
+            // [4] VLAN final do serviço
+
+            // System.out.println("\nVLANs de Serviço:");
+            // for (String[] entry : serviceVlans) {
+            // System.out.println(Arrays.toString(entry));
+            // }
 
         } catch (final Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public String getPath() {
-        return path;
     }
 }
