@@ -19,6 +19,7 @@ import engtelecom.access.SSHClient;
 import engtelecom.access.TelnetCutover;
 import engtelecom.access.TelnetFhtt;
 import engtelecom.analytics.DataAnaliser5k;
+import engtelecom.config.ConfigCutoverGenerator5k;
 
 /**
  *
@@ -552,8 +553,7 @@ public class OltCutover5k extends javax.swing.JInternalFrame {
                                                                                                                                 .addComponent(jRadioButtonTELNELDestino))
                                                                                                                 .addComponent(jLabel12)))
                                                                                 .addGroup(jPanel8Layout
-                                                                                                .createSequentialGroup()
-                                                                                ))
+                                                                                                .createSequentialGroup()))
                                                                 .addContainerGap()));
                 jPanel8Layout.setVerticalGroup(
                                 jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -874,17 +874,17 @@ public class OltCutover5k extends javax.swing.JInternalFrame {
                 if (this.fileChooserIsSelected) {
                         final DataAnaliser5k dataAnaliser = new DataAnaliser5k(this.filePath);
                         dataAnaliser.start();
-                        // String oltType = "AN6000";
-                        // final String slotChassiPon = (String) jSpinnerSlotPON.getValue().toString();
-                        // final String slotChassiUp = (String) jSpinnerSlotUplink.getValue().toString();
-                        // final String slotPortaUp = (String) jSpinnerPortaUplink.getValue().toString();
+                        String oltType = "AN6000";
+                        final String slotChassiPon = (String) jSpinnerSlotPON.getValue().toString();
+                        final String slotChassiUp = (String) jSpinnerSlotUplink.getValue().toString();
+                        final String slotPortaUp = (String) jSpinnerPortaUplink.getValue().toString();
 
-                        // final ConfigCutoverGenerator cutover = new ConfigCutoverGenerator(dataAnaliser.getData(),
-                        //                 oltType, slotChassiPon, slotChassiUp, slotPortaUp);
-                        // if (cutover.start()) {
-                        //         previewText("scriptMigracao.txt");
-                        //         scriptCriado = true;
-                        // }
+                        final ConfigCutoverGenerator5k cutover = new ConfigCutoverGenerator5k(dataAnaliser,
+                                        slotChassiPon, slotChassiUp, slotPortaUp);
+                        if (cutover.start()) {
+                                previewText("scriptMigracao.txt");
+                                scriptCriado = true;
+                        }
 
                 } else {
                         JOptionPane.showMessageDialog(null,

@@ -1,7 +1,5 @@
 package engtelecom.analytics;
 
-import java.util.ArrayList;
-
 import engtelecom.filters.DataBandwidthFilter;
 import engtelecom.filters.DataNgnFilter;
 import engtelecom.filters.DataPortEthFilter;
@@ -12,67 +10,92 @@ import engtelecom.filters.DataWanServiceWifiFilter;
 import engtelecom.filters.DataWhitelistFilter;
 
 public class DataAnaliser5k {
-    // private List<List<String>> configUplinkVlan;
-    // private List<List<String>> whitelist;
-    // private List<List<String>> veip;
-    // private List<List<String>> wanService;
-    // private List<List<String>> portEth;
-    // private List<List<String>> ngn;
-    // private List<List<String>> qinq;
+    private final DataVlanUpFilter dataVlanUpFilter;
+    private final DataWhitelistFilter dataWhitelistFilter;
+    private final DataWanServicePPPFilter dataWanServiceFilter;
+    private final DataWanServiceWifiFilter dataWanServiceWifiFilter;
+    private final DataVeipFilter dataVeipFilter;
+    private final DataPortEthFilter dataPortEthFilter;
+    private final DataBandwidthFilter dataBandwidthFilter;
+    private final DataNgnFilter dataNgnFilter;
 
-    private String fileName;
-    private ArrayList<String> data;
+    private final String fileName;
 
-    public DataAnaliser5k(String fileName) {
-        this.data = new ArrayList<>();
+    public DataAnaliser5k(final String fileName) {
         this.fileName = fileName;
+        this.dataVlanUpFilter = new DataVlanUpFilter(fileName);
+        this.dataWhitelistFilter = new DataWhitelistFilter(fileName);
+        this.dataWanServiceFilter = new DataWanServicePPPFilter(fileName);
+        this.dataWanServiceWifiFilter = new DataWanServiceWifiFilter(fileName);
+        this.dataVeipFilter = new DataVeipFilter(fileName);
+        this.dataPortEthFilter = new DataPortEthFilter(fileName);
+        this.dataBandwidthFilter = new DataBandwidthFilter(fileName);
+        this.dataNgnFilter = new DataNgnFilter(fileName);
+    }
+
+    public DataVlanUpFilter getDataVlanUpFilter() {
+        return dataVlanUpFilter;
+    }
+
+    public DataWhitelistFilter getDataWhitelistFilter() {
+        return dataWhitelistFilter;
+    }
+
+    public DataWanServicePPPFilter getDataWanServiceFilter() {
+        return dataWanServiceFilter;
+    }
+
+    public DataWanServiceWifiFilter getDataWanServiceWifiFilter() {
+        return dataWanServiceWifiFilter;
+    }
+
+    public DataVeipFilter getDataVeipFilter() {
+        return dataVeipFilter;
+    }
+
+    public DataPortEthFilter getDataPortEthFilter() {
+        return dataPortEthFilter;
+    }
+
+    public DataBandwidthFilter getDataBandwidthFilter() {
+        return dataBandwidthFilter;
+    }
+
+    public DataNgnFilter getDataNgnFilter() {
+        return dataNgnFilter;
     }
 
     public void start() {
         System.out.println(this.fileName);
 
         // Faz a coleta da vlan
-        DataVlanUpFilter dataVlanUpFilter = new DataVlanUpFilter(fileName);
-        // dataVlanUpFilter.start();
+        dataVlanUpFilter.start();
 
         // Faz a coleta do whitelist
-        DataWhitelistFilter dataWhitelistFilter = new DataWhitelistFilter(fileName);
         // dataWhitelistFilter.start();
 
         // Faz a coleta da config do wan-service
         // Faz a coleta do pppoe
-        DataWanServicePPPFilter dataWanServiceFilter = new DataWanServicePPPFilter(fileName);
         // dataWanServiceFilter.start();
 
         // Fazer a coleta do wifi com senha
         // Fazer a coleta do wifi com radius
-        DataWanServiceWifiFilter dataWanServiceWifiFilter = new DataWanServiceWifiFilter(fileName);
         // dataWanServiceWifiFilter.start();
 
         // Fazer a coleta do veip
-        DataVeipFilter dataVeipFilter = new DataVeipFilter(fileName);
         // dataVeipFilter.start();
 
         // Fazer a coleta do portEth
-        DataPortEthFilter dataPortEthFilter = new DataPortEthFilter(fileName);
         // dataPortEthFilter.start();
 
         // Fazer a coleta do bandwidth
-        DataBandwidthFilter dataBandwidthFilter = new DataBandwidthFilter(fileName);
         // dataBandwidthFilter.start();
 
         // Fazer a coleta do ngn
-        DataNgnFilter dataNgnFilter = new DataNgnFilter(fileName);
-        dataNgnFilter.start();
+        // dataNgnFilter.start();
 
         // TO-DO
         // Fazer a coleta do qinq
-
-        // Criar um arrayList de tudo, e enviar para o gerador
-    }
-
-    public ArrayList<String> getData() {
-        return data;
     }
 
 }
