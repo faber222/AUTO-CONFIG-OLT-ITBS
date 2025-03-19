@@ -18,6 +18,7 @@ public class DataVlanFilter {
         this.path = fileName;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public void start() {
         // Hashtable onde a chave é o "line" e o valor é uma lista de strings no formato
         // "XXXX-FFFFFFFF;0/x/y"

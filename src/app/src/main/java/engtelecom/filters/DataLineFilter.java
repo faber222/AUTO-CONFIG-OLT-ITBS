@@ -36,6 +36,7 @@ public class DataLineFilter {
         this.path = fileName;
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public void start() { // HashMap onde a chave é o aim e o valor é uma lista de objetos contendo
                           // os
 
@@ -46,28 +47,6 @@ public class DataLineFilter {
                 "flow\\s+\\d+\\s+port\\s+(veip)\\s+default\\s+vlan\\s+(\\d+)",
                 "flow\\s+\\d+\\s+port\\s+(veip)\\s+vlan\\s+(\\d+)\\s+keep"
         };
-
-        // String[] mappings = {
-        // "mapping\\s+\\d+\\s+port\\s+(eth)\\s+(\\d+)\\s+vlan\\s+(\\d+)\\s+gemport\\s+\\d+",
-        // "mapping\\s+\\d+\\s+port\\s+(veip)\\s+vlan\\s+(\\d+)\\s+gemport\\s+\\d+"
-        // };
-        // // dados da tabela
-        // String[] flows = {
-        // "flow\\s+\\d+\\s+port\\s+(eth)\\s+(\\d+)\\s+default\\s+vlan\\s+(\\d+)", //
-        // eth com default
-        // "flow\\s+\\d+\\s+port\\s+(eth)\\s+(\\d+)\\s+vlan\\s+(\\d+)\\s+keep", // eth
-        // com keep
-        // "flow\\s+\\d+\\s+port\\s+(veip)\\s+default\\s+vlan\\s+(\\d+)", // veip com
-        // default
-        // "flow\\s+\\d+\\s+port\\s+(veip)\\s+vlan\\s+(\\d+)\\s+keep" // veip com keep
-        // };
-
-        // String[] mappings = {
-        // "mapping\\s+\\d+\\s+port\\s+(eth)\\s+(\\d+)\\s+vlan\\s+(\\d+)\\s+gemport\\s+\\d+",
-        // // eth
-        // "mapping\\s+\\d+\\s+port\\s+(veip)\\s+vlan\\s+(\\d+)\\s+gemport\\s+\\d+" //
-        // veip
-        // };
 
         // ArrayList para armazenar os valores de vlan-profile sem repetição
         // HashSet<Integer> vlanProfileSet = new HashSet<>();
@@ -98,26 +77,6 @@ public class DataLineFilter {
                     // vlanProfileSet.add(vlanProfile); // Adiciona ao conjunto (sem repetição)
                     continue;
                 }
-
-                // // Captura o mapping (porta e vlan)
-                // Matcher mappingMatcher = matcherLine(line, mappings);
-                // if (mappingMatcher != null) { // Verifique se não é nulo
-                // mode = mappingMatcher.group(1); // Porta (ETH ou VEIP)
-                // System.out.println("mode: " + mode);
-                // if (mode.equals("eth")) {
-                // port = mappingMatcher.group(2); // Número da porta (ETH)
-                // testPort.add(port);
-                // // System.out.println("port: " + port);
-                // vlan = mappingMatcher.group(3); // VLAN associada
-                // testVlanMapping.add(vlan);
-                // // System.out.println("vlan: " + vlan);
-                // } else {
-                // vlan = mappingMatcher.group(2); // VLAN associada no caso de VEIP
-                // testVlanMapping.add(vlan);
-                // // System.out.println("vlan veip: " + vlan);
-                // }
-                // continue;
-                // }
 
                 // Captura o flow e define o valor de tagging
                 final Matcher flowMatcher = matcherLine(line, flows);
