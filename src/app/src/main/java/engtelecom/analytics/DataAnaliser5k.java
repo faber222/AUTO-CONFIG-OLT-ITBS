@@ -2,6 +2,8 @@ package engtelecom.analytics;
 
 import java.util.ArrayList;
 
+import engtelecom.filters.DataBandwidthFilter;
+import engtelecom.filters.DataNgnFilter;
 import engtelecom.filters.DataPortEthFilter;
 import engtelecom.filters.DataVeipFilter;
 import engtelecom.filters.DataVlanUpFilter;
@@ -55,8 +57,15 @@ public class DataAnaliser5k {
         DataPortEthFilter dataPortEthFilter = new DataPortEthFilter(fileName);
         // dataPortEthFilter.start();
 
-        // TO-DO
+        // Fazer a coleta do bandwidth
+        DataBandwidthFilter dataBandwidthFilter = new DataBandwidthFilter(fileName);
+        // dataBandwidthFilter.start();
+
         // Fazer a coleta do ngn
+        DataNgnFilter dataNgnFilter = new DataNgnFilter(fileName);
+        dataNgnFilter.start();
+
+        // TO-DO
         // Fazer a coleta do qinq
 
         // Criar um arrayList de tudo, e enviar para o gerador
