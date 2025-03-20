@@ -20,18 +20,17 @@ public class DataWanServiceWifiFilter {
      * [0] Slot
      * [1] Pon
      * [2] ONU
-     * [3] Index
-     * [4] Índice do Wi-Fi (1-2)
+     * [3] Índice do Wi-Fi (1-2)
+     * [4] Index
      * [5] Enable/Disable
      * [6] Nome do SSID
      * [7] SSID oculto ou não
      * [8] Tipo de autenticação (WPA, WPA2, etc.)
      * [9] Tipo de criptografia
      * [10] Senha do Wi-Fi
-     * [11] Intervalo de autenticação
-     * [12] IP do Radius
-     * [13] Porta do Radius
-     * [14] Senha do Radius
+     * [11] IP do Radius
+     * [12] Porta do Radius
+     * [13] Senha do Radius
      *
      * @return Retorna um arrayList contendo todos os dados de configuração de wifi
      */
@@ -57,8 +56,8 @@ public class DataWanServiceWifiFilter {
                     final String slot = wlanMatcher.group(1); // Slot
                     final String pon = wlanMatcher.group(2); // Pon
                     final String onu = wlanMatcher.group(3); // ONU
-                    final String servNo = wlanMatcher.group(4); // Número do serviço
-                    final String index = wlanMatcher.group(5); // Índice do Wi-Fi
+                    final String servNo = wlanMatcher.group(4); // Índice do Wi-Fi (1-2)
+                    final String index = wlanMatcher.group(5); // Index
                     final String ssidStatus = wlanMatcher.group(6); // Enable/Disable
                     final String ssid = wlanMatcher.group(7); // Nome do SSID
                     final String hideStatus = wlanMatcher.group(8); // SSID oculto ou não
@@ -66,7 +65,7 @@ public class DataWanServiceWifiFilter {
                     final String encryptType = wlanMatcher.group(10); // Tipo de criptografia
                     // Senha do Wi-Fi
                     final String wpakey = wlanMatcher.group(11).equals("null") ? "N/A" : wlanMatcher.group(11);
-                    
+
                     @SuppressWarnings("unused")
                     final String interval = wlanMatcher.group(12); // Intervalo de autenticação Radius (NÃO USADO)
                     final String radiusIP = wlanMatcher.group(13); // IP do Radius
@@ -83,22 +82,21 @@ public class DataWanServiceWifiFilter {
             // [0] Slot
             // [1] Pon
             // [2] ONU
-            // [3] Número do serviço
-            // [4] Índice do Wi-Fi
+            // [3] Índice do Wi-Fi (1-2)
+            // [4] Index
             // [5] Enable/Disable
             // [6] Nome do SSID
             // [7] SSID oculto ou não
             // [8] Tipo de autenticação (WPA, WPA2, etc.)
             // [9] Tipo de criptografia
             // [10] Senha do Wi-Fi
-            // [11] Intervalo de autenticação
-            // [12] IP do Radius
-            // [13] Porta do Radius
-            // [14] Senha do Radius
+            // [11] IP do Radius
+            // [12] Porta do Radius
+            // [13] Senha do Radius
 
             // System.out.println("Configurações Wi-Fi:");
             // for (final String[] config : wifiConfigs) {
-            //     System.out.println(Arrays.toString(config));
+            // System.out.println(Arrays.toString(config));
             // }
 
         } catch (final Exception e) {
