@@ -103,6 +103,28 @@ public class ConfigCutoverGenerator5k {
 
             writer.newLine();
 
+            if (this.configWanService != null) {
+                for (final List<String> list : this.configWanService) {
+                    for (final String lines : list) {
+                        writer.write(lines);
+                        writer.newLine();
+                    }
+                }
+                writer.newLine();
+            }
+            writer.newLine();
+
+            if (this.configWifi != null) {
+                for (final List<String> list : this.configWifi) {
+                    for (final String lines : list) {
+                        writer.write(lines);
+                        writer.newLine();
+                    }
+                }
+                writer.newLine();
+            }
+            writer.newLine();
+
             if (this.configVeip != null) {
                 for (final List<String> list : this.configVeip) {
                     for (final String lines : list) {
@@ -112,6 +134,7 @@ public class ConfigCutoverGenerator5k {
                 }
                 writer.newLine();
             }
+            writer.newLine();
 
             if (this.configEth != null) {
                 for (final List<String> list : this.configEth) {
@@ -140,18 +163,64 @@ public class ConfigCutoverGenerator5k {
             configUplinkVlan.add(scriptsAN6k.addVlanToUplink(config[0], config[1], config[2], config[3]));
         }
 
-        // TO-DO
         // Configurar o whitelist
-
-        // Configurar o bandwidth
+        for (final String[] config : this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist()) {
+            configWhiteList.add(scriptsAN6k.provisionaCPE(config[0], config[1], config[2], config[3], config[4]));
+        }
 
         // Configurar o wan-service
-
         // Configurar o pppoe
+        for (final String[] config : this.dataAnaliser5k.getDataWanServiceFilter().getWanConfigs()) {
+            if ("r".equals(config[5])) {
+                configWanService.add(scriptsAN6k.comandoPpoe(config[0], config[1], config[2], config[6], config[9],
+                        config[10], config[3], config[4], config[5], config[7], config[8]));
+            }
+        }
 
         // Configurar o wifi com senha
 
+        for (final String[] config : this.dataAnaliser5k.getDataWanServiceWifiFilter().getWifiConfigs()) {
+            if ("1".equals(config[3])) {
+                // ssid 2.4
+                if ("N/A".equals(config[13])) {
+                    // sem radius
+                    configWifi.add(scriptsAN6k.comandoWifi2(config[0], config[1], config[2],
+                            config[6], config[10],
+                            "802.11bgn", config[3], config[4],
+                            config[5], config[7], config[8], config[9]));
+                } else {
+                    // com radius
+                    // configWifi.add(scriptsAN6k.comandoWifi2(config[], config[], config[],
+                    // config[], config[], config[], config[], config[],
+                    // config[], config[], config[], config[], config[],
+                    // config[], config[]));
+                }
+
+            } else {
+                // ssid 5.0
+                if ("N/A".equals(config[13])) {
+                    // sem radius
+                    configWifi.add(scriptsAN6k.comandoWifi5(config[0], config[1], config[2],
+                            config[6], config[10],
+                            "802.11ac", config[3], config[4],
+                            config[5], config[7], config[8], config[9]));
+                } else {
+                    // com radius
+                    // configWifi.add(scriptsAN6k.comandoWifi5(config[], config[], config[],
+                    // config[], config[], config[], config[], config[],
+                    // config[], config[], config[], config[], config[],
+                    // config[], config[]));
+                }
+            }
+
+        }
+
+        // TO-DO
         // Configurar o wifi com radius
+
+        // Configurar o bridge
+
+        // Configurar o bandwidth
 
         // Configurar o veip
 

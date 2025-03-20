@@ -72,15 +72,15 @@ public class DataAnaliser5k {
         dataVlanUpFilter.start();
 
         // Faz a coleta do whitelist
-        // dataWhitelistFilter.start();
+        dataWhitelistFilter.start();
 
         // Faz a coleta da config do wan-service
         // Faz a coleta do pppoe
-        // dataWanServiceFilter.start();
+        dataWanServiceFilter.start();
 
         // Fazer a coleta do wifi com senha
         // Fazer a coleta do wifi com radius
-        // dataWanServiceWifiFilter.start();
+        dataWanServiceWifiFilter.start();
 
         // Fazer a coleta do veip
         // dataVeipFilter.start();
