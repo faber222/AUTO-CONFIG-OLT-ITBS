@@ -17,14 +17,14 @@ public class ScriptsCutoverAN5kto6k {
          * Função usada para criar o script para provisionamento de CPE
          * 
          * @param serialNumberCpe Serial number da CPE, seguir esse padrao FHTT12345678
-         * @param cpeType         Capability da CPE
          * @param slotGpon        Slot da placa no chassi
          * @param slotPortaPon    Porta pon onde a CPE se encontra
          * @param slotCpe         Slot da pon onde desejamos provisionar a CPE
+         * @param cpeType         Capability da CPE
          * @return Lista de strings contendo todo o script de provisionamento de cpes
          */
-        public List<String> provisionaCPE(final String serialNumberCpe, final String cpeType, final String slotGpon,
-                        final String slotPortaPon, final String slotCpe) {
+        public List<String> provisionaCPE(final String serialNumberCpe, final String slotGpon,
+                        final String slotPortaPon, final String slotCpe, final String cpeType) {
                 final List<String> scriptProvisionaCpe = new ArrayList<>();
                 scriptProvisionaCpe.add(String.format("whitelist add phy-id %s type %s slot %s pon %s onuid %s",
                                 serialNumberCpe, cpeType, slotGpon, slotPortaPon, slotCpe));
@@ -104,5 +104,180 @@ public class ScriptsCutoverAN5kto6k {
                                 slotUplink, slotPortaUplink));
                 uplink.add(String.format("port vlan %s to %s allslot", vlanBegin, vlanEnd));
                 return uplink;
+        }
+
+        /**
+         * Função usada para criar o script para configurar o pppoe da cpe
+         * 
+         * @param slotGpon     Slot da placa no chassi
+         * @param slotPortaPon Porta pon onde a CPE se encontra
+         * @param slotCpe      Slot da pon onde desejamos provisionar a CPE
+         * @param vlan         Vlan do WanService
+         * @param userPPP      Usuario pppoe
+         * @param passPPP      Senha do pppoe
+         * @param index        Index do WanService
+         * @param mode         Modo do WanService (Internet, voice/Internet, etc)
+         * @param type         Modo de operação da Wan (bridge/router)
+         * @param nat          Nat enable/disable
+         * @param dsp          Modo pppoe/null
+         * 
+         * @return Lista de strings contendo todo o script para configurar pppoe
+         */
+        public List<String> comandoPpoe(final String slotGpon, final String slotPortaPon, final String slotCpe,
+                        final String vlan, final String userPPP, final String passPPP, final String index,
+                        final String mode, final String type, final String nat, final String dsp) {
+                final List<String> scriptComandoPpoe = new ArrayList<>();
+                scriptComandoPpoe.add(String.format("interface pon 1/%s/%s", slotGpon, slotPortaPon));
+                scriptComandoPpoe.add(String.format(
+                                "onu wan-cfg %s index %s mode %s type %s %s 7 nat %s qos disable dsp %s pro disable %s %s null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5",
+                                slotCpe, index, mode, type, vlan, nat, dsp, userPPP, passPPP));
+                scriptComandoPpoe.add(String.format(
+                                "onu ipv6-wan-cfg %s ind 1 ip-stack-mode both ipv6-src-type slaac prefix-src-type delegate",
+                                slotCpe));
+                scriptComandoPpoe.add("exit");
+                return scriptComandoPpoe;
+        }
+
+        /**
+         * Função usada para criar o script para configurar o wifi 2.4Ghz
+         * 
+         * @param slotGpon     Slot da placa no chassi
+         * @param slotPortaPon Porta pon onde a CPE se encontra
+         * @param slotCpe      Slot da pon onde a cpe se encontra
+         * @param ssidName2    Ssid da rede 2.4Ghz
+         * @param passName2    Senha da rede 2.4Ghz
+         * @param wifiVersion  802.11
+         * @param servNo       Indica se é wifi 2.4 ou 5Ghz (1/2)
+         * @param index        Index
+         * @param ssidEnable   Enable/Disable
+         * @param hide         SSID oculto ou não
+         * @param authMode     Tipo de autenticação (WPA, WPA2, etc.)
+         * @param encryptType  Tipo de criptografia
+         * @return Lista de strings contendo todo o script para configurar a rede 2.4Ghz
+         */
+        public List<String> comandoWifi2(final String slotGpon, final String slotPortaPon, final String slotCpe,
+                        final String ssidName2, final String passName2, final String wifiVersion,
+                        final String servNo, final String index,
+                        final String ssidEnable, final String hide,
+                        final String authMode, final String encryptType) {
+                final List<String> scriptComandoWifi = new ArrayList<>();
+                scriptComandoWifi.add(String.format("interface pon 1/%s/%s", slotGpon, slotPortaPon));
+                scriptComandoWifi.add(String.format(
+                                "onu wifi connection %s serv-no %s index %s ssid %s %s hide %s authmode %s encrypt-type %s wpakey %s interval 86400 wifi-connect-num 32",
+                                slotCpe, servNo, index, ssidEnable, ssidName2, hide, authMode, encryptType, passName2));
+                scriptComandoWifi.add(String.format(
+                                "onu wifi attribute %s serv-no %s wifi %s district brazil channel 6 standard %s txpower 20 frequency 2.4ghz freq-bandwidth 20mhz/40mhz",
+                                slotCpe, servNo, ssidEnable, wifiVersion));
+                scriptComandoWifi.add("exit");
+                return scriptComandoWifi;
+        }
+
+        /**
+         * Função usada para criar o script para configurar o wifi 2.4Ghz com radius
+         * 
+         * @param slotGpon     Slot da placa no chassi
+         * @param slotPortaPon Porta pon onde a CPE se encontra
+         * @param slotCpe      Slot da pon onde a cpe se encontra
+         * @param ssidName2    Ssid da rede 2.4Ghz
+         * @param passName2    Senha da rede 2.4Ghz
+         * @param wifiVersion  802.11
+         * @param index        Index
+         * @param servNo       Indica se é wifi 2.4 ou 5Ghz (1/2)
+         * @param ssidEnable   Enable/Disable
+         * @param hide         SSID oculto ou não
+         * @param authMode     Tipo de autenticação (WPA, WPA2, etc.)
+         * @param encryptType  Tipo de criptografia
+         * @param radiusServ   IP do Radius
+         * @param port         Porta do Radius
+         * @param pswd         Senha do Radius
+         * @return Lista de strings contendo todo o script para configurar a rede 2.4Ghz
+         */
+        public List<String> comandoWifi2(final String slotGpon, final String slotPortaPon, final String slotCpe,
+                        final String ssidName2, final String passName2, final String wifiVersion,
+                        final String index, final String servNo, final String ssidEnable, final String hide,
+                        final String authMode, final String encryptType, final String radiusServ, final String port,
+                        final String pswd) {
+                final List<String> scriptComandoWifi = new ArrayList<>();
+                scriptComandoWifi.add(String.format("interface pon 1/%s/%s", slotGpon, slotPortaPon));
+                scriptComandoWifi.add(String.format(
+                                "onu wifi connection %s serv-no %s index %s ssid %s %s hide %s authmode %s encrypt-type %s wpakey %s interval 86400 wifi-connect-num 32",
+                                slotCpe, servNo, index, ssidEnable, ssidName2, hide, authMode, encryptType, passName2));
+                scriptComandoWifi.add(String.format(
+                                "onu wifi attribute %s serv-no %s wifi %s district brazil channel 6 standard %s txpower 20 frequency 2.4ghz freq-bandwidth 20mhz/40mhz",
+                                slotCpe, servNo, ssidEnable, wifiVersion));
+                scriptComandoWifi.add("exit");
+                return scriptComandoWifi;
+        }
+
+        /**
+         * Função usada para criar o script para configurar o wifi 5Ghz
+         * 
+         * @param slotGpon     Slot da placa no chassi
+         * @param slotPortaPon Porta pon onde a CPE se encontra
+         * @param slotCpe      Slot da pon onde a cpe se encontra
+         * @param ssidName5    Ssid da rede 5Ghz
+         * @param passName5    Senha da rede 5Ghz
+         * @param wifiVersion  802.11
+         * @param servNo       Indica se é wifi 2.4 ou 5Ghz (1/2)
+         * @param index        Index
+         * @param ssidEnable   Enable/Disable
+         * @param hide         SSID oculto ou não
+         * @param authMode     Tipo de autenticação (WPA, WPA2, etc.)
+         * @param encryptType  Tipo de criptografia
+         * @return Lista de strings contendo todo o script para configurar a rede 5Ghz
+         */
+        public List<String> comandoWifi5(final String slotGpon, final String slotPortaPon, final String slotCpe,
+                        final String ssidName5, final String passName5, final String wifiVersion,
+                        final String servNo, final String index,
+                        final String ssidEnable, final String hide,
+                        final String authMode, final String encryptType) {
+                final List<String> scriptComandoWifi = new ArrayList<>();
+                scriptComandoWifi.add(String.format("interface pon 1/%s/%s", slotGpon, slotPortaPon));
+                scriptComandoWifi.add(String.format(
+                                "onu wifi connection %s serv-no %s index %s ssid %s %s hide %s authmode %s encrypt-type %s wpakey %s interval 86400 wifi-connect-num 32",
+                                slotCpe, servNo, index, ssidEnable, ssidName5, hide, authMode, encryptType, passName5));
+                scriptComandoWifi.add(String.format(
+                                "onu wifi attribute %s serv-no %s wifi %s district brazil channel 161 standard %s txpower 20 frequency 5.8ghz freq-bandwidth 80mhz",
+                                slotCpe, servNo, ssidEnable, wifiVersion));
+                scriptComandoWifi.add("exit");
+                return scriptComandoWifi;
+        }
+
+        /**
+         * Função usada para criar o script para configurar o wifi 5Ghz com radius
+         * 
+         * @param slotGpon     Slot da placa no chassi
+         * @param slotPortaPon Porta pon onde a CPE se encontra
+         * @param slotCpe      Slot da pon onde a cpe se encontra
+         * @param ssidName5    Ssid da rede 5Ghz
+         * @param passName5    Senha da rede 5Ghz
+         * @param wifiVersion  802.11
+         * @param servNo       Indica se é wifi 2.4 ou 5Ghz (1/2)
+         * @param index        Index
+         * @param ssidEnable   Enable/Disable
+         * @param hide         SSID oculto ou não
+         * @param authMode     Tipo de autenticação (WPA, WPA2, etc.)
+         * @param encryptType  Tipo de criptografia
+         * @param radiusServ   IP do Radius
+         * @param port         Porta do Radius
+         * @param pswd         Senha do Radius
+         * @return Lista de strings contendo todo o script para configurar a rede 5Ghz
+         */
+        public List<String> comandoWifi5(final String slotGpon, final String slotPortaPon, final String slotCpe,
+                        final String ssidName5, final String passName5, final String wifiVersion,
+                        final String servNo, final String index,
+                        final String ssidEnable, final String hide,
+                        final String authMode, final String encryptType, final String radiusServ, final String port,
+                        final String pswd) {
+                final List<String> scriptComandoWifi = new ArrayList<>();
+                scriptComandoWifi.add(String.format("interface pon 1/%s/%s", slotGpon, slotPortaPon));
+                scriptComandoWifi.add(String.format(
+                                "onu wifi connection %s serv-no %s index %s ssid %s %s hide %s authmode %s encrypt-type %s wpakey %s interval 86400 wifi-connect-num 32",
+                                slotCpe, servNo, index, ssidEnable, ssidName5, hide, authMode, encryptType, passName5));
+                scriptComandoWifi.add(String.format(
+                                "onu wifi attribute %s serv-no %s wifi %s district brazil channel 161 standard %s txpower 20 frequency 5.8ghz freq-bandwidth 80mhz",
+                                slotCpe, servNo, ssidEnable, wifiVersion));
+                scriptComandoWifi.add("exit");
+                return scriptComandoWifi;
         }
 }
