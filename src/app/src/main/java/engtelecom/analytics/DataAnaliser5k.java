@@ -83,10 +83,10 @@ public class DataAnaliser5k {
         dataWanServiceWifiFilter.start();
 
         // Fazer a coleta do veip
-        // dataVeipFilter.start();
+        dataVeipFilter.start();
 
         // Fazer a coleta do portEth
-        // dataPortEthFilter.start();
+        dataPortEthFilter.start();
 
         // Fazer a coleta do bandwidth
         // dataBandwidthFilter.start();

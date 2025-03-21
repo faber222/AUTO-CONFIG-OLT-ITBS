@@ -12,7 +12,6 @@ import engtelecom.analytics.DataAnaliser5k;
 import engtelecom.scripts.ScriptsCutoverAN5kto6k;
 
 public class ConfigCutoverGenerator5k {
-    // private List<String> vlansUplink;
 
     private final List<List<String>> configUplinkVlan;
     private final List<List<String>> configWhiteList;
@@ -39,7 +38,6 @@ public class ConfigCutoverGenerator5k {
         this.slotChassiUplink = slotChassiUplink;
         this.slotPortaUplink = slotPortaUplink;
 
-        // this.vlansUplink = new ArrayList<>(); // Inicializa a lista vlans;
         this.profileServMode = new ArrayList<>();
 
         this.configUplinkVlan = new ArrayList<>();
@@ -55,18 +53,8 @@ public class ConfigCutoverGenerator5k {
         this.configQinQ = new ArrayList<>();
     }
 
-    // public void setVlans(final List<String> vlans) {
-    // this.vlansUplink = vlans;
-    // }
-
     public boolean start() {
-        // for (final String[] config :
-        // this.dataAnaliser5k.getDataBandwidthFilter().getBandwidthConfigs()) {
-        // System.out.println(Arrays.toString(config));
-        // }
-
         return createScript();
-        // return true;
     }
 
     private boolean writeScript() {
@@ -215,16 +203,29 @@ public class ConfigCutoverGenerator5k {
 
         }
 
+        // Configurar o veip
+        for (final String[] config : this.dataAnaliser5k.getDataVeipFilter().getPrfMgrConfigs()) {
+            profileServMode.add(scriptsAN6k.configProfileServMode(config[0], config[1], config[2]));
+        }
+
+        for (final String[] config : this.dataAnaliser5k.getDataVeipFilter().getVeipConfigs()) {
+            configVeip.add(scriptsAN6k.configVeip(config[0], config[1], config[2], config[5], config[6]));
+        }
+
+        // Configurar o portEth
+        for (final String[] config : this.dataAnaliser5k.getDataPortEthFilter().getEthConfigs()) {
+            configEth.add(scriptsAN6k.configEth(config[0], config[1], config[2],
+                    config[3], config[5], config[4], config[6]));
+        }
+
         // TO-DO
+        // Precisa analisar o caso de não ser informado o cvlan-id
+
         // Configurar o wifi com radius
 
         // Configurar o bridge
 
         // Configurar o bandwidth
-
-        // Configurar o veip
-
-        // Configurar o portEth
 
         // Configurar o ngn
 
