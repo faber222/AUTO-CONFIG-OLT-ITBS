@@ -34,12 +34,16 @@ public class ScriptsCutoverAN5kto6k {
         /**
          * Função usada para criar o servMode intelbras router para perfil veip
          * 
+         * @param index Identificador do Service mode profile
+         * @param nome  Nome do Service mode profile
+         * @param type  Tipo do Service(uni/transp)
          * @return Lista de strings contendo a config servMode default intelbras
          */
-        public List<String> configProfileServMode() {
+        public List<String> configProfileServMode(final String index, final String nome, final String type) {
                 final List<String> scriptServMode = new ArrayList<>();
-                scriptServMode.add(
-                                "port-service-mode-profile add index 30 name INTELBRAS_ROUTER type unicast cvlan transparent translate disable qinq disable null");
+                scriptServMode.add(String.format(
+                                "port-service-mode-profile add index %s name %s type %s cvlan transparent translate disable qinq disable null",
+                                index, nome, type));
                 return scriptServMode;
         }
 
@@ -50,15 +54,16 @@ public class ScriptsCutoverAN5kto6k {
          * @param slotPortaPon Porta pon onde a CPE se encontra
          * @param slotCpe      Slot da pon onde a CPE se encontra
          * @param vlan         Vlan do VEIP
+         * @param perfil       Perfil do Service Mode Profile
          * @return Lista de strings contendo todo o script para configuração de veip
          */
-        public List<String> configVeip(final String slotGpon, final String slotPortaPon, final String slotCpe,
-                        final String vlan) {
+        public List<String> configVeip(final String slotGpon, final String slotPortaPon,
+                        final String slotCpe, final String vlan, final String perfil) {
                 final List<String> scriptVeip = new ArrayList<>();
                 scriptVeip.add(String.format("interface pon 1/%s/%s", slotGpon, slotPortaPon));
                 scriptVeip.add(String.format(
-                                "onu veip %s cvlan-tpid 33024 cvlan-id %s cvlan-cos 65535 trans-vlan-tpid 33024 trans-vlan-id 65535 trans-vlan-cos 65535 svlan-tpid 33024 svlan-vid 65535 svlan-cos 65535 tls 0 service-mode-profile 30 svlan-profile 65535 service-type 1",
-                                slotCpe, vlan));
+                                "onu veip %s cvlan-tpid 33024 cvlan-id %s cvlan-cos 65535 trans-vlan-tpid 33024 trans-vlan-id 65535 trans-vlan-cos 65535 svlan-tpid 33024 svlan-vid 65535 svlan-cos 65535 tls 0 service-mode-profile %s svlan-profile 65535 service-type 1",
+                                slotCpe, vlan, perfil));
                 scriptVeip.add("exit");
                 return scriptVeip;
         }
