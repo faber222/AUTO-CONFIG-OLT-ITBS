@@ -1,0 +1,126 @@
+!module config:ngn.
+!ngn config version -------------------------------------------------
+check ngn_cfg version GEPON_NGN_V4.0 
+!ngn config version end -------------------------------------------------
+!ngn port lever switch-----------------------------------------
+set ngn-port-lever switch disable 
+!ngn port lever switch end--------------------------------------
+!iad mac range config-----------------------------------------
+set mac_range_cfg startmac 000ac2100000 endmac 000ac21e8480 
+set mac_range_cfg startmac 000ac22e0100 endmac 000ac2300513 
+set mac_range_cfg startmac 000ac20000e7 endmac 000ac200ffff 
+set mac_range_cfg startmac 000ac2fe0000 endmac 000ac2ffffff 
+set mac_range_cfg startmac 70b921000000 endmac 70b9210f423f 
+set mac_range_cfg startmac 444b00000000 endmac 444bffffffff 
+set mac_range_cfg startmac 000eb4010000 endmac 000eb401ffff 
+set mac_range_cfg startmac 000eb4a90000 endmac 000eb4a9ffff 
+set mac_range_cfg startmac 000eb4450000 endmac 000eb445ffff 
+set mac_range_cfg startmac 70b921e082c0 endmac 70b921ffffff 
+set mac_range_cfg startmac 000467000000 endmac 000467ffffff 
+set mac_range_cfg startmac 34bf90000000 endmac 34bf90ffffff 
+!iad mac range config end-----------------------------------------
+!ngn interface config -------------------------------------------------
+set new_ngn_uplink_interface name VOIP@50 protocol_type SIP mgc 1 impactnet.smt02.serversip.com.br 5060 mgc 2 impactnet.smt02.serversip.com.br 5060 m_dns ipv4 8.8.8.8 s_dns ipv4 1.1.1.1 sip_reg_addr impactnet.smt02.serversip.com.br sip_proxy_addr 0.0.0.0 
+set new_ngn_uplink_interface name VOIP@58 protocol_type SIP mgc 1 45.166.248.245 5060 mgc 2 45.166.248.245 5060 m_dns ipv4 8.8.8.8 s_dns ipv4 1.1.1.1 sip_reg_addr 45.166.248.245 sip_proxy_addr 0.0.0.0 
+set new_ngn_uplink_interface name VOIP@51 protocol_type SIP mgc 1 45.166.248.245 5060 mgc 2 45.166.248.245 5060 m_dns ipv4 8.8.8.8 s_dns ipv4 8.8.4.4 sip_reg_addr 45.166.248.245 sip_proxy_addr 0.0.0.0 
+!ngn interface config end ---------------------------------------------
+!ngn user config -------------------------------------------------
+set new_ngn_uplink_user serv VOIP@50 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 0 
+set ngn_uplink_user_port phone 1 usern 554133242829 sip_user_n 55008135700075 sip_user_p 5dek3s6 user_in 0 
+set new_ngn_uplink_user serv VOIP@50 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 1 
+set ngn_uplink_user_port phone 2 usern 554130730963 sip_user_n 55008135700039 sip_user_p b26y4r9 user_in 1 
+set new_ngn_uplink_user serv VOIP@50 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 2 
+set ngn_uplink_user_port phone 3 usern 554132973537 sip_user_n 55008135700025 sip_user_p dz94rjq user_in 2 
+set new_ngn_uplink_user serv VOIP@50 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 3 
+set ngn_uplink_user_port phone 4 usern 55008135700095 sip_user_n 55008135700095 sip_user_p qbps1e7 user_in 3 
+set new_ngn_uplink_user serv VOIP@50 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 4 
+set ngn_uplink_user_port phone 5 usern 4130732399 sip_user_n 55008135700204 sip_user_p zfezy0fp user_in 4 
+set new_ngn_uplink_user serv VOIP@58 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 5 
+set ngn_uplink_user_port phone 6 usern 30220986 sip_user_n 30220986 sip_user_p beywECfJ user_in 5 
+set new_ngn_uplink_user serv VOIP@58 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 6 
+set ngn_uplink_user_port phone 7 usern 32320423 sip_user_n 32320423 sip_user_p IcBllzFQ user_in 6 
+set new_ngn_uplink_user serv VOIP@58 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 7 
+set ngn_uplink_user_port phone 8 usern 4132324281 sip_user_n 4132324281 sip_user_p syO4wvnCz user_in 7 
+set new_ngn_uplink_user serv VOIP@58 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 8 
+set ngn_uplink_user_port phone 9 usern 32334058 sip_user_n 32334058 sip_user_p sOHOKcgh user_in 8 
+set new_ngn_uplink_user serv VOIP@58 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 9 
+set ngn_uplink_user_port phone 10 usern 32241867 sip_user_n 32241867 sip_user_p USLNsQPM user_in 9 
+set new_ngn_uplink_user serv VOIP@50 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 10 
+set ngn_uplink_user_port phone 11 usern 4132247117 sip_user_n 4132247117 sip_user_p PJ0SiJLnD user_in 10 
+set new_ngn_uplink_user serv VOIP@50 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 11 
+set ngn_uplink_user_port phone 12 usern 55008135700296 sip_user_n 55008135700296 sip_user_p ern2uz9 user_in 11 
+set new_ngn_uplink_user serv VOIP@58 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 12 
+set ngn_uplink_user_port phone 13 usern 32247472 sip_user_n 32247472 sip_user_p YkC8XSJZ user_in 12 
+set new_ngn_uplink_user serv VOIP@58 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 13 
+set ngn_uplink_user_port phone 14 usern 30732853 sip_user_n 30732853 sip_user_p tHlbiriw user_in 13 
+set new_ngn_uplink_user serv VOIP@50 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 14 
+set ngn_uplink_user_port phone 15 usern 4130732863 sip_user_n 55008135700350 sip_user_p 0jwtdf2 user_in 14 
+set new_ngn_uplink_user serv VOIP@58 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 15 
+set ngn_uplink_user_port phone 16 usern 30736363 sip_user_n 30736363 sip_user_p TXwg2AJ5 user_in 15 
+set new_ngn_uplink_user serv VOIP@58 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 16 
+set new_ngn_uplink_user serv VOIP@58 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 17 
+set ngn_uplink_user_port phone 17 usern 32332447 sip_user_n 32332447 sip_user_p sDlagnQI user_in 17 
+set new_ngn_uplink_user serv VOIP@58 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 18 
+set ngn_uplink_user_port phone 19 usern 32338320 sip_user_n 32338320 sip_user_p 2BkOjPuC user_in 18 
+set new_ngn_uplink_user serv VOIP@51 vid 50 ip_m dhcp dhcp_opt enable pro 5060 user_in 19 
+set ngn_uplink_user_port phone 31 usern 30578155 sip_user_n 30578155 sip_user_p tvpKnHufm user_in 19 
+set new_ngn_uplink_user serv VOIP@51 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 20 
+set ngn_uplink_user_port phone 21 usern 4132247472 sip_user_n 4132247472 sip_user_p EvUsnwHdl user_in 20 
+set new_ngn_uplink_user serv VOIP@51 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 21 
+set ngn_uplink_user_port phone 22 usern 4132338320 sip_user_n 4132338320 sip_user_p iWXRlCVOP user_in 21 
+set new_ngn_uplink_user serv VOIP@51 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 22 
+set ngn_uplink_user_port phone 23 usern 4132332447 sip_user_n 4132332447 sip_user_p v2lcI5WnV user_in 22 
+set new_ngn_uplink_user serv VOIP@51 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 24 
+set ngn_uplink_user_port phone 25 usern 4132334058 sip_user_n 4132334058 sip_user_p fXzOVO1aN user_in 24 
+set new_ngn_uplink_user serv VOIP@51 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 25 
+set ngn_uplink_user_port phone 26 usern 4137792552 sip_user_n 4137792552 sip_user_p SVLtAmeKW user_in 25 
+set new_ngn_uplink_user serv VOIP@51 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 26 
+set ngn_uplink_user_port phone 27 usern 4130220986 sip_user_n 4130220986 sip_user_p GqTIdVV4R user_in 26 
+set new_ngn_uplink_user serv VOIP@51 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 27 
+set ngn_uplink_user_port phone 28 usern 4132241867 sip_user_n 4132241867 sip_user_p b6IiI3YIQ user_in 27 
+set new_ngn_uplink_user serv VOIP@51 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 28 
+set ngn_uplink_user_port phone 29 usern 4130732853 sip_user_n 4130732853 sip_user_p e0vrG4mnR user_in 28 
+set new_ngn_uplink_user serv VOIP@51 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 29 
+set ngn_uplink_user_port phone 30 usern 4132320423 sip_user_n 4132320423 sip_user_p 68awFyxnz user_in 29 
+!ngn user config end ---------------------------------------------
+!ngn bitmap config -------------------------------------------------
+!ngn bitmap config end ---------------------------------------------
+!ngn bind bitmap config begin ---------------------------------------------
+!ngn bind bitmap config end ---------------------------------------------
+!ngn iad md5 config -------------------------------------------------
+!ngn iad md5 config end ---------------------------------------------
+!ngn softswitch profile config-----------------------------------------
+!ngn softswitch profile config end ---------------------------------------------
+!ngn adv pots profile config -------------------------------------------------
+!ngn softswitch profile config end ---------------------------------------------
+!ngn keepalive config-----------------------------------------
+set ngn_keepalive servicename VOIP@50 aliveinterval 30 alivetimes 3
+set ngn_keepalive servicename VOIP@58 aliveinterval 30 alivetimes 3
+set ngn_keepalive servicename VOIP@51 aliveinterval 30 alivetimes 3
+!ngn keepalive config end--------------------------------------
+!ngn voice activation type-----------------------------------------
+set ngn_activation_type auto 
+!ngn voice activation type end--------------------------------------
+!ngn reg para -----------------------------------------
+set ngn_reg_para name VOIP@50 reg_time 30 reg_pkts 0 reg_interval 30
+set ngn_reg_para name VOIP@58 reg_time 30 reg_pkts 0 reg_interval 30
+set ngn_reg_para name VOIP@51 reg_time 30 reg_pkts 0 reg_interval 30
+!ngn reg para end--------------------------------------
+!ngn voice service config-----------------------------------------
+set ngn_v sl 11 p 1 o 7 p 1 ph 31 
+set ngn_v sl 11 p 2 o 1 p 1 ph 30 
+set ngn_v sl 11 p 3 o 4 p 1 ph 8 
+set ngn_v sl 11 p 3 o 24 p 1 ph 27 
+set ngn_v sl 11 p 3 o 24 p 2 ph 28 
+set ngn_v sl 11 p 3 o 27 p 1 ph 29 
+set ngn_v sl 11 p 4 o 3 p 1 ph 11 
+set ngn_v sl 11 p 4 o 23 p 1 ph 25 
+set ngn_v sl 11 p 4 o 31 p 1 ph 26 
+!ngn voice service config end--------------------------------------
+!ngn private subnet config-----------------------------------------
+set ngn_private_subnet private_ip 10.27.255.255 private_subnet 255.255.0.0 index 1 iptype voice
+set ngn_private_subnet private_ip 10.26.255.255 private_subnet 255.255.0.0 index 2 iptype data
+set ngn_private_subnet private_ip 10.29.255.255 private_subnet 255.255.0.0 index 3 iptype ppcommunication
+set ngn_private_subnet private_ip 10.25.255.255 private_subnet 255.255.0.0 index 4 iptype voice25
+!ngn private subnet end ---------------------------------------------
+!voip_manage_global_showrun ------------------------

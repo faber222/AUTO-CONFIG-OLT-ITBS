@@ -1,0 +1,123 @@
+ 
+!onu physical ID whitelist configuration 
+ 
+set white phy addr FHTT911f14d8 pas null ac add sl 11 p 1 o 4 ty 5506-04-FA 
+set white phy addr FHTT91504810 pas null ac add sl 11 p 1 o 14 ty 5506-02-F 
+set white phy addr FHTT92146738 pas null ac add sl 11 p 2 o 3 ty 5506-02-F 
+set white phy addr FHTT92165fb0 pas null ac add sl 11 p 1 o 17 ty 5506-02-F 
+set white phy addr FHTT92bab660 pas null ac add sl 11 p 4 o 31 ty 5506-04-FA 
+set white phy addr FHTT9408b980 pas fiberhome ac add sl 11 p 1 o 9 ty 5506-04-FA 
+set white phy addr FHTT9408cb78 pas null ac add sl 11 p 1 o 12 ty 5506-04-FA 
+set white phy addr FHTT94fe6928 pas null ac add sl 11 p 4 o 1 ty 5506-04-FA 
+set white phy addr FHTT94ff6118 pas null ac add sl 11 p 4 o 12 ty 5506-04-FA 
+set white phy addr FHTT94ff9a10 pas null ac add sl 11 p 2 o 9 ty 5506-04-FA 
+set white phy addr FHTT952246c0 pas null ac add sl 11 p 4 o 2 ty 5506-04-FA 
+set white phy addr FHTT95225a20 pas null ac add sl 11 p 4 o 8 ty 5506-04-FA 
+set white phy addr FHTT95228208 pas null ac add sl 11 p 1 o 5 ty 5506-04-FA 
+set white phy addr FHTT9522e900 pas null ac add sl 11 p 3 o 7 ty 5506-04-FA 
+set white phy addr FHTT95231018 pas null ac add sl 11 p 4 o 5 ty 5506-04-FA 
+set white phy addr FHTT95239530 pas null ac add sl 11 p 3 o 14 ty 5506-04-FA 
+set white phy addr FHTT952419b0 pas null ac add sl 11 p 3 o 5 ty 5506-04-FA 
+set white phy addr FHTT95297f48 pas null ac add sl 11 p 1 o 8 ty 5506-04-FA 
+set white phy addr FHTT9529e558 pas null ac add sl 11 p 1 o 18 ty 5506-04-FA 
+set white phy addr FHTT952a2c40 pas null ac add sl 11 p 4 o 21 ty 5506-04-FA 
+set white phy addr FHTT955429b0 pas null ac add sl 11 p 3 o 21 ty 5506-04-FA 
+set white phy addr FHTT9554d168 pas null ac add sl 11 p 1 o 1 ty 5506-04-FA 
+set white phy addr FHTT955582f8 pas null ac add sl 11 p 3 o 3 ty 5506-04-FA 
+set white phy addr FHTT95558708 pas null ac add sl 11 p 3 o 1 ty 5506-04-FA 
+set white phy addr FHTT9555bcc0 pas null ac add sl 11 p 3 o 8 ty 5506-04-FA 
+set white phy addr FHTT9555cdf8 pas null ac add sl 11 p 3 o 36 ty 5506-04-FA 
+set white phy addr FHTT95563c10 pas null ac add sl 11 p 2 o 1 ty 5506-04-FA 
+set white phy addr FHTT95566be8 pas null ac add sl 11 p 4 o 29 ty 5506-04-FA 
+set white phy addr FHTT96a3a400 pas null ac add sl 11 p 1 o 7 ty 5506-04-FA 
+set white phy addr FHTT96a3b7a0 pas null ac add sl 11 p 3 o 27 ty 5506-04-FA 
+set white phy addr FHTT9712ade8 pas null ac add sl 11 p 4 o 17 ty 5506-04-FA 
+set white phy addr FHTT9854b090 pas null ac add sl 11 p 2 o 4 ty 5506-04-FA 
+set white phy addr FHTT9854b290 pas null ac add sl 11 p 4 o 23 ty 5506-04-FA 
+set white phy addr FHTT9854c1b0 pas null ac add sl 11 p 3 o 24 ty 5506-04-FA 
+set white phy addr FHTT98697f78 pas null ac add sl 11 p 3 o 33 ty 5506-04-FA 
+set white phy addr FHTT98698710 pas null ac add sl 11 p 3 o 12 ty 5506-04-FA 
+set white phy addr FHTT98698958 pas null ac add sl 11 p 4 o 20 ty 5506-04-FA 
+set white phy addr FHTT9882cf70 pas null ac add sl 11 p 3 o 25 ty 5506-04-FA 
+set white phy addr FHTT9882db48 pas null ac add sl 11 p 4 o 3 ty 5506-04-FA 
+set white phy addr FHTT98831990 pas null ac add sl 11 p 3 o 31 ty 5506-04-FA 
+set white phy addr FHTT98ca2480 pas null ac add sl 11 p 4 o 30 ty 5506-04-FA 
+set white phy addr FHTT995bac68 pas null ac add sl 11 p 3 o 29 ty 5506-04-FA 
+set white phy addr FHTT995bb500 pas null ac add sl 11 p 3 o 35 ty 5506-04-FA 
+set white phy addr FHTT995bb698 pas null ac add sl 11 p 4 o 4 ty 5506-04-FA 
+set white phy addr FHTT9961bfe8 pas null ac add sl 11 p 1 o 6 ty 5506-04-FA 
+set white phy addr FHTT9961f800 pas null ac add sl 11 p 3 o 4 ty 5506-04-FA 
+set white phy addr FHTT9961faf0 pas null ac add sl 11 p 4 o 25 ty 5506-04-FA 
+set white phy addr FHTT9961fb88 pas null ac add sl 11 p 1 o 21 ty 5506-04-FA 
+set white phy addr FHTT9961fbb0 pas null ac add sl 11 p 1 o 10 ty 5506-04-FA 
+set white phy addr FHTT9e513828 pas null ac add sl 11 p 1 o 2 ty 5506-04-FA 
+set white phy addr FHTT9e513c68 pas null ac add sl 11 p 3 o 2 ty 5506-04-FA 
+set white phy addr FHTT9e513df0 pas null ac add sl 11 p 4 o 33 ty 5506-04-FA 
+set white phy addr FHTTfb022a30 pas null ac add sl 11 p 3 o 32 ty 5506-04-FA 
+ 
+!onu password whitelist configuration 
+
+
+!onu logical SN whitelist configuration 
+ 
+ 
+!onu logical SN whitelist configuration 
+ 
+ 
+!onu authorization configuration 
+ 
+set autho sl 11 p 1 ty 5506-04-FA o 1 phy FHTT9554d168 pas null 
+set autho sl 11 p 1 ty 5506-04-FA o 2 phy FHTT9e513828 pas null 
+set autho sl 11 p 1 ty 5506-04-FA o 4 phy FHTT911f14d8 pas null 
+set autho sl 11 p 1 ty 5506-04-FA o 5 phy FHTT95228208 pas null 
+set autho sl 11 p 1 ty 5506-04-FA o 6 phy FHTT9961bfe8 pas null 
+set autho sl 11 p 1 ty 5506-04-FA o 7 phy FHTT96a3a400 pas null 
+set autho sl 11 p 1 ty 5506-04-FA o 8 phy FHTT95297f48 pas null 
+set autho sl 11 p 1 ty 5506-04-FA o 9 phy FHTT9408b980 pas null 
+set autho sl 11 p 1 ty 5506-04-FA o 10 phy FHTT9961fbb0 pas null 
+set autho sl 11 p 1 ty 5506-04-FA o 12 phy FHTT9408cb78 pas null 
+set autho sl 11 p 1 ty 5506-02-F o 14 phy FHTT91504810 pas null 
+set autho sl 11 p 1 ty 5506-02-F o 17 phy FHTT92165fb0 pas null 
+set autho sl 11 p 1 ty 5506-04-FA o 18 phy FHTT9529e558 pas null 
+set autho sl 11 p 1 ty 5506-04-FA o 21 phy FHTT9961fb88 pas null 
+set autho sl 11 p 2 ty 5506-04-FA o 1 phy FHTT95563c10 pas null 
+set autho sl 11 p 2 ty 5506-02-F o 3 phy FHTT92146738 pas null 
+set autho sl 11 p 2 ty 5506-04-FA o 4 phy FHTT9854b090 pas null 
+set autho sl 11 p 2 ty 5506-04-FA o 9 phy FHTT94ff9a10 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 1 phy FHTT95558708 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 2 phy FHTT9e513c68 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 3 phy FHTT955582f8 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 4 phy FHTT9961f800 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 5 phy FHTT952419b0 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 7 phy FHTT9522e900 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 8 phy FHTT9555bcc0 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 12 phy FHTT98698710 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 14 phy FHTT95239530 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 21 phy FHTT955429b0 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 24 phy FHTT9854c1b0 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 25 phy FHTT9882cf70 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 27 phy FHTT96a3b7a0 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 29 phy FHTT995bac68 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 31 phy FHTT98831990 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 32 phy FHTTfb022a30 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 33 phy FHTT98697f78 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 35 phy FHTT995bb500 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 36 phy FHTT9555cdf8 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 1 phy FHTT94fe6928 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 2 phy FHTT952246c0 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 3 phy FHTT9882db48 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 4 phy FHTT995bb698 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 5 phy FHTT95231018 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 8 phy FHTT95225a20 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 12 phy FHTT94ff6118 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 17 phy FHTT9712ade8 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 20 phy FHTT98698958 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 21 phy FHTT952a2c40 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 23 phy FHTT9854b290 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 25 phy FHTT9961faf0 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 29 phy FHTT95566be8 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 30 phy FHTT98ca2480 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 31 phy FHTT92bab660 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 33 phy FHTT9e513df0 pas null 
+
+!onu replacement configuration 

@@ -1,0 +1,37 @@
+whitelist add phy-id #onumac# type #onutipo# slot #slot# pon #pon# onuid #onunumero#;
+ 
+ngn-uplink-user service TELEFONIA@51 vid #vlanvoip# ip-mode dhcp dhcp-option60 disable protocol-port 5060 user-index #pon#0#onunumero#;
+
+ngn-uplink-user-port phone 4130732562 username 4130732562 sip-user-name 4130732562 sip-user-password RMAgkkTE7 user-index #pon#0#onunumero#;
+
+interface pon 1/#slot#/#pon#;
+
+onu wan-cfg #onunumero# ind 1 mode inter type route #vlan# 7 nat enable qos disable dsp pppoe pro disable #pppoelogin# #pppoesenha# null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5;
+
+onu ipv6-wan-cfg #onunumero# ind 1 ip-stack-mode both ipv6-src-type slaac prefix-src-type delegate;
+
+onu wifi attribute #onunumero# serv-no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq-bandwidth 20mhz;
+
+onu wifi attribute #onunumero# serv-no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq-bandwidth 80mhz;
+
+onu wifi connection #onunumero# serv-no 1 index 1 ssid enable #routerssid# hide disable authmode wpa-psk/wpa2psk encrypt-type tkipaes wpakey #routerchavewifi# interval 0;
+
+onu wifi connection #onunumero# serv-no 2 index 1 ssid enable #routerssid5ghz# hide disable authmode wpa-psk/wpa2psk encrypt-type tkipaes wpakey #routerchavewifi5ghz# interval 0;
+
+onu local-manage-config #onu_numero# config-enable-switch enable console-switch disable telnet-switch disable web-switch enable web-port 80 web-ani-switch enable tel-ani-switch enable web-admin-switchclose enable;
+
+onu ngn-voice-service 2 pots 1 phonenum 4130732562;
+exit;
+
+
+
+
+
+Admin(config)# service-vlan TELEFONIA 2101 to 2101
+Admin(config)# ngn-uplink-interface name TELEFONIA protocol-type sip sip-reg-addr sip.eaifone.net.br sip-proxy-addr sip.eaifone.net.br
+
+
+
+
+
+onu wan-cfg 1 index 2 mode voip type route 1066 0 nat enable qos enable vlanmode tag tvlan enable 1066 0 pppoe proxy enable voipuser voippass active enable

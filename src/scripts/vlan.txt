@@ -1,0 +1,55 @@
+!module config:br_cli_snmp.
+!br cli showrun begin-------------------
+set uplink slot 19 port 1 enable 
+set uplink slot 19 port 1 Interface serdes 
+set uplink slot 19 port 2 enable 
+set uplink slot 19 port 2 Interface serdes 
+set uplink slot 19 port 3 enable 
+set uplink slot 19 port 3 Interface serdes 
+set uplink slot 19 port 4 enable 
+set uplink slot 19 port 4 Interface serdes 
+set uplink slot 19 port 5 enable 
+set uplink slot 19 port 5 Interface serdes 
+set uplink slot 19 port 6 enable 
+set uplink slot 19 port 6 Interface serdes 
+set uplink slot 20 port 1 enable 
+set uplink slot 20 port 1 Interface serdes 
+set uplink slot 20 port 2 enable 
+set uplink slot 20 port 2 Interface serdes 
+set uplink slot 20 port 3 enable 
+set uplink slot 20 port 3 Interface serdes 
+set uplink slot 20 port 4 enable 
+set uplink slot 20 port 4 Interface serdes 
+set uplink slot 20 port 5 enable 
+set uplink slot 20 port 5 Interface serdes 
+set uplink slot 20 port 6 enable 
+set uplink slot 20 port 6 Interface serdes 
+set upbak_trunk min activate ports 0
+set manage_vlan 1100 gerencia 
+set manage vlan name gerencia ip 10.110.10.2/24 
+set debugip 10.25.1.1 mask 255.255.255.224
+add static route destination 0.0.0.0 gateway 10.110.10.1 mask 0.0.0.0 
+
+add vlan vlan_begin 50 vlan_end 50 tag uplink slot 19 port 1
+add vlan vlan_begin 99 vlan_end 99 tag uplink slot 19 port 1
+add vlan vlan_begin 1100 vlan_end 1104 tag uplink slot 19 port 1
+add vlan vlan_begin 1106 vlan_end 1108 tag uplink slot 19 port 1
+add vlan vlan_begin 50 vlan_end 50 tag allslot 0
+add vlan vlan_begin 99 vlan_end 99 tag allslot 0
+add vlan vlan_begin 1100 vlan_end 1104 tag allslot 0
+add vlan vlan_begin 1106 vlan_end 1108 tag allslot 0
+add vlan vlan_begin 4089 vlan_end 4089 tag allslot 0
+
+create service_vlan 101 
+set service_vlan 101 VOIP type voip 
+set service_vlan 101 vlan_begin 50 vlan_end 50 
+create service_vlan 102 
+set service_vlan 102 PLACA1 type data 
+set service_vlan 102 vlan_begin 1100 vlan_end 1116 
+create service_vlan 103 
+set service_vlan 103 GAMES type data 
+set service_vlan 103 vlan_begin 99 vlan_end 99 
+set fdb agingtime 80 
+set crc protect disable
+set rx-down 40dbm disable
+!br cli showrun end!-----------------------

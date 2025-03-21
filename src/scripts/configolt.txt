@@ -1,0 +1,1543 @@
+!WOS system config file----------------------------------------
+!system name:ngpon olt
+cli debug off
+set auto_save enable period 360 active_time hour 1 min 0
+!module config:cli.
+!usermanage config---------------------------------------------
+
+user add GEPON login-password 636c32783c27513329950c6604a84150
+user role GEPON ADMIN enable-password 636c32783c27513329950c6604a84150
+
+!module config:cli_ssh.
+
+!module config:License.
+Set License Threshold 90 Switch enable interval 2
+
+!module config:nwLicense.
+config nw license automate disable
+
+!module config:capability_set.
+!cs_module cfg
+!onu profile cs  showrun cfg
+!onu cs  showrun cfg
+!card cs  showrun cfg
+!onu to card real cs  showrun cfg
+!onu to card match cs  showrun cfg
+
+!module config:CardAuth.
+set sys_apply_flag 1 apply_sence 0
+!card auth config-----------------------------------
+set card_auth slot 9 type hswa
+set card_auth slot 10 type hswa
+set card_auth slot 11 type gc8b
+set card_auth slot 19 type hu1a
+set card_auth slot 21 type fan
+set card_auth slot 24 type pwr
+set card_auth slot 26 type cio
+
+!module config:br_cli_snmp.
+!br cli showrun begin-------------------
+set uplink slot 19 port 1 enable 
+set uplink slot 19 port 1 Interface serdes 
+set uplink slot 19 port 2 enable 
+set uplink slot 19 port 2 Interface serdes 
+set uplink slot 19 port 3 enable 
+set uplink slot 19 port 3 Interface serdes 
+set uplink slot 19 port 4 enable 
+set uplink slot 19 port 4 Interface serdes 
+set uplink slot 19 port 5 enable 
+set uplink slot 19 port 5 Interface serdes 
+set uplink slot 19 port 6 enable 
+set uplink slot 19 port 6 Interface serdes 
+set uplink slot 20 port 1 enable 
+set uplink slot 20 port 1 Interface serdes 
+set uplink slot 20 port 2 enable 
+set uplink slot 20 port 2 Interface serdes 
+set uplink slot 20 port 3 enable 
+set uplink slot 20 port 3 Interface serdes 
+set uplink slot 20 port 4 enable 
+set uplink slot 20 port 4 Interface serdes 
+set uplink slot 20 port 5 enable 
+set uplink slot 20 port 5 Interface serdes 
+set uplink slot 20 port 6 enable 
+set uplink slot 20 port 6 Interface serdes 
+set upbak_trunk min activate ports 0
+set manage_vlan 1100 gerencia 
+set manage vlan name gerencia ip 10.110.10.2/24 
+set debugip 10.25.1.1 mask 255.255.255.224
+add static route destination 0.0.0.0 gateway 10.110.10.1 mask 0.0.0.0 
+
+add vlan vlan_begin 50 vlan_end 50 tag uplink slot 19 port 1
+add vlan vlan_begin 99 vlan_end 99 tag uplink slot 19 port 1
+add vlan vlan_begin 99 vlan_end 99 tag uplink slot 19 port 5
+add vlan vlan_begin 99 vlan_end 99 tag uplink slot 19 port 7
+add vlan vlan_begin 1100 vlan_end 1104 tag uplink slot 19 port 1
+add vlan vlan_begin 1106 vlan_end 1108 tag uplink slot 19 port 1
+add vlan vlan_begin 50 vlan_end 50 tag allslot 0
+add vlan vlan_begin 99 vlan_end 99 tag allslot 0
+add vlan vlan_begin 1100 vlan_end 1104 tag allslot 0
+add vlan vlan_begin 1106 vlan_end 1108 tag allslot 0
+add vlan vlan_begin 4089 vlan_end 4089 tag allslot 0
+
+create service_vlan 101 
+set service_vlan 101 VOIP type voip 
+set service_vlan 101 vlan_begin 50 vlan_end 50 
+create service_vlan 102 
+set service_vlan 102 PLACA1 type data 
+set service_vlan 102 vlan_begin 1100 vlan_end 1116 
+create service_vlan 103 
+set service_vlan 103 GAMES type data 
+set service_vlan 103 vlan_begin 99 vlan_end 99 
+set fdb agingtime 80 
+set crc protect disable
+set rx-down 40dbm disable
+!br cli showrun end!-----------------------
+
+
+!module config:fhsp_device.
+set ftp type ftp
+set core-card auto-swith disable
+
+
+!module config:nbase_device.
+
+!----------------showrun nbase_device begin-------------------
+set vlan 1100 ipv4 mtu 1492
+
+!module config:rcal_route.
+!route config -----------------------------------------
+!route config end!-------------------------------------
+!qinq_vlan config -----------------------------------------
+set arp qinq vlan-switch disable
+!qinq_vlan config end!-------------------------------------
+!route transparent config start -------------------------------------
+!route transparent config end!-------------------------------------
+
+!module config:rcal_mstp.
+!stp config -----------------------------------------
+------------------------------------------------------
+
+!stp config end!-------------------------------------
+
+!module config:rcal_mstp_gsof.
+!gsof stp config -----------------------------------------
+!gsof stp config end!-------------------------------------
+
+!module config:rcal_lacp.
+!lacp config -----------------------------------------
+!lacp config end!-------------------------------------
+
+!module config:rcal_lacp.
+
+!-------trunk gsof config --------!
+
+!-------trunk gsof end --------!
+
+!-------lacp gsof config --------!
+
+!-------lacp gsof end --------!
+
+!module config:LINEID.
+!circuit and remote identifier config---------------------------------
+set remote_id enable
+!circuit and remote identifier config---------------------------------
+
+!module config:LINEID_DHCP.
+!dhcp config---------------------------------
+set dhcp option82 disable
+set dhcp option18 disable
+set dhcp option37 disable
+set dhcp patch disable
+set arp patch disable
+!end dhcp config---------------------------------
+
+!module config:LINEID_PPPOE.
+!pppoe+ config---------------------------------
+set pppoe_plus disable
+!end pppoe+ config---------------------------------
+!pppoe_white_list config---------------------------------
+set pppoe_white_list onu_type 32 action replace 
+set pppoe_white_list onu_type 56 action replace 
+set pppoe_white_list onu_type 32 action keep 
+set pppoe_white_list onu_type 56 action keep 
+!end pppoe_white_list config---------------------------------
+
+!module config:LINEID_PROFILE.
+!line_id_profile config start -------------------------------------
+!line_id_profile config end!-------------------------------------
+!line_id_vlan_switch config start -------------------------------
+set lineid_vlan_switch disable
+!line_id_vlan_switch end!-------------------------------------
+
+!module config:rcal_dsnping.
+
+!dsnping config------------------------------------------
+set dhcp snooping disable 
+set dhcp snooping vlan disable 
+!dsnping config end!-------------------------------------
+
+!module config:rcal_radius.
+!radius config -----------------------------------------
+!radius config end!-------------------------------------
+
+!module config:rcal_dhcp.
+
+!dhcp config -----------------------------------------
+!dhcp config end!-------------------------------------
+
+!module config:rcal_erps.
+!erps config -----------------------------------------
+!erps config end!-------------------------------------
+
+!module config:rcal_lldp.
+!lldp config -----------------------------------------
+!lldp config end!-------------------------------------
+
+
+!module config:rcal_tacacs.
+aaa accounting-mode none
+
+!module config:ldt.
+set ld_macmv disable 
+
+!module config:cli_log.
+!sys log config
+set log save_interval 1440
+!end of sys log config
+
+!module config:prf_mgr.
+
+!module config:FlowRule.
+!flow rule profile config-----------------------------------
+
+!module config:FlowPolicy.
+
+!flow policy profile showrun begin------------------
+
+!flow policy profile showrun end---------------------
+
+!module config:QosSw.
+!qos attach policy config-----------------------------------
+set slot 20 port 6 attach 1023 1019 1023 1020 1023 1021 1023 1022 1023 1023 
+set slot 20 port 5 attach 1023 1019 1023 1020 1023 1021 1023 1022 1023 1023 
+set slot 20 port 4 attach 1023 1019 1023 1020 1023 1021 1023 1022 1023 1023 
+set slot 20 port 3 attach 1023 1019 1023 1020 1023 1021 1023 1022 1023 1023 
+set slot 20 port 2 attach 1023 1019 1023 1020 1023 1021 1023 1022 1023 1023 
+set slot 20 port 1 attach 1023 1019 1023 1020 1023 1021 1023 1022 1023 1023 
+set slot 19 port 6 attach 1023 1019 1023 1020 1023 1021 1023 1022 1023 1023 
+set slot 19 port 5 attach 1023 1019 1023 1020 1023 1021 1023 1022 1023 1023 
+set slot 19 port 4 attach 1023 1019 1023 1020 1023 1021 1023 1022 1023 1023 
+set slot 19 port 3 attach 1023 1019 1023 1020 1023 1021 1023 1022 1023 1023 
+set slot 19 port 2 attach 1023 1019 1023 1020 1023 1021 1023 1022 1023 1023 
+set slot 19 port 1 attach 1023 1019 1023 1020 1023 1021 1023 1022 1023 1023 
+set slot 18 port 0 attach 
+set slot 17 port 0 attach 
+set slot 16 port 0 attach 
+set slot 15 port 0 attach 
+set slot 14 port 0 attach 
+set slot 13 port 0 attach 
+set slot 12 port 0 attach 
+set slot 11 port 0 attach 
+set slot 8 port 0 attach 
+set slot 7 port 0 attach 
+set slot 6 port 0 attach 
+set slot 5 port 0 attach 
+set slot 4 port 0 attach 
+set slot 3 port 0 attach 
+set slot 2 port 0 attach 
+set slot 1 port 0 attach 
+
+!module config:QosAdapt.
+set priority mode wrr 0 1 1 1 2 1 3 1 4 1 5 1 6 1 7 1 
+
+!module config:oltCap.
+
+!module config:ver_cfg.
+set version_cfg enable
+
+
+!module config:ability_set.
+set onu_ability_set_config id_no 255 card_type gepon onu_report_type 56 onu_real_type 56 lan_num 128 pots_num 128 veip_num 0 wifi_num 0 catv_num 0 pptp_flag 255 vendor FHTT onu_ability mdu pon_type no_care poe_num 0 ptp_num 0 
+set onu_ability_set_config id_no 254 card_type gepon onu_report_type 32 onu_real_type 32 lan_num 64 pots_num 64 veip_num 0 wifi_num 0 catv_num 0 pptp_flag 255 vendor FHTT onu_ability mdu pon_type no_care poe_num 0 ptp_num 0 
+set onu_ability_set_config id_no 253 card_type xgpon onu_report_type 863 onu_real_type 863 lan_num 16 pots_num 16 veip_num 0 wifi_num 0 catv_num 0 pptp_flag 255 vendor FHTT onu_ability mdu pon_type xgpon1 poe_num 0 ptp_num 0 
+set onu_ability_set_config id_no 252 card_type xgpon onu_report_type 898 onu_real_type 898 lan_num 8 pots_num 0 veip_num 0 wifi_num 0 catv_num 0 pptp_flag 255 vendor FHTT onu_ability mdu pon_type xgpon1 poe_num 0 ptp_num 0 
+set onu_ability_set_config id_no 251 card_type xgpon onu_report_type 907 onu_real_type 907 lan_num 24 pots_num 24 veip_num 0 wifi_num 0 catv_num 0 pptp_flag 255 vendor FHTT onu_ability mdu pon_type xgpon1 poe_num 0 ptp_num 0 
+set onu_ability_set_config id_no 250 card_type xgpon onu_report_type 910 onu_real_type 910 lan_num 8 pots_num 8 veip_num 0 wifi_num 0 catv_num 0 pptp_flag 255 vendor FHTT onu_ability mdu pon_type xgpon1 poe_num 0 ptp_num 0 
+set onu_ability_set_config id_no 249 card_type xgpon onu_report_type 908 onu_real_type 908 lan_num 16 pots_num 0 veip_num 0 wifi_num 0 catv_num 0 pptp_flag 255 vendor FHTT onu_ability mdu pon_type xgpon1 poe_num 0 ptp_num 0 
+set onu_ability_set_config id_no 248 card_type xgpon onu_report_type 909 onu_real_type 909 lan_num 24 pots_num 0 veip_num 0 wifi_num 0 catv_num 0 pptp_flag 255 vendor FHTT onu_ability mdu pon_type xgpon1 poe_num 0 ptp_num 0 
+set onu_ability_set_config id_no 247 card_type xgpon onu_report_type 911 onu_real_type 911 lan_num 4 pots_num 4 veip_num 0 wifi_num 2 catv_num 0 pptp_flag 255 vendor FHTT onu_ability sfu pon_type xgpon1 poe_num 0 ptp_num 0 
+set onu_ability_set_config id_no 246 card_type xgpon onu_report_type 912 onu_real_type 912 lan_num 4 pots_num 4 veip_num 0 wifi_num 0 catv_num 0 pptp_flag 255 vendor FHTT onu_ability sfu pon_type xgpon1 poe_num 0 ptp_num 0 
+set onu_ability_set_config id_no 245 card_type xgpon onu_report_type 903 onu_real_type 903 lan_num 4 pots_num 0 veip_num 0 wifi_num 0 catv_num 0 pptp_flag 255 vendor FHTT onu_ability sfu pon_type xgpon1 poe_num 0 ptp_num 0 
+set onu_ability_set_config id_no 244 card_type xgpon onu_report_type 918 onu_real_type 918 lan_num 6 pots_num 0 veip_num 0 wifi_num 0 catv_num 0 pptp_flag 255 vendor FHTT onu_ability mdu pon_type xgpon1 poe_num 4 ptp_num 1 
+set onu_ability_set_config id_no 243 card_type xgpon onu_report_type 917 onu_real_type 917 lan_num 24 pots_num 0 veip_num 0 wifi_num 0 catv_num 0 pptp_flag 255 vendor FHTT onu_ability mdu pon_type xgpon1 poe_num 24 ptp_num 0 
+set onu_ability_set_config id_no 242 card_type xgpon onu_report_type 916 onu_real_type 916 lan_num 16 pots_num 0 veip_num 0 wifi_num 0 catv_num 0 pptp_flag 255 vendor FHTT onu_ability mdu pon_type xgpon1 poe_num 16 ptp_num 0 
+set onu_ability_set_config id_no 241 card_type xgpon onu_report_type 915 onu_real_type 915 lan_num 8 pots_num 0 veip_num 0 wifi_num 0 catv_num 0 pptp_flag 255 vendor FHTT onu_ability mdu pon_type xgpon1 poe_num 8 ptp_num 0 
+set onu_ability_set_config id_no 240 card_type xgpon onu_report_type 927 onu_real_type 927 lan_num 4 pots_num 2 veip_num 0 wifi_num 0 catv_num 0 pptp_flag 255 vendor null onu_ability sfu pon_type xgpon1 poe_num 0 ptp_num 0 
+set onu_ability_set_config id_no 239 card_type xgpon onu_report_type 928 onu_real_type 928 lan_num 5 pots_num 2 veip_num 0 wifi_num 0 catv_num 0 pptp_flag 255 vendor null onu_ability sfu pon_type xgpon1 poe_num 0 ptp_num 0 
+set onu_ability_set_config id_no 238 card_type xgpon onu_report_type 929 onu_real_type 929 lan_num 4 pots_num 2 veip_num 0 wifi_num 0 catv_num 0 pptp_flag 255 vendor FHTT onu_ability sfu pon_type xgpon1 poe_num 0 ptp_num 0 
+
+
+!module config:onu_qos.
+!onu port qos rule config-----------------------------------
+!onu port acl rule config-----------------------------------
+
+!module config:otdr.
+!otdr configuration
+
+
+
+
+
+
+
+
+
+
+
+
+!module config:onu_auth.
+
+!module config begin: onu authorization 
+set pon fixbw 60000000 availablebw 143750000 
+set xgpon fixbw 60000000 availablebw 256000000 
+ 
+!pon authentication mode configuration 
+ 
+set whitelist reg conflict pon 
+ 
+!onu physical ID whitelist configuration 
+ 
+set white phy addr FHTT911f14d8 pas null ac add sl 11 p 1 o 4 ty 5506-04-FA 
+set white phy addr FHTT91504810 pas null ac add sl 11 p 1 o 14 ty 5506-02-F 
+set white phy addr FHTT92146738 pas null ac add sl 11 p 2 o 3 ty 5506-02-F 
+set white phy addr FHTT92165fb0 pas null ac add sl 11 p 1 o 17 ty 5506-02-F 
+set white phy addr FHTT92bab660 pas null ac add sl 11 p 4 o 31 ty 5506-04-FA 
+set white phy addr FHTT9408b980 pas fiberhome ac add sl 11 p 1 o 9 ty 5506-04-FA 
+set white phy addr FHTT9408cb78 pas null ac add sl 11 p 1 o 12 ty 5506-04-FA 
+set white phy addr FHTT94fe6928 pas null ac add sl 11 p 4 o 1 ty 5506-04-FA 
+set white phy addr FHTT94ff6118 pas null ac add sl 11 p 4 o 12 ty 5506-04-FA 
+set white phy addr FHTT94ff9a10 pas null ac add sl 11 p 2 o 9 ty 5506-04-FA 
+set white phy addr FHTT952246c0 pas null ac add sl 11 p 4 o 2 ty 5506-04-FA 
+set white phy addr FHTT95225a20 pas null ac add sl 11 p 4 o 8 ty 5506-04-FA 
+set white phy addr FHTT95228208 pas null ac add sl 11 p 1 o 5 ty 5506-04-FA 
+set white phy addr FHTT9522e900 pas null ac add sl 11 p 3 o 7 ty 5506-04-FA 
+set white phy addr FHTT95231018 pas null ac add sl 11 p 4 o 5 ty 5506-04-FA 
+set white phy addr FHTT95239530 pas null ac add sl 11 p 3 o 14 ty 5506-04-FA 
+set white phy addr FHTT952419b0 pas null ac add sl 11 p 3 o 5 ty 5506-04-FA 
+set white phy addr FHTT95297f48 pas null ac add sl 11 p 1 o 8 ty 5506-04-FA 
+set white phy addr FHTT9529e558 pas null ac add sl 11 p 1 o 18 ty 5506-04-FA 
+set white phy addr FHTT952a2c40 pas null ac add sl 11 p 4 o 21 ty 5506-04-FA 
+set white phy addr FHTT955429b0 pas null ac add sl 11 p 3 o 21 ty 5506-04-FA 
+set white phy addr FHTT9554d168 pas null ac add sl 11 p 1 o 1 ty 5506-04-FA 
+set white phy addr FHTT955582f8 pas null ac add sl 11 p 3 o 3 ty 5506-04-FA 
+set white phy addr FHTT95558708 pas null ac add sl 11 p 3 o 1 ty 5506-04-FA 
+set white phy addr FHTT9555bcc0 pas null ac add sl 11 p 3 o 8 ty 5506-04-FA 
+set white phy addr FHTT9555cdf8 pas null ac add sl 11 p 3 o 36 ty 5506-04-FA 
+set white phy addr FHTT95563c10 pas null ac add sl 11 p 2 o 1 ty 5506-04-FA 
+set white phy addr FHTT95566be8 pas null ac add sl 11 p 4 o 29 ty 5506-04-FA 
+set white phy addr FHTT96a3a400 pas null ac add sl 11 p 1 o 7 ty 5506-04-FA 
+set white phy addr FHTT96a3b7a0 pas null ac add sl 11 p 3 o 27 ty 5506-04-FA 
+set white phy addr FHTT9712ade8 pas null ac add sl 11 p 4 o 17 ty 5506-04-FA 
+set white phy addr FHTT9854b090 pas null ac add sl 11 p 2 o 4 ty 5506-04-FA 
+set white phy addr FHTT9854b290 pas null ac add sl 11 p 4 o 23 ty 5506-04-FA 
+set white phy addr FHTT9854c1b0 pas null ac add sl 11 p 3 o 24 ty 5506-04-FA 
+set white phy addr FHTT98697f78 pas null ac add sl 11 p 3 o 33 ty 5506-04-FA 
+set white phy addr FHTT98698710 pas null ac add sl 11 p 3 o 12 ty 5506-04-FA 
+set white phy addr FHTT98698958 pas null ac add sl 11 p 4 o 20 ty 5506-04-FA 
+set white phy addr FHTT9882cf70 pas null ac add sl 11 p 3 o 25 ty 5506-04-FA 
+set white phy addr FHTT9882db48 pas null ac add sl 11 p 4 o 3 ty 5506-04-FA 
+set white phy addr FHTT98831990 pas null ac add sl 11 p 3 o 31 ty 5506-04-FA 
+set white phy addr FHTT98ca2480 pas null ac add sl 11 p 4 o 30 ty 5506-04-FA 
+set white phy addr FHTT995bac68 pas null ac add sl 11 p 3 o 29 ty 5506-04-FA 
+set white phy addr FHTT995bb500 pas null ac add sl 11 p 3 o 35 ty 5506-04-FA 
+set white phy addr FHTT995bb698 pas null ac add sl 11 p 4 o 4 ty 5506-04-FA 
+set white phy addr FHTT9961bfe8 pas null ac add sl 11 p 1 o 6 ty 5506-04-FA 
+set white phy addr FHTT9961f800 pas null ac add sl 11 p 3 o 4 ty 5506-04-FA 
+set white phy addr FHTT9961faf0 pas null ac add sl 11 p 4 o 25 ty 5506-04-FA 
+set white phy addr FHTT9961fb88 pas null ac add sl 11 p 1 o 21 ty 5506-04-FA 
+set white phy addr FHTT9961fbb0 pas null ac add sl 11 p 1 o 10 ty 5506-04-FA 
+set white phy addr FHTT9e513828 pas null ac add sl 11 p 1 o 2 ty 5506-04-FA 
+set white phy addr FHTT9e513c68 pas null ac add sl 11 p 3 o 2 ty 5506-04-FA 
+set white phy addr FHTT9e513df0 pas null ac add sl 11 p 4 o 33 ty 5506-04-FA 
+set white phy addr FHTTfb022a30 pas null ac add sl 11 p 3 o 32 ty 5506-04-FA 
+ 
+!onu password whitelist configuration 
+ 
+ 
+!onu logical SN whitelist configuration 
+ 
+ 
+!onu logical SN whitelist configuration 
+ 
+ 
+!onu authorization configuration 
+ 
+set autho sl 11 p 1 ty 5506-04-FA o 1 phy FHTT9554d168 pas null 
+set autho sl 11 p 1 ty 5506-04-FA o 2 phy FHTT9e513828 pas null 
+set autho sl 11 p 1 ty 5506-04-FA o 4 phy FHTT911f14d8 pas null 
+set autho sl 11 p 1 ty 5506-04-FA o 5 phy FHTT95228208 pas null 
+set autho sl 11 p 1 ty 5506-04-FA o 6 phy FHTT9961bfe8 pas null 
+set autho sl 11 p 1 ty 5506-04-FA o 7 phy FHTT96a3a400 pas null 
+set autho sl 11 p 1 ty 5506-04-FA o 8 phy FHTT95297f48 pas null 
+set autho sl 11 p 1 ty 5506-04-FA o 9 phy FHTT9408b980 pas null 
+set autho sl 11 p 1 ty 5506-04-FA o 10 phy FHTT9961fbb0 pas null 
+set autho sl 11 p 1 ty 5506-04-FA o 12 phy FHTT9408cb78 pas null 
+set autho sl 11 p 1 ty 5506-02-F o 14 phy FHTT91504810 pas null 
+set autho sl 11 p 1 ty 5506-02-F o 17 phy FHTT92165fb0 pas null 
+set autho sl 11 p 1 ty 5506-04-FA o 18 phy FHTT9529e558 pas null 
+set autho sl 11 p 1 ty 5506-04-FA o 21 phy FHTT9961fb88 pas null 
+set autho sl 11 p 2 ty 5506-04-FA o 1 phy FHTT95563c10 pas null 
+set autho sl 11 p 2 ty 5506-02-F o 3 phy FHTT92146738 pas null 
+set autho sl 11 p 2 ty 5506-04-FA o 4 phy FHTT9854b090 pas null 
+set autho sl 11 p 2 ty 5506-04-FA o 9 phy FHTT94ff9a10 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 1 phy FHTT95558708 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 2 phy FHTT9e513c68 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 3 phy FHTT955582f8 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 4 phy FHTT9961f800 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 5 phy FHTT952419b0 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 7 phy FHTT9522e900 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 8 phy FHTT9555bcc0 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 12 phy FHTT98698710 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 14 phy FHTT95239530 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 21 phy FHTT955429b0 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 24 phy FHTT9854c1b0 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 25 phy FHTT9882cf70 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 27 phy FHTT96a3b7a0 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 29 phy FHTT995bac68 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 31 phy FHTT98831990 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 32 phy FHTTfb022a30 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 33 phy FHTT98697f78 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 35 phy FHTT995bb500 pas null 
+set autho sl 11 p 3 ty 5506-04-FA o 36 phy FHTT9555cdf8 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 1 phy FHTT94fe6928 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 2 phy FHTT952246c0 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 3 phy FHTT9882db48 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 4 phy FHTT995bb698 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 5 phy FHTT95231018 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 8 phy FHTT95225a20 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 12 phy FHTT94ff6118 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 17 phy FHTT9712ade8 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 20 phy FHTT98698958 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 21 phy FHTT952a2c40 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 23 phy FHTT9854b290 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 25 phy FHTT9961faf0 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 29 phy FHTT95566be8 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 30 phy FHTT98ca2480 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 31 phy FHTT92bab660 pas null 
+set autho sl 11 p 4 ty 5506-04-FA o 33 phy FHTT9e513df0 pas null 
+
+!onu replacement configuration 
+
+!onu pon type configuration 
+
+!module config end: onu authorization 
+
+!module config:pon_protect.
+!PP: Pon protect group config-----------------------------------
+!PP: Pon protect group config end-------------------------------
+!PP: Hand in hand pon protect config-----------------------------------
+!PP: Hand in hand pon protect config end-------------------------------
+
+!module config:onuCfg.
+!onu config start-----------------------------------
+!gpononu max default servicebandwidth info-----------------------------------
+set gpononu default maxservicebandwidth 1000m
+
+!gpon servband profile -------- 
+
+!gpon servband config -------- 
+set service_ba sl 11 p 1 o 1 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 1 o 1 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 1 o 1 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 1 o 2 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 1 o 2 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 1 o 2 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 1 o 4 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 1 o 4 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 1 o 4 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 1 o 5 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 1 o 5 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 1 o 5 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 1 o 6 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 1 o 6 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 1 o 6 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 1 o 7 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 1 o 7 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 1 o 7 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 1 o 8 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 1 o 8 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 1 o 8 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 1 o 9 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 1 o 9 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 1 o 9 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 1 o 10 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 1 o 10 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 1 o 10 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 1 o 12 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 1 o 12 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 1 o 12 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 1 o 14 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 1 o 14 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 1 o 14 ty voi fix 16 as 0 max 64 
+set service_ba sl 11 p 1 o 17 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 1 o 17 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 1 o 17 ty voi fix 16 as 0 max 64 
+set service_ba sl 11 p 1 o 18 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 1 o 18 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 1 o 18 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 1 o 21 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 1 o 21 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 1 o 21 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 2 o 1 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 2 o 1 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 2 o 1 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 2 o 3 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 2 o 3 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 2 o 3 ty voi fix 16 as 0 max 64 
+set service_ba sl 11 p 2 o 4 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 2 o 4 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 2 o 4 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 2 o 9 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 2 o 9 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 2 o 9 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 3 o 1 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 3 o 1 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 3 o 1 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 3 o 2 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 3 o 2 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 3 o 2 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 3 o 3 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 3 o 3 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 3 o 3 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 3 o 4 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 3 o 4 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 3 o 4 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 3 o 5 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 3 o 5 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 3 o 5 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 3 o 7 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 3 o 7 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 3 o 7 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 3 o 8 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 3 o 8 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 3 o 8 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 3 o 12 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 3 o 12 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 3 o 12 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 3 o 14 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 3 o 14 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 3 o 14 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 3 o 21 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 3 o 21 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 3 o 21 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 3 o 24 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 3 o 24 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 3 o 24 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 3 o 25 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 3 o 25 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 3 o 25 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 3 o 27 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 3 o 27 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 3 o 27 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 3 o 29 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 3 o 29 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 3 o 29 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 3 o 31 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 3 o 31 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 3 o 31 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 3 o 32 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 3 o 32 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 3 o 32 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 3 o 33 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 3 o 33 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 3 o 33 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 3 o 35 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 3 o 35 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 3 o 35 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 3 o 36 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 3 o 36 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 3 o 36 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 4 o 1 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 4 o 1 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 4 o 1 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 4 o 2 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 4 o 2 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 4 o 2 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 4 o 3 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 4 o 3 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 4 o 3 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 4 o 4 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 4 o 4 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 4 o 4 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 4 o 5 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 4 o 5 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 4 o 5 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 4 o 8 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 4 o 8 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 4 o 8 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 4 o 12 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 4 o 12 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 4 o 12 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 4 o 17 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 4 o 17 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 4 o 17 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 4 o 20 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 4 o 20 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 4 o 20 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 4 o 21 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 4 o 21 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 4 o 21 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 4 o 23 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 4 o 23 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 4 o 23 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 4 o 25 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 4 o 25 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 4 o 25 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 4 o 29 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 4 o 29 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 4 o 29 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 4 o 30 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 4 o 30 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 4 o 30 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 4 o 31 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 4 o 31 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 4 o 31 ty voi fix 32 as 0 max 64 
+set service_ba sl 11 p 4 o 33 ty iptv fix 16 as 0 max 64 
+set service_ba sl 11 p 4 o 33 ty data fix 16 as 0 max 128000 
+set service_ba sl 11 p 4 o 33 ty voi fix 32 as 0 max 64 
+
+!onu bandwidth profile -------- 
+
+!onu bandwidth config -------- 
+!gpononu max default servicebandwidth info-----------------------------------
+set gpononu default maxservicebandwidth 1000m
+
+!high_priority config -------- 
+
+!gpon_card_system_switch config -------- 
+set port_separate slot 11 pon 3 onu 8 separate disable
+set port_separate slot 11 pon 4 onu 12 separate disable
+
+!onu queue schedule config -------- 
+
+!onuport bind packet_curb profile -------- 
+
+!gfast vdsl port enable begin -----------
+
+!gfast vdsl port enable end -----------
+
+!gfast dpu dsl rate prf begin -----------
+
+!gfast dpu dsl rate prf end -----------
+
+!gfast dpu vdsl line basic prf begin -----------
+
+!gfast dpu vdsl line basic prf end -----------
+
+!gfast dpu vdsl service prf begin -----------
+
+!gfast dpu vdsl service prf end -----------
+
+!onu static route begin-----------------------------------
+
+!onu static route end-----------------------------------
+!nonu sergird cfg config-----------------------------------
+!onu config end-----------------------------------
+
+!module config:ngn.
+!ngn config version -------------------------------------------------
+check ngn_cfg version GEPON_NGN_V4.0 
+!ngn config version end -------------------------------------------------
+!ngn port lever switch-----------------------------------------
+set ngn-port-lever switch disable 
+!ngn port lever switch end--------------------------------------
+!iad mac range config-----------------------------------------
+set mac_range_cfg startmac 000ac2100000 endmac 000ac21e8480 
+set mac_range_cfg startmac 000ac22e0100 endmac 000ac2300513 
+set mac_range_cfg startmac 000ac20000e7 endmac 000ac200ffff 
+set mac_range_cfg startmac 000ac2fe0000 endmac 000ac2ffffff 
+set mac_range_cfg startmac 70b921000000 endmac 70b9210f423f 
+set mac_range_cfg startmac 444b00000000 endmac 444bffffffff 
+set mac_range_cfg startmac 000eb4010000 endmac 000eb401ffff 
+set mac_range_cfg startmac 000eb4a90000 endmac 000eb4a9ffff 
+set mac_range_cfg startmac 000eb4450000 endmac 000eb445ffff 
+set mac_range_cfg startmac 70b921e082c0 endmac 70b921ffffff 
+set mac_range_cfg startmac 000467000000 endmac 000467ffffff 
+set mac_range_cfg startmac 34bf90000000 endmac 34bf90ffffff 
+!iad mac range config end-----------------------------------------
+!ngn interface config -------------------------------------------------
+set new_ngn_uplink_interface name VOIP@50 protocol_type SIP mgc 1 impactnet.smt02.serversip.com.br 5060 mgc 2 impactnet.smt02.serversip.com.br 5060 m_dns ipv4 8.8.8.8 s_dns ipv4 1.1.1.1 sip_reg_addr impactnet.smt02.serversip.com.br sip_proxy_addr 0.0.0.0 
+set new_ngn_uplink_interface name VOIP@58 protocol_type SIP mgc 1 45.166.248.245 5060 mgc 2 45.166.248.245 5060 m_dns ipv4 8.8.8.8 s_dns ipv4 1.1.1.1 sip_reg_addr 45.166.248.245 sip_proxy_addr 0.0.0.0 
+set new_ngn_uplink_interface name VOIP@51 protocol_type SIP mgc 1 45.166.248.245 5060 mgc 2 45.166.248.245 5060 m_dns ipv4 8.8.8.8 s_dns ipv4 8.8.4.4 sip_reg_addr 45.166.248.245 sip_proxy_addr 0.0.0.0 
+!ngn interface config end ---------------------------------------------
+!ngn user config -------------------------------------------------
+set new_ngn_uplink_user serv VOIP@50 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 0 
+set ngn_uplink_user_port phone 1 usern 554133242829 sip_user_n 55008135700075 sip_user_p 5dek3s6 user_in 0 
+set new_ngn_uplink_user serv VOIP@50 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 1 
+set ngn_uplink_user_port phone 2 usern 554130730963 sip_user_n 55008135700039 sip_user_p b26y4r9 user_in 1 
+set new_ngn_uplink_user serv VOIP@50 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 2 
+set ngn_uplink_user_port phone 3 usern 554132973537 sip_user_n 55008135700025 sip_user_p dz94rjq user_in 2 
+set new_ngn_uplink_user serv VOIP@50 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 3 
+set ngn_uplink_user_port phone 4 usern 55008135700095 sip_user_n 55008135700095 sip_user_p qbps1e7 user_in 3 
+set new_ngn_uplink_user serv VOIP@50 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 4 
+set ngn_uplink_user_port phone 5 usern 4130732399 sip_user_n 55008135700204 sip_user_p zfezy0fp user_in 4 
+set new_ngn_uplink_user serv VOIP@58 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 5 
+set ngn_uplink_user_port phone 6 usern 30220986 sip_user_n 30220986 sip_user_p beywECfJ user_in 5 
+set new_ngn_uplink_user serv VOIP@58 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 6 
+set ngn_uplink_user_port phone 7 usern 32320423 sip_user_n 32320423 sip_user_p IcBllzFQ user_in 6 
+set new_ngn_uplink_user serv VOIP@58 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 7 
+set ngn_uplink_user_port phone 8 usern 4132324281 sip_user_n 4132324281 sip_user_p syO4wvnCz user_in 7 
+set new_ngn_uplink_user serv VOIP@58 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 8 
+set ngn_uplink_user_port phone 9 usern 32334058 sip_user_n 32334058 sip_user_p sOHOKcgh user_in 8 
+set new_ngn_uplink_user serv VOIP@58 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 9 
+set ngn_uplink_user_port phone 10 usern 32241867 sip_user_n 32241867 sip_user_p USLNsQPM user_in 9 
+set new_ngn_uplink_user serv VOIP@50 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 10 
+set ngn_uplink_user_port phone 11 usern 4132247117 sip_user_n 4132247117 sip_user_p PJ0SiJLnD user_in 10 
+set new_ngn_uplink_user serv VOIP@50 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 11 
+set ngn_uplink_user_port phone 12 usern 55008135700296 sip_user_n 55008135700296 sip_user_p ern2uz9 user_in 11 
+set new_ngn_uplink_user serv VOIP@58 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 12 
+set ngn_uplink_user_port phone 13 usern 32247472 sip_user_n 32247472 sip_user_p YkC8XSJZ user_in 12 
+set new_ngn_uplink_user serv VOIP@58 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 13 
+set ngn_uplink_user_port phone 14 usern 30732853 sip_user_n 30732853 sip_user_p tHlbiriw user_in 13 
+set new_ngn_uplink_user serv VOIP@50 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 14 
+set ngn_uplink_user_port phone 15 usern 4130732863 sip_user_n 55008135700350 sip_user_p 0jwtdf2 user_in 14 
+set new_ngn_uplink_user serv VOIP@58 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 15 
+set ngn_uplink_user_port phone 16 usern 30736363 sip_user_n 30736363 sip_user_p TXwg2AJ5 user_in 15 
+set new_ngn_uplink_user serv VOIP@58 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 16 
+set new_ngn_uplink_user serv VOIP@58 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 17 
+set ngn_uplink_user_port phone 17 usern 32332447 sip_user_n 32332447 sip_user_p sDlagnQI user_in 17 
+set new_ngn_uplink_user serv VOIP@58 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 18 
+set ngn_uplink_user_port phone 19 usern 32338320 sip_user_n 32338320 sip_user_p 2BkOjPuC user_in 18 
+set new_ngn_uplink_user serv VOIP@51 vid 50 ip_m dhcp dhcp_opt enable pro 5060 user_in 19 
+set ngn_uplink_user_port phone 31 usern 30578155 sip_user_n 30578155 sip_user_p tvpKnHufm user_in 19 
+set new_ngn_uplink_user serv VOIP@51 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 20 
+set ngn_uplink_user_port phone 21 usern 4132247472 sip_user_n 4132247472 sip_user_p EvUsnwHdl user_in 20 
+set new_ngn_uplink_user serv VOIP@51 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 21 
+set ngn_uplink_user_port phone 22 usern 4132338320 sip_user_n 4132338320 sip_user_p iWXRlCVOP user_in 21 
+set new_ngn_uplink_user serv VOIP@51 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 22 
+set ngn_uplink_user_port phone 23 usern 4132332447 sip_user_n 4132332447 sip_user_p v2lcI5WnV user_in 22 
+set new_ngn_uplink_user serv VOIP@51 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 24 
+set ngn_uplink_user_port phone 25 usern 4132334058 sip_user_n 4132334058 sip_user_p fXzOVO1aN user_in 24 
+set new_ngn_uplink_user serv VOIP@51 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 25 
+set ngn_uplink_user_port phone 26 usern 4137792552 sip_user_n 4137792552 sip_user_p SVLtAmeKW user_in 25 
+set new_ngn_uplink_user serv VOIP@51 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 26 
+set ngn_uplink_user_port phone 27 usern 4130220986 sip_user_n 4130220986 sip_user_p GqTIdVV4R user_in 26 
+set new_ngn_uplink_user serv VOIP@51 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 27 
+set ngn_uplink_user_port phone 28 usern 4132241867 sip_user_n 4132241867 sip_user_p b6IiI3YIQ user_in 27 
+set new_ngn_uplink_user serv VOIP@51 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 28 
+set ngn_uplink_user_port phone 29 usern 4130732853 sip_user_n 4130732853 sip_user_p e0vrG4mnR user_in 28 
+set new_ngn_uplink_user serv VOIP@51 vid 50 ip_m dhcp dhcp_opt disable pro 5060 user_in 29 
+set ngn_uplink_user_port phone 30 usern 4132320423 sip_user_n 4132320423 sip_user_p 68awFyxnz user_in 29 
+!ngn user config end ---------------------------------------------
+!ngn bitmap config -------------------------------------------------
+!ngn bitmap config end ---------------------------------------------
+!ngn bind bitmap config begin ---------------------------------------------
+!ngn bind bitmap config end ---------------------------------------------
+!ngn iad md5 config -------------------------------------------------
+!ngn iad md5 config end ---------------------------------------------
+!ngn softswitch profile config-----------------------------------------
+!ngn softswitch profile config end ---------------------------------------------
+!ngn adv pots profile config -------------------------------------------------
+!ngn softswitch profile config end ---------------------------------------------
+!ngn keepalive config-----------------------------------------
+set ngn_keepalive servicename VOIP@50 aliveinterval 30 alivetimes 3
+set ngn_keepalive servicename VOIP@58 aliveinterval 30 alivetimes 3
+set ngn_keepalive servicename VOIP@51 aliveinterval 30 alivetimes 3
+!ngn keepalive config end--------------------------------------
+!ngn voice activation type-----------------------------------------
+set ngn_activation_type auto 
+!ngn voice activation type end--------------------------------------
+!ngn reg para -----------------------------------------
+set ngn_reg_para name VOIP@50 reg_time 30 reg_pkts 0 reg_interval 30
+set ngn_reg_para name VOIP@58 reg_time 30 reg_pkts 0 reg_interval 30
+set ngn_reg_para name VOIP@51 reg_time 30 reg_pkts 0 reg_interval 30
+!ngn reg para end--------------------------------------
+!ngn voice service config-----------------------------------------
+set ngn_v sl 11 p 1 o 7 p 1 ph 31 
+set ngn_v sl 11 p 2 o 1 p 1 ph 30 
+set ngn_v sl 11 p 3 o 4 p 1 ph 8 
+set ngn_v sl 11 p 3 o 24 p 1 ph 27 
+set ngn_v sl 11 p 3 o 24 p 2 ph 28 
+set ngn_v sl 11 p 3 o 27 p 1 ph 29 
+set ngn_v sl 11 p 4 o 3 p 1 ph 11 
+set ngn_v sl 11 p 4 o 23 p 1 ph 25 
+set ngn_v sl 11 p 4 o 31 p 1 ph 26 
+!ngn voice service config end--------------------------------------
+!ngn private subnet config-----------------------------------------
+set ngn_private_subnet private_ip 10.27.255.255 private_subnet 255.255.0.0 index 1 iptype voice
+set ngn_private_subnet private_ip 10.26.255.255 private_subnet 255.255.0.0 index 2 iptype data
+set ngn_private_subnet private_ip 10.29.255.255 private_subnet 255.255.0.0 index 3 iptype ppcommunication
+set ngn_private_subnet private_ip 10.25.255.255 private_subnet 255.255.0.0 index 4 iptype voice25
+!ngn private subnet end ---------------------------------------------
+!voip_manage_global_showrun ------------------------
+
+!module config:qinq.
+!QinQ: Qinq profile config-----------------------------------
+!
+!QinQ: Olt qinq domain config-----------------------------------
+!---------------------------------------------------------------
+!Basic command format:
+!create oltqinq_domain <name>
+!set oltqinq_domain <name> service_num <number>
+!set oltqinq_domain <name> <1-8> uprule {<1-27> <value> <op>}*4 {serv_id <1-8>}*1
+!set oltqinq_domain <name> <1-8> downrule {<1-27> <value> <op>}*4
+!set oltqinq_domain <name> <1-8> {vlan <1-4> [<oldvid>|null] [<oldcos>|null] [add|translation|transparent] <tpid> [<cos>|null] [<newvid>|null]}*4
+!Key parameter interpretation:
+!<1-8>: service index.
+!<1-27>: 1: Destination MAC. 2: Source MAC. 3: Ethernet Type. 4: Fourth layer VLAN. 5: Third layer VLAN. 6: Second layer VLAN. 7: First layer VLAN. 8: TOS. 10: TTL. 11: Protocol type. 12: Source IPv4. 13: Source IPv6. 14: Destination IPv4. 15: Destination IPv6. 16: L4 source port. 17: L4 destination port. 18: Cos4. 19: Cos3. 20: Cos2. 21: Cos1. 22: Destination IPv6 prefix. 23: Source IPv6 prefix. 24: IP version. 25: IPv6 traffic class. 26: IPv6 flow label. 27: IPv6 next header.
+!<op>: 0: Never. 1: ==. 2: !=. 3: <=. 4: >=. 5: Exist. 6: No exist. 7: Always.
+!---------------------------------------------------------------
+!
+!QinQ: Onu attach olt qinq config-----------------------------------
+!
+!QinQ: Pon attach olt qinq config-----------------------------------
+!
+!QinQ: Onu qinq policing config-----------------------------------
+!
+!QinQ: Gpon vlan table config-----------------------------------
+
+!
+!QinQ: Qinq parameters config-----------------------------------
+!
+!QinQ: Pon attach vlan table config-----------------------------------
+!
+!QinQ: rate limit model config-----------------------------------
+no rate_limit_model
+set rate_limit_model svlan add cvlan translate
+!
+
+!module config:onu_data.
+
+!module config:onu_data.
+!onu igmp module showrun begin----------------
+!onu igmp module showrun end----------------
+
+!module config:onu_data.
+
+!module config:onu_data.
+
+!module config:onu_data.
+
+!module config:onu_data.
+
+!module config:onu_catv.
+
+!module config:onu_wan.
+set wancfg sl 11 1 1 ind 1 mode inter ty r 1101 7 nat en qos dis dsp pppoe pro dis banrisul1804 key:<=0,5+)2mfnj null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 1 1 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 2 ind 1 mode inter ty r 1101 7 nat en qos dis dsp pppoe pro dis brs507 key:<,+ing null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 1 2 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 4 ind 1 mode inter ty r 1101 7 nat en qos dis dsp pppoe pro dis 25293089000152 key:lileknfennnmil null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 1 4 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 5 ind 1 mode inter ty r 1101 7 nat en qos dis dsp pppoe pro dis peixoto228wilson key:.95&/*/llf'52+/0 null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 1 5 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 6 ind 1 mode inter ty r 1101 7 nat en qos dis dsp pppoe pro dis brs1507 key:<,+ming null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 1 6 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 7 ind 1 mode inter ty r 1101 7 nat en qos dis dsp pppoe pro dis 34546399000122 key:kjijhkeennnmll null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 1 7 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 8 ind 1 mode inter ty r 1101 7 nat en qos dis dsp pppoe pro dis brs804 key:<,+fnj null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 1 8 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 9 ind 1 mode inter ty r 1101 7 nat en qos dis dsp pppoe pro dis Banrisul1407 key:\=0,5+)2mjng null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 1 9 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 10 ind 1 mode inter ty r 1101 7 nat en qos dis vlanm transp tvlan dis 0 0 dsp pppoe pro dis 04389091948 key:njkfenemejf null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 1 10 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 12 ind 1 mode inter ty r 1101 7 nat en qos dis dsp pppoe pro dis CentroSala903 key:[90*,/K=2=enk null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 1 12 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 14 ind 1 mode inter ty r 99 7 nat en qos dis dsp pppoe pro dis brs1507 key:<,+ming null auto entries 3 fe1 fe2 ssid1  
+set wancfg sl 11 1 14 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 17 ind 1 mode inter ty r 1101 7 nat en qos dis dsp pppoe pro dis banrisul1007 key:<=0,5+)2mnng null auto entries 4 fe1 fe2 ssid1 ssid2  
+set wancfg sl 11 1 17 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 18 ind 1 mode inter ty r 1101 7 nat en qos dis dsp pppoe pro dis marechal228 key:1=,9;6=2llf null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 1 18 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 21 ind 1 mode inter ty r 99 7 nat en qos dis vlanm transp tvlan dis 0 0 dsp pppoe pro dis brs104 key:<,+mnj null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 1 21 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 2 1 ind 1 mode inter ty r 1102 7 nat en qos dis dsp pppoe pro dis Peixoto228 key:N95&/*/llf null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 2 1 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 2 3 ind 1 mode inter ty r 1102 7 nat en qos dis dsp pppoe pro dis brs101 key:<,+mnm null auto entries 3 fe1 fe2 ssid1  
+set wancfg sl 11 2 3 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 2 4 ind 1 mode inter ty r 1102 7 nat en qos dis dsp pppoe pro dis peixotoo228 key:.95&/*//llf null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 2 4 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 2 9 ind 1 mode inter ty r 1102 7 nat en qos dis dsp pppoe pro dis banrisul407 key:<=0,5+)2jng null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 2 9 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 2 ind 1 mode inter ty b 99 0 nat en qos dis vlanm transp tvlan dis 0 0 dsp null entries 4 fe1 fe2 fe3 fe4  
+set wancfg sl 11 3 2 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 3 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis 74708015968 key:gjgnfnmiehf null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 3 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 4 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis 35966815968 key:kiehhfmiehf null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 4 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 5 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis lou133 key:2/)mkk null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 5 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 7 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis Loureiroconj802 key:R/),95,/;/04fnl null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 7 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 8 ind 1 mode inter ty r 99 7 nat en qos dis dsp pppoe pro dis loureiocon133 key:2/),95/;/0mkk null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 8 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 12 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis 82981531972 key:flefmikmegl null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 12 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 14 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis loureiocon205 key:2/),95/;/0lni null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 14 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 21 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis Loureiro133A key:R/),95,/mkk] null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 21 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 24 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis 16andar key:mh=0:=, null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 24 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 25 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis centro4andarcjto410 key:;90*,/j=0:=,;4*/jmn null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 25 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 27 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis Tosin key:J/+50 null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 27 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 29 ind 1 mode inter ty r 1103 7 nat en qos dis vlanm transp tvlan dis 0 0 dsp pppoe pro dis Lopes key:R/.9+ null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 29 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 31 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis MuaAnd5sl505 key:Q)=]0:i+2ini null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 31 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 32 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis Loureiro133Sl104 key:R/),95,/mkkK2mnj null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 32 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 33 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis Loureiro133CJ108 key:R/),95,/mkk[Tmnf null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 33 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 35 ind 1 mode inter ty r 1103 7 nat en qos dis vlanm transp tvlan dis 0 0 dsp pppoe pro dis 34861928000182 key:kjfhmelfnnnmfl null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 35 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 36 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis Loureirosl14133 key:R/),95,/+2mjmkk null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 36 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 1 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis Muricy650l key:Q),5;%hin2 null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 1 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 2 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis edagusad17 key:9:=7)+=:mg null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 2 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 3 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis 76258318000139 key:ghlifkmfnnnmke null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 3 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 4 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis 95829059053 key:eiflenienik null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 4 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 5 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis Edagu82 key:Y:=7)fl null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 5 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 8 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis edauguad19192 key:9:=)7)=:memel null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 8 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 12 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis muricyConj204terraco key:1),5;%[/04lnj*9,,=;/ null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 12 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 17 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis edagustaportaria10 key:9:=7)+*=./,*=,5=mn null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 17 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 20 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis 09482735935 key:nejflgkieki null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 20 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 21 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis 04300047960 key:njknnnjgehn null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 21 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 23 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis Muricy650andar9sala94 key:Q),5;%hin=0:=,e+=2=ej null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 23 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 25 ind 1 mode inter ty r 1104 7 nat en qos dis vlanm transp tvlan dis 0 0 dsp pppoe pro dis Souza key:K/)$= null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 25 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 29 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis Muricy650sL203 key:Q),5;%hin+Rlnk null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 29 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 30 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis alameda654 key:=2=19:=hij null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 30 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 31 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis Muricyy650 key:Q),5;%%hin null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 31 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 33 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis 07957373941 key:ngeigkgkejm null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 33 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+
+
+!module config:onu_wifi.
+set wifi_serv_wlan slot 11 pon 1 onu 2 serv_no 1 index 1 ssid enable ImpactNet-507 hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey marbozza3e27 interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 2 serv_no 1 index 2 ssid disable fh_513828_ssid2 hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 2 serv_no 1 index 3 ssid disable fh_513828_ssid3 hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 2 serv_no 1 index 4 ssid disable fh_513828_ssid4 hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 1 onu 2 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 1 onu 2 serv_no 2 index 1 ssid enable ImpactNet-507_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey marbozza3e27 interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 2 serv_no 2 index 2 ssid disable fh_513828_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 2 serv_no 2 index 3 ssid disable fh_513828_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 2 serv_no 2 index 4 ssid disable fh_513828_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 1 onu 2 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 1 onu 5 serv_no 1 index 1 ssid enable RBOuro hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey R83331120 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 5 serv_no 1 index 2 ssid disable fh_228208_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 5 serv_no 1 index 3 ssid disable fh_228208_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 5 serv_no 1 index 4 ssid disable fh_228208_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 1 onu 5 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 1 onu 5 serv_no 2 index 1 ssid enable RBOuro_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey R83331120 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 5 serv_no 2 index 2 ssid disable fh_228208_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 5 serv_no 2 index 3 ssid disable fh_228208_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 5 serv_no 2 index 4 ssid disable fh_228208_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 1 onu 5 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 1 onu 6 serv_no 1 index 1 ssid enable Gcaproni hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey Gcaproni1331 interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 6 serv_no 1 index 2 ssid disable fh_61bfe8_ssid2 hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 6 serv_no 1 index 3 ssid disable fh_61bfe8_ssid3 hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 6 serv_no 1 index 4 ssid disable fh_61bfe8_ssid4 hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 1 onu 6 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 1 onu 6 serv_no 2 index 1 ssid enable Gcaproni_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey Gcaproni1331 interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 6 serv_no 2 index 2 ssid disable fh_61bfe8_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 6 serv_no 2 index 3 ssid disable fh_61bfe8_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 6 serv_no 2 index 4 ssid disable fh_61bfe8_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 1 onu 6 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 1 onu 7 serv_no 1 index 1 ssid enable MISSAOIMOVEIS hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 96834311 interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 7 serv_no 1 index 2 ssid disable fh_a3a400_ssid2 hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 7 serv_no 1 index 3 ssid disable fh_a3a400_ssid3 hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 7 serv_no 1 index 4 ssid disable fh_a3a400_ssid4 hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 1 onu 7 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 1 onu 7 serv_no 2 index 1 ssid enable MISSAOIMOVEIS_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 96834311 interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 7 serv_no 2 index 2 ssid disable fh_a3a400_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 7 serv_no 2 index 3 ssid disable fh_a3a400_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 7 serv_no 2 index 4 ssid disable fh_a3a400_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 1 onu 7 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 1 onu 8 serv_no 1 index 1 ssid enable America_2.4 hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey america804 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 8 serv_no 1 index 2 ssid disable fh_297f48_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 8 serv_no 1 index 3 ssid disable fh_297f48_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 8 serv_no 1 index 4 ssid disable fh_297f48_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 1 onu 8 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 1 onu 8 serv_no 2 index 1 ssid enable America_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey america804 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 8 serv_no 2 index 2 ssid disable fh_297f48_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 8 serv_no 2 index 3 ssid disable fh_297f48_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 8 serv_no 2 index 4 ssid disable fh_297f48_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 1 onu 8 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 1 onu 9 serv_no 1 index 1 ssid enable Oliveira_2.4 hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey wlanf7467f interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 9 serv_no 1 index 2 ssid disable fh_08b980_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 9 serv_no 1 index 3 ssid disable fh_08b980_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 9 serv_no 1 index 4 ssid disable fh_08b980_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 1 onu 9 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 1 onu 9 serv_no 2 index 1 ssid enable Oliveira_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey wlanf7467f interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 9 serv_no 2 index 2 ssid disable fh_08b980_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 9 serv_no 2 index 3 ssid disable fh_08b980_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 9 serv_no 2 index 4 ssid disable fh_08b980_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 1 onu 9 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 1 onu 10 serv_no 1 index 1 ssid enable OFICINA hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 08162712 interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 10 serv_no 1 index 2 ssid disable fh_61fbb0_ssid2 hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 10 serv_no 1 index 3 ssid disable fh_61fbb0_ssid3 hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 10 serv_no 1 index 4 ssid disable fh_61fbb0_ssid4 hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 1 onu 10 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 1 onu 10 serv_no 2 index 1 ssid enable OFICINA_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 08162712 interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 10 serv_no 2 index 2 ssid disable fh_61fbb0_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 10 serv_no 2 index 3 ssid disable fh_61fbb0_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 10 serv_no 2 index 4 ssid disable fh_61fbb0_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 1 onu 10 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 1 onu 12 serv_no 1 index 1 ssid enable imobiliarialider_2.4G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey vendaselocacao interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 12 serv_no 1 index 2 ssid disable fh_08cb78_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 12 serv_no 1 index 3 ssid disable fh_08cb78_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 12 serv_no 1 index 4 ssid disable fh_08cb78_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 1 onu 12 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 1 onu 12 serv_no 2 index 1 ssid enable imobiliarialider_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey vendaselocacao interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 12 serv_no 2 index 2 ssid disable fh_08cb78_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 12 serv_no 2 index 3 ssid disable fh_08cb78_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 12 serv_no 2 index 4 ssid disable fh_08cb78_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 1 onu 12 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 1 onu 18 serv_no 1 index 1 ssid enable ImpactNet_29e558 hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 12345678 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 18 serv_no 1 index 2 ssid disable fh_29e558_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 18 serv_no 1 index 3 ssid disable fh_29e558_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 18 serv_no 1 index 4 ssid disable fh_29e558_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 1 onu 18 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 1 onu 18 serv_no 2 index 1 ssid enable ImpactNet_29e558_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 12345678 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 18 serv_no 2 index 2 ssid disable fh_29e558_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 18 serv_no 2 index 3 ssid disable fh_29e558_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 18 serv_no 2 index 4 ssid disable fh_29e558_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 1 onu 18 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 1 onu 21 serv_no 1 index 1 ssid enable Impactnet_61fb88 hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey wlan9e0477 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 21 serv_no 1 index 2 ssid disable fh_61fb88_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 21 serv_no 1 index 3 ssid disable fh_61fb88_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 21 serv_no 1 index 4 ssid disable fh_61fb88_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 1 onu 21 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 40mhz
+set wifi_serv_wlan slot 11 pon 1 onu 21 serv_no 2 index 1 ssid enable Impactnet__61fb88_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey wlan9e0477 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 21 serv_no 2 index 2 ssid disable fh_61fb88_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 21 serv_no 2 index 3 ssid disable fh_61fb88_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 1 onu 21 serv_no 2 index 4 ssid disable fh_61fb88_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 1 onu 21 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 2 onu 1 serv_no 1 index 1 ssid enable ImpactNet_2.4G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 1423abc221 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 2 onu 1 serv_no 1 index 2 ssid disable fh_563c10_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 2 onu 1 serv_no 1 index 3 ssid disable fh_563c10_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 2 onu 1 serv_no 1 index 4 ssid disable fh_563c10_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 2 onu 1 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 2 onu 1 serv_no 2 index 1 ssid enable ImpactNet_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 1423abc221 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 2 onu 1 serv_no 2 index 2 ssid disable fh_563c10_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 2 onu 1 serv_no 2 index 3 ssid disable fh_563c10_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 2 onu 1 serv_no 2 index 4 ssid disable fh_563c10_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 2 onu 1 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 2 onu 4 serv_no 1 index 1 ssid enable Marcos hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey Pakko4464 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 2 onu 4 serv_no 1 index 2 ssid disable fh_54b090_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 2 onu 4 serv_no 1 index 3 ssid disable fh_54b090_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 2 onu 4 serv_no 1 index 4 ssid disable fh_54b090_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 2 onu 4 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 2 onu 4 serv_no 2 index 1 ssid enable Marcos_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey Pakko4464 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 2 onu 4 serv_no 2 index 2 ssid disable fh_54b090_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 2 onu 4 serv_no 2 index 3 ssid disable fh_54b090_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 2 onu 4 serv_no 2 index 4 ssid disable fh_54b090_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 2 onu 4 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 2 onu 9 serv_no 1 index 1 ssid enable ImpactNet_ff9a10 hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey wlan0065ef interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 2 onu 9 serv_no 1 index 2 ssid disable fh_ff9a10_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 2 onu 9 serv_no 1 index 3 ssid disable fh_ff9a10_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 2 onu 9 serv_no 1 index 4 ssid disable fh_ff9a10_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 2 onu 9 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 2 onu 9 serv_no 2 index 1 ssid enable ImpactNet_ff9a10_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey wlan0065ef interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 2 onu 9 serv_no 2 index 2 ssid disable fh_ff9a10_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 2 onu 9 serv_no 2 index 3 ssid disable fh_ff9a10_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 2 onu 9 serv_no 2 index 4 ssid disable fh_ff9a10_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 2 onu 9 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 3 onu 1 serv_no 1 index 1 ssid enable Bancada hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 123456789 interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 1 serv_no 1 index 2 ssid disable fh_558708_ssid2 hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 1 serv_no 1 index 3 ssid disable fh_558708_ssid3 hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 1 serv_no 1 index 4 ssid disable fh_558708_ssid4 hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 1 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 3 onu 1 serv_no 2 index 1 ssid enable Bancada_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 123456789 interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 1 serv_no 2 index 2 ssid disable fh_558708_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 1 serv_no 2 index 3 ssid disable fh_558708_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 1 serv_no 2 index 4 ssid disable fh_558708_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 1 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 3 onu 3 serv_no 1 index 1 ssid enable SUSSANA hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 14253679 interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 3 serv_no 1 index 2 ssid enable Visitante hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 74859613 interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 3 serv_no 1 index 3 ssid disable fh_5582f8_ssid3 hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 3 serv_no 1 index 4 ssid disable fh_5582f8_ssid4 hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 3 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 3 onu 3 serv_no 2 index 1 ssid enable SUSSANA_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 14253679 interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 3 serv_no 2 index 2 ssid disable fh_5582f8_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 3 serv_no 2 index 3 ssid disable fh_5582f8_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 3 serv_no 2 index 4 ssid disable fh_5582f8_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 3 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 3 onu 4 serv_no 1 index 1 ssid enable Manif_2025 hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 89898989 interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 4 serv_no 1 index 2 ssid disable fh_61f800_ssid2 hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 4 serv_no 1 index 3 ssid disable fh_61f800_ssid3 hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 4 serv_no 1 index 4 ssid disable fh_61f800_ssid4 hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 4 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 3 onu 4 serv_no 2 index 1 ssid enable Manif_2025_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 89898989 interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 4 serv_no 2 index 2 ssid disable fh_61f800_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 4 serv_no 2 index 3 ssid disable fh_61f800_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 4 serv_no 2 index 4 ssid disable fh_61f800_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 4 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 3 onu 8 serv_no 1 index 1 ssid enable ImpactNet_55bcc0 hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey wlanaa433f interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 8 serv_no 1 index 2 ssid disable fh_55bcc0_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 8 serv_no 1 index 3 ssid disable fh_55bcc0_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 8 serv_no 1 index 4 ssid disable fh_55bcc0_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 8 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 40mhz
+set wifi_serv_wlan slot 11 pon 3 onu 8 serv_no 2 index 1 ssid enable impactNet_55bcc0_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey wlanaa433f interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 8 serv_no 2 index 2 ssid disable fh_55bcc0_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 8 serv_no 2 index 3 ssid disable fh_55bcc0_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 8 serv_no 2 index 4 ssid disable fh_55bcc0_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 8 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 3 onu 12 serv_no 1 index 1 ssid enable CELEXPRESSO hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 940769681328228 interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 12 serv_no 1 index 2 ssid enable fh_698710_ssid2 hide disable authmode wpa_psk encrypt_type tkip wpakey wlan9678ef interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 12 serv_no 1 index 3 ssid enable fh_698710_ssid3 hide disable authmode wpa_psk encrypt_type tkip wpakey wlan9678ef interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 12 serv_no 1 index 4 ssid enable fh_698710_ssid4 hide disable authmode wpa_psk encrypt_type tkip wpakey wlan9678ef interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 12 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 3 onu 12 serv_no 2 index 1 ssid enable CELEXPRESSO_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 940769681328228 interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 12 serv_no 2 index 2 ssid enable fh_698710_ssid2_5G hide disable authmode wpa_psk encrypt_type tkip wpakey wlan9678ef interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 12 serv_no 2 index 3 ssid enable fh_698710_ssid3_5G hide disable authmode wpa_psk encrypt_type tkip wpakey wlan9678ef interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 12 serv_no 2 index 4 ssid enable fh_698710_ssid4_5G hide disable authmode wpa_psk encrypt_type tkip wpakey wlan9678ef interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 12 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 3 onu 14 serv_no 1 index 1 ssid enable Fibra_JF_CWB hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 41991931483 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 14 serv_no 1 index 2 ssid disable fh_239530_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 14 serv_no 1 index 3 ssid disable fh_239530_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 14 serv_no 1 index 4 ssid disable fh_239530_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 14 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 3 onu 14 serv_no 2 index 1 ssid enable Fibra_JF_CWB_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 41991931483 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 14 serv_no 2 index 2 ssid disable fh_239530_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 14 serv_no 2 index 3 ssid disable fh_239530_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 14 serv_no 2 index 4 ssid disable fh_239530_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 14 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 3 onu 21 serv_no 1 index 1 ssid enable Impacnet_5429b0 hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 12345678 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 21 serv_no 1 index 2 ssid disable fh_5429b0_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 21 serv_no 1 index 3 ssid disable fh_5429b0_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 21 serv_no 1 index 4 ssid disable fh_5429b0_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 21 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 40mhz
+set wifi_serv_wlan slot 11 pon 3 onu 21 serv_no 2 index 1 ssid enable Impactnet_5429b0_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 12345678 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 21 serv_no 2 index 2 ssid disable fh_5429b0_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 21 serv_no 2 index 3 ssid disable fh_5429b0_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 21 serv_no 2 index 4 ssid disable fh_5429b0_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 21 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 3 onu 24 serv_no 1 index 1 ssid enable Escritorio hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 3x8k1m7r interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 24 serv_no 1 index 2 ssid disable fh_54c1b0_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 24 serv_no 1 index 3 ssid disable fh_54c1b0_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 24 serv_no 1 index 4 ssid disable fh_54c1b0_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 24 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 3 onu 24 serv_no 2 index 1 ssid enable Escritorio_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 3x8k1m7r interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 24 serv_no 2 index 2 ssid disable fh_54c1b0_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 24 serv_no 2 index 3 ssid disable fh_54c1b0_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 24 serv_no 2 index 4 ssid disable fh_54c1b0_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 24 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 3 onu 25 serv_no 1 index 1 ssid enable MALLIN-ADV hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey ML2022ADV interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 25 serv_no 1 index 2 ssid disable fh_82cf70_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 25 serv_no 1 index 3 ssid disable fh_82cf70_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 25 serv_no 1 index 4 ssid disable fh_82cf70_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 25 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 3 onu 25 serv_no 2 index 1 ssid enable MALLIN-ADV_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey ML2022ADV interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 25 serv_no 2 index 2 ssid disable fh_82cf70_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 25 serv_no 2 index 3 ssid disable fh_82cf70_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 25 serv_no 2 index 4 ssid disable fh_82cf70_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 25 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 3 onu 27 serv_no 1 index 1 ssid enable ODONTOLOGIA hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey chocolate interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 27 serv_no 1 index 2 ssid disable fh_a3b7a0_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 27 serv_no 1 index 3 ssid disable fh_a3b7a0_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 27 serv_no 1 index 4 ssid disable fh_a3b7a0_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 27 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 3 onu 27 serv_no 2 index 1 ssid enable ODONTOLOGIA_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey chocolate interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 27 serv_no 2 index 2 ssid disable fh_a3b7a0_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 27 serv_no 2 index 3 ssid disable fh_a3b7a0_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 27 serv_no 2 index 4 ssid disable fh_a3b7a0_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 27 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 3 onu 29 serv_no 1 index 1 ssid enable KORBANTECH hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey korb@2022 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 29 serv_no 1 index 2 ssid disable fh_5bac68_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 29 serv_no 1 index 3 ssid disable fh_5bac68_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 29 serv_no 1 index 4 ssid disable fh_5bac68_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 29 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 3 onu 29 serv_no 2 index 1 ssid enable KORBANTECH_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey korb@2022 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 29 serv_no 2 index 2 ssid disable fh_5bac68_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 29 serv_no 2 index 3 ssid disable fh_5bac68_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 29 serv_no 2 index 4 ssid disable fh_5bac68_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 29 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 3 onu 31 serv_no 1 index 1 ssid enable documentalize_2.4 hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey Docc2023 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 31 serv_no 1 index 2 ssid disable fh_831990_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 31 serv_no 1 index 3 ssid disable fh_831990_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 31 serv_no 1 index 4 ssid disable fh_831990_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 31 serv_no 1 wifi enable district brazil channel 5 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 3 onu 31 serv_no 2 index 1 ssid enable documentalize_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey Docc2023 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 31 serv_no 2 index 2 ssid disable fh_831990_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 31 serv_no 2 index 3 ssid disable fh_831990_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 31 serv_no 2 index 4 ssid disable fh_831990_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 31 serv_no 2 wifi enable district brazil channel 153 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 3 onu 32 serv_no 1 index 1 ssid enable MARINHODEOLIVEIRA_2.4 hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey *melola# interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 32 serv_no 1 index 2 ssid disable fh_2e2a30_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 32 serv_no 1 index 3 ssid disable fh_2e2a30_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 32 serv_no 1 index 4 ssid disable fh_2e2a30_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 32 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 3 onu 32 serv_no 2 index 1 ssid enable MARINHODEOLIVEIRA_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey *melola# interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 32 serv_no 2 index 2 ssid disable fh_2e2a30_5G_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 32 serv_no 2 index 3 ssid disable fh_2e2a30_5G_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 32 serv_no 2 index 4 ssid disable fh_2e2a30_5G_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 32 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 3 onu 33 serv_no 1 index 1 ssid enable PARANAEMOURA hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 19701974 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 33 serv_no 1 index 2 ssid disable fh_697f78_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 33 serv_no 1 index 3 ssid disable fh_697f78_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 33 serv_no 1 index 4 ssid disable fh_697f78_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 33 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 3 onu 33 serv_no 2 index 1 ssid enable PARANAEMOURA_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 19701974 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 33 serv_no 2 index 2 ssid disable fh_697f78_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 33 serv_no 2 index 3 ssid disable fh_697f78_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 33 serv_no 2 index 4 ssid disable fh_697f78_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 33 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 3 onu 35 serv_no 1 index 1 ssid enable Impactnet_5bb500 hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey wlana44aff interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 35 serv_no 1 index 2 ssid disable fh_5bb500_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 35 serv_no 1 index 3 ssid disable fh_5bb500_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 35 serv_no 1 index 4 ssid disable fh_5bb500_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 35 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 40 frequency 2.4ghz freq_bandwidth 20mhz
+set wifi_serv_wlan slot 11 pon 3 onu 35 serv_no 2 index 1 ssid enable Impactnet_5bb500_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey wlana44aff interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 35 serv_no 2 index 2 ssid disable fh_5bb500_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 35 serv_no 2 index 3 ssid disable fh_5bb500_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 35 serv_no 2 index 4 ssid disable fh_5bb500_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 35 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 40 frequency 5.8ghz freq_bandwidth 40mhz
+set wifi_serv_wlan slot 11 pon 3 onu 36 serv_no 1 index 1 ssid enable IMPACT_Nelson_55cdf8 hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey violin1956 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 36 serv_no 1 index 2 ssid disable fh_55cdf8_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 36 serv_no 1 index 3 ssid disable fh_55cdf8_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 36 serv_no 1 index 4 ssid disable fh_55cdf8_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 36 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 3 onu 36 serv_no 2 index 1 ssid enable IMPACT_Nelson_55cdf8_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey violin1956 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 36 serv_no 2 index 2 ssid disable fh_55cdf8_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 36 serv_no 2 index 3 ssid disable fh_55cdf8_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 3 onu 36 serv_no 2 index 4 ssid disable fh_55cdf8_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 3 onu 36 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 4 onu 2 serv_no 1 index 1 ssid enable ImpactNet_2246c0 hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey wlanddb93f interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 2 serv_no 1 index 2 ssid disable fh_2246c0_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 2 serv_no 1 index 3 ssid disable fh_2246c0_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 2 serv_no 1 index 4 ssid disable fh_2246c0_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 4 onu 2 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 4 onu 2 serv_no 2 index 1 ssid enable ImpactNet_2246c0_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey wlanddb93f interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 2 serv_no 2 index 2 ssid disable fh_2246c0_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 2 serv_no 2 index 3 ssid disable fh_2246c0_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 2 serv_no 2 index 4 ssid disable fh_2246c0_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 4 onu 2 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 4 onu 3 serv_no 1 index 1 ssid enable CONTABILMURICI hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey es10mibe interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 3 serv_no 1 index 2 ssid disable fh_82db48_ssid2 hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 3 serv_no 1 index 3 ssid disable fh_82db48_ssid3 hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 3 serv_no 1 index 4 ssid disable fh_82db48_ssid4 hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 4 onu 3 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 4 onu 3 serv_no 2 index 1 ssid enable CONTABILMURICI_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey es10mibe interval 0 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 3 serv_no 2 index 2 ssid disable fh_82db48_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 3 serv_no 2 index 3 ssid disable fh_82db48_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 3 serv_no 2 index 4 ssid disable fh_82db48_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 86400 radius_serv ipv4 0.0.0.0 port 65535 pswd null wep_length 40bit key_index 1 wep_key null null null null wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 4 onu 3 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 4 onu 8 serv_no 1 index 1 ssid enable WebJuris hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 1358$$Roma interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 8 serv_no 1 index 2 ssid disable fh_225a20_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 8 serv_no 1 index 3 ssid disable fh_225a20_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 8 serv_no 1 index 4 ssid disable fh_225a20_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 4 onu 8 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 4 onu 8 serv_no 2 index 1 ssid enable WebJuris|5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 1358$$Roma interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 8 serv_no 2 index 2 ssid disable fh_225a20_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 8 serv_no 2 index 3 ssid disable fh_225a20_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 8 serv_no 2 index 4 ssid disable fh_225a20_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 4 onu 8 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 4 onu 17 serv_no 1 index 1 ssid enable ImpactNet_12ade8 hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey wlaned5217 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 17 serv_no 1 index 2 ssid disable fh_12ade8_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 17 serv_no 1 index 3 ssid disable fh_12ade8_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 17 serv_no 1 index 4 ssid disable fh_12ade8_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 4 onu 17 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 4 onu 17 serv_no 2 index 1 ssid enable ImpactNet_12ade8_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey wlaned5217 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 17 serv_no 2 index 2 ssid disable fh_12ade8_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 17 serv_no 2 index 3 ssid disable fh_12ade8_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 17 serv_no 2 index 4 ssid disable fh_12ade8_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 4 onu 17 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 4 onu 20 serv_no 1 index 1 ssid enable CuritibaJoias hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey Curitiba23 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 20 serv_no 1 index 2 ssid disable fh_698958_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 20 serv_no 1 index 3 ssid disable fh_698958_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 20 serv_no 1 index 4 ssid disable fh_698958_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 4 onu 20 serv_no 1 wifi enable district brazil channel 5 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 4 onu 20 serv_no 2 index 1 ssid enable CuritibaJoias_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey Curitiba23 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 20 serv_no 2 index 2 ssid disable fh_698958_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 20 serv_no 2 index 3 ssid disable fh_698958_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 20 serv_no 2 index 4 ssid disable fh_698958_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 4 onu 20 serv_no 2 wifi enable district brazil channel 153 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 4 onu 21 serv_no 1 index 1 ssid enable SALA181 hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 33382500 interval 0 radius_serv ipv4 null port 65535 pswd null wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 21 serv_no 1 index 2 ssid disable fh_2a2c40_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 null port 65535 pswd null wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 21 serv_no 1 index 3 ssid disable fh_2a2c40_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 null port 65535 pswd null wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 21 serv_no 1 index 4 ssid disable fh_2a2c40_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 null port 65535 pswd null wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 4 onu 21 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 4 onu 21 serv_no 2 index 1 ssid enable SALA181_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey 33382500 interval 0 radius_serv ipv4 null port 65535 pswd null wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 21 serv_no 2 index 2 ssid disable fh_2a2c40_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 null port 65535 pswd null wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 21 serv_no 2 index 3 ssid disable fh_2a2c40_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 null port 65535 pswd null wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 21 serv_no 2 index 4 ssid disable fh_2a2c40_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 null port 65535 pswd null wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 4 onu 21 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 4 onu 23 serv_no 1 index 1 ssid enable MARCOS hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey abcdef4398 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 23 serv_no 1 index 2 ssid disable fh_54b290_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 23 serv_no 1 index 3 ssid disable fh_54b290_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 23 serv_no 1 index 4 ssid disable fh_54b290_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 4 onu 23 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 4 onu 23 serv_no 2 index 1 ssid enable MARCOS_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey abcdef4398 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 23 serv_no 2 index 2 ssid disable fh_54b290_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 23 serv_no 2 index 3 ssid disable fh_54b290_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 23 serv_no 2 index 4 ssid disable fh_54b290_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 4 onu 23 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 4 onu 25 serv_no 1 index 1 ssid enable AdvocaciaCriminal hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey advocaciacrim interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 25 serv_no 1 index 2 ssid disable fh_61faf0_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 25 serv_no 1 index 3 ssid disable fh_61faf0_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 25 serv_no 1 index 4 ssid disable fh_61faf0_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 4 onu 25 serv_no 1 wifi enable district brazil channel 10 standard 802.11bgn txpower 40 frequency 2.4ghz freq_bandwidth 20mhz
+set wifi_serv_wlan slot 11 pon 4 onu 25 serv_no 2 index 1 ssid enable AdvocaciaCriminal_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey advocaciacrim interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 25 serv_no 2 index 2 ssid disable fh_61faf0_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 25 serv_no 2 index 3 ssid disable fh_61faf0_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 25 serv_no 2 index 4 ssid disable fh_61faf0_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 4 onu 25 serv_no 2 wifi enable district brazil channel 104 standard 802.11ac txpower 40 frequency 5.8ghz freq_bandwidth 40mhz
+set wifi_serv_wlan slot 11 pon 4 onu 29 serv_no 1 index 1 ssid enable Impactnet_2.4 hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey wlana99417 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 29 serv_no 1 index 2 ssid disable fh_566be8_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 29 serv_no 1 index 3 ssid disable fh_566be8_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 29 serv_no 1 index 4 ssid disable fh_566be8_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 4 onu 29 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 4 onu 29 serv_no 2 index 1 ssid enable Impactnet_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey wlana99417 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 29 serv_no 2 index 2 ssid disable fh_566be8_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 29 serv_no 2 index 3 ssid disable fh_566be8_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 29 serv_no 2 index 4 ssid disable fh_566be8_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 4 onu 29 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 4 onu 30 serv_no 1 index 1 ssid enable Kisses_Moda_2.4 hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey Kisses250915 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 30 serv_no 1 index 2 ssid disable fh_ca2480_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 30 serv_no 1 index 3 ssid disable fh_ca2480_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 30 serv_no 1 index 4 ssid disable fh_ca2480_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 4 onu 30 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 4 onu 30 serv_no 2 index 1 ssid enable Kisses_Moda_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey Kisses250915 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 30 serv_no 2 index 2 ssid disable fh_ca2480_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 30 serv_no 2 index 3 ssid disable fh_ca2480_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 30 serv_no 2 index 4 ssid disable fh_ca2480_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 4 onu 30 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 4 onu 31 serv_no 1 index 1 ssid enable DEXTMODEL_2.4 hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey sucesso2024 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 31 serv_no 1 index 2 ssid disable fh_bab660_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 31 serv_no 1 index 3 ssid disable fh_bab660_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 31 serv_no 1 index 4 ssid disable fh_bab660_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 4 onu 31 serv_no 1 wifi enable district brazil channel 0 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 4 onu 31 serv_no 2 index 1 ssid enable DEXTMODEL_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey sucesso2024 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 31 serv_no 2 index 2 ssid disable fh_bab660_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 31 serv_no 2 index 3 ssid disable fh_bab660_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 31 serv_no 2 index 4 ssid disable fh_bab660_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 4 onu 31 serv_no 2 wifi enable district brazil channel 0 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+set wifi_serv_wlan slot 11 pon 4 onu 33 serv_no 1 index 1 ssid enable LARISSA_NUTRICIONISTA hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey nutri133 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 33 serv_no 1 index 2 ssid disable fh_513df0_ssid2 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 33 serv_no 1 index 3 ssid disable fh_513df0_ssid3 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 33 serv_no 1 index 4 ssid disable fh_513df0_ssid4 hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 4 onu 33 serv_no 1 wifi enable district brazil channel 11 standard 802.11bgn txpower 20 frequency 2.4ghz freq_bandwidth 20mhz/40mhz
+set wifi_serv_wlan slot 11 pon 4 onu 33 serv_no 2 index 1 ssid enable LARISSA_NUTRICIONISTA_5G hide disable authmode wpa_psk/wpa2psk encrypt_type tkipaes wpakey nutri133 interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 33 serv_no 2 index 2 ssid disable fh_513df0_ssid2_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 33 serv_no 2 index 3 ssid disable fh_513df0_ssid3_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_wlan slot 11 pon 4 onu 33 serv_no 2 index 4 ssid disable fh_513df0_ssid4_5G hide disable authmode open encrypt_type none wpakey null interval 0 radius_serv ipv4 192.168.1.18 port 1812 pswd 12345678 wep_length 40bit key_index 1 wep_key 12345 12345 12345 12345 wapi_serv_addr 0.0.0.0 0 wifi_connect_num 32 
+set wifi_serv_cfg slot 11 pon 4 onu 33 serv_no 2 wifi enable district brazil channel 132 standard 802.11ac txpower 20 frequency 5.8ghz freq_bandwidth 80mhz
+
+!module config:veip.
+set veip_model flag
+
+!module config:dbacfg.
+!dba_cfg module config showrun----------------
+!dba pon parameters config----------------
+!dba sla profile config-----------------------------------
+!dba config profile config-----------------------------------
+!dba bind info config----------------
+
+!module config:rms.
+!RMS: Olt access config-----------------------------------
+!RMS: Olt access config end-----------------------------------
+
+!module config:igmp.
+
+!module config:igmp_control.
+!IGMP config----------------------------------------
+debug off
+
+!IGMP group config start!!!!----------------------------------------
+set igmp vlan 4088
+set igmp stack v2
+set igmp mode snooping
+set igmp dynamic_vlan disable
+set igmp proxy ip 10.25.14.57
+set igmp-ssm ip-range 232.0.0.0/8
+
+!IGMP group config end!!!!!----------------------------------------
+
+!IGMP onu&port config ----------------------------------------
+
+!IGMP group config ----------------------------------------
+
+!IGMP program packet config----------------------------------------
+
+!IGMP port attach program packet config----------------------------------------
+
+!IGMP onu group white list config----------------------------------------
+
+!IGMP olt group white list config----------------------------------------
+set igmp group filter disable
+
+!IGMP olt program config----------------------------------------
+
+!vlan mode -----------------------------------------------------
+
+!igmp static group -----------------------------------------------------
+set igmp route disable
+
+!end of IGMP  config ----------------------------------------
+
+!module config:dmapp.
+
+!module config:perform.
+set mib performance switch enable
+set pon_traffic_sts switch traffic enable 1 0 opt enable 1 0 rtt enable 2 0 
+set pon_traffic_sts upload_cfg enable ip unknown 0.0.0.0    
+
+!module config:polling.
+
+!module config:ntp.
+!ntp config -------------------------------------------------
+set ntp mode disable burst disable minipoll 6 maxpoll 10 
+!ntp config end ---------------------------------------------
+
+!module config:dev_mgr.
+set time_method snmp hour gmt-3 min 0 ems-hour same-sys ems-min 0 
+set snmp_time_cfg interval 3600 servIp ipv4 192.168.26.3  
+set onu_local_manage_glo con en tel dis web en web_p 8080 web_ani_s en tel_ani_s dis web_admin_switch dis
+set fan_contol_pra tem 30 step 5 speed 1 schame hswa
+set fan_contol_pra tem 30 step 5 speed 1 schame hswd
+set fan_contol_pra tem 60 step 5 speed 1 schame xg8a_bcm
+set fan_contol_pra tem 40 step 5 speed 1 schame xg8a_cortina
+set fan_contol_pra tem 55 step 5 speed 1 schame xp4a
+set fan_contol_pra tem 55 step 5 speed 1 schame xp8a
+set fan_contol_pra tem 60 step 5 speed 1 schame xp8a_maple
+set fan_contol_pra tem 40 step 5 speed 1 schame hswb
+set fan_contol_pra tem 40 step 5 speed 1 schame ppda
+set fan_contol_pra tem 35 step 5 speed 1 schame cata
+set fan_contol_pra tem 40 step 5 speed 1 schame caua
+set fan_contol_pra tem 40 step 5 speed 1 schame gcob_maple
+set fan_contol_pra tem 45 step 5 speed 1 schame gc8b_maple
+set fan_contol_pra tem 40 step 5 speed 1 schame cvta
+set fan_contol_pra tem 45 step 5 speed 1 schame vpsa
+set fan_contol_pra tem 45 step 5 speed 1 schame apsa
+set fan_contol_pra tem 45 step 5 speed 1 schame xp8a_easic
+set fan_contol_pra tem 50 step 5 speed 1 schame hswd_tr2plus
+set fan_contol_pra tem 40 step 5 speed 1 schame seta
+set fan_contol_pra tem 45 step 5 speed 1 schame shua
+set fan_contol_pra tem 45 step 5 speed 1 schame broa
+set fan_contol_pra tem 50 step 5 speed 1 schame ppea
+set fan_contol_pra tem 60 step 5 speed 1 schame xp8a_sfpplus_maple
+set fan_contol_pra tem 60 step 3 speed 1 schame xp8a_sfpplus_easic
+set fan_contol_pra tem 60 step 3 speed 1 schame xpoa
+set fan_contol_pra tem 60 step 5 speed 1 schame xp8c
+set fan_contol_pra tem 60 step 3 speed 1 schame xs8a
+set fan_contol_pra tem 40 step 5 speed 1 schame vcna
+set fan_contol_pra tem 55 step 5 speed 1 schame ftsa
+set fan_contol_pra tem 40 step 5 speed 1 schame fcea
+apply in_olt_interflow core_card 
+set polling interval 10s
+set onu_local_manage_con slot 11 pon 1 onu 1 conf en cons en tel en web en web_p 8080 web_ani_s en tel_ani_s en web_admin_switch dis
+set onu_local_manage_con slot 11 pon 1 onu 5 conf en cons en tel dis web en web_p 80 web_ani_s en tel_ani_s dis web_admin_switch dis
+set onu_local_manage_con slot 11 pon 1 onu 6 conf en cons en tel en web en web_p 80 web_ani_s en tel_ani_s en web_admin_switch dis
+set onu_local_manage_con slot 11 pon 1 onu 9 conf en cons en tel en web en web_p 80 web_ani_s en tel_ani_s en web_admin_switch dis
+set onu_local_manage_con slot 11 pon 1 onu 14 conf en cons en tel dis web en web_p 80 web_ani_s en tel_ani_s dis web_admin_switch dis
+set onu_local_manage_con slot 11 pon 1 onu 18 conf en cons en tel dis web en web_p 80 web_ani_s en tel_ani_s dis web_admin_switch dis
+set onu_local_manage_con slot 11 pon 2 onu 4 conf en cons en tel en web en web_p 80 web_ani_s en tel_ani_s en web_admin_switch dis
+set onu_local_manage_con slot 11 pon 3 onu 2 conf en cons en tel en web en web_p 80 web_ani_s en tel_ani_s en web_admin_switch dis
+set onu_local_manage_con slot 11 pon 3 onu 8 conf en cons en tel dis web en web_p 80 web_ani_s en tel_ani_s dis web_admin_switch dis
+set onu_local_manage_con slot 11 pon 3 onu 35 conf en cons en tel en web en web_p 80 web_ani_s en tel_ani_s dis web_admin_switch dis
+set onu_local_manage_con slot 11 pon 3 onu 36 conf en cons en tel dis web en web_p 80 web_ani_s en tel_ani_s dis web_admin_switch dis
+set onu_local_manage_con slot 11 pon 4 onu 5 conf en cons en tel dis web en web_p 80 web_ani_s en tel_ani_s dis web_admin_switch dis
+set onu_local_manage_con slot 11 pon 4 onu 8 conf en cons en tel dis web en web_p 80 web_ani_s en tel_ani_s dis web_admin_switch dis
+set onu_local_manage_con slot 11 pon 4 onu 17 conf en cons en tel dis web en web_p 80 web_ani_s en tel_ani_s dis web_admin_switch dis
+set onu_local_manage_con slot 11 pon 4 onu 23 conf en cons en tel dis web en web_p 80 web_ani_s en tel_ani_s dis web_admin_switch dis
+set onu_local_manage_con slot 11 pon 4 onu 31 conf en cons en tel en web en web_p 80 web_ani_s en tel_ani_s en web_admin_switch dis
+
+!module config:alarm.
+
+!module config:upgrade.
+
+!module config:snmp.
+!snmp config --------------------------------------------------
+
+set snmp community readwrite adsl
+set snmp community readonly adsl
+service snmp trap enable
+add snmp trap_map id 1 ip_address ::ffff:192.168.26.3
+add snmp trap_map id 2 ip_address ::ffff:45.166.248.250
+add snmp trap_map id 3 ip_address ::ffff:45.166.248.251
+add snmp trap_map id 4 ip_address ::ffff:192.168.26.4
+set snmp trapreceiver add ::ffff:45.166.248.250 version v2c community public signaltrace_switch disable
+set snmp trapreceiver add ::ffff:45.166.248.251 version v2c community public signaltrace_switch disable
+set snmp trapreceiver add ::ffff:192.168.26.3 version v2c community adsl signaltrace_switch enable
+set snmp trapreceiver add ::ffff:192.168.26.4 version v2c community adsl signaltrace_switch disable
+set trap ::ffff:45.166.248.250 Version privformat
+set trap ::ffff:45.166.248.251 Version privformat
+set trap ::ffff:192.168.26.3 Version privformat
+set trap ::ffff:192.168.26.4 Version privformat
+set snmp trapreceiver ip ::ffff:45.166.248.250 port 162 
+set snmp trapreceiver ip ::ffff:45.166.248.251 port 162 
+set snmp trapreceiver ip ::ffff:192.168.26.3 port 162 
+set snmp trapreceiver ip ::ffff:192.168.26.4 port 162 
+snmp-agent trapreceiver ip ::ffff:45.166.248.250 source-ip ::
+snmp-agent trapreceiver ip ::ffff:45.166.248.251 source-ip ::
+snmp-agent trapreceiver ip ::ffff:192.168.26.3 source-ip ::
+snmp-agent trapreceiver ip ::ffff:192.168.26.4 source-ip ::
+set ponLinkLossSwitch disable
+set importAlarmLogSwitch disable
+set uplink index switch disable
+set real-time sync time 5 switch enable
+set snmp direct-send-alarm enable
+snmp-agent usm-user v3 initmd5 initmd5 authentication-mode md5 12345678
+snmp-agent usm-user v3 initone initone
+snmp-agent usm-user v3 initsha initsha authentication-mode sha 12345678
+snmp-agent usm-user v3 initmd5aes initmd5aes authentication-mode md5 12345678 privacy-mode aes128 12345678
+snmp-agent usm-user v3 initmd5des initmd5des authentication-mode md5 12345678 privacy-mode des 12345678
+snmp-agent usm-user v3 initshaaes initshaaes authentication-mode sha 12345678 privacy-mode aes128 12345678
+snmp-agent usm-user v3 initshades initshades authentication-mode sha 12345678 privacy-mode des 12345678
+snmp-agent mib-view _all_ included 0
+snmp-agent mib-view _all_ included 1
+snmp-agent mib-view _all_ included 2
+snmp-agent mib-view _none_ excluded 0
+snmp-agent mib-view _none_ excluded 1
+snmp-agent mib-view _none_ excluded 2
+snmp-agent group v3 initmd5 usm authentication _all_ _all_ _all_
+snmp-agent group v3 initone usm noauth _all_ _all_ _all_
+snmp-agent group v3 initsha usm authentication _all_ _all_ _all_
+snmp-agent group v3 initmd5aes usm privacy _all_ _all_ _all_
+snmp-agent group v3 initmd5des usm privacy _all_ _all_ _all_
+snmp-agent group v3 initshaaes usm privacy _all_ _all_ _all_
+snmp-agent group v3 initshades usm privacy _all_ _all_ _all_
+set snmp trap sendLen 1100 autoConfirmSwitch disable sendRepeatNumber 18
+alarm alarmlevel id 1336 level warning
+alarm alarmlevel id 50018 level warning
+
+!module config:CFM.
+!
+!CFM configuration
+oam ctrl disable oamah disable 
+oam base-mcast 01:80:c2:00:00:30
+oam remote-mep dync-learning disable
+
+!module config:Y1731.
+
+
+
+!end  of config -----------------------------------------------
+!------------------------------------------------------------
+
+!system configuration saved from--
+!User Name : auto save
+!Address : auto save
+!Through : 
+!End-----------------------------------------------------------
+!@@@@save time:2025-02-26 19:00:31
+!version:RP1000
+!complieTime:Jan 23 2018 13:18:07

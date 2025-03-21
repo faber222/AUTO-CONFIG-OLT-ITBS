@@ -1,0 +1,683 @@
+!module config:ngn.
+!ngn config version -------------------------------------------------
+check ngn_cfg version GEPON_NGN_V4.0 
+!ngn config version end -------------------------------------------------
+!ngn port lever switch-----------------------------------------
+set ngn-port-lever switch disable 
+!ngn port lever switch end--------------------------------------
+!iad mac range config-----------------------------------------
+set mac_range_cfg startmac 000ac2100000 endmac 000ac21e8480 
+set mac_range_cfg startmac 000ac22e0100 endmac 000ac2300513 
+set mac_range_cfg startmac 000ac20000e7 endmac 000ac200ffff 
+set mac_range_cfg startmac 000ac2fe0000 endmac 000ac2ffffff 
+set mac_range_cfg startmac 70b921000000 endmac 70b9210f423f 
+set mac_range_cfg startmac 444b00000000 endmac 444bffffffff 
+set mac_range_cfg startmac 000eb4010000 endmac 000eb401ffff 
+set mac_range_cfg startmac 000eb4a90000 endmac 000eb4a9ffff 
+set mac_range_cfg startmac 000eb4450000 endmac 000eb445ffff 
+set mac_range_cfg startmac 70b921e082c0 endmac 70b921ffffff 
+set mac_range_cfg startmac 000467000000 endmac 000467ffffff 
+set mac_range_cfg startmac 34bf90000000 endmac 34bf90ffffff 
+!iad mac range config end-----------------------------------------
+!ngn interface config -------------------------------------------------
+set new_ngn_uplink_interface name TELEFONIA@130 protocol_type SIP mgc 1 191.243.56.13 5060 mgc 2 191.243.56.13 5060 keepalive passive m_dns ipv4 8.8.8.8 s_dns ipv4 8.8.4.4 dhcp enable sip_reg_addr 191.243.56.13 sip_proxy_addr 191.243.56.13 
+!ngn interface config end ---------------------------------------------
+!ngn user config -------------------------------------------------
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 0 
+set ngn_uplink_user_port phone 35130060 usern 35130060 sip_user_n 35130060 sip_user_p 12345678 user_in 0 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 1 
+set ngn_uplink_user_port phone 35232005 usern 35232005 sip_user_n 35232005 sip_user_p 04636747666 user_in 1 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 2 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 3 
+set ngn_uplink_user_port phone 35234178 usern 35234178 sip_user_n 35234178 sip_user_p 75842572672 user_in 3 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 4 
+set ngn_uplink_user_port phone 35232136 usern 35232136 sip_user_n 35232136 sip_user_p 04567034000113 user_in 4 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 5 
+set ngn_uplink_user_port phone 35231904 usern 35231904 sip_user_n 35231904 sip_user_p 04567034000113 user_in 5 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 6 
+set ngn_uplink_user_port phone 35231899 usern 35231899 sip_user_n 35231899 sip_user_p 07188529663 user_in 6 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 7 
+set ngn_uplink_user_port phone 35130068 usern 35130068 sip_user_n 35130068 sip_user_p 85444049600 user_in 7 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 8 
+set ngn_uplink_user_port phone 35231072 usern 35231072 sip_user_n 35231072 sip_user_p 14433444000125 user_in 8 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 9 
+set ngn_uplink_user_port phone 35234119 usern 35234119 sip_user_n 35234119 sip_user_p 59074779620 user_in 9 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 10 
+set ngn_uplink_user_port phone 35231201 usern 35231201 sip_user_n 35231201 sip_user_p 10738673000105 user_in 10 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 11 
+set ngn_uplink_user_port phone 35231127 usern 35231127 sip_user_n 35231127 sip_user_p 10738673000105 user_in 11 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 12 
+set ngn_uplink_user_port phone 35234200 usern 35234200 sip_user_n 35234200 sip_user_p 53634496000111 user_in 12 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 13 
+set ngn_uplink_user_port phone 35234676 usern 35234676 sip_user_n 35234676 sip_user_p 69278890600 user_in 13 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 14 
+set ngn_uplink_user_port phone 35130069 usern 35130069 sip_user_n 35130069 sip_user_p 74527533649 user_in 14 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 15 
+set ngn_uplink_user_port phone 35130061 usern 35130061 sip_user_n 35130061 sip_user_p 05744401601 user_in 15 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 16 
+set ngn_uplink_user_port phone 35130065 usern 35130065 sip_user_n 35130065 sip_user_p 11073993604 user_in 16 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 17 
+set ngn_uplink_user_port phone 35130062 usern 35130062 sip_user_n 35130062 sip_user_p 08151146648 user_in 17 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 18 
+set ngn_uplink_user_port phone 35231661 usern 35231661 sip_user_n 35231661 sip_user_p 23779556000204 user_in 18 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 19 
+set ngn_uplink_user_port phone 35231145 usern 35231145 sip_user_n 35231145 sip_user_p 64481344687 user_in 19 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 20 
+set ngn_uplink_user_port phone 35231390 usern 35231390 sip_user_n 35231390 sip_user_p 05673807694 user_in 20 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 21 
+set ngn_uplink_user_port phone 35234376 usern 35234376 sip_user_n 35234376 sip_user_p 06957198669 user_in 21 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 22 
+set ngn_uplink_user_port phone 35234545 usern 35234545 sip_user_n 35234545 sip_user_p 27841990000147 user_in 22 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 23 
+set ngn_uplink_user_port phone 35231050 usern 35231050 sip_user_n 35231050 sip_user_p 09111440000190 user_in 23 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 24 
+set ngn_uplink_user_port phone 35234639 usern 35234639 sip_user_n 35234639 sip_user_p 85332682620 user_in 24 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 25 
+set ngn_uplink_user_port phone 35233992 usern 35233992 sip_user_n 35233992 sip_user_p 19583370000127 user_in 25 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 26 
+set ngn_uplink_user_port phone 35231628 usern 35231628 sip_user_n 35231628 sip_user_p 64479546000150 user_in 26 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 27 
+set ngn_uplink_user_port phone 35231655 usern 35231655 sip_user_n 35231655 sip_user_p 12399467671 user_in 27 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 28 
+set ngn_uplink_user_port phone 35234221 usern 35234221 sip_user_n 35234221 sip_user_p 36821879000180 user_in 28 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 29 
+set ngn_uplink_user_port phone 35231711 usern 35231711 sip_user_n 35231711 sip_user_p 05441640000150 user_in 29 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 30 
+set ngn_uplink_user_port phone 35231366 usern 35231366 sip_user_n 35231366 sip_user_p 23779556000123 user_in 30 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 31 
+set ngn_uplink_user_port phone 35234768 usern 35234768 sip_user_n 35234768 sip_user_p 10312857000109 user_in 31 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 32 
+set ngn_uplink_user_port phone 35234320 usern 35234320 sip_user_n 35234320 sip_user_p 47517352687 user_in 32 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 33 
+set ngn_uplink_user_port phone 35231169 usern 35231169 sip_user_n 35231169 sip_user_p 87529220810 user_in 33 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 34 
+set ngn_uplink_user_port phone 35234222 usern 35234222 sip_user_n 35234222 sip_user_p 87529220810 user_in 34 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 35 
+set ngn_uplink_user_port phone 35231007 usern 35231007 sip_user_n 35231007 sip_user_p 12743666668 user_in 35 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 36 
+set ngn_uplink_user_port phone 35234016 usern 35234016 sip_user_n 35234016 sip_user_p 02665228661 user_in 36 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 37 
+set ngn_uplink_user_port phone 34601790 usern 34601790 sip_user_n 34601790 sip_user_p 11114272000139 user_in 37 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 38 
+set ngn_uplink_user_port phone 35231595 usern 35231595 sip_user_n 35231595 sip_user_p 05699312668 user_in 38 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 40 
+set ngn_uplink_user_port phone 35232026 usern 35232026 sip_user_n 35232026 sip_user_p 02280284000142 user_in 40 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 41 
+set ngn_uplink_user_port phone 35231736 usern 35231736 sip_user_n 35231736 sip_user_p 27945413668 user_in 41 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 42 
+set ngn_uplink_user_port phone 35234071 usern 35234071 sip_user_n 35234071 sip_user_p 05626828648 user_in 42 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 43 
+set ngn_uplink_user_port phone 35231086 usern 35231086 sip_user_n 35231086 sip_user_p 09120733658 user_in 43 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 44 
+set ngn_uplink_user_port phone 35232015 usern 35232015 sip_user_n 35232015 sip_user_p 23296758000114 user_in 44 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 45 
+set ngn_uplink_user_port phone 35231596 usern 35231596 sip_user_n 35231596 sip_user_p 20928537000123 user_in 45 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 46 
+set ngn_uplink_user_port phone 35234001 usern 35234001 sip_user_n 35234001 sip_user_p 20928537000123 user_in 46 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 47 
+set ngn_uplink_user_port phone 35231468 usern 35231468 sip_user_n 35231468 sip_user_p 21679824000100 user_in 47 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 48 
+set ngn_uplink_user_port phone 35231508 usern 35231508 sip_user_n 35231508 sip_user_p 25123899000160 user_in 48 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 49 
+set ngn_uplink_user_port phone 35231562 usern 35231562 sip_user_n 35231562 sip_user_p 25123899000160 user_in 49 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 50 
+set ngn_uplink_user_port phone 35234732 usern 35234732 sip_user_n 35234732 sip_user_p 25123899000160 user_in 50 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 51 
+set ngn_uplink_user_port phone 35232100 usern 35232100 sip_user_n 35232100 sip_user_p 02018239000114 user_in 51 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 52 
+set ngn_uplink_user_port phone 35231312 usern 35231312 sip_user_n 35231312 sip_user_p 36345512672 user_in 52 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 53 
+set ngn_uplink_user_port phone 35231882 usern 35231882 sip_user_n 35231882 sip_user_p 54991250668 user_in 53 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 54 
+set ngn_uplink_user_port phone 35232128 usern 35232128 sip_user_n 35232128 sip_user_p 01860760000131 user_in 54 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 55 
+set ngn_uplink_user_port phone 35234509 usern 35234509 sip_user_n 35234509 sip_user_p 32521071000126 user_in 55 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 56 
+set ngn_uplink_user_port phone 35232074 usern 35232074 sip_user_n 35232074 sip_user_p 02124450000111 user_in 56 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 57 
+set ngn_uplink_user_port phone 35234190 usern 35234190 sip_user_n 35234190 sip_user_p 88013189600 user_in 57 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 58 
+set ngn_uplink_user_port phone 35234747 usern 35234747 sip_user_n 35234747 sip_user_p 23439696000152 user_in 58 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 59 
+set ngn_uplink_user_port phone 35232054 usern 35232054 sip_user_n 35232054 sip_user_p 03683711663 user_in 59 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 60 
+set ngn_uplink_user_port phone 35232700 usern 35232700 sip_user_n 35232700 sip_user_p 03981160673 user_in 60 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 61 
+set ngn_uplink_user_port phone 35233237 usern 35233237 sip_user_n 35233237 sip_user_p 24054832000159 user_in 61 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 62 
+set ngn_uplink_user_port phone 35234580 usern 35234580 sip_user_n 35234580 sip_user_p 14518798000172 user_in 62 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 63 
+set ngn_uplink_user_port phone 35231249 usern 35231249 sip_user_n 35231249 sip_user_p 79848001620 user_in 63 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 64 
+set ngn_uplink_user_port phone 35231606 usern 35231606 sip_user_n 35231606 sip_user_p 23292067634 user_in 64 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 65 
+set ngn_uplink_user_port phone 35232122 usern 35232122 sip_user_n 35232122 sip_user_p 79848001620 user_in 65 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 66 
+set ngn_uplink_user_port phone 35231267 usern 35231267 sip_user_n 35231267 sip_user_p 22610422000111 user_in 66 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 67 
+set ngn_uplink_user_port phone 35231979 usern 35231979 sip_user_n 35231979 sip_user_p 31784313653 user_in 67 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 68 
+set ngn_uplink_user_port phone 35233630 usern 35233630 sip_user_n 35233630 sip_user_p 59071907600 user_in 68 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 69 
+set ngn_uplink_user_port phone 35234300 usern 35234300 sip_user_n 35234300 sip_user_p 07436753000149 user_in 69 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 70 
+set ngn_uplink_user_port phone 35232882 usern 35232882 sip_user_n 35232882 sip_user_p 03609166606 user_in 70 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 71 
+set ngn_uplink_user_port phone 35231676 usern 35231676 sip_user_n 35231676 sip_user_p 13299228000176 user_in 71 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 72 
+set ngn_uplink_user_port phone 35232323 usern 35232323 sip_user_n 35232323 sip_user_p 02886364657 user_in 72 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 73 
+set ngn_uplink_user_port phone 35232553 usern 35232553 sip_user_n 35232553 sip_user_p 67176739668 user_in 73 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 74 
+set ngn_uplink_user_port phone 35231331 usern 35231331 sip_user_n 35231331 sip_user_p 02874178000197 user_in 74 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 75 
+set ngn_uplink_user_port phone 35232292 usern 35232292 sip_user_n 35232292 sip_user_p 03336503604 user_in 75 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 76 
+set ngn_uplink_user_port phone 35232376 usern 35232376 sip_user_n 35232376 sip_user_p 08567981697 user_in 76 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 77 
+set ngn_uplink_user_port phone 35130064 usern 35130064 sip_user_n 35130064 sip_user_p 18353870000100 user_in 77 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 78 
+set ngn_uplink_user_port phone 35233639 usern 35233639 sip_user_n 35233639 sip_user_p 19674580000120 user_in 78 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 79 
+set ngn_uplink_user_port phone 35231901 usern 35231901 sip_user_n 35231901 sip_user_p 18352591000121 user_in 79 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 80 
+set ngn_uplink_user_port phone 35233904 usern 35233904 sip_user_n 35233904 sip_user_p 4459442698 user_in 80 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 81 
+set ngn_uplink_user_port phone 35234487 usern 35234487 sip_user_n 35234487 sip_user_p 60507209672 user_in 81 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 82 
+set ngn_uplink_user_port phone 35233300 usern 35233300 sip_user_n 35233300 sip_user_p 06107183000125 user_in 82 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 83 
+set ngn_uplink_user_port phone 35234795 usern 35234795 sip_user_n 35234795 sip_user_p 10268744000145 user_in 83 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 84 
+set ngn_uplink_user_port phone 35231737 usern 35231737 sip_user_n 35231737 sip_user_p 04164889608 user_in 84 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 85 
+set ngn_uplink_user_port phone 35231332 usern 35231332 sip_user_n 35231332 sip_user_p 44388446653 user_in 85 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 86 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 87 
+set ngn_uplink_user_port phone 35231988 usern 35231988 sip_user_n 35231988 sip_user_p 07046980640 user_in 87 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 88 
+set ngn_uplink_user_port phone 35231428 usern 35231428 sip_user_n 35231428 sip_user_p 34195565000193 user_in 88 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 89 
+set ngn_uplink_user_port phone 35231822 usern 35231822 sip_user_n 35231822 sip_user_p 42907899000170 user_in 89 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 90 
+set ngn_uplink_user_port phone 35232301 usern 35232301 sip_user_n 35232301 sip_user_p 68737769634 user_in 90 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 91 
+set ngn_uplink_user_port phone 35233794 usern 35233794 sip_user_n 35233794 sip_user_p 35881215000143 user_in 91 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 92 
+set ngn_uplink_user_port phone 35231791 usern 35231791 sip_user_n 35231791 sip_user_p 79445586620 user_in 92 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 94 
+set ngn_uplink_user_port phone 35231629 usern 35231629 sip_user_n 35231629 sip_user_p 02614353612 user_in 94 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 95 
+set ngn_uplink_user_port phone 35232274 usern 35232274 sip_user_n 35232274 sip_user_p 29587808649 user_in 95 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 97 
+set ngn_uplink_user_port phone 35232870 usern 35232870 sip_user_n 35232870 sip_user_p 05319066635 user_in 97 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 98 
+set ngn_uplink_user_port phone 35231951 usern 35231951 sip_user_n 35231951 sip_user_p 01248795601 user_in 98 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 99 
+set ngn_uplink_user_port phone 35130802 usern 35130802 sip_user_n 35130802 sip_user_p 01248795601 user_in 99 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 100 
+set ngn_uplink_user_port phone 35231763 usern 35231763 sip_user_n 35231763 sip_user_p 23170505000108 user_in 100 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 101 
+set ngn_uplink_user_port phone 35130277 usern 35130277 sip_user_n 35130277 sip_user_p 74363999691 user_in 101 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 102 
+set ngn_uplink_user_port phone 35231354 usern 35231354 sip_user_n 35231354 sip_user_p 23773062000131 user_in 102 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 103 
+set ngn_uplink_user_port phone 35234611 usern 35234611 sip_user_n 35234611 sip_user_p 03511851602 user_in 103 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 104 
+set ngn_uplink_user_port phone 35233064 usern 35233064 sip_user_n 35233064 sip_user_p 11632657643 user_in 104 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 105 
+set ngn_uplink_user_port phone 35231677 usern 35231677 sip_user_n 35231677 sip_user_p 64402464000107 user_in 105 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 106 
+set ngn_uplink_user_port phone 35231660 usern 35231660 sip_user_n 35231660 sip_user_p 04758907609 user_in 106 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 107 
+set ngn_uplink_user_port phone 35231585 usern 35231585 sip_user_n 35231585 sip_user_p 48903620615 user_in 107 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 108 
+set ngn_uplink_user_port phone 35234110 usern 35234110 sip_user_n 35234110 sip_user_p 22260708000114 user_in 108 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 109 
+set ngn_uplink_user_port phone 34601122 usern 34601122 sip_user_n 34601122 sip_user_p 46196398000184 user_in 109 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 110 
+set ngn_uplink_user_port phone 35234228 usern 35234228 sip_user_n 35234228 sip_user_p 05441650000196 user_in 110 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 111 
+set ngn_uplink_user_port phone 35232112 usern 35232112 sip_user_n 35232112 sip_user_p 08569135610 user_in 111 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 112 
+set ngn_uplink_user_port phone 35233206 usern 35233206 sip_user_n 35233206 sip_user_p 08846209000182 user_in 112 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 114 
+set ngn_uplink_user_port phone 35231977 usern 35231977 sip_user_n 35231977 sip_user_p 21758425687 user_in 114 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 115 
+set ngn_uplink_user_port phone 35231788 usern 35231788 sip_user_n 35231788 sip_user_p 98883011600 user_in 115 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 116 
+set ngn_uplink_user_port phone 35130800 usern 35130800 sip_user_n 35130800 sip_user_p 9362804689 user_in 116 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 117 
+set ngn_uplink_user_port phone 35231559 usern 35231559 sip_user_n 35231559 sip_user_p 03988044601 user_in 117 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 118 
+set ngn_uplink_user_port phone 35130063 usern 35130063 sip_user_n 35130063 sip_user_p 12681017610 user_in 118 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 119 
+set ngn_uplink_user_port phone 35130282 usern 35130282 sip_user_n 35130282 sip_user_p 05481361655 user_in 119 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 120 
+set ngn_uplink_user_port phone 35231835 usern 35231835 sip_user_n 35231835 sip_user_p 55554415687 user_in 120 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 121 
+set ngn_uplink_user_port phone 35232943 usern 35232943 sip_user_n 35232943 sip_user_p 50121405672 user_in 121 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 122 
+set ngn_uplink_user_port phone 35130287 usern 35130287 sip_user_n 35130287 sip_user_p 36342726604 user_in 122 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 123 
+set ngn_uplink_user_port phone 35231096 usern 35231096 sip_user_n 35231096 sip_user_p 14056593604 user_in 123 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 124 
+set ngn_uplink_user_port phone 35232290 usern 35232290 sip_user_n 35232290 sip_user_p 05370985693 user_in 124 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 125 
+set ngn_uplink_user_port phone 35130281 usern 35130281 sip_user_n 35130281 sip_user_p 00448759675 user_in 125 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 126 
+set ngn_uplink_user_port phone 35130067 usern 35130067 sip_user_n 35130067 sip_user_p 00083241663 user_in 126 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 128 
+set ngn_uplink_user_port phone 35130286 usern 35130286 sip_user_n 35130286 sip_user_p 14869950000242 user_in 128 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 129 
+set ngn_uplink_user_port phone 35232753 usern 35232753 sip_user_n 35232753 sip_user_p 63995476600 user_in 129 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 130 
+set ngn_uplink_user_port phone 35231698 usern 35231698 sip_user_n 35231698 sip_user_p 53502841691 user_in 130 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 131 
+set ngn_uplink_user_port phone 35233509 usern 35233509 sip_user_n 35233509 sip_user_p 06368701625 user_in 131 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 133 
+set ngn_uplink_user_port phone 35231968 usern 35231968 sip_user_n 35231968 sip_user_p 53502841691 user_in 133 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 134 
+set ngn_uplink_user_port phone 35231300 usern 35231300 sip_user_n 35231300 sip_user_p 04321438000122 user_in 134 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 135 
+set ngn_uplink_user_port phone 35232371 usern 35232371 sip_user_n 35232371 sip_user_p 04042657000172 user_in 135 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 136 
+set ngn_uplink_user_port phone 35231398 usern 35231398 sip_user_n 35231398 sip_user_p 36345075604 user_in 136 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 137 
+set ngn_uplink_user_port phone 35231371 usern 35231371 sip_user_n 35231371 sip_user_p 25938051000190 user_in 137 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 138 
+set ngn_uplink_user_port phone 35231849 usern 35231849 sip_user_n 35231849 sip_user_p 25938051000190 user_in 138 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 139 
+set ngn_uplink_user_port phone 35233938 usern 35233938 sip_user_n 35233938 sip_user_p 00985968000114 user_in 139 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 140 
+set ngn_uplink_user_port phone 35231900 usern 35231900 sip_user_n 35231900 sip_user_p 08321566634 user_in 140 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 141 
+set ngn_uplink_user_port phone 35231034 usern 35231034 sip_user_n 35231034 sip_user_p 25938051000190 user_in 141 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 144 
+set ngn_uplink_user_port phone 35130283 usern 35130283 sip_user_n 35130283 sip_user_p 09747628651 user_in 144 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 145 
+set ngn_uplink_user_port phone 35234783 usern 35234783 sip_user_n 35234783 sip_user_p 08953789000107 user_in 145 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 146 
+set ngn_uplink_user_port phone 35130285 usern 35130285 sip_user_n 35130285 sip_user_p 12743550600 user_in 146 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 147 
+set ngn_uplink_user_port phone 35232049 usern 35232049 sip_user_n 35232049 sip_user_p 23469125000241 user_in 147 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 148 
+set ngn_uplink_user_port phone 35231248 usern 35231248 sip_user_n 35231248 sip_user_p 23779200000190 user_in 148 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 149 
+set ngn_uplink_user_port phone 35231270 usern 35231270 sip_user_n 35231270 sip_user_p 23779200000190 user_in 149 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 150 
+set ngn_uplink_user_port phone 35130801 usern 35130801 sip_user_n 35130801 sip_user_p 17229832000187 user_in 150 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 151 
+set ngn_uplink_user_port phone 35130808 usern 35130808 sip_user_n 35130808 sip_user_p 15017370000109 user_in 151 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 152 
+set ngn_uplink_user_port phone 35130809 usern 35130809 sip_user_n 35130809 sip_user_p 05045527673 user_in 152 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 153 
+set ngn_uplink_user_port phone 35232097 usern 35232097 sip_user_n 35232097 sip_user_p 08019508643 user_in 153 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 155 
+set ngn_uplink_user_port phone 35231987 usern 35231987 sip_user_n 35231987 sip_user_p 06117969000123 user_in 155 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 156 
+set ngn_uplink_user_port phone 35233844 usern 35233844 sip_user_n 35233844 sip_user_p 06117969000123 user_in 156 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 157 
+set ngn_uplink_user_port phone 35130803 usern 35130803 sip_user_n 35130803 sip_user_p 09172359676 user_in 157 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 158 
+set ngn_uplink_user_port phone 35130807 usern 35130807 sip_user_n 35130807 sip_user_p 79865127687 user_in 158 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 159 
+set ngn_uplink_user_port phone 35234699 usern 35234699 sip_user_n 35234699 sip_user_p 00829956646 user_in 159 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 160 
+set ngn_uplink_user_port phone 35231558 usern 35231558 sip_user_n 35231558 sip_user_p 07423012653 user_in 160 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 161 
+set ngn_uplink_user_port phone 35231271 usern 35231271 sip_user_n 35231271 sip_user_p 01879914646 user_in 161 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 162 
+set ngn_uplink_user_port phone 35232067 usern 35232067 sip_user_n 35232067 sip_user_p 12211134610 user_in 162 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 163 
+set ngn_uplink_user_port phone 34601559 usern 34601559 sip_user_n 34601559 sip_user_p 03988044601 user_in 163 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 164 
+set ngn_uplink_user_port phone 35232782 usern 35232782 sip_user_n 35232782 sip_user_p 05441310618 user_in 164 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 165 
+set ngn_uplink_user_port phone 35130810 usern 35130810 sip_user_n 35130810 sip_user_p 26189530000113 user_in 165 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 166 
+set ngn_uplink_user_port phone 35231211 usern 35231211 sip_user_n 35231211 sip_user_p 27373702000258 user_in 166 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 167 
+set ngn_uplink_user_port phone 35231173 usern 35231173 sip_user_n 35231173 sip_user_p 18885023000196 user_in 167 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 168 
+set ngn_uplink_user_port phone 35231325 usern 35231325 sip_user_n 35231325 sip_user_p 43337368620 user_in 168 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 169 
+set ngn_uplink_user_port phone 35233055 usern 35233055 sip_user_n 35233055 sip_user_p 02545188697 user_in 169 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 170 
+set ngn_uplink_user_port phone 35130812 usern 35130812 sip_user_n 35130812 sip_user_p 03572132000186 user_in 170 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 171 
+set ngn_uplink_user_port phone 35233998 usern 35233998 sip_user_n 35233998 sip_user_p 08569069642 user_in 171 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 172 
+set ngn_uplink_user_port phone 35232796 usern 35232796 sip_user_n 35232796 sip_user_p 08192247660 user_in 172 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 173 
+set ngn_uplink_user_port phone 35130811 usern 35130811 sip_user_n 35130811 sip_user_p 10843625627 user_in 173 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 174 
+set ngn_uplink_user_port phone 35231814 usern 35231814 sip_user_n 35231814 sip_user_p 16939019003587 user_in 174 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 175 
+set ngn_uplink_user_port phone 35232643 usern 35232643 sip_user_n 35232643 sip_user_p 20487802000185 user_in 175 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 176 
+set ngn_uplink_user_port phone 35130806 usern 35130806 sip_user_n 35130806 sip_user_p 02712816692 user_in 176 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 177 
+set ngn_uplink_user_port phone 35231168 usern 35231168 sip_user_n 35231168 sip_user_p 01735084000174 user_in 177 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 178 
+set ngn_uplink_user_port phone 35231228 usern 35231228 sip_user_n 35231228 sip_user_p 08178739615 user_in 178 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 179 
+set ngn_uplink_user_port phone 35130826 usern 35130826 sip_user_n 35130826 sip_user_p 29480230682 user_in 179 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 180 
+set ngn_uplink_user_port phone 35130827 usern 35130827 sip_user_n 35130827 sip_user_p 12610957661 user_in 180 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 181 
+set ngn_uplink_user_port phone 35130828 usern 35130828 sip_user_n 35130828 sip_user_p 98843354604 user_in 181 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 182 
+set ngn_uplink_user_port phone 35232343 usern 35232343 sip_user_n 35232343 sip_user_p 20502772000139 user_in 182 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 183 
+set ngn_uplink_user_port phone 35130830 usern 35130830 sip_user_n 35130830 sip_user_p 44203119000137 user_in 183 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 184 
+set ngn_uplink_user_port phone 35231891 usern 35231891 sip_user_n 35231891 sip_user_p 04591724689 user_in 184 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 185 
+set ngn_uplink_user_port phone 35233553 usern 35233553 sip_user_n 35233553 sip_user_p 01043699813 user_in 185 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 186 
+set ngn_uplink_user_port phone 35233969 usern 35233969 sip_user_n 35233969 sip_user_p 16939019001703 user_in 186 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 187 
+set ngn_uplink_user_port phone 35130829 usern 35130829 sip_user_n 35130829 sip_user_p 81137001615 user_in 187 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 188 
+set ngn_uplink_user_port phone 35233971 usern 35233971 sip_user_n 35233971 sip_user_p 07944430000100 user_in 188 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 189 
+set ngn_uplink_user_port phone 35232917 usern 35232917 sip_user_n 35232917 sip_user_p 08264449620 user_in 189 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 190 
+set ngn_uplink_user_port phone 35130833 usern 35130833 sip_user_n 35130833 sip_user_p 77479726600 user_in 190 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 191 
+set ngn_uplink_user_port phone 35231502 usern 35231502 sip_user_n 35231502 sip_user_p 01065593000137 user_in 191 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 192 
+set ngn_uplink_user_port phone 35232739 usern 35232739 sip_user_n 35232739 sip_user_p 01065593000137 user_in 192 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 193 
+set ngn_uplink_user_port phone 35233967 usern 35233967 sip_user_n 35233967 sip_user_p 18313684004134 user_in 193 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 194 
+set ngn_uplink_user_port phone 35232182 usern 35232182 sip_user_n 35232182 sip_user_p 18313684004134 user_in 194 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 195 
+set ngn_uplink_user_port phone 35231177 usern 35231177 sip_user_n 35231177 sip_user_p 36473847634 user_in 195 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 196 
+set ngn_uplink_user_port phone 35231476 usern 35231476 sip_user_n 35231476 sip_user_p 00595326617 user_in 196 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 197 
+set ngn_uplink_user_port phone 35130837 usern 35130837 sip_user_n 35130837 sip_user_p 00215389000192 user_in 197 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 198 
+set ngn_uplink_user_port phone 35231403 usern 35231403 sip_user_n 35231403 sip_user_p 44387172649 user_in 198 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 199 
+set ngn_uplink_user_port phone 35130831 usern 35130831 sip_user_n 35130831 sip_user_p 34394752000104 user_in 199 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 200 
+set ngn_uplink_user_port phone 35231490 usern 35231490 sip_user_n 35231490 sip_user_p 13237379000108 user_in 200 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 201 
+set ngn_uplink_user_port phone 35231864 usern 35231864 sip_user_n 35231864 sip_user_p 39759032600 user_in 201 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 202 
+set ngn_uplink_user_port phone 35233133 usern 35233133 sip_user_n 35233133 sip_user_p 36274593691 user_in 202 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 203 
+set ngn_uplink_user_port phone 35231928 usern 35231928 sip_user_n 35231928 sip_user_p 13459589604 user_in 203 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 204 
+set ngn_uplink_user_port phone 35231566 usern 35231566 sip_user_n 35231566 sip_user_p 08158219640 user_in 204 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 205 
+set ngn_uplink_user_port phone 35232152 usern 35232152 sip_user_n 35232152 sip_user_p 01675783000176 user_in 205 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 206 
+set ngn_uplink_user_port phone 35231278 usern 35231278 sip_user_n 35231278 sip_user_p 59070293668 user_in 206 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 207 
+set ngn_uplink_user_port phone 35231451 usern 35231451 sip_user_n 35231451 sip_user_p 60507012615 user_in 207 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 208 
+set ngn_uplink_user_port phone 35231577 usern 35231577 sip_user_n 35231577 sip_user_p 59071940659 user_in 208 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 209 
+set ngn_uplink_user_port phone 35130284 usern 35130284 sip_user_n 35130284 sip_user_p 34295704687 user_in 209 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 210 
+set ngn_uplink_user_port phone 35232075 usern 35232075 sip_user_n 35232075 sip_user_p 06226576669 user_in 210 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 211 
+set ngn_uplink_user_port phone 35234738 usern 35234738 sip_user_n 35234738 sip_user_p 05424203680 user_in 211 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 212 
+set ngn_uplink_user_port phone 35233822 usern 35233822 sip_user_n 35233822 sip_user_p 00885563603 user_in 212 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 213 
+set ngn_uplink_user_port phone 35231305 usern 35231305 sip_user_n 35231305 sip_user_p 18836015000150 user_in 213 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 214 
+set ngn_uplink_user_port phone 35231894 usern 35231894 sip_user_n 35231894 sip_user_p 88265021615 user_in 214 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 215 
+set ngn_uplink_user_port phone 35231760 usern 35231760 sip_user_n 35231760 sip_user_p 56143133620 user_in 215 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 216 
+set ngn_uplink_user_port phone 35232173 usern 35232173 sip_user_n 35232173 sip_user_p 05437782000144 user_in 216 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 217 
+set ngn_uplink_user_port phone 35232025 usern 35232025 sip_user_n 35232025 sip_user_p 11713746000169 user_in 217 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 218 
+set ngn_uplink_user_port phone 35233979 usern 35233979 sip_user_n 35233979 sip_user_p 11713746000169 user_in 218 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 219 
+set ngn_uplink_user_port phone 35231253 usern 35231253 sip_user_n 35231253 sip_user_p 08180431649 user_in 219 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 220 
+set ngn_uplink_user_port phone 35231983 usern 35231983 sip_user_n 35231983 sip_user_p 68789190610 user_in 220 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 221 
+set ngn_uplink_user_port phone 35232039 usern 35232039 sip_user_n 35232039 sip_user_p 23482396000156 user_in 221 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 222 
+set ngn_uplink_user_port phone 35130804 usern 35130804 sip_user_n 35130804 sip_user_p 59074159672 user_in 222 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 223 
+set ngn_uplink_user_port phone 35234210 usern 35234210 sip_user_n 35234210 sip_user_p 04670443682 user_in 223 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 224 
+set ngn_uplink_user_port phone 35231268 usern 35231268 sip_user_n 35231268 sip_user_p 06337375696 user_in 224 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 225 
+set ngn_uplink_user_port phone 35231448 usern 35231448 sip_user_n 35231448 sip_user_p 00843802685 user_in 225 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 226 
+set ngn_uplink_user_port phone 35232033 usern 35232033 sip_user_n 35232033 sip_user_p 04042657000172 user_in 226 
+set new_ngn_uplink_user serv TELEFONIA@130 vid 130 ip_m dhcp dhcp_opt disable pro 5060 user_in 227 
+set ngn_uplink_user_port phone 35130834 usern 35130834 sip_user_n 35130834 sip_user_p 44385560668 user_in 227 
+!ngn user config end ---------------------------------------------
+!ngn bitmap config -------------------------------------------------
+!ngn bitmap config end ---------------------------------------------
+!ngn bind bitmap config begin ---------------------------------------------
+!ngn bind bitmap config end ---------------------------------------------
+!ngn iad md5 config -------------------------------------------------
+!ngn iad md5 config end ---------------------------------------------
+!ngn softswitch profile config-----------------------------------------
+!ngn softswitch profile config end ---------------------------------------------
+!ngn adv pots profile config -------------------------------------------------
+!ngn softswitch profile config end ---------------------------------------------
+!ngn keepalive config-----------------------------------------
+set ngn_keepalive servicename TELEFONIA@130 aliveinterval 30 alivetimes 3
+!ngn keepalive config end--------------------------------------
+!ngn voice activation type-----------------------------------------
+set ngn_activation_type auto 
+!ngn voice activation type end--------------------------------------
+!ngn reg para -----------------------------------------
+set ngn_reg_para name TELEFONIA@130 reg_time 30 reg_pkts 0 reg_interval 30
+!ngn reg para end--------------------------------------
+!ngn voice service config-----------------------------------------
+set ngn_v sl 1 p 2 o 17 p 1 ph 35231655 sli en dt RFC2833 
+set ngn_v sl 1 p 2 o 27 p 1 ph 35231899 dt RFC2833 
+set ngn_v sl 1 p 2 o 38 p 1 ph 35232074 sli en dt RFC2833 
+set ngn_v sl 1 p 2 o 56 p 1 ph 35231987 dt RFC2833 
+set ngn_v sl 1 p 2 o 56 p 2 ph 35233844 dt RFC2833 
+set ngn_v sl 1 p 3 o 6 p 1 ph 35233969 sli en dt RFC2833 
+set ngn_v sl 1 p 3 o 17 p 1 ph 35231585 sli en dt RFC2833 
+set ngn_v sl 1 p 3 o 18 p 1 ph 35233300 sli en dt RFC2833 
+set ngn_v sl 1 p 3 o 23 p 1 ph 35231300 sli en dt RFC2833 
+set ngn_v sl 1 p 3 o 25 p 1 ph 35232700 dt RFC2833 
+set ngn_v sl 1 p 3 o 26 p 1 ph 35234639 sli en dt RFC2833 
+set ngn_v sl 1 p 3 o 29 p 1 ph 35231145 sli en dt RFC2833 
+set ngn_v sl 1 p 3 o 35 p 1 ph 35234580 sli en dt RFC2833 
+set ngn_v sl 1 p 3 o 45 p 1 ph 35231822 dt RFC2833 
+set ngn_v sl 1 p 3 o 47 p 1 ph 35231737 sli en dt RFC2833 
+set ngn_v sl 1 p 3 o 50 p 1 ph 35232753 sli en dt RFC2833 
+set ngn_v sl 1 p 6 o 1 p 1 ph 35234228 dt RFC2833 
+set ngn_v sl 1 p 6 o 4 p 1 ph 35232323 sli en dt RFC2833 
+set ngn_v sl 1 p 6 o 5 p 1 ph 35231201 dt RFC2833 
+set ngn_v sl 1 p 6 o 5 p 2 ph 35231127 dt RFC2833 
+set ngn_v sl 1 p 6 o 6 p 1 ph 35233064 sli en dt RFC2833 
+set ngn_v sl 1 p 6 o 8 p 1 ph 35232128 sli en dt RFC2833 
+set ngn_v sl 1 p 6 o 25 p 1 ph 35234222 sli en dt RFC2833 
+set ngn_v sl 1 p 6 o 25 p 2 ph 35231169 sli en dt RFC2833 
+set ngn_v sl 1 p 6 o 34 p 1 ph 35232173 sli en dt RFC2833 
+set ngn_v sl 1 p 6 o 39 p 1 ph 35234178 sli en dt RFC2833 
+set ngn_v sl 1 p 6 o 41 p 1 ph 35231448 sli en dt RFC2833 
+set ngn_v sl 1 p 6 o 46 p 1 ph 35234768 sli en dt RFC2833 
+set ngn_v sl 1 p 8 o 3 p 1 ph 35232643 sli en dt RFC2833 
+set ngn_v sl 1 p 8 o 15 p 1 ph 35130068 sli en dt RFC2833 
+set ngn_v sl 1 p 8 o 55 p 1 ph 35130807 sli en dt RFC2833 
+set ngn_v sl 1 p 8 o 57 p 1 ph 35231476 sli en dt RFC2833 
+set ngn_v sl 2 p 2 o 1 p 1 ph 35130061 sli en dt RFC2833 
+set ngn_v sl 2 p 4 o 4 p 1 ph 35231168 dt RFC2833 
+set ngn_v sl 2 p 4 o 23 p 1 ph 35232136 sli en dt RFC2833 
+set ngn_v sl 2 p 4 o 23 p 2 ph 35231904 sli en dt RFC2833 
+set ngn_v sl 2 p 4 o 26 p 1 ph 35130829 sli en dt RFC2833 
+set ngn_v sl 2 p 4 o 30 p 1 ph 35233553 dt RFC2833 
+set ngn_v sl 2 p 5 o 2 p 1 ph 35232882 sli en dt RFC2833 
+set ngn_v sl 2 p 5 o 3 p 1 ph 35232274 sli en dt RFC2833 
+set ngn_v sl 2 p 5 o 29 p 1 ph 35231760 dt RFC2833 
+set ngn_v sl 2 p 7 o 18 p 1 ph 35231403 sli en dt RFC2833 
+set ngn_v sl 2 p 8 o 5 p 1 ph 35234320 sli en dt RFC2833 
+set ngn_v sl 2 p 10 o 3 p 1 ph 35130803 dt RFC2833 
+set ngn_v sl 2 p 10 o 16 p 1 ph 35232796 dt RFC2833 
+set ngn_v sl 2 p 10 o 22 p 1 ph 35130287 dt RFC2833 
+set ngn_v sl 2 p 10 o 30 p 1 ph 35231096 dt RFC2833 
+set ngn_v sl 2 p 11 o 16 p 1 ph 35231508 sli en dt RFC2833 
+set ngn_v sl 3 p 1 o 8 p 1 ph 35231007 sli en dt RFC2833 
+set ngn_v sl 3 p 1 o 11 p 1 ph 35232039 sli en dt RFC2833 
+set ngn_v sl 3 p 1 o 14 p 1 ph 35231451 sli en dt RFC2833 
+set ngn_v sl 3 p 1 o 16 p 1 ph 35234016 dt RFC2833 
+set ngn_v sl 3 p 1 o 20 p 1 ph 35231490 sli en dt RFC2833 
+set ngn_v sl 3 p 1 o 27 p 1 ph 35231900 sli en dt RFC2833 
+set ngn_v sl 3 p 1 o 36 p 1 ph 35130067 dt RFC2833 
+set ngn_v sl 3 p 1 o 38 p 1 ph 35234200 dt RFC2833 
+set ngn_v sl 3 p 1 o 40 p 1 ph 35231882 dt RFC2833 
+set ngn_v sl 3 p 1 o 45 p 1 ph 35231606 sli en dt RFC2833 
+set ngn_v sl 3 p 1 o 48 p 1 ph 35231332 dt RFC2833 
+set ngn_v sl 3 p 1 o 52 p 1 ph 35231596 sli en dt RFC2833 
+set ngn_v sl 3 p 1 o 52 p 2 ph 35234001 sli en dt RFC2833 
+set ngn_v sl 3 p 1 o 69 p 1 ph 35232097 sli en dt RFC2833 
+set ngn_v sl 3 p 1 o 87 p 1 ph 35231086 sli en dt RFC2833 
+set ngn_v sl 3 p 2 o 4 p 1 ph 35231354 dt RFC2833 
+set ngn_v sl 3 p 2 o 17 p 1 ph 35234795 sli en dt RFC2833 
+set ngn_v sl 3 p 4 o 2 p 1 ph 35234545 sli en dt RFC2833 
+set ngn_v sl 3 p 4 o 16 p 1 ph 35130065 sli en dt RFC2833 
+set ngn_v sl 3 p 4 o 18 p 1 ph 35233971 sli en ec dis dt RFC2833 
+set ngn_v sl 3 p 4 o 26 p 1 ph 35231928 sli en dt RFC2833 
+set ngn_v sl 3 p 4 o 33 p 1 ph 35233998 sli en dt RFC2833 
+set ngn_v sl 3 p 5 o 33 p 1 ph 35232054 sli en dt RFC2833 
+set ngn_v sl 3 p 5 o 49 p 1 ph 35234119 sli en dt RFC2833 
+set ngn_v sl 3 p 5 o 55 p 1 ph 35232049 sli en dt RFC2833 
+set ngn_v sl 3 p 7 o 20 p 1 ph 35232376 dt RFC2833 
+set ngn_v sl 3 p 8 o 8 p 1 ph 35231661 sli en dt RFC2833 
+set ngn_v sl 3 p 8 o 16 p 1 ph 35234738 sli en dt RFC2833 
+set ngn_v sl 3 p 8 o 22 p 1 ph 35130282 sli en dt RFC2833 
+set ngn_v sl 3 p 8 o 31 p 1 ph 35233992 sli en dt RFC2833 
+set ngn_v sl 3 p 8 o 41 p 1 ph 35232015 sli en dt RFC2833 
+set ngn_v sl 3 p 8 o 44 p 1 ph 35231968 sli en dt RFC2833 
+set ngn_v sl 3 p 8 o 58 p 1 ph 35231366 dt RFC2833 
+set ngn_v sl 3 p 8 o 62 p 1 ph 35234300 dt RFC2833 
+set ngn_v sl 3 p 8 o 64 p 1 ph 35231398 sli en dt RFC2833 
+set ngn_v sl 3 p 8 o 72 p 1 ph 35231271 sli en dt RFC2833 
+set ngn_v sl 4 p 3 o 12 p 1 ph 35231562 sli en dt RFC2833 
+set ngn_v sl 4 p 4 o 20 p 1 ph 35232917 sli en dt RFC2833 
+set ngn_v sl 4 p 4 o 21 p 1 ph 35130277 sli en dt RFC2833 
+set ngn_v sl 4 p 4 o 35 p 1 ph 35231788 dt RFC2833 
+set ngn_v sl 4 p 6 o 22 p 1 ph 35234732 sli en dt RFC2833 
+set ngn_v sl 4 p 9 o 13 p 1 ph 35233639 sli en dt RFC2833 
+set ngn_v sl 4 p 9 o 16 p 1 ph 35233794 sli en dt RFC2833 
+set ngn_v sl 4 p 9 o 27 p 1 ph 35231901 dt RFC2833 
+set ngn_v sl 4 p 9 o 39 p 1 ph 35130284 sli en dt RFC2833 
+set ngn_v sl 4 p 9 o 40 p 1 ph 35231390 sli en dt RFC2833 
+set ngn_v sl 4 p 9 o 44 p 1 ph 35233938 sli en dt RFC2833 
+set ngn_v sl 4 p 9 o 58 p 1 ph 35234071 sli en dt RFC2833 
+set ngn_v sl 4 p 11 o 8 p 1 ph 35130837 sli en dt RFC2833 
+set ngn_v sl 4 p 11 o 20 p 1 ph 35130806 sli en dt RFC2833 
+set ngn_v sl 4 p 12 o 14 p 1 ph 35130281 sli en dt RFC2833 
+set ngn_v sl 4 p 13 o 29 p 1 ph 35130810 sli en dt RFC2833 
+set ngn_v sl 4 p 13 o 58 p 1 ph 35233822 sli en dt RFC2833 
+set ngn_v sl 4 p 15 o 2 p 1 ph 35234190 sli en dt RFC2833 
+set ngn_v sl 4 p 15 o 24 p 1 ph 35232292 sli en dt RFC2833 
+set ngn_v sl 5 p 5 o 12 p 1 ph 35231468 sli en dt RFC2833 
+set ngn_v sl 5 p 6 o 9 p 1 ph 35231325 dt RFC2833 
+set ngn_v sl 5 p 6 o 14 p 1 ph 35231566 dt RFC2833 
+set ngn_v sl 5 p 6 o 15 p 1 ph 35130804 sli en dt RFC2833 
+set ngn_v sl 5 p 6 o 34 p 1 ph 35231891 dt RFC2833 
+set ngn_v sl 5 p 6 o 47 p 1 ph 35231629 sli en dt RFC2833 
+set ngn_v sl 5 p 6 o 56 p 1 ph 35233206 sli en dt RFC2833 
+set ngn_v sl 5 p 6 o 67 p 1 ph 35231312 dt RFC2833 
+set ngn_v sl 5 p 6 o 71 p 1 ph 35234611 dt RFC2833 
+set ngn_v sl 5 p 7 o 12 p 1 ph 35130833 sli en dt RFC2833 
+set ngn_v sl 5 p 12 o 18 p 1 ph 35130286 sli en dt RFC2833 
+set ngn_v sl 5 p 12 o 30 p 1 ph 35234110 dt RFC2833 
+set ngn_v sl 5 p 14 o 3 p 1 ph 35130834 dt RFC2833 
+set ngn_v sl 5 p 15 o 51 p 1 ph 35130827 sli en dt RFC2833 
+set ngn_v sl 6 p 1 o 10 p 1 ph 35231894 sli en dt RFC2833 
+set ngn_v sl 6 p 1 o 23 p 1 ph 35231864 sli en dt RFC2833 
+set ngn_v sl 6 p 3 o 6 p 1 ph 35232943 dt RFC2833 
+set ngn_v sl 6 p 3 o 22 p 1 ph 35233055 sli en dt RFC2833 
+set ngn_v sl 6 p 3 o 25 p 1 ph 35231763 sli en dt RFC2833 
+set ngn_v sl 6 p 5 o 39 p 1 ph 35130285 sli en dt RFC2833 
+set ngn_v sl 6 p 5 o 45 p 1 ph 35231676 sli en dt RFC2833 
+set ngn_v sl 6 p 7 o 26 p 1 ph 35233904 sli en dt RFC2833 
+set ngn_v sl 6 p 8 o 16 p 1 ph 35233509 dt RFC2833 
+set ngn_v sl 6 p 8 o 33 p 1 ph 35233630 sli en dt RFC2833 
+set ngn_v sl 6 p 9 o 28 p 1 ph 35130801 dt RFC2833 
+set ngn_v sl 6 p 10 o 3 p 1 ph 35231677 dt RFC2833 
+set ngn_v sl 6 p 10 o 4 p 1 ph 35231267 dt RFC2833 
+set ngn_v sl 6 p 10 o 6 p 1 ph 35130811 sli en dt RFC2833 
+set ngn_v sl 6 p 10 o 7 p 1 ph 35231791 sli en dt RFC2833 
+set ngn_v sl 6 p 10 o 14 p 1 ph 35232075 sli en dt RFC2833 
+set ngn_v sl 6 p 10 o 16 p 1 ph 35234376 sli en dt RFC2833 
+set ngn_v sl 6 p 10 o 17 p 1 ph 35233237 dt RFC2833 
+set ngn_v sl 6 p 10 o 31 p 1 ph 35231331 sli en dt RFC2833 
+set ngn_v sl 6 p 10 o 41 p 1 ph 35130283 dt RFC2833 
+set ngn_v sl 6 p 10 o 43 p 1 ph 34601559 dt RFC2833 
+set ngn_v sl 6 p 10 o 44 p 1 ph 35231268 sli en dt RFC2833 
+set ngn_v sl 6 p 15 o 10 p 1 ph 35232182 sli en dt RFC2833 
+set ngn_v sl 6 p 15 o 10 p 2 ph 35233967 sli en dt RFC2833 
+set ngn_v sl 6 p 15 o 16 p 1 ph 34601790 dt RFC2833 
+set ngn_v sl 6 p 16 o 1 p 1 ph 35231979 sli en dt RFC2833 
+set ngn_v sl 7 p 1 o 13 p 1 ph 35130063 sli en dt RFC2833 
+set ngn_v sl 7 p 4 o 25 p 1 ph 35231736 sli en dt RFC2833 
+set ngn_v sl 7 p 7 o 6 p 1 ph 35231595 sli en dt RFC2833 
+set ngn_v sl 7 p 7 o 8 p 1 ph 35231278 sli en dt RFC2833 
+set ngn_v sl 7 p 7 o 20 p 1 ph 35231711 sli en dt RFC2833 
+set ngn_v sl 7 p 7 o 22 p 1 ph 35231211 sli en dt RFC2833 
+set ngn_v sl 7 p 7 o 24 p 1 ph 35130830 sli en dt RFC2833 
+set ngn_v sl 7 p 7 o 27 p 1 ph 35231988 sli en dt RFC2833 
+set ngn_v sl 7 p 7 o 31 p 1 ph 35232005 sli en dt RFC2833 
+set ngn_v sl 7 p 7 o 37 p 1 ph 35231577 sli en dt RFC2833 
+set ngn_v sl 7 p 7 o 45 p 1 ph 35231253 sli en dt RFC2833 
+set ngn_v sl 7 p 7 o 46 p 1 ph 35232152 sli en dt RFC2833 
+set ngn_v sl 7 p 9 o 26 p 1 ph 35130062 dt RFC2833 
+set ngn_v sl 7 p 12 o 3 p 1 ph 35231050 sli en dt RFC2833 
+set ngn_v sl 7 p 12 o 6 p 1 ph 35130831 dt RFC2833 
+set ngn_v sl 7 p 12 o 8 p 1 ph 35232025 sli en dt RFC2833 
+set ngn_v sl 7 p 12 o 8 p 2 ph 35233979 dt RFC2833 
+set ngn_v sl 7 p 12 o 14 p 1 ph 35232026 sli en dt RFC2833 
+set ngn_v sl 7 p 12 o 19 p 1 ph 35232301 sli en dt RFC2833 
+set ngn_v sl 7 p 12 o 20 p 1 ph 35231249 sli en dt RFC2833 
+set ngn_v sl 7 p 12 o 20 p 2 ph 35232122 sli en dt RFC2833 
+set ngn_v sl 7 p 12 o 21 p 1 ph 35232100 ec dis dt RFC2833 
+set ngn_v sl 7 p 12 o 27 p 1 ph 35130064 sli en dt RFC2833 
+set ngn_v sl 7 p 12 o 30 p 1 ph 35234487 dt RFC2833 
+set ngn_v sl 7 p 12 o 38 p 1 ph 35231270 dt RFC2833 
+set ngn_v sl 7 p 12 o 38 p 2 ph 35231248 dt RFC2833 
+set ngn_v sl 7 p 12 o 49 p 1 ph 34601122 sli en dt RFC2833 
+set ngn_v sl 7 p 12 o 50 p 1 ph 35231558 sli en dt RFC2833 
+set ngn_v sl 7 p 12 o 53 p 1 ph 35231977 dt RFC2833 
+set ngn_v sl 7 p 12 o 56 p 1 ph 35231559 dt RFC2833 
+set ngn_v sl 7 p 12 o 60 p 1 ph 35231371 sli en dt RFC2833 
+set ngn_v sl 7 p 12 o 60 p 2 ph 35231849 sli en dt RFC2833 
+set ngn_v sl 7 p 13 o 15 p 1 ph 35231628 sli en dt RFC2833 
+set ngn_v sl 7 p 13 o 32 p 1 ph 35232112 sli en dt RFC2833 
+set ngn_v sl 7 p 13 o 33 p 1 ph 35231228 sli en dt RFC2833 
+set ngn_v sl 7 p 13 o 36 p 1 ph 35234676 dt RFC2833 
+set ngn_v sl 7 p 14 o 28 p 1 ph 35231814 sli en dt RFC2833 
+set ngn_v sl 7 p 14 o 34 p 1 ph 35231428 sli en dt RFC2833 
+set ngn_v sl 7 p 14 o 44 p 1 ph 35232067 sli en dt RFC2833 
+set ngn_v sl 7 p 16 o 2 p 1 ph 35130800 dt RFC2833 
+set ngn_v sl 7 p 16 o 10 p 1 ph 35234221 sli en dt RFC2833 
+set ngn_v sl 7 p 16 o 37 p 1 ph 35130069 dt RFC2833 
+set ngn_v sl 8 p 5 o 15 p 1 ph 35232782 dt RFC2833 
+set ngn_v sl 8 p 8 o 1 p 1 ph 35231660 sli en dt RFC2833 
+set ngn_v sl 8 p 8 o 12 p 1 ph 35233133 sli en dt RFC2833 
+set ngn_v sl 8 p 10 o 20 p 1 ph 35130812 sli en dt RFC2833 
+set ngn_v sl 8 p 12 o 39 p 1 ph 35232290 dt RFC2833 
+set ngn_v sl 8 p 12 o 51 p 1 ph 35130808 sli en dt RFC2833 
+set ngn_v sl 8 p 13 o 7 p 1 ph 35130826 sli en dt RFC2833 
+set ngn_v sl 8 p 13 o 28 p 1 ph 35130828 sli en dt RFC2833 
+!ngn voice service config end--------------------------------------
+!ngn private subnet config-----------------------------------------
+set ngn_private_subnet private_ip 10.27.255.255 private_subnet 255.255.0.0 index 1 iptype voice
+set ngn_private_subnet private_ip 10.26.255.255 private_subnet 255.255.0.0 index 2 iptype data
+set ngn_private_subnet private_ip 10.29.255.255 private_subnet 255.255.0.0 index 3 iptype ppcommunication
+set ngn_private_subnet private_ip 10.25.255.255 private_subnet 255.255.0.0 index 4 iptype voice25
+!ngn private subnet end ---------------------------------------------
+!voip_manage_global_showrun ------------------------
