@@ -3,7 +3,6 @@ package engtelecom.filters;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,7 +30,7 @@ public class DataVeipFilter {
     }
 
     /**
-     * [0] slot
+     * [0] SLOT
      * [1] PON
      * [2] ONU
      * [3] Port
@@ -86,10 +85,10 @@ public class DataVeipFilter {
             // [1] Nome do perfil
             // [2] Tipo do perfil
 
-            System.out.println("Perfis prf_mgr:");
-            for (final String[] config : prfMgrConfigs) {
-                System.out.println(Arrays.toString(config));
-            }
+            // System.out.println("Perfis prf_mgr:");
+            // for (final String[] config : prfMgrConfigs) {
+            //     System.out.println(Arrays.toString(config));
+            // }
 
             // [0] Slot
             // [1] PON
