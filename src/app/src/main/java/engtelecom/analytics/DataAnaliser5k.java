@@ -89,7 +89,7 @@ public class DataAnaliser5k {
         dataPortEthFilter.start();
 
         // Fazer a coleta do bandwidth
-        // dataBandwidthFilter.start();
+        dataBandwidthFilter.start();
 
         // Fazer a coleta do ngn
         // dataNgnFilter.start();

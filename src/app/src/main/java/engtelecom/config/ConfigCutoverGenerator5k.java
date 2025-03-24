@@ -89,6 +89,15 @@ public class ConfigCutoverGenerator5k {
                 }
             }
 
+            if (this.configBandWidth != null) {
+                for (final List<String> list : this.configBandWidth) {
+                    for (final String lines : list) {
+                        writer.write(lines);
+                        writer.newLine();
+                    }
+                }
+            }
+
             writer.newLine();
 
             if (this.configWanService != null) {
@@ -158,11 +167,15 @@ public class ConfigCutoverGenerator5k {
 
         // Configurar o wan-service
         // Configurar o pppoe
-        for (final String[] config : this.dataAnaliser5k.getDataWanServiceFilter().getWanConfigs()) {
-            if ("r".equals(config[5])) {
-                configWanService.add(scriptsAN6k.comandoPpoe(config[0], config[1], config[2], config[6], config[9],
-                        config[10], config[3], config[4], config[5], config[7], config[8]));
-            }
+        for (final String[] config : this.dataAnaliser5k.getDataWanServiceFilter().getWanRouterConfigs()) {
+            configWanService.add(scriptsAN6k.comandoPpoe(config[0], config[1], config[2], config[6], config[9],
+                    config[10], config[3], config[4], config[5], config[7], config[8]));
+        }
+
+        // Configurar o bridge
+        for (final String[] config : this.dataAnaliser5k.getDataWanServiceFilter().getWanBridgeConfigs()) {
+            configWanService.add(scriptsAN6k.comandoBridge(config[0], config[1], config[2], config[6], config[3],
+                    config[4], config[5], config[7], config[8], config[9], config[10]));
         }
 
         // Configurar o wifi com senha
@@ -218,14 +231,20 @@ public class ConfigCutoverGenerator5k {
                     config[3], config[5], config[4], config[6]));
         }
 
+        // Configurar o bandwidth
+        for (final String[] config : this.dataAnaliser5k.getDataBandwidthFilter().getBandwidthConfigs()) {
+            String fixbw = String.valueOf(Math.max(Integer.parseInt(config[4]), 64));
+            String asbw = String.valueOf(Math.max(Integer.parseInt(config[5]), 64));
+            String maxbw = String.valueOf(Math.max(Integer.parseInt(config[6]), 512));
+
+            configBandWidth.add(scriptsAN6k.configBandwidth(config[0], config[1], config[2], config[3],
+                    fixbw, asbw, maxbw));
+        }
+
         // TO-DO
         // Precisa analisar o caso de não ser informado o cvlan-id
 
         // Configurar o wifi com radius
-
-        // Configurar o bridge
-
-        // Configurar o bandwidth
 
         // Configurar o ngn
 

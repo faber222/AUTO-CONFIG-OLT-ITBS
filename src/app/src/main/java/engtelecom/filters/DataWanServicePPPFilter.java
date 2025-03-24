@@ -1,20 +1,18 @@
 package engtelecom.filters;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.*;
+import java.util.*;
+import java.util.regex.*;
 
 public class DataWanServicePPPFilter {
     private final String path;
-
-    private final List<String[]> wanConfigs;
+    private final List<String[]> wanRouterConfigs; // Configs de "ty r"
+    private final List<String[]> wanBridgeConfigs; // Configs de "ty b"
 
     public DataWanServicePPPFilter(final String path) {
         this.path = path;
-        this.wanConfigs = new ArrayList<>();
+        this.wanRouterConfigs = new ArrayList<>();
+        this.wanBridgeConfigs = new ArrayList<>();
     }
 
     /**
@@ -23,17 +21,36 @@ public class DataWanServicePPPFilter {
      * [2] onu
      * [3] index
      * [4] Mode
-     * [5] Tipo (r/b)
+     * [5] Tipo (r)
      * [6] VLAN
      * [7] NAT (en/dis)
      * [8] PPPoE (pppoe/null)
      * [9] Usuário PPPoE (se existir)
      * [10] Senha PPPoE (se existir)
      * 
-     * @return ArrayList contendo todos os dados de wanService
+     * @return Lista com configurações do tipo "r" (router)
      */
-    public List<String[]> getWanConfigs() {
-        return wanConfigs;
+    public List<String[]> getWanRouterConfigs() {
+        return wanRouterConfigs;
+    }
+
+    /**
+     * [0] slot
+     * [1] pon
+     * [2] onu
+     * [3] index
+     * [4] Mode
+     * [5] Tipo (b)
+     * [6] VLAN
+     * [7] NAT (en/dis)
+     * [8] VLAN Mode (tag/transparent)
+     * [9] TVLAN (dis ou número)
+     * [10] TVID
+     * 
+     * @return Lista com configurações do tipo "b" (bridge)
+     */
+    public List<String[]> getWanBridgeConfigs() {
+        return wanBridgeConfigs;
     }
 
     @SuppressWarnings("CallToPrintStackTrace")
@@ -42,47 +59,61 @@ public class DataWanServicePPPFilter {
             String line;
 
             while ((line = br.readLine()) != null) {
-                // Regex para capturar todas as informações desejadas
-                final Pattern wanPattern = Pattern.compile(
-                        "set wancfg sl (\\d+) (\\d+) (\\d+) ind (\\d+) mode (\\S+) ty (r|b) (\\d+) \\d+ nat (\\S+).*? dsp (pppoe|null)(?: pro dis (\\S+) key:([^\\s]+))?");
-                final Matcher matcher = wanPattern.matcher(line);
+                // Regex para capturar configurações do tipo "r" (router)
+                Pattern routerPattern = Pattern.compile(
+                        "set wancfg sl (\\d+) (\\d+) (\\d+) ind (\\d+) mode (\\S+) ty r (\\d+) \\d+ nat (\\S+).*? dsp (pppoe|null)(?: pro dis (\\S+) key:([^\\s]+))?");
+                Matcher routerMatcher = routerPattern.matcher(line);
 
-                if (matcher.find()) {
-                    final String slot = matcher.group(1); // slot
-                    final String pon = matcher.group(2); // pon
-                    final String onu = matcher.group(3); // onu
-                    final String ind = matcher.group(4); // Índice (ind)
-                    final String mode = matcher.group(5); // Mode
-                    final String tipo = matcher.group(6); // Tipo (r/b)
-                    final String vlan = matcher.group(7); // VLAN
-                    final String nat = matcher.group(8); // NAT (en/dis)
-                    final String pppoe = matcher.group(9); // PPPoE (pppoe/null)
-                    final String user = matcher.group(10) != null ? matcher.group(10) : "N/A"; // Usuário PPPoE (se
-                                                                                               // existir)
-                    final String pass = matcher.group(11) != null ? matcher.group(11) : "N/A"; // Senha PPPoE (se
-                                                                                               // existir)
+                if (routerMatcher.find()) {
+                    final String slot = routerMatcher.group(1);
+                    final String pon = routerMatcher.group(2);
+                    final String onu = routerMatcher.group(3);
+                    final String ind = routerMatcher.group(4);
+                    final String mode = routerMatcher.group(5);
+                    final String tipo = "r"; // Tipo router
+                    final String vlan = routerMatcher.group(6);
+                    final String nat = routerMatcher.group(7);
+                    final String pppoe = routerMatcher.group(8);
+                    final String user = routerMatcher.group(9) != null ? routerMatcher.group(9) : "N/A";
+                    final String pass = routerMatcher.group(10) != null ? routerMatcher.group(10) : "N/A";
 
-                    // [0] slot
-                    // [1] pon
-                    // [2] onu
-                    // [3] Índice (ind)
-                    // [4] Mode
-                    // [5] Tipo (r/b)
-                    // [6] VLAN
-                    // [7] NAT (en/dis)
-                    // [8] PPPoE (pppoe/null)
-                    // [9] Usuário PPPoE (se existir)
-                    // [10] Senha PPPoE (se existir)
+                    wanRouterConfigs
+                            .add(new String[] { slot, pon, onu, ind, mode, tipo, vlan, nat, pppoe, user, pass });
+                    continue;
+                }
 
-                    // Adiciona os dados como array de strings na lista
-                    wanConfigs.add(new String[] { slot, pon, onu, ind, mode, tipo, vlan, nat, pppoe, user, pass });
+                // Regex para capturar configurações do tipo "b" (bridge)
+                Pattern bridgePattern = Pattern.compile(
+                        "set wancfg sl (\\d+) (\\d+) (\\d+) ind (\\d+) mode (\\S+) ty b (\\d+) \\d+ nat (\\S+).*? vlanm (\\S+) tvlan (\\S+) (\\d+)");
+                Matcher bridgeMatcher = bridgePattern.matcher(line);
+
+                if (bridgeMatcher.find()) {
+                    final String slot = bridgeMatcher.group(1);
+                    final String pon = bridgeMatcher.group(2);
+                    final String onu = bridgeMatcher.group(3);
+                    final String ind = bridgeMatcher.group(4);
+                    final String mode = bridgeMatcher.group(5);
+                    final String tipo = "b"; // Tipo bridge
+                    final String vlan = bridgeMatcher.group(6);
+                    final String nat = bridgeMatcher.group(7);
+                    final String vlanMode = bridgeMatcher.group(8); // Ex: "tag" ou "transparent"
+                    final String tvlan = bridgeMatcher.group(9); // VLAN de transporte
+                    final String tvid = bridgeMatcher.group(10); // TVID extraído
+
+                    wanBridgeConfigs.add(new String[] { slot, pon, onu, ind, mode, tipo, vlan, nat, vlanMode, tvlan,
+                            tvid });
                 }
             }
 
-            // // Exibir os resultados (opcional, apenas para conferência)
-            // System.out.println("Configurações WAN:");
-            // for (final String[] config : wanConfigs) {
-            //     System.out.println(Arrays.toString(config));
+            // Debug: Exibir os resultados processados
+            // System.out.println("Configurações WAN - Router:");
+            // for (final String[] config : wanRouterConfigs) {
+            // System.out.println(Arrays.toString(config));
+            // }
+
+            // System.out.println("\nConfigurações WAN - Bridge:");
+            // for (final String[] config : wanBridgeConfigs) {
+            // System.out.println(Arrays.toString(config));
             // }
 
         } catch (final Exception e) {

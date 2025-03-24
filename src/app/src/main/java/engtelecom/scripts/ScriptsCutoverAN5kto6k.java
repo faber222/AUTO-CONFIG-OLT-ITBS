@@ -32,6 +32,31 @@ public class ScriptsCutoverAN5kto6k {
         }
 
         /**
+         * Função usada para criar o script bandwidth
+         * 
+         * @param slotGpon     Slot da placa no chassi
+         * @param slotPortaPon Porta pon onde a CPE se encontra
+         * @param slotCpe      Slot da pon onde a CPE se encontra
+         * @param typestr      Tipo de config de bw
+         * @param fixbw        Banda fixa
+         * @param asrbw        Banda assegurada
+         * @param maxbw        Banda max
+         * @return Lista de strings contendo todo o script para configuração de
+         *         bandwidth
+         */
+        public List<String> configBandwidth(final String slotGpon, final String slotPortaPon,
+                        final String slotCpe, final String typestr, final String fixbw, final String asrbw,
+                        final String maxbw) {
+                final List<String> scriptBandwidth = new ArrayList<>();
+                scriptBandwidth.add(String.format("interface pon 1/%s/%s", slotGpon, slotPortaPon));
+                scriptBandwidth.add(String.format(
+                                "onu gpon-upstream-service-bandwidth %s type %s fix %s assure %s max %s",
+                                slotCpe, typestr, fixbw, asrbw, maxbw));
+                scriptBandwidth.add("exit");
+                return scriptBandwidth;
+        }
+
+        /**
          * Função usada para criar o servMode intelbras router para perfil veip
          * 
          * @param index Identificador do Service mode profile
@@ -137,8 +162,40 @@ public class ScriptsCutoverAN5kto6k {
                                 "onu wan-cfg %s index %s mode %s type %s %s 7 nat %s qos disable dsp %s pro disable %s %s null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5",
                                 slotCpe, index, mode, type, vlan, nat, dsp, userPPP, passPPP));
                 scriptComandoPpoe.add(String.format(
-                                "onu ipv6-wan-cfg %s ind 1 ip-stack-mode both ipv6-src-type slaac prefix-src-type delegate",
-                                slotCpe));
+                                "onu ipv6-wan-cfg %s ind %s ip-stack-mode both ipv6-src-type slaac prefix-src-type delegate",
+                                slotCpe, index));
+                scriptComandoPpoe.add("exit");
+                return scriptComandoPpoe;
+        }
+
+        /**
+         * Função usada para criar o script para configurar o pppoe da cpe
+         * 
+         * @param slotGpon     Slot da placa no chassi
+         * @param slotPortaPon Porta pon onde a CPE se encontra
+         * @param slotCpe      Slot da pon onde desejamos provisionar a CPE
+         * @param vlan         Vlan do WanService
+         * @param index        Index do WanService
+         * @param mode         Modo do WanService (Internet, voice/Internet, etc)
+         * @param type         Modo de operação da Wan (bridge/router)
+         * @param nat          Nat enable/disable
+         * @param vlanMode     Modo tag/transp
+         * @param tvlan        Translate vlan dis/en
+         * @param tvid         Id vlan translate
+         * 
+         * @return Lista de strings contendo todo o script para configurar pppoe
+         */
+        public List<String> comandoBridge(final String slotGpon, final String slotPortaPon, final String slotCpe,
+                        final String vlan, final String index, final String mode, final String type, final String nat,
+                        final String vlanMode, final String tvlan, final String tvid) {
+                final List<String> scriptComandoPpoe = new ArrayList<>();
+                scriptComandoPpoe.add(String.format("interface pon 1/%s/%s", slotGpon, slotPortaPon));
+                scriptComandoPpoe.add(String.format(
+                                "onu wan-cfg %s index %s mode %s type %s %s 7 nat %s qos disable vlanmode %s tvlan %s %s 0 dsp null entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5",
+                                slotCpe, index, mode, type, vlan, nat, vlanMode, tvlan, tvid));
+                scriptComandoPpoe.add(String.format(
+                                "onu ipv6-wan-cfg %s ind %s ip-stack-mode both ipv6-src-type slaac prefix-src-type delegate",
+                                slotCpe, index));
                 scriptComandoPpoe.add("exit");
                 return scriptComandoPpoe;
         }
