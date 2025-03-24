@@ -243,8 +243,8 @@ public class ScriptsCutoverAN5kto6k {
          * @param ssidName2    Ssid da rede 2.4Ghz
          * @param passName2    Senha da rede 2.4Ghz
          * @param wifiVersion  802.11
-         * @param index        Index
          * @param servNo       Indica se é wifi 2.4 ou 5Ghz (1/2)
+         * @param index        Index
          * @param ssidEnable   Enable/Disable
          * @param hide         SSID oculto ou não
          * @param authMode     Tipo de autenticação (WPA, WPA2, etc.)
@@ -255,15 +255,16 @@ public class ScriptsCutoverAN5kto6k {
          * @return Lista de strings contendo todo o script para configurar a rede 2.4Ghz
          */
         public List<String> comandoWifi2(final String slotGpon, final String slotPortaPon, final String slotCpe,
-                        final String ssidName2, final String passName2, final String wifiVersion,
-                        final String index, final String servNo, final String ssidEnable, final String hide,
+                        final String ssidName2, final String passName2, final String wifiVersion, final String servNo,
+                        final String index, final String ssidEnable, final String hide,
                         final String authMode, final String encryptType, final String radiusServ, final String port,
                         final String pswd) {
                 final List<String> scriptComandoWifi = new ArrayList<>();
                 scriptComandoWifi.add(String.format("interface pon 1/%s/%s", slotGpon, slotPortaPon));
                 scriptComandoWifi.add(String.format(
-                                "onu wifi connection %s serv-no %s index %s ssid %s %s hide %s authmode %s encrypt-type %s wpakey %s interval 86400 wifi-connect-num 32",
-                                slotCpe, servNo, index, ssidEnable, ssidName2, hide, authMode, encryptType, passName2));
+                                "onu wifi connection %s serv-no %s index %s ssid %s %s hide %s authmode %s encrypt-type %s wpakey %s interval 86400 radius-serv ipv4 %s port %s pswd %s wifi-connect-num 32",
+                                slotCpe, servNo, index, ssidEnable, ssidName2, hide, authMode, encryptType, passName2,
+                                radiusServ, port, pswd));
                 scriptComandoWifi.add(String.format(
                                 "onu wifi attribute %s serv-no %s wifi %s district brazil channel 6 standard %s txpower 20 frequency 2.4ghz freq-bandwidth 20mhz/40mhz",
                                 slotCpe, servNo, ssidEnable, wifiVersion));
@@ -334,8 +335,9 @@ public class ScriptsCutoverAN5kto6k {
                 final List<String> scriptComandoWifi = new ArrayList<>();
                 scriptComandoWifi.add(String.format("interface pon 1/%s/%s", slotGpon, slotPortaPon));
                 scriptComandoWifi.add(String.format(
-                                "onu wifi connection %s serv-no %s index %s ssid %s %s hide %s authmode %s encrypt-type %s wpakey %s interval 86400 wifi-connect-num 32",
-                                slotCpe, servNo, index, ssidEnable, ssidName5, hide, authMode, encryptType, passName5));
+                                "onu wifi connection %s serv-no %s index %s ssid %s %s hide %s authmode %s encrypt-type %s wpakey %s interval 86400 radius-serv ipv4 %s port %s pswd %s wifi-connect-num 32",
+                                slotCpe, servNo, index, ssidEnable, ssidName5, hide, authMode, encryptType, passName5,
+                                radiusServ, port, pswd));
                 scriptComandoWifi.add(String.format(
                                 "onu wifi attribute %s serv-no %s wifi %s district brazil channel 161 standard %s txpower 20 frequency 5.8ghz freq-bandwidth 80mhz",
                                 slotCpe, servNo, ssidEnable, wifiVersion));

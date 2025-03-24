@@ -153,8 +153,6 @@ public class ConfigCutoverGenerator5k {
     private boolean createScript() {
         final ScriptsCutoverAN5kto6k scriptsAN6k = new ScriptsCutoverAN5kto6k();
 
-        boolean hasVeip = false;
-
         // Configurar vlan de uplink
         for (final String[] config : this.dataAnaliser5k.getDataVlanUpFilter().getUplinkVlans()) {
             configUplinkVlan.add(scriptsAN6k.addVlanToUplink(config[0], config[1], config[2], config[3]));
@@ -179,22 +177,28 @@ public class ConfigCutoverGenerator5k {
         }
 
         // Configurar o wifi com senha
+        // Configurar o wifi com radius
 
         for (final String[] config : this.dataAnaliser5k.getDataWanServiceWifiFilter().getWifiConfigs()) {
             if ("1".equals(config[3])) {
                 // ssid 2.4
                 if ("N/A".equals(config[13])) {
+
                     // sem radius
                     configWifi.add(scriptsAN6k.comandoWifi2(config[0], config[1], config[2],
-                            config[6], config[10],
+                            config[6].replaceAll("[\\p{Cntrl}&&[^\\n\\t]]",
+                                    "-"),
+                            config[10],
                             "802.11bgn", config[3], config[4],
-                            config[5], config[7], config[8], config[9]));
+                            config[5], config[7], config[8].replace("_", "-"), config[9]));
                 } else {
                     // com radius
-                    // configWifi.add(scriptsAN6k.comandoWifi2(config[], config[], config[],
-                    // config[], config[], config[], config[], config[],
-                    // config[], config[], config[], config[], config[],
-                    // config[], config[]));
+                    configWifi.add(scriptsAN6k.comandoWifi2(config[0], config[1], config[2],
+                            config[6].replaceAll("[\\p{Cntrl}&&[^\\n\\t]]",
+                                    "-"),
+                            config[10], "802.11bgn", config[3], config[4],
+                            config[5], config[7], config[8].replace("_", "-"), config[9], config[11],
+                            config[12], config[13]));
                 }
 
             } else {
@@ -202,15 +206,19 @@ public class ConfigCutoverGenerator5k {
                 if ("N/A".equals(config[13])) {
                     // sem radius
                     configWifi.add(scriptsAN6k.comandoWifi5(config[0], config[1], config[2],
-                            config[6], config[10],
+                            config[6].replaceAll("[\\p{Cntrl}&&[^\\n\\t]]",
+                                    "-"),
+                            config[10],
                             "802.11ac", config[3], config[4],
-                            config[5], config[7], config[8], config[9]));
+                            config[5], config[7], config[8].replace("_", "-"), config[9]));
                 } else {
                     // com radius
-                    // configWifi.add(scriptsAN6k.comandoWifi5(config[], config[], config[],
-                    // config[], config[], config[], config[], config[],
-                    // config[], config[], config[], config[], config[],
-                    // config[], config[]));
+                    configWifi.add(scriptsAN6k.comandoWifi5(config[0], config[1], config[2],
+                            config[6].replaceAll("[\\p{Cntrl}&&[^\\n\\t]]",
+                                    "-"),
+                            config[10], "802.11ac", config[3], config[4],
+                            config[5], config[7], config[8].replace("_", "-"), config[9], config[11],
+                            config[12], config[13]));
                 }
             }
 
@@ -243,8 +251,6 @@ public class ConfigCutoverGenerator5k {
 
         // TO-DO
         // Precisa analisar o caso de não ser informado o cvlan-id
-
-        // Configurar o wifi com radius
 
         // Configurar o ngn
 
