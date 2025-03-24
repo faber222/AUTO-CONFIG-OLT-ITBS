@@ -20,15 +20,20 @@ public class ConfigCutoverGenerator5k {
     private final List<List<String>> configWifi;
     private final List<List<String>> configVeip;
     private final List<List<String>> configEth;
+    @SuppressWarnings("unused")
     private final List<List<String>> configNgn;
+    @SuppressWarnings("unused")
     private final List<List<String>> configQinQ;
     private final List<List<String>> profileServMode;
 
+    @SuppressWarnings("unused")
     private final String slotChassiGpon;
+    @SuppressWarnings("unused")
     private final String slotChassiUplink;
+    @SuppressWarnings("unused")
     private final String slotPortaUplink;
 
-    private DataAnaliser5k dataAnaliser5k;
+    private final DataAnaliser5k dataAnaliser5k;
 
     public ConfigCutoverGenerator5k(final DataAnaliser5k data,
             final String slotChassiGpon, final String slotChassiUplink, final String slotPortaUplink) {
@@ -241,9 +246,9 @@ public class ConfigCutoverGenerator5k {
 
         // Configurar o bandwidth
         for (final String[] config : this.dataAnaliser5k.getDataBandwidthFilter().getBandwidthConfigs()) {
-            String fixbw = String.valueOf(Math.max(Integer.parseInt(config[4]), 64));
-            String asbw = String.valueOf(Math.max(Integer.parseInt(config[5]), 64));
-            String maxbw = String.valueOf(Math.max(Integer.parseInt(config[6]), 512));
+            final String fixbw = String.valueOf(Math.max(Integer.parseInt(config[4]), 64));
+            final String asbw = String.valueOf(Math.max(Integer.parseInt(config[5]), 64));
+            final String maxbw = String.valueOf(Math.max(Integer.parseInt(config[6]), 512));
 
             configBandWidth.add(scriptsAN6k.configBandwidth(config[0], config[1], config[2], config[3],
                     fixbw, asbw, maxbw));
