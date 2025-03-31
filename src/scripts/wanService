@@ -1,0 +1,105 @@
+!module config:onu_wan.
+set wancfg sl 11 1 1 ind 1 mode inter ty r 1101 7 nat en qos dis dsp pppoe pro dis banrisul1804 key:<=0,5+)2mfnj null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 1 1 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 2 ind 1 mode inter ty r 1101 7 nat en qos dis dsp pppoe pro dis brs507 key:<,+ing null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 1 2 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 4 ind 1 mode inter ty r 1101 7 nat en qos dis dsp pppoe pro dis 25293089000152 key:lileknfennnmil null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 1 4 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 5 ind 1 mode inter ty r 1101 7 nat en qos dis dsp pppoe pro dis peixoto228wilson key:.95&/*/llf'52+/0 null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 1 5 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 6 ind 1 mode inter ty r 1101 7 nat en qos dis dsp pppoe pro dis brs1507 key:<,+ming null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 1 6 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 7 ind 1 mode inter ty r 1101 7 nat en qos dis dsp pppoe pro dis 34546399000122 key:kjijhkeennnmll null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 1 7 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 8 ind 1 mode inter ty r 1101 7 nat en qos dis dsp pppoe pro dis brs804 key:<,+fnj null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 1 8 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 9 ind 1 mode inter ty r 1101 7 nat en qos dis dsp pppoe pro dis Banrisul1407 key:\=0,5+)2mjng null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 1 9 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 10 ind 1 mode inter ty r 1101 7 nat en qos dis vlanm transp tvlan dis 0 0 dsp pppoe pro dis 04389091948 key:njkfenemejf null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 1 10 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 12 ind 1 mode inter ty r 1101 7 nat en qos dis dsp pppoe pro dis CentroSala903 key:[90*,/K=2=enk null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 1 12 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 14 ind 1 mode inter ty r 99 7 nat en qos dis dsp pppoe pro dis brs1507 key:<,+ming null auto entries 3 fe1 fe2 ssid1  
+set wancfg sl 11 1 14 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 17 ind 1 mode inter ty r 1101 7 nat en qos dis dsp pppoe pro dis banrisul1007 key:<=0,5+)2mnng null auto entries 4 fe1 fe2 ssid1 ssid2  
+set wancfg sl 11 1 17 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 18 ind 1 mode inter ty r 1101 7 nat en qos dis dsp pppoe pro dis marechal228 key:1=,9;6=2llf null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 1 18 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 1 21 ind 1 mode inter ty r 99 7 nat en qos dis vlanm transp tvlan dis 0 0 dsp pppoe pro dis brs104 key:<,+mnj null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 1 21 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 2 1 ind 1 mode inter ty r 1102 7 nat en qos dis dsp pppoe pro dis Peixoto228 key:N95&/*/llf null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 2 1 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 2 3 ind 1 mode inter ty r 1102 7 nat en qos dis dsp pppoe pro dis brs101 key:<,+mnm null auto entries 3 fe1 fe2 ssid1  
+set wancfg sl 11 2 3 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 2 4 ind 1 mode inter ty r 1102 7 nat en qos dis dsp pppoe pro dis peixotoo228 key:.95&/*//llf null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 2 4 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 2 9 ind 1 mode inter ty r 1102 7 nat en qos dis dsp pppoe pro dis banrisul407 key:<=0,5+)2jng null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 2 9 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 2 ind 1 mode inter ty b 99 0 nat en qos dis vlanm transp tvlan dis 0 0 dsp null entries 4 fe1 fe2 fe3 fe4  
+set wancfg sl 11 3 2 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 3 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis 74708015968 key:gjgnfnmiehf null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 3 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 4 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis 35966815968 key:kiehhfmiehf null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 4 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 5 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis lou133 key:2/)mkk null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 5 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 7 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis Loureiroconj802 key:R/),95,/;/04fnl null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 7 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 8 ind 1 mode inter ty r 99 7 nat en qos dis dsp pppoe pro dis loureiocon133 key:2/),95/;/0mkk null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 8 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 12 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis 82981531972 key:flefmikmegl null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 12 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 14 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis loureiocon205 key:2/),95/;/0lni null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 14 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 21 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis Loureiro133A key:R/),95,/mkk] null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 21 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 24 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis 16andar key:mh=0:=, null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 24 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 25 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis centro4andarcjto410 key:;90*,/j=0:=,;4*/jmn null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 25 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 27 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis Tosin key:J/+50 null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 27 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 29 ind 1 mode inter ty r 1103 7 nat en qos dis vlanm transp tvlan dis 0 0 dsp pppoe pro dis Lopes key:R/.9+ null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 29 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 31 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis MuaAnd5sl505 key:Q)=]0:i+2ini null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 31 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 32 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis Loureiro133Sl104 key:R/),95,/mkkK2mnj null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 32 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 33 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis Loureiro133CJ108 key:R/),95,/mkk[Tmnf null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 33 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 35 ind 1 mode inter ty r 1103 7 nat en qos dis vlanm transp tvlan dis 0 0 dsp pppoe pro dis 34861928000182 key:kjfhmelfnnnmfl null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 35 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 3 36 ind 1 mode inter ty r 1103 7 nat en qos dis dsp pppoe pro dis Loureirosl14133 key:R/),95,/+2mjmkk null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 3 36 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 1 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis Muricy650l key:Q),5;%hin2 null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 1 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 2 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis edagusad17 key:9:=7)+=:mg null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 2 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 3 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis 76258318000139 key:ghlifkmfnnnmke null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 3 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 4 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis 95829059053 key:eiflenienik null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 4 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 5 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis Edagu82 key:Y:=7)fl null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 5 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 8 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis edauguad19192 key:9:=)7)=:memel null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 8 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 12 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis muricyConj204terraco key:1),5;%[/04lnj*9,,=;/ null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 12 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 17 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis edagustaportaria10 key:9:=7)+*=./,*=,5=mn null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 17 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 20 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis 09482735935 key:nejflgkieki null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 20 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 21 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis 04300047960 key:njknnnjgehn null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 21 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 23 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis Muricy650andar9sala94 key:Q),5;%hin=0:=,e+=2=ej null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 23 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 25 ind 1 mode inter ty r 1104 7 nat en qos dis vlanm transp tvlan dis 0 0 dsp pppoe pro dis Souza key:K/)$= null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 25 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 29 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis Muricy650sL203 key:Q),5;%hin+Rlnk null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 29 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 30 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis alameda654 key:=2=19:=hij null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 30 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 31 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis Muricyy650 key:Q),5;%%hin null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 31 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
+set wancfg sl 11 4 33 ind 1 mode inter ty r 1104 7 nat en qos dis dsp pppoe pro dis 07957373941 key:ngeigkgkejm null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5  
+set wancfg sl 11 4 33 ind 1 ip-stack-mode ipv4 ipv6-src-type slaac prefix-src-type delegate 
