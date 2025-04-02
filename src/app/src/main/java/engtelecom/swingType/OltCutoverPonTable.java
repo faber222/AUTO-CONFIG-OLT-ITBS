@@ -31,29 +31,29 @@ public class OltCutoverPonTable extends javax.swing.JFrame {
         jTablePon = new javax.swing.JTable();
         jButtonOk = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(null);
         setResizable(false);
 
         jTablePon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "PON", ""
+                "SLOT", "PON", ""
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Boolean.class
+                java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true
+                true, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -67,8 +67,8 @@ public class OltCutoverPonTable extends javax.swing.JFrame {
         jTablePon.setToolTipText("Objetos");
         jScrollPane1.setViewportView(jTablePon);
         if (jTablePon.getColumnModel().getColumnCount() > 0) {
-            jTablePon.getColumnModel().getColumn(0).setResizable(false);
             jTablePon.getColumnModel().getColumn(1).setResizable(false);
+            jTablePon.getColumnModel().getColumn(2).setResizable(false);
         }
 
         jButtonOk.setText("OK");
@@ -83,14 +83,14 @@ public class OltCutoverPonTable extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 115, Short.MAX_VALUE)
+            .addGap(0, 170, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jButtonOk, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))
-                    .addContainerGap(6, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                        .addComponent(jButtonOk, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,7 +124,7 @@ public class OltCutoverPonTable extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkActionPerformed
-        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_jButtonOkActionPerformed
 
     /**

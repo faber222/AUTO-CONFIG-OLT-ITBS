@@ -31,7 +31,7 @@ public class OltCutoverSlotTable extends javax.swing.JFrame {
         jTableSlot = new javax.swing.JTable();
         jButtonOk = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(null);
         setMinimumSize(null);
         setResizable(false);
@@ -125,7 +125,7 @@ public class OltCutoverSlotTable extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkActionPerformed
-        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_jButtonOkActionPerformed
 
     /**
