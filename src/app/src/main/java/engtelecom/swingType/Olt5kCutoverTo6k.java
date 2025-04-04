@@ -8,7 +8,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -20,7 +22,8 @@ import engtelecom.analytics.DataAnaliser5k;
  *
  * @author faber222
  */
-public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame implements OltCutoverOnuTableListener {
+public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
+        implements OltCutoverOnuTableListener, OltCutoverPonTableListener, OltCutoverSlotTableListener {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
@@ -64,12 +67,12 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame implements OltC
     private javax.swing.JTextPane jTextPaneDadosOltOrigem;
 
     private final OltCutoverOnuTable oltCutoverOnuTable;
-    private OltCutoverPonTable oltCutoverPonTable;
-    private OltCutoverSlotTable oltCutoverSlotTable;
+    private final OltCutoverPonTable oltCutoverPonTable;
+    private final OltCutoverSlotTable oltCutoverSlotTable;
 
     private List<String[]> onuSelecionadaOnuTable;
     private List<String[]> ponSelecionadaPonTable;
-    private List<String[]> ponSelecionadaSlotTable;
+    private List<String[]> slotSelecionadaSlotTable;
 
     private DataAnaliser5k dataAnaliser5k;
 
@@ -78,22 +81,30 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame implements OltC
     private boolean scriptCriado;
     private boolean origemSelecionada;
 
-    public List<String[]> getOnuSelecionadaOnuTable() {
-        return onuSelecionadaOnuTable;
-    }
-
     /**
      * Creates new form Olt5kCutover
      */
     public Olt5kCutoverTo6k() {
         initComponents();
-        oltCutoverOnuTable = new OltCutoverOnuTable();
+        this.oltCutoverOnuTable = new OltCutoverOnuTable();
         this.oltCutoverPonTable = new OltCutoverPonTable();
         this.oltCutoverSlotTable = new OltCutoverSlotTable();
         this.fileChooserIsSelected = false;
         this.filePath = new String();
         this.scriptCriado = false;
         this.origemSelecionada = false;
+    }
+
+    public List<String[]> getOnuSelecionadaOnuTable() {
+        return onuSelecionadaOnuTable;
+    }
+
+    public List<String[]> getPonSelecionadaPonTable() {
+        return ponSelecionadaPonTable;
+    }
+
+    public List<String[]> getSlotSelecionadaSlotTable() {
+        return slotSelecionadaSlotTable;
     }
 
     @Override
@@ -104,6 +115,21 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame implements OltC
         System.out.println("ONU Selecionada na classe principal:");
         for (String[] onu : this.onuSelecionadaOnuTable) {
             System.out.println(Arrays.toString(onu));
+        }
+    }
+
+    @Override
+    public void onProfileCreatedSlotTable(List<String[]> slotSelecionada) {
+
+    }
+
+    @Override
+    public void onProfileCreatedPonTable(List<String[]> ponSelecionada) {
+        this.ponSelecionadaPonTable = ponSelecionada;
+
+        System.out.println("Pon Selecionada na classe principal:");
+        for (String[] pon : this.ponSelecionadaPonTable) {
+            System.out.println(Arrays.toString(pon));
         }
     }
 
@@ -543,7 +569,17 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame implements OltC
 
                 oltCutoverSlotTable.setVisible(true);
             } else if (jRadioButtonPon.isSelected()) {
+                Set<String> conjuntoUnico = new HashSet<>();
 
+                for (String[] linha : this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist()) {
+                    String chave = linha[1] + ";" + linha[2]; // Cria uma chave única
+
+                    if (conjuntoUnico.add(chave)) { // Só adiciona se ainda não existir no conjunto
+                        oltCutoverPonTable.adicionarLinha(linha[1], linha[2]);
+                    }
+                }
+                oltCutoverPonTable.ordenarTabela();
+                oltCutoverPonTable.setListener(this);
                 oltCutoverPonTable.setVisible(true);
             } else {
                 for (String[] linha : this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist()) {
@@ -581,30 +617,31 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame implements OltC
         jButtonColetar.setText("Coletar");
         // fileChooserIsSelected = false;
         // if (jRadioButtonTELNETOrigem.isSelected()) {
-        //     final TelnetCutover telnet = new TelnetCutover(jTextFieldIpOltOrigem.getText(),
-        //             (Integer) jSpinnerPortOltOrigem.getValue(),
-        //             jTextFieldOltUserOrigem.getText(),
-        //             new String(jPasswordFieldOltPasswdOrigem.getPassword()), arq);
-        //     if (telnet.oltAccess()) {
-        //         this.filePath = arq;
-        //         previewText(this.filePath);
-        //         jButtonColetar.setText(this.filePath);
-        //         acessou = true;
-        //         fileChooserIsSelected = true;
-        //     }
+        // final TelnetCutover telnet = new
+        // TelnetCutover(jTextFieldIpOltOrigem.getText(),
+        // (Integer) jSpinnerPortOltOrigem.getValue(),
+        // jTextFieldOltUserOrigem.getText(),
+        // new String(jPasswordFieldOltPasswdOrigem.getPassword()), arq);
+        // if (telnet.oltAccess()) {
+        // this.filePath = arq;
+        // previewText(this.filePath);
+        // jButtonColetar.setText(this.filePath);
+        // acessou = true;
+        // fileChooserIsSelected = true;
+        // }
 
         // } else {
-        //     final SSHClient sshClient = new SSHClient(jTextFieldIpOltOrigem.getText(),
-        //             (Integer) jSpinnerPortOltOrigem.getValue(),
-        //             jTextFieldOltUserOrigem.getText(),
-        //             new String(jPasswordFieldOltPasswdOrigem.getPassword()), arq);
-        //     if (sshClient.oltAccess()) {
-        //         this.filePath = arq;
-        //         previewText(this.filePath);
-        //         jButtonColetar.setText(this.filePath);
-        //         acessou = true;
-        //         fileChooserIsSelected = true;
-        //     }
+        // final SSHClient sshClient = new SSHClient(jTextFieldIpOltOrigem.getText(),
+        // (Integer) jSpinnerPortOltOrigem.getValue(),
+        // jTextFieldOltUserOrigem.getText(),
+        // new String(jPasswordFieldOltPasswdOrigem.getPassword()), arq);
+        // if (sshClient.oltAccess()) {
+        // this.filePath = arq;
+        // previewText(this.filePath);
+        // jButtonColetar.setText(this.filePath);
+        // acessou = true;
+        // fileChooserIsSelected = true;
+        // }
         // }
         if (acessou) {
             JOptionPane.showMessageDialog(null,
