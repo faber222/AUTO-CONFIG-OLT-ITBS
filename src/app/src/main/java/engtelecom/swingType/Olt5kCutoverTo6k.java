@@ -29,6 +29,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
     private javax.swing.ButtonGroup buttonGroup1;
 
     private javax.swing.JButton jButtonColetar;
+    private javax.swing.JButton jButtonPreview;
 
     private javax.swing.JButton jButtonCriar;
 
@@ -65,6 +66,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextPane jTextPaneDadosOltDestino;
     private javax.swing.JTextPane jTextPaneDadosOltOrigem;
+    private javax.swing.JTextArea jTextAreaPreviewCode;
 
     private final OltCutoverOnuTable oltCutoverOnuTable;
     private final OltCutoverPonTable oltCutoverPonTable;
@@ -76,6 +78,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
 
     private DataAnaliser5k dataAnaliser5k;
 
+    private OltPreview preview;
     private boolean fileChooserIsSelected;
     private String filePath;
     private boolean scriptCriado;
@@ -120,7 +123,13 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
 
     @Override
     public void onProfileCreatedSlotTable(List<String[]> slotSelecionada) {
+        this.slotSelecionadaSlotTable = slotSelecionada; // Copia os dados corretamente
 
+        // Debug: imprimir para garantir que os dados foram armazenados corretamente
+        System.out.println("SLOT Selecionado na classe principal:");
+        for (String[] slot : this.slotSelecionadaSlotTable) {
+            System.out.println(Arrays.toString(slot));
+        }
     }
 
     @Override
@@ -170,6 +179,8 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
         jButtonDadosImportOltDestino = new javax.swing.JButton();
         jButtonCriar = new javax.swing.JButton();
         jButtonColetar = new javax.swing.JButton();
+        jButtonPreview = new javax.swing.JButton();
+        jTextAreaPreviewCode = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cutover 5k");
@@ -195,7 +206,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
         jLabel3.setFont(new java.awt.Font("sansserif", 1, 13)); // NOI18N
         jLabel3.setIcon(new javax.swing.ImageIcon(
                 getClass().getResource("/icons/application_osx_terminal.png"))); // NOI18N
-        jLabel3.setText("OLT Destino");
+        jLabel3.setText("Destino");
         jLabel3.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -254,7 +265,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
         jLabel1.setFont(new java.awt.Font("sansserif", 1, 13)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(
                 getClass().getResource("/icons/application_osx_terminal.png"))); // NOI18N
-        jLabel1.setText("OLT Origem");
+        jLabel1.setText("Origem");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -329,19 +340,21 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
         jButtonDadosImportOltOrigem.setText("...");
         jButtonDadosImportOltOrigem.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonDadosImportOltOrigem.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonDadosImportOltOrigemActionPerformed(evt);
+                jButtonDadosImportOltOrigemActionPerformed();
             }
         });
 
         jLabel8.setFont(new java.awt.Font("sansserif", 1, 13)); // NOI18N
-        jLabel8.setText("IMPORTAR OLT ORIGEM");
+        jLabel8.setText("IMPORTAR BKP LOCAL");
 
         jButtonFileChooser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/folder.png"))); // NOI18N
         jButtonFileChooser.setText("File");
         jButtonFileChooser.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonFileChooserActionPerformed(evt);
+                jButtonFileChooserActionPerformed();
             }
         });
 
@@ -350,8 +363,9 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
 
         jButtonDadosImportOltDestino.setText("...");
         jButtonDadosImportOltDestino.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonDadosImportOltDestinoActionPerformed(evt);
+                jButtonDadosImportOltDestinoActionPerformed();
             }
         });
 
@@ -458,15 +472,25 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
 
         jButtonCriar.setText("Criar");
         jButtonCriar.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCriarActionPerformed(evt);
             }
         });
 
-        jButtonColetar.setText("Coletar");
+        jButtonColetar.setText("Coletar bkp remoto");
         jButtonColetar.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonColetarActionPerformed(evt);
+            }
+        });
+
+        jButtonPreview.setText("Preview");
+        jButtonPreview.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPreviewActionPerformed(evt);
             }
         });
 
@@ -480,6 +504,9 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                                         javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(jPanel1Layout
                                                 .createSequentialGroup()
+                                                .addComponent(jButtonPreview)
+                                                .addPreferredGap(
+                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jButtonColetar)
                                                 .addPreferredGap(
                                                         javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -540,7 +567,8 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                                         .addComponent(jButtonSair)
                                         .addComponent(jButtonEnviar)
                                         .addComponent(jButtonCriar)
-                                        .addComponent(jButtonColetar))
+                                        .addComponent(jButtonColetar)
+                                        .addComponent(jButtonPreview))
                                 .addGap(12, 12, 12)));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -565,12 +593,17 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
             this.dataAnaliser5k = new DataAnaliser5k(this.filePath);
             this.dataAnaliser5k.start();
             origemSelecionada = true;
+            Set<String> conjuntoUnico = new HashSet<>();
             if (jRadioButtonSlot.isSelected()) {
-
+                for (String[] linha : this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist()) {
+                    if (conjuntoUnico.add(linha[1])) { // Só adiciona se ainda não existir no conjunto
+                        oltCutoverSlotTable.adicionarLinha(linha[1]);
+                    }
+                }
+                oltCutoverSlotTable.ordenarTabela();
+                oltCutoverSlotTable.setListener(this);
                 oltCutoverSlotTable.setVisible(true);
             } else if (jRadioButtonPon.isSelected()) {
-                Set<String> conjuntoUnico = new HashSet<>();
-
                 for (String[] linha : this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist()) {
                     String chave = linha[1] + ";" + linha[2]; // Cria uma chave única
 
@@ -590,6 +623,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 oltCutoverOnuTable.setVisible(true);
             }
         } else {
+            origemSelecionada = false;
             JOptionPane.showMessageDialog(null,
                     "Nenhum arquivo importado localmente ou remotamente.", "Error!",
                     JOptionPane.ERROR_MESSAGE, null);
@@ -601,12 +635,19 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
     }// GEN-LAST:event_jButtonSairActionPerformed
 
     private void jButtonDadosOltDestinoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonDadosOltDestinoActionPerformed
-        // TODO add your handling code here:
+
     }// GEN-LAST:event_jButtonDadosOltDestinoActionPerformed
 
     private void jRadioButtonOnuActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jRadioButtonOnuActionPerformed
-        // TODO add your handling code here:
+
     }// GEN-LAST:event_jRadioButtonOnuActionPerformed
+
+    private void jButtonPreviewActionPerformed(java.awt.event.ActionEvent evt) {
+        preview = new OltPreview("Cutover 5k");
+        // System.out.println(jTextAreaPreviewCode.getText());
+        preview.setjTextAreaPreview(jTextAreaPreviewCode);
+        preview.setVisible(true);
+    }
 
     private void jButtonColetarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonColetarActionPerformed
         JOptionPane.showMessageDialog(null,
@@ -614,7 +655,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 JOptionPane.INFORMATION_MESSAGE, null);
         boolean acessou = false;
         String arq = "dados.txt";
-        jButtonColetar.setText("Coletar");
+        jButtonColetar.setText("Coletar bkp remoto");
         // fileChooserIsSelected = false;
         // if (jRadioButtonTELNETOrigem.isSelected()) {
         // final TelnetCutover telnet = new
@@ -715,13 +756,15 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
         }
     }// GEN-LAST:event_jButtonEnviarActionPerformed
 
-    private void jButtonDadosImportOltOrigemActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonDadosImportOltOrigemActionPerformed
-        // TODO add your handling code here:
+    @SuppressWarnings("unused")
+    private void jButtonDadosImportOltOrigemActionPerformed() {
+
     }// GEN-LAST:event_jButtonDadosImportOltOrigemActionPerformed
 
-    private void jButtonDadosImportOltDestinoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonDadosImportOltDestinoActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_jButtonDadosImportOltDestinoActionPerformed
+    @SuppressWarnings("unused")
+    private void jButtonDadosImportOltDestinoActionPerformed() {
+
+    }
 
     private void previewText(String path) {
         // Tente abrir e ler o arquivo
@@ -735,14 +778,14 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
             }
 
             // Define o texto do JTextArea com o conteúdo lido
-            // jTextAreaPreviewCode.setText(content.toString());
+            jTextAreaPreviewCode.setText(content.toString());
             br.close();
         } catch (final IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void jButtonFileChooserActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonFileChooserActionPerformed
+    private void jButtonFileChooserActionPerformed() {
         final JFileChooser fileChooser = new JFileChooser();
 
         // Adiciona um filtro para aceitar apenas arquivos de texto e derivados
@@ -777,7 +820,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                     "Nenhum arquivo selecionado.", "Error!",
                     JOptionPane.ERROR_MESSAGE, null);
             jButtonFileChooser.setText("File");
-            // jTextAreaPreviewCode.setText("");
+            jTextAreaPreviewCode.setText("");
         }
-    }// GEN-LAST:event_jButtonFileChooserActionPerformed
+    }
 }
