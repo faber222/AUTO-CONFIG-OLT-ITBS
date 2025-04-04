@@ -76,9 +76,9 @@ public class OltCutoverOnuTable extends javax.swing.JFrame {
                 jTableOnu.setRowSorter(sorter);
 
                 // Definir comparadores para colunas numéricas
-                sorter.setComparator(0, Comparator.comparingInt(o -> Integer.parseInt(o.toString()))); // SLOT
-                sorter.setComparator(1, Comparator.comparingInt(o -> Integer.parseInt(o.toString()))); // PON
-                sorter.setComparator(2, Comparator.comparingInt(o -> Integer.parseInt(o.toString()))); // ONU
+                sorter.setComparator(0, Comparator.comparingInt(o -> Integer.valueOf(o.toString()))); // SLOT
+                sorter.setComparator(1, Comparator.comparingInt(o -> Integer.valueOf(o.toString()))); // PON
+                sorter.setComparator(2, Comparator.comparingInt(o -> Integer.valueOf(o.toString()))); // ONU
 
                 // Definir ordenação: primeiro SLOT (coluna 0), depois PON (coluna 1), e depois
                 // ONU (coluna 2)
@@ -92,10 +92,6 @@ public class OltCutoverOnuTable extends javax.swing.JFrame {
                 sorter.sort(); // Aplica a ordenação
         }
 
-        /**
-         * Código gerado pelo NetBeans
-         */
-        @SuppressWarnings("unchecked")
         private void initComponents() {
                 jPanel1 = new javax.swing.JPanel();
                 jScrollPane1 = new javax.swing.JScrollPane();
