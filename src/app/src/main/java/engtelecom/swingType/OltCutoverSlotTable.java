@@ -125,7 +125,7 @@ public class OltCutoverSlotTable extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkActionPerformed
-        dispose();
+        this.dispose();
     }//GEN-LAST:event_jButtonOkActionPerformed
 
     /**

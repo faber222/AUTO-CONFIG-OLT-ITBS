@@ -4,59 +4,23 @@
  */
 package engtelecom.swingType;
 
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
+
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import engtelecom.analytics.DataAnaliser5k;
 
 /**
  *
  * @author faber222
  */
 public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame implements OltCutoverOnuTableListener {
-
-    /**
-     * @param args the command line arguments
-     */
-    @SuppressWarnings("Convert2Lambda")
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
-        // (optional) ">
-        /*
-         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
-         * look and feel.
-         * For details see
-         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Olt5kCutoverTo6k.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Olt5kCutoverTo6k.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Olt5kCutoverTo6k.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Olt5kCutoverTo6k.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
-        }
-        // </editor-fold>
-        // </editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Olt5kCutoverTo6k().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
@@ -99,7 +63,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame implements OltC
     private javax.swing.JTextPane jTextPaneDadosOltDestino;
     private javax.swing.JTextPane jTextPaneDadosOltOrigem;
 
-    private OltCutoverOnuTable oltCutoverOnuTable;
+    private final OltCutoverOnuTable oltCutoverOnuTable;
     private OltCutoverPonTable oltCutoverPonTable;
     private OltCutoverSlotTable oltCutoverSlotTable;
 
@@ -107,19 +71,40 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame implements OltC
     private List<String[]> ponSelecionadaPonTable;
     private List<String[]> ponSelecionadaSlotTable;
 
+    private DataAnaliser5k dataAnaliser5k;
+
+    private boolean fileChooserIsSelected;
+    private String filePath;
+    private boolean scriptCriado;
+    private boolean origemSelecionada;
+
+    public List<String[]> getOnuSelecionadaOnuTable() {
+        return onuSelecionadaOnuTable;
+    }
+
     /**
      * Creates new form Olt5kCutover
      */
     public Olt5kCutoverTo6k() {
         initComponents();
-        this.oltCutoverOnuTable = new OltCutoverOnuTable(null, null, null);
+        oltCutoverOnuTable = new OltCutoverOnuTable();
         this.oltCutoverPonTable = new OltCutoverPonTable();
         this.oltCutoverSlotTable = new OltCutoverSlotTable();
+        this.fileChooserIsSelected = false;
+        this.filePath = new String();
+        this.scriptCriado = false;
+        this.origemSelecionada = false;
     }
 
     @Override
     public void onProfileCreatedOnuTable(List<String[]> onuSelecionada) {
-        this.onuSelecionadaOnuTable = onuSelecionada;
+        this.onuSelecionadaOnuTable = onuSelecionada; // Copia os dados corretamente
+
+        // Debug: imprimir para garantir que os dados foram armazenados corretamente
+        System.out.println("ONU Selecionada na classe principal:");
+        for (String[] onu : this.onuSelecionadaOnuTable) {
+            System.out.println(Arrays.toString(onu));
+        }
     }
 
     /**
@@ -163,9 +148,12 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame implements OltC
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cutover 5k");
         setResizable(false);
+        setClosable(true);
+        setIconifiable(true);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "OLT DESTINO",
-                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION,
+                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+                javax.swing.border.TitledBorder.DEFAULT_POSITION,
                 new java.awt.Font("sansserif", 1, 13))); // NOI18N
 
         jButtonDadosOltDestino.setText("...");
@@ -179,7 +167,8 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame implements OltC
         jScrollPane3.setViewportView(jTextPaneDadosOltDestino);
 
         jLabel3.setFont(new java.awt.Font("sansserif", 1, 13)); // NOI18N
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/application_osx_terminal.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(
+                getClass().getResource("/icons/application_osx_terminal.png"))); // NOI18N
         jLabel3.setText("OLT Destino");
         jLabel3.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
@@ -189,29 +178,40 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame implements OltC
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(25, 25, 25)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 104,
+                                .addComponent(jLabel3,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        104,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 432,
+                                .addPreferredGap(
+                                        javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane3,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        432,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButtonDadosOltDestino, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(
+                                        javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButtonDadosOltDestino,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        Short.MAX_VALUE)
                                 .addGap(7, 7, 7)));
         jPanel2Layout.setVerticalGroup(
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(12, 12, 12)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createParallelGroup(
+                                        javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jButtonDadosOltDestino)
-                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        .addComponent(jScrollPane3,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE,
                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel3))
                                 .addGap(6, 6, 6)));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "OLT ORIGEM",
-                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION,
+                javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+                javax.swing.border.TitledBorder.DEFAULT_POSITION,
                 new java.awt.Font("sansserif", 1, 13))); // NOI18N
 
         jButtonDadosOltOrigem.setText("...");
@@ -226,7 +226,8 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame implements OltC
         jScrollPane1.setViewportView(jTextPaneDadosOltOrigem);
 
         jLabel1.setFont(new java.awt.Font("sansserif", 1, 13)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/application_osx_terminal.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(
+                getClass().getResource("/icons/application_osx_terminal.png"))); // NOI18N
         jLabel1.setText("OLT Origem");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
@@ -236,21 +237,29 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame implements OltC
                 jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(25, 25, 25)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 104,
+                                .addComponent(jLabel1,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        104,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(12, 12, 12)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 432,
+                                .addComponent(jScrollPane1,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        432,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(
+                                        javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButtonDadosOltOrigem)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        Short.MAX_VALUE)));
         jPanel3Layout.setVerticalGroup(
                 jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(12, 12, 12)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel3Layout.createParallelGroup(
+                                        javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jButtonDadosOltOrigem)
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        .addComponent(jScrollPane1,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE,
                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel1))
@@ -327,64 +336,96 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame implements OltC
                         .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGap(14, 14, 14)
                                 .addGroup(jPanel4Layout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(jPanel4Layout.createSequentialGroup()
-                                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 167,
+                                        .createParallelGroup(
+                                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                                false)
+                                        .addGroup(jPanel4Layout
+                                                .createSequentialGroup()
+                                                .addComponent(jLabel6,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        167,
                                                         javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addPreferredGap(
+                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        Short.MAX_VALUE)
                                                 .addComponent(jButtonDadosImportOltOrigem,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 80,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        80,
                                                         javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel4Layout.createSequentialGroup()
-                                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 69,
+                                        .addGroup(jPanel4Layout
+                                                .createSequentialGroup()
+                                                .addComponent(jLabel5,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        69,
                                                         javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addPreferredGap(
+                                                        javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(jRadioButtonSlot)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(jRadioButtonPon)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(jRadioButtonOnu)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(
+                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        Short.MAX_VALUE)
                                 .addGroup(jPanel4Layout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 143,
+                                        .createParallelGroup(
+                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                false)
+                                        .addComponent(jLabel8,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                Short.MAX_VALUE)
+                                        .addComponent(jLabel7,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                143,
                                                 javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(21, 21, 21)
                                 .addGroup(jPanel4Layout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jButtonFileChooser, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .createParallelGroup(
+                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                false)
+                                        .addComponent(jButtonFileChooser,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                Short.MAX_VALUE)
                                         .addComponent(jButtonDadosImportOltDestino,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE, 80,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                80,
                                                 javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(12, 12, 12)));
         jPanel4Layout.setVerticalGroup(
                 jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout
+                                .createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel4Layout.createParallelGroup(
+                                        javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel4Layout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .createParallelGroup(
+                                                        javax.swing.GroupLayout.Alignment.BASELINE)
                                                 .addComponent(jLabel6)
                                                 .addComponent(jButtonDadosImportOltOrigem))
                                         .addGroup(jPanel4Layout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .createParallelGroup(
+                                                        javax.swing.GroupLayout.Alignment.BASELINE)
                                                 .addComponent(jButtonDadosImportOltDestino)
                                                 .addComponent(jLabel7)))
                                 .addGap(12, 12, 12)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel4Layout.createParallelGroup(
+                                        javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel4Layout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .createParallelGroup(
+                                                        javax.swing.GroupLayout.Alignment.BASELINE)
                                                 .addComponent(jRadioButtonSlot)
                                                 .addComponent(jRadioButtonPon)
                                                 .addComponent(jRadioButtonOnu)
                                                 .addComponent(jLabel5))
                                         .addGroup(jPanel4Layout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .createParallelGroup(
+                                                        javax.swing.GroupLayout.Alignment.BASELINE)
                                                 .addComponent(jLabel8)
                                                 .addComponent(jButtonFileChooser)))
                                 .addGap(6, 6, 6)));
@@ -409,42 +450,67 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame implements OltC
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(
+                                        javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(jPanel1Layout
+                                                .createSequentialGroup()
                                                 .addComponent(jButtonColetar)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addPreferredGap(
+                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jButtonCriar)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jButtonEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 72,
+                                                .addPreferredGap(
+                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jButtonEnviar,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        72,
                                                         javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addPreferredGap(
+                                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jButtonSair))
                                         .addGroup(jPanel1Layout
-                                                .createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING,
+                                                .createParallelGroup(
+                                                        javax.swing.GroupLayout.Alignment.TRAILING,
+                                                        false)
+                                                .addComponent(jPanel2,
+                                                        javax.swing.GroupLayout.Alignment.LEADING,
                                                         javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING,
                                                         javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING,
+                                                        Short.MAX_VALUE)
+                                                .addComponent(jPanel3,
+                                                        javax.swing.GroupLayout.Alignment.LEADING,
                                                         javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        Short.MAX_VALUE)
+                                                .addComponent(jPanel4,
+                                                        javax.swing.GroupLayout.Alignment.LEADING,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        Short.MAX_VALUE)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        Short.MAX_VALUE)));
         jPanel1Layout.setVerticalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout
+                                .createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jPanel4,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(6, 6, 6)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jPanel3,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(6, 6, 6)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jPanel2,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(
+                                        javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(
+                                        javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jButtonSair)
                                         .addComponent(jButtonEnviar)
                                         .addComponent(jButtonCriar)
@@ -456,34 +522,46 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame implements OltC
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE));
+                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.PREFERRED_SIZE));
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE));
+                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.PREFERRED_SIZE));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonDadosOltOrigemActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonDadosOltOrigemActionPerformed
-        if (jRadioButtonSlot.isSelected()) {
-            OltCutoverSlotTable oltCutoverSlotTable = new OltCutoverSlotTable();
-            oltCutoverSlotTable.setVisible(true);
-        } else if (jRadioButtonPon.isSelected()) {
-            OltCutoverPonTable oltCutoverPonTable = new OltCutoverPonTable();
-            oltCutoverPonTable.setVisible(true);
+        if (this.fileChooserIsSelected) {
+
+            this.dataAnaliser5k = new DataAnaliser5k(this.filePath);
+            this.dataAnaliser5k.start();
+            origemSelecionada = true;
+            if (jRadioButtonSlot.isSelected()) {
+
+                oltCutoverSlotTable.setVisible(true);
+            } else if (jRadioButtonPon.isSelected()) {
+
+                oltCutoverPonTable.setVisible(true);
+            } else {
+                for (String[] linha : this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist()) {
+                    oltCutoverOnuTable.adicionarLinha(linha[1], linha[2], linha[3]);
+                }
+                oltCutoverOnuTable.ordenarTabela();
+                oltCutoverOnuTable.setListener(this);
+                oltCutoverOnuTable.setVisible(true);
+            }
         } else {
-            ArrayList<String> lista = new ArrayList<>();
-            lista.add("1");
-            lista.add("2");
-            lista.add("3");
-            OltCutoverOnuTable oltCutoverOnuTable = new OltCutoverOnuTable(lista, lista, lista);
-            oltCutoverOnuTable.setVisible(true);
+            JOptionPane.showMessageDialog(null,
+                    "Nenhum arquivo importado localmente ou remotamente.", "Error!",
+                    JOptionPane.ERROR_MESSAGE, null);
         }
     }// GEN-LAST:event_jButtonDadosOltOrigemActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonSairActionPerformed
-        dispose();
+        this.dispose();
     }// GEN-LAST:event_jButtonSairActionPerformed
 
     private void jButtonDadosOltDestinoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonDadosOltDestinoActionPerformed
@@ -495,15 +573,109 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame implements OltC
     }// GEN-LAST:event_jRadioButtonOnuActionPerformed
 
     private void jButtonColetarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonColetarActionPerformed
-        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null,
+                "Acessando a OLT remotamente....", null,
+                JOptionPane.INFORMATION_MESSAGE, null);
+        boolean acessou = false;
+        String arq = "dados.txt";
+        jButtonColetar.setText("Coletar");
+        // fileChooserIsSelected = false;
+        // if (jRadioButtonTELNETOrigem.isSelected()) {
+        //     final TelnetCutover telnet = new TelnetCutover(jTextFieldIpOltOrigem.getText(),
+        //             (Integer) jSpinnerPortOltOrigem.getValue(),
+        //             jTextFieldOltUserOrigem.getText(),
+        //             new String(jPasswordFieldOltPasswdOrigem.getPassword()), arq);
+        //     if (telnet.oltAccess()) {
+        //         this.filePath = arq;
+        //         previewText(this.filePath);
+        //         jButtonColetar.setText(this.filePath);
+        //         acessou = true;
+        //         fileChooserIsSelected = true;
+        //     }
+
+        // } else {
+        //     final SSHClient sshClient = new SSHClient(jTextFieldIpOltOrigem.getText(),
+        //             (Integer) jSpinnerPortOltOrigem.getValue(),
+        //             jTextFieldOltUserOrigem.getText(),
+        //             new String(jPasswordFieldOltPasswdOrigem.getPassword()), arq);
+        //     if (sshClient.oltAccess()) {
+        //         this.filePath = arq;
+        //         previewText(this.filePath);
+        //         jButtonColetar.setText(this.filePath);
+        //         acessou = true;
+        //         fileChooserIsSelected = true;
+        //     }
+        // }
+        if (acessou) {
+            JOptionPane.showMessageDialog(null,
+                    "Script importado com sucesso", null,
+                    JOptionPane.INFORMATION_MESSAGE, null);
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "Não foi possível importar o script", null,
+                    JOptionPane.INFORMATION_MESSAGE, null);
+
+        }
     }// GEN-LAST:event_jButtonColetarActionPerformed
 
     private void jButtonCriarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonCriarActionPerformed
-        // TODO add your handling code here:
+        if (this.origemSelecionada) {
+            // this.dataAnaliser5k = new DataAnaliser5k(this.filePath);
+            // this.dataAnaliser5k.start();
+            // String oltType = "AN6000";
+            // final String slotChassiPon = (String) jSpinnerSlotPON.getValue().toString();
+            // final String slotChassiUp = (String)
+            // jSpinnerSlotUplink.getValue().toString();
+            // final String slotPortaUp = (String)
+            // jSpinnerPortaUplink.getValue().toString();
+
+            // final ConfigCutoverGenerator5k cutover = new
+            // ConfigCutoverGenerator5k(dataAnaliser,
+            // slotChassiPon, slotChassiUp, slotPortaUp);
+            // if (cutover.start()) {
+            // previewText("scriptMigracao.txt");
+            scriptCriado = true;
+            // }
+
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "Nenhuma origem selecionada.", "Error!",
+                    JOptionPane.ERROR_MESSAGE, null);
+        }
     }// GEN-LAST:event_jButtonCriarActionPerformed
 
     private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonEnviarActionPerformed
-        // TODO add your handling code here:
+        if (scriptCriado) {
+            JOptionPane.showMessageDialog(null,
+                    "Acessando a OLT remotamente....", null,
+                    JOptionPane.INFORMATION_MESSAGE, null);
+            String oltType = "AN6000";
+
+            // final TelnetFhtt tesTelnetFhtt = new
+            // TelnetFhtt(jTextFieldIpOltDestino.getText(),
+            // (Integer) jSpinnerPortOltDestino.getValue(),
+            // jTextFieldOltUserDestino.getText(),
+            // new String(jPasswordFieldOltPasswdDestino.getPassword()),
+            // oltType);
+            // if (tesTelnetFhtt.oltAccess("scriptMigracao.txt")) {
+            // JOptionPane.showMessageDialog(null,
+            // "Script aplicado com sucesso!", null,
+            // JOptionPane.INFORMATION_MESSAGE, null);
+            // JOptionPane.showMessageDialog(null,
+            // "NÃO ESQUEÇA DE VALIDAR O LOG GERADO E APLICAR AS CONFIGURAÇÕES!",
+            // null,
+            // JOptionPane.INFORMATION_MESSAGE, null);
+            // } else {
+            // JOptionPane.showMessageDialog(null,
+            // "Não foi possível aplicar o script!", null,
+            // JOptionPane.INFORMATION_MESSAGE, null);
+            // }
+
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "Nenhum script criado para enviar.", "Error!",
+                    JOptionPane.ERROR_MESSAGE, null);
+        }
     }// GEN-LAST:event_jButtonEnviarActionPerformed
 
     private void jButtonDadosImportOltOrigemActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonDadosImportOltOrigemActionPerformed
@@ -514,7 +686,61 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame implements OltC
         // TODO add your handling code here:
     }// GEN-LAST:event_jButtonDadosImportOltDestinoActionPerformed
 
+    private void previewText(String path) {
+        // Tente abrir e ler o arquivo
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            final StringBuilder content = new StringBuilder();
+            String line;
+
+            // Lê linha por linha até o final do arquivo
+            while ((line = br.readLine()) != null) {
+                content.append(line).append("\n");
+            }
+
+            // Define o texto do JTextArea com o conteúdo lido
+            // jTextAreaPreviewCode.setText(content.toString());
+            br.close();
+        } catch (final IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void jButtonFileChooserActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonFileChooserActionPerformed
-        // TODO add your handling code here:
+        final JFileChooser fileChooser = new JFileChooser();
+
+        // Adiciona um filtro para aceitar apenas arquivos de texto e derivados
+        final FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "Arquivos de Texto", "txt", "md", "csv", "log", "java", "xml", "html", "json");
+        fileChooser.setFileFilter(filter);
+        // Exibe o seletor de arquivo e obtém a resposta do usuário
+        final int returnValue = fileChooser.showOpenDialog(this);
+        fileChooser.setDialogTitle("Selecione o arquivo:");
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+        // Verifica se o usuário escolheu um arquivo
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            this.fileChooserIsSelected = true;
+            // Obtém o arquivo selecionado
+            final java.io.File selectedFile = fileChooser.getSelectedFile();
+            System.out.println("Arquivo selecionado: " + selectedFile.getAbsolutePath());
+            this.filePath = selectedFile.getAbsolutePath();
+            // jButtonFileChooser.setText(selectedFile.getName());
+            String fileName = selectedFile.getName();
+            int maxLength = 5; // Defina o número máximo de caracteres visíveis
+
+            if (fileName.length() > maxLength) {
+                fileName = fileName.substring(0, maxLength - 3) + "..."; // Corta e adiciona "..."
+            }
+
+            jButtonFileChooser.setText(fileName);
+            previewText(this.filePath);
+        } else {
+            this.fileChooserIsSelected = false;
+            JOptionPane.showMessageDialog(null,
+                    "Nenhum arquivo selecionado.", "Error!",
+                    JOptionPane.ERROR_MESSAGE, null);
+            jButtonFileChooser.setText("File");
+            // jTextAreaPreviewCode.setText("");
+        }
     }// GEN-LAST:event_jButtonFileChooserActionPerformed
 }
