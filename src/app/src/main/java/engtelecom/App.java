@@ -7,6 +7,7 @@ package engtelecom;
 import javax.swing.ImageIcon;
 
 import engtelecom.swingType.InfoFrame;
+import engtelecom.swingType.Olt5kCutoverTo6k;
 import engtelecom.swingType.Olt8820;
 import engtelecom.swingType.OltCutover;
 import engtelecom.swingType.OltCutover5k;
@@ -82,6 +83,8 @@ public class App extends javax.swing.JFrame {
 
     private javax.swing.JMenuItem jMenuCutover5k;
 
+    private javax.swing.JMenuItem jMenuCutover5kTo6k;
+
     private ImageIcon infoIcon;
     private ImageIcon terminalIcon;
     private ImageIcon terminalOsxIcon;
@@ -115,6 +118,7 @@ public class App extends javax.swing.JFrame {
     private final String olt8820;
     private final String oltCutover;
     private final String oltCutover5k;
+    private final String oltCutover5kTo6k;
 
     // End of variables declaration//GEN-END:variables
     /**
@@ -128,6 +132,7 @@ public class App extends javax.swing.JFrame {
         this.oltG08 = "G08";
         this.oltCutover = "OLT-CUTOVER";
         this.oltCutover5k = "OLT-CUTOVER-5k";
+        this.oltCutover5kTo6k = "OLT-CUTOVER-5k-TO-6K";
         initComponents();
         this.setIconImage(this.mainIcon.getImage());
     }
@@ -220,8 +225,6 @@ public class App extends javax.swing.JFrame {
     private void initComponents() {
 
         olt();
-
-        new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuAN5k = new javax.swing.JMenuItem();
@@ -231,26 +234,15 @@ public class App extends javax.swing.JFrame {
         jMenu8820i = new javax.swing.JMenuItem();
         jMenuCutover = new javax.swing.JMenuItem();
         jMenuCutover5k = new javax.swing.JMenuItem();
-        new javax.swing.JMenu();
-        new javax.swing.JMenuItem();
+        jMenuCutover5kTo6k = new javax.swing.JMenuItem();
 
         jMenuItem1 = new javax.swing.JMenuItem();
         jDesktopPane1 = new javax.swing.JDesktopPane();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-
-        jMenuAN5k = new javax.swing.JMenuItem();
-        jMenuAN6k = new javax.swing.JMenuItem();
-        jMenuG16 = new javax.swing.JMenuItem();
-        jMenuG08 = new javax.swing.JMenuItem();
-        jMenu8820i = new javax.swing.JMenuItem();
-        jMenuCutover = new javax.swing.JMenuItem();
-        jMenuCutover5k = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -262,10 +254,10 @@ public class App extends javax.swing.JFrame {
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
                 jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 852, Short.MAX_VALUE));
+                        .addGap(0, 1165, Short.MAX_VALUE));
         jDesktopPane1Layout.setVerticalGroup(
                 jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 483, Short.MAX_VALUE));
+                        .addGap(0, 700, Short.MAX_VALUE));
 
         jMenu1.setIcon(terminalOsxIcon); // NOI18N
         jMenu1.setText("Intelbras");
@@ -337,6 +329,14 @@ public class App extends javax.swing.JFrame {
 
         jMenu4.add(jMenuCutover5k);
 
+        jMenuCutover5kTo6k.setIcon(oltCutoverIcon);
+        jMenuCutover5kTo6k.setText(this.oltCutover5kTo6k);
+        jMenuCutover5kTo6k.addActionListener((final java.awt.event.ActionEvent evt) -> {
+            jMenuCutover5kTo6kActionPerformed();
+        });
+
+        jMenu4.add(jMenuCutover5kTo6k);
+
         jMenu5.setIcon(infoIcon); // NOI18N
         jMenu5.setText("Sobre");
 
@@ -370,6 +370,7 @@ public class App extends javax.swing.JFrame {
                         .addComponent(jDesktopPane1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuG16ActionPerformed() {// GEN-FIRST:event_jMenuG16ActionPerformed
@@ -402,6 +403,12 @@ public class App extends javax.swing.JFrame {
         telaCutover2.setVisible(true);
     }// GEN-LAST:event_jMenu8820iActionPerformed
 
+    private void jMenuCutover5kTo6kActionPerformed() {// GEN-FIRST:event_jMenu8820iActionPerformed
+        final Olt5kCutoverTo6k olt5kCutoverTo6k = new Olt5kCutoverTo6k();
+        jDesktopPane1.add(olt5kCutoverTo6k);
+        olt5kCutoverTo6k.setVisible(true);
+    }// GEN-LAST:event_jMenu8820iActionPerformed
+
     private void jMenuAN5kActionPerformed() {
         final OltFhtt telaAN5000 = new OltFhtt(this.oltAn5k, this);
         jDesktopPane1.add(telaAN5000);
@@ -419,6 +426,6 @@ public class App extends javax.swing.JFrame {
     }
 
     private void jMenuItem2ActionPerformed() {// GEN-FIRST:event_jMenuItem2ActionPerformed
-        this.dispose();
+        System.exit(0);
     }// GEN-LAST:event_jMenuItem2ActionPerformed
 }
