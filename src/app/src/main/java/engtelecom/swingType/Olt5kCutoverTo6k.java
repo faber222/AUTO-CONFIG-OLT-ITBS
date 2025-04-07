@@ -135,6 +135,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
 
         @Override
         public void onProfileCreatedOnuTable(final List<String[]> onuSelecionada) {
+
                 this.onuSelecionadaOnuTable = onuSelecionada; // Copia os dados corretamente
 
                 // Debug: imprimir para garantir que os dados foram armazenados corretamente
@@ -142,6 +143,27 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 for (final String[] onu : this.onuSelecionadaOnuTable) {
                         System.out.println(Arrays.toString(onu));
                 }
+
+                // Cria um resumo em uma única linha
+                StringBuilder resumo = new StringBuilder();
+                for (final String[] onu : this.onuSelecionadaOnuTable) {
+                        // Formata cada ONU como SLOT-PON-ONU e adiciona ao resumo
+                        resumo.append(onu[0]).append("-").append(onu[1]).append("-").append(onu[2]).append(", ");
+                }
+
+                // Remove a última vírgula e espaço, se existirem
+                if (resumo.length() > 0) {
+                        resumo.setLength(resumo.length() - 2);
+                }
+
+                // Limita o texto ao tamanho máximo permitido
+                final int maxLength = 66; // Defina o limite de caracteres
+                String textoFinal = resumo.toString();
+                if (textoFinal.length() > maxLength) {
+                        textoFinal = textoFinal.substring(0, maxLength - 3) + "..."; // Trunca e adiciona "..."
+                }
+
+                jTextPaneDadosOltOrigem.setText(textoFinal);
         }
 
         @Override
@@ -153,6 +175,27 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 for (final String[] slot : this.slotSelecionadaSlotTable) {
                         System.out.println(Arrays.toString(slot));
                 }
+
+                // Cria um resumo em uma única linha
+                StringBuilder resumo = new StringBuilder();
+                for (final String[] slot : this.slotSelecionadaSlotTable) {
+                        // Formata cada ONU como SLOT e adiciona ao resumo
+                        resumo.append(slot[0]).append(", ");
+                }
+
+                // Remove a última vírgula e espaço, se existirem
+                if (resumo.length() > 0) {
+                        resumo.setLength(resumo.length() - 2);
+                }
+
+                // Limita o texto ao tamanho máximo permitido
+                final int maxLength = 66; // Defina o limite de caracteres
+                String textoFinal = resumo.toString();
+                if (textoFinal.length() > maxLength) {
+                        textoFinal = textoFinal.substring(0, maxLength - 3) + "..."; // Trunca e adiciona "..."
+                }
+
+                jTextPaneDadosOltOrigem.setText(textoFinal);
         }
 
         @Override
@@ -163,6 +206,27 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 for (final String[] pon : this.ponSelecionadaPonTable) {
                         System.out.println(Arrays.toString(pon));
                 }
+
+                // Cria um resumo em uma única linha
+                StringBuilder resumo = new StringBuilder();
+                for (final String[] pon : this.ponSelecionadaPonTable) {
+                        // Formata cada pon como SLOT-PON e adiciona ao resumo
+                        resumo.append(pon[0]).append("-").append(pon[1]).append(", ");
+                }
+
+                // Remove a última vírgula e espaço, se existirem
+                if (resumo.length() > 0) {
+                        resumo.setLength(resumo.length() - 2);
+                }
+
+                // Limita o texto ao tamanho máximo permitido
+                final int maxLength = 66; // Defina o limite de caracteres
+                String textoFinal = resumo.toString();
+                if (textoFinal.length() > maxLength) {
+                        textoFinal = textoFinal.substring(0, maxLength - 3) + "..."; // Trunca e adiciona "..."
+                }
+
+                jTextPaneDadosOltOrigem.setText(textoFinal);
         }
 
         @Override
@@ -780,7 +844,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                                         "Nenhuma origem selecionada.", "Error!",
                                         JOptionPane.ERROR_MESSAGE, null);
                 }
-        }// GEN-LAST:event_jButtonCriarActionPerformed
+        }
 
         private void jButtonEnviarActionPerformed(final java.awt.event.ActionEvent evt) {
                 if (dadosDestinoPreenchidos) {
