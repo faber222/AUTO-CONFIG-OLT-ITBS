@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
-package engtelecom.swingType;
+package engtelecom.swingType.gcon;
 
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -21,7 +22,7 @@ import engtelecom.product.OltGpon;
  *
  * @author faber222
  */
-public class OltG08 extends javax.swing.JInternalFrame {
+public class OltG16 extends javax.swing.JInternalFrame {
 
         // Variables declaration - do not modify//GEN-BEGIN:variables
         private javax.swing.ButtonGroup buttonGroup1;
@@ -63,7 +64,9 @@ public class OltG08 extends javax.swing.JInternalFrame {
         private javax.swing.JLabel jLabel9;
 
         private javax.swing.JPanel jPanel1;
+
         private javax.swing.JPanel jPanel2;
+
         private javax.swing.JPanel jPanel3;
         private javax.swing.JPanel jPanel4;
         private javax.swing.JPanel jPanel5;
@@ -93,15 +96,20 @@ public class OltG08 extends javax.swing.JInternalFrame {
         /**
          * Creates new form OltG16
          */
-        public OltG08(final String oltName) {
-                this.slotLength = 8;
+        public OltG16(final String oltName) {
+                this.slotLength = 16;
                 this.oltName = oltName;
                 initComponents();
                 oltGpon = new OltGpon();
         }
 
+        public String getOltName() {
+                return oltName;
+        }
+
         public void previewText() {
                 // Tente abrir e ler o arquivo
+
                 try (BufferedReader br = new BufferedReader(new FileReader(this.nomeArq))) {
                         final StringBuilder content = new StringBuilder();
                         String line;
@@ -119,17 +127,21 @@ public class OltG08 extends javax.swing.JInternalFrame {
                 }
         }
 
-        public String getOltName() {
-                return oltName;
+        public void saida() {
+                // Exibe uma caixa de diálogo com uma mensagem de aviso indicando que o programa
+                // será encerrado.
+                JOptionPane.showMessageDialog(null,
+                                "Voce pressionou o botao 'Cancelar'. O programa sera encerrado.",
+                                null, JOptionPane.WARNING_MESSAGE, this.saidaIcon);
         }
 
         private void olt() {
                 // Carrega os ícones necessários para o diálogo
-                final ClassLoader classLoader = OltG08.class.getClassLoader();
+                final ClassLoader classLoader = OltG16.class.getClassLoader();
                 this.errorIcon = new ImageIcon(classLoader.getResource("erro.png"));
                 this.successIcon = new ImageIcon(classLoader.getResource("success.png"));
                 this.saidaIcon = new ImageIcon(classLoader.getResource("saida.png"));
-                this.nomeArq = "scriptG08.txt";
+                this.nomeArq = "scriptG16.txt";
                 this.fileChooserIsSelected = false;
 
                 this.modelosInterface = new String[] {
@@ -147,7 +159,7 @@ public class OltG08 extends javax.swing.JInternalFrame {
                                 "Uma vlan por pon untagged"
                 };
 
-                final String[] interfaceGponG08 = {
+                final String[] interfaceGponG16 = {
                                 "0/1",
                                 "0/2",
                                 "0/3",
@@ -155,10 +167,18 @@ public class OltG08 extends javax.swing.JInternalFrame {
                                 "0/5",
                                 "0/6",
                                 "0/7",
-                                "0/8"
+                                "0/8",
+                                "0/9",
+                                "0/10",
+                                "0/11",
+                                "0/12",
+                                "0/13",
+                                "0/14",
+                                "0/15",
+                                "0/16"
                 };
 
-                this.interfaceGpon = interfaceGponG08;
+                this.interfaceGpon = interfaceGponG16;
 
         }
 
@@ -213,7 +233,7 @@ public class OltG08 extends javax.swing.JInternalFrame {
                 setIconifiable(true);
                 setMaximizable(true);
                 setResizable(true);
-                setTitle("G08");
+                setTitle("G16");
                 setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
                 setMinimumSize(new java.awt.Dimension(812, 700));
                 setPreferredSize(new java.awt.Dimension(812, 700));
@@ -746,6 +766,7 @@ public class OltG08 extends javax.swing.JInternalFrame {
                                                                                 Short.MAX_VALUE)));
 
                 pack();
+
         }// </editor-fold>//GEN-END:initComponents
 
         private void jPasswordFieldOltPasswdActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jPasswordFieldOltPasswdActionPerformed
@@ -796,7 +817,9 @@ public class OltG08 extends javax.swing.JInternalFrame {
                                 "Arquivos de Texto", "txt", "md", "csv", "log", "java", "xml", "html", "json");
                 fileChooser.setFileFilter(filter);
                 // Exibe o seletor de arquivo e obtém a resposta do usuário
-                final int returnValue = fileChooser.showOpenDialog(null);
+                final int returnValue = fileChooser.showOpenDialog(this);
+                fileChooser.setDialogTitle("Selecione o arquivo:");
+                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
                 // Verifica se o usuário escolheu um arquivo
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -815,6 +838,7 @@ public class OltG08 extends javax.swing.JInternalFrame {
                         jButtonFileChooser.setText("File");
                         jTextAreaPreviewCode.setText("");
                 }
+
         }// GEN-LAST:event_jButtonFileChooserActionPerformed
 
         private void jButtonEnviarActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonEnviarActionPerformed
@@ -831,7 +855,8 @@ public class OltG08 extends javax.swing.JInternalFrame {
                                                 final Telnet acessoOlt = new Telnet(jTextFieldIpOlt.getText(),
                                                                 Integer.parseInt(jFormattedTextFieldPortOlt.getText()),
                                                                 jTextFieldOltUser.getText(),
-                                                                new String(jPasswordFieldOltPasswd.getPassword()), getOltName());
+                                                                new String(jPasswordFieldOltPasswd.getPassword()),
+                                                                getOltName());
                                                 acessoOlt.oltAccess(nomeArq);
                                                 return null;
                                         }
@@ -848,7 +873,7 @@ public class OltG08 extends javax.swing.JInternalFrame {
         }// GEN-LAST:event_jButtonEnviarActionPerformed
 
         private void jButtonCriarActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonCriarActionPerformed
-                this.nomeArq = "script08.txt";
+                this.nomeArq = "scriptG16.txt";
 
                 String terceiros = "router";
                 if (jRadioButtonBridge.isSelected()) {
@@ -878,6 +903,13 @@ public class OltG08 extends javax.swing.JInternalFrame {
         private void jTextFieldOltUserActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jTextFieldOltUserActionPerformed
                 // TODO add your handling code here:
         }// GEN-LAST:event_jTextFieldOltUserActionPerformed
+
+        private void formKeyPressed(final java.awt.event.KeyEvent evt) {// GEN-FIRST:event_formKeyPressed
+                if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                        saida();
+                        dispose();
+                }
+        }// GEN-LAST:event_formKeyPressed
 
         private void jButtonCancelActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonCancelActionPerformed
                 this.dispose();

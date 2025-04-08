@@ -7,13 +7,13 @@ package engtelecom;
 import javax.swing.ImageIcon;
 
 import engtelecom.swingType.InfoFrame;
-import engtelecom.swingType.Olt5kCutoverTo6k;
-import engtelecom.swingType.Olt8820;
-import engtelecom.swingType.OltCutover;
-import engtelecom.swingType.OltCutover5k;
-import engtelecom.swingType.OltFhtt;
-import engtelecom.swingType.OltG08;
-import engtelecom.swingType.OltG16;
+import engtelecom.swingType.cutoverFhtt.Olt5kCutoverTo6k;
+import engtelecom.swingType.cutoverItbs.OltCutover;
+import engtelecom.swingType.fiberhome.OltFhtt;
+import engtelecom.swingType.gcon.OltG08;
+import engtelecom.swingType.gcon.OltG16;
+import engtelecom.swingType.templates.OltCutover5k;
+import engtelecom.swingType.zhone.Olt8820;    
 
 /**
  *

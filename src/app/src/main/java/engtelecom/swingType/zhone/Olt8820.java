@@ -2,9 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
-package engtelecom.swingType;
+package engtelecom.swingType.zhone;
 
-import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,14 +14,14 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import engtelecom.access.Telnet;
-import engtelecom.product.OltGpon;
+import engtelecom.access.Telnet8820Plus;
+import engtelecom.product.Olt8820Plus;
 
 /**
  *
  * @author faber222
  */
-public class OltG16 extends javax.swing.JInternalFrame {
+public class Olt8820 extends javax.swing.JInternalFrame {
 
         // Variables declaration - do not modify//GEN-BEGIN:variables
         private javax.swing.ButtonGroup buttonGroup1;
@@ -35,9 +34,13 @@ public class OltG16 extends javax.swing.JInternalFrame {
 
         private javax.swing.JButton jButtonFileChooser;
 
-        private javax.swing.JComboBox<String> jComboBoxInterfaceUplink;
+        private javax.swing.JComboBox<String> jComboBoxBridgeUplink;
 
-        private javax.swing.JComboBox<String> jComboBoxModoAutoConfig;
+        private javax.swing.JComboBox<String> jComboBoxInterfaceUplink1;
+
+        private javax.swing.JComboBox<String> jComboBoxModoAutoConfig1;
+
+        private javax.swing.JComboBox<String> jComboBoxModoVlan;
 
         private javax.swing.JFormattedTextField jFormattedTextFieldPortOlt;
 
@@ -45,71 +48,62 @@ public class OltG16 extends javax.swing.JInternalFrame {
 
         private javax.swing.JLabel jLabel10;
 
+        private javax.swing.JLabel jLabel11;
+
+        private javax.swing.JLabel jLabel12;
+
+        private javax.swing.JLabel jLabel13;
+
+        private javax.swing.JLabel jLabel14;
+
         private javax.swing.JLabel jLabel15;
+
+        private javax.swing.JLabel jLabel16;
+
+        private javax.swing.JLabel jLabel17;
 
         private javax.swing.JLabel jLabel2;
 
-        private javax.swing.JLabel jLabel3;
-
-        private javax.swing.JLabel jLabel4;
-
-        private javax.swing.JLabel jLabel5;
-
-        private javax.swing.JLabel jLabel6;
-
-        private javax.swing.JLabel jLabel7;
-
-        private javax.swing.JLabel jLabel8;
-
         private javax.swing.JLabel jLabel9;
-
         private javax.swing.JPanel jPanel1;
-
         private javax.swing.JPanel jPanel2;
-
         private javax.swing.JPanel jPanel3;
         private javax.swing.JPanel jPanel4;
         private javax.swing.JPanel jPanel5;
         private javax.swing.JPasswordField jPasswordFieldOltPasswd;
-        private javax.swing.JRadioButton jRadioButtonBridge;
-        private javax.swing.JRadioButton jRadioButtonRouter;
+        private javax.swing.JRadioButton jRadioButtonBridge1;
+        private javax.swing.JRadioButton jRadioButtonRouter1;
         private javax.swing.JScrollPane jScrollPanel;
         private javax.swing.JTextArea jTextAreaPreviewCode;
         private javax.swing.JTextField jTextFieldIpOlt;
         private javax.swing.JTextField jTextFieldOltUser;
-        private javax.swing.JTextField jTextFieldRangeProfileLine;
-        private javax.swing.JTextField jTextFieldRangeProfileVlan;
-        private javax.swing.JTextField jTextFieldRangeVlan;
+        private javax.swing.JTextField jTextFieldRangeVlan1;
         private String[] modelosInterface;
         private String[] configuracoes;
-        private String[] interfaceGpon;
-        private boolean fileChooserIsSelected;
+        private String[] bridgeInterfaceUplink;
+        private String[] bridgeInterfaceUplinkVlanMode;
         private String nomeArq;
         private final String oltName;
+        private boolean fileChooserIsSelected;
         private ImageIcon errorIcon;
         private ImageIcon successIcon;
         private ImageIcon saidaIcon;
-        private final OltGpon oltGpon;
+        private final Olt8820Plus olt8820Plus;
         private final int slotLength;
 
         // End of variables declaration//GEN-END:variables
         /**
          * Creates new form OltG16
          */
-        public OltG16(final String oltName) {
-                this.slotLength = 16;
+        public Olt8820(final String oltName) {
+                this.slotLength = 8;
                 this.oltName = oltName;
+                this.olt8820Plus = new Olt8820Plus();
                 initComponents();
-                oltGpon = new OltGpon();
-        }
-
-        public String getOltName() {
-                return oltName;
         }
 
         public void previewText() {
                 // Tente abrir e ler o arquivo
-
                 try (BufferedReader br = new BufferedReader(new FileReader(this.nomeArq))) {
                         final StringBuilder content = new StringBuilder();
                         String line;
@@ -124,7 +118,12 @@ public class OltG16 extends javax.swing.JInternalFrame {
                         br.close();
                 } catch (final IOException e) {
                         e.printStackTrace();
+                        jTextAreaPreviewCode.setText(null);
                 }
+        }
+
+        public String getOltName() {
+                return oltName;
         }
 
         public void saida() {
@@ -137,48 +136,40 @@ public class OltG16 extends javax.swing.JInternalFrame {
 
         private void olt() {
                 // Carrega os ícones necessários para o diálogo
-                final ClassLoader classLoader = OltG16.class.getClassLoader();
+                final ClassLoader classLoader = Olt8820.class.getClassLoader();
                 this.errorIcon = new ImageIcon(classLoader.getResource("erro.png"));
                 this.successIcon = new ImageIcon(classLoader.getResource("success.png"));
                 this.saidaIcon = new ImageIcon(classLoader.getResource("saida.png"));
-                this.nomeArq = "scriptG16.txt";
+                this.nomeArq = "script8820I.txt";
                 this.fileChooserIsSelected = false;
 
                 this.modelosInterface = new String[] {
-                                "interface ethernet 1/1",
-                                "interface ethernet 1/2",
-                                "interface ethernet 1/3",
-                                "interface ethernet 1/4",
-                                "interface ethernet 2/1",
-                                "interface ethernet 2/2"
+                                "eth 1",
+                                "eth 2",
+                                "eth 3",
+                                "eth 4",
+                                "eth 5",
+                                "eth 6",
+                                "eth 7",
+                                "eth 8",
+                                "xeth 1",
+                                "xeth 2",
                 };
 
                 this.configuracoes = new String[] {
                                 "Uma vlan por pon",
-                                "Uma vlan para todas as pon",
-                                "Uma vlan por pon untagged"
+                                "Apenas uma Vlan"
                 };
 
-                final String[] interfaceGponG16 = {
-                                "0/1",
-                                "0/2",
-                                "0/3",
-                                "0/4",
-                                "0/5",
-                                "0/6",
-                                "0/7",
-                                "0/8",
-                                "0/9",
-                                "0/10",
-                                "0/11",
-                                "0/12",
-                                "0/13",
-                                "0/14",
-                                "0/15",
-                                "0/16"
+                this.bridgeInterfaceUplink = new String[] {
+                                "uplink",
+                                "tls"
                 };
 
-                this.interfaceGpon = interfaceGponG16;
+                this.bridgeInterfaceUplinkVlanMode = new String[] {
+                                "tagged",
+                                "untagged"
+                };
 
         }
 
@@ -203,19 +194,19 @@ public class OltG16 extends javax.swing.JInternalFrame {
                 jTextFieldIpOlt = new javax.swing.JTextField();
                 jFormattedTextFieldPortOlt = new javax.swing.JFormattedTextField();
                 jPanel2 = new javax.swing.JPanel();
-                jLabel7 = new javax.swing.JLabel();
-                jRadioButtonBridge = new javax.swing.JRadioButton();
-                jRadioButtonRouter = new javax.swing.JRadioButton();
-                jComboBoxInterfaceUplink = new javax.swing.JComboBox<>();
-                jLabel3 = new javax.swing.JLabel();
-                jLabel4 = new javax.swing.JLabel();
-                jComboBoxModoAutoConfig = new javax.swing.JComboBox<>();
-                jLabel6 = new javax.swing.JLabel();
-                jLabel8 = new javax.swing.JLabel();
-                jTextFieldRangeProfileVlan = new javax.swing.JTextField();
-                jTextFieldRangeProfileLine = new javax.swing.JTextField();
-                jLabel5 = new javax.swing.JLabel();
-                jTextFieldRangeVlan = new javax.swing.JTextField();
+                jLabel11 = new javax.swing.JLabel();
+                jRadioButtonBridge1 = new javax.swing.JRadioButton();
+                jRadioButtonRouter1 = new javax.swing.JRadioButton();
+                jComboBoxInterfaceUplink1 = new javax.swing.JComboBox<>();
+                jLabel12 = new javax.swing.JLabel();
+                jLabel13 = new javax.swing.JLabel();
+                jComboBoxModoAutoConfig1 = new javax.swing.JComboBox<>();
+                jLabel14 = new javax.swing.JLabel();
+                jTextFieldRangeVlan1 = new javax.swing.JTextField();
+                jComboBoxModoVlan = new javax.swing.JComboBox<>();
+                jLabel16 = new javax.swing.JLabel();
+                jComboBoxBridgeUplink = new javax.swing.JComboBox<>();
+                jLabel17 = new javax.swing.JLabel();
                 jPanel3 = new javax.swing.JPanel();
                 jLabel15 = new javax.swing.JLabel();
                 jButtonFileChooser = new javax.swing.JButton();
@@ -229,15 +220,17 @@ public class OltG16 extends javax.swing.JInternalFrame {
 
                 setBackground(new java.awt.Color(204, 204, 204));
                 setClosable(true);
-                setForeground(java.awt.Color.darkGray);
+                setForeground(java.awt.Color.black);
                 setIconifiable(true);
                 setMaximizable(true);
                 setResizable(true);
-                setTitle("G16");
+                setTitle("8820i");
                 setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-                setMinimumSize(new java.awt.Dimension(812, 700));
-                setPreferredSize(new java.awt.Dimension(812, 700));
+                setMinimumSize(new java.awt.Dimension(745, 705));
+                setPreferredSize(new java.awt.Dimension(733, 705));
                 setRequestFocusEnabled(false);
+
+                // setVisible(true);
 
                 jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Dados de acesso da OLT ",
                                 javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
@@ -258,18 +251,21 @@ public class OltG16 extends javax.swing.JInternalFrame {
                 jLabel10.setFont(new java.awt.Font("JetBrains Mono ExtraBold", 0, 12)); // NOI18N
                 jLabel10.setText("Senha");
 
+                // jPasswordFieldOltPasswd.setText("");
                 jPasswordFieldOltPasswd.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(final java.awt.event.ActionEvent evt) {
                                 jPasswordFieldOltPasswdActionPerformed(evt);
                         }
                 });
 
+                // jTextFieldOltUser.setText("John");
                 jTextFieldOltUser.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(final java.awt.event.ActionEvent evt) {
                                 jTextFieldOltUserActionPerformed(evt);
                         }
                 });
 
+                // jTextFieldIpOlt.setText("jTextField1");
                 jTextFieldIpOlt.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(final java.awt.event.ActionEvent evt) {
                                 jTextFieldIpOltActionPerformed(evt);
@@ -308,9 +304,10 @@ public class OltG16 extends javax.swing.JInternalFrame {
                                                                                                 181,
                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE))
                                                                 .addGap(180, 180, 180)
-                                                                .addGroup(jPanel1Layout.createParallelGroup(
-                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
-                                                                                false)
+                                                                .addGroup(jPanel1Layout
+                                                                                .createParallelGroup(
+                                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                                                false)
                                                                                 .addComponent(jLabel10,
                                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
                                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
@@ -369,139 +366,145 @@ public class OltG16 extends javax.swing.JInternalFrame {
                                 javax.swing.border.TitledBorder.DEFAULT_POSITION,
                                 new java.awt.Font("JetBrains Mono ExtraBold", 0, 12))); // NOI18N
 
-                jLabel7.setText("CPEs de terceiros, em:");
+                jLabel11.setText("CPEs de terceiros, em:");
 
-                buttonGroup1.add(jRadioButtonBridge);
-                jRadioButtonBridge.setSelected(true);
-                jRadioButtonBridge.setText("BRIDGE");
-                jRadioButtonBridge.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-                jRadioButtonBridge.setMargin(new java.awt.Insets(0, 0, 0, 0));
-                jRadioButtonBridge.addActionListener(new java.awt.event.ActionListener() {
+                buttonGroup1.add(jRadioButtonBridge1);
+                jRadioButtonBridge1.setSelected(true);
+                jRadioButtonBridge1.setText("BRIDGE");
+                jRadioButtonBridge1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+                jRadioButtonBridge1.setMargin(new java.awt.Insets(0, 0, 0, 0));
+                jRadioButtonBridge1.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                                jRadioButtonBridgeActionPerformed(evt);
+                                jRadioButtonBridge1ActionPerformed(evt);
                         }
                 });
 
-                buttonGroup1.add(jRadioButtonRouter);
-                jRadioButtonRouter.setText("ROUTER");
-                jRadioButtonRouter.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-                jRadioButtonRouter.setMargin(new java.awt.Insets(0, 0, 0, 0));
-                jRadioButtonRouter.addActionListener(new java.awt.event.ActionListener() {
+                buttonGroup1.add(jRadioButtonRouter1);
+                jRadioButtonRouter1.setText("ROUTER");
+                jRadioButtonRouter1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+                jRadioButtonRouter1.setMargin(new java.awt.Insets(0, 0, 0, 0));
+                jRadioButtonRouter1.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                                jRadioButtonRouterActionPerformed(evt);
+                                jRadioButtonRouter1ActionPerformed(evt);
                         }
                 });
 
-                jComboBoxInterfaceUplink.setMaximumRowCount(6);
-                jComboBoxInterfaceUplink.setModel(new javax.swing.DefaultComboBoxModel<>(this.modelosInterface));
-                jComboBoxInterfaceUplink.setMinimumSize(new java.awt.Dimension(65, 23));
-                jComboBoxInterfaceUplink.addActionListener(new java.awt.event.ActionListener() {
+                jComboBoxInterfaceUplink1.setMaximumRowCount(6);
+                jComboBoxInterfaceUplink1.setModel(
+                                new javax.swing.DefaultComboBoxModel<>(modelosInterface));
+                jComboBoxInterfaceUplink1.setMinimumSize(new java.awt.Dimension(65, 23));
+                jComboBoxInterfaceUplink1.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                                jComboBoxInterfaceUplinkActionPerformed(evt);
+                                jComboBoxInterfaceUplink1ActionPerformed(evt);
                         }
                 });
 
-                jLabel3.setText("Interface Uplink");
+                jLabel12.setText("Interface Uplink");
 
-                jLabel4.setText("Profile Line");
+                jLabel13.setText("Range Vlan");
 
-                jComboBoxModoAutoConfig.setMaximumRowCount(3);
-                jComboBoxModoAutoConfig.setModel(new javax.swing.DefaultComboBoxModel<>(this.configuracoes));
-                jComboBoxModoAutoConfig.setToolTipText("");
-                jComboBoxModoAutoConfig.addActionListener(new java.awt.event.ActionListener() {
+                jComboBoxModoAutoConfig1.setMaximumRowCount(3);
+                jComboBoxModoAutoConfig1.setModel(
+                                new javax.swing.DefaultComboBoxModel<>(configuracoes));
+                jComboBoxModoAutoConfig1.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                                jComboBoxModoAutoConfigActionPerformed(evt);
+                                jComboBoxModoAutoConfig1ActionPerformed(evt);
                         }
                 });
 
-                jLabel6.setText("Modo do Auto-Config");
+                jLabel14.setText("Modo do Auto-Config");
 
-                jLabel8.setText("Profile Vlan");
-
-                jTextFieldRangeProfileVlan.addActionListener(new java.awt.event.ActionListener() {
+                jTextFieldRangeVlan1.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                                jTextFieldRangeProfileVlanActionPerformed(evt);
+                                jTextFieldRangeVlan1ActionPerformed(evt);
                         }
                 });
 
-                jTextFieldRangeProfileLine.addActionListener(new java.awt.event.ActionListener() {
+                jComboBoxModoVlan.setMaximumRowCount(3);
+                jComboBoxModoVlan.setModel(
+                                new javax.swing.DefaultComboBoxModel<>(bridgeInterfaceUplinkVlanMode));
+                jComboBoxModoVlan.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                                jTextFieldRangeProfileLineActionPerformed(evt);
+                                jComboBoxModoVlanActionPerformed(evt);
                         }
                 });
 
-                jLabel5.setText("Vlan");
+                jLabel16.setText("Modo Vlan");
 
-                jTextFieldRangeVlan.addActionListener(new java.awt.event.ActionListener() {
+                jComboBoxBridgeUplink.setMaximumRowCount(6);
+                jComboBoxBridgeUplink.setModel(
+                                new javax.swing.DefaultComboBoxModel<>(bridgeInterfaceUplink));
+                jComboBoxBridgeUplink.setMinimumSize(new java.awt.Dimension(65, 23));
+                jComboBoxBridgeUplink.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(final java.awt.event.ActionEvent evt) {
-                                jTextFieldRangeVlanActionPerformed(evt);
+                                jComboBoxBridgeUplinkActionPerformed(evt);
                         }
                 });
+
+                jLabel17.setText("Bridge Uplink");
 
                 final javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
                 jPanel2.setLayout(jPanel2Layout);
                 jPanel2Layout.setHorizontalGroup(
                                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addGroup(jPanel2Layout.createSequentialGroup()
-                                                                .addGap(12, 12, 12)
-                                                                .addGroup(jPanel2Layout.createParallelGroup(
-                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
-                                                                                false)
-                                                                                .addComponent(jLabel5,
+                                                                .addContainerGap()
+                                                                .addGroup(jPanel2Layout
+                                                                                .createParallelGroup(
                                                                                                 javax.swing.GroupLayout.Alignment.LEADING,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE)
-                                                                                .addComponent(jLabel3,
-                                                                                                javax.swing.GroupLayout.Alignment.LEADING,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                127, Short.MAX_VALUE)
-                                                                                .addComponent(jLabel4,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE))
-                                                                .addPreferredGap(
-                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                Short.MAX_VALUE)
-                                                                .addGroup(jPanel2Layout.createParallelGroup(
-                                                                                javax.swing.GroupLayout.Alignment.LEADING,
-                                                                                false)
-                                                                                .addComponent(jTextFieldRangeVlan)
-                                                                                .addComponent(jComboBoxInterfaceUplink,
-                                                                                                0, 186,
-                                                                                                Short.MAX_VALUE)
-                                                                                .addComponent(jTextFieldRangeProfileLine))
-                                                                .addPreferredGap(
-                                                                                javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                .addGroup(jPanel2Layout.createParallelGroup(
-                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                false)
+                                                                                .addGroup(jPanel2Layout
+                                                                                                .createSequentialGroup()
+                                                                                                .addComponent(jLabel17,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                147,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                .addGap(18, 18, 18)
+                                                                                                .addComponent(jComboBoxBridgeUplink,
+                                                                                                                0, 143,
+                                                                                                                Short.MAX_VALUE))
                                                                                 .addGroup(jPanel2Layout
                                                                                                 .createSequentialGroup()
                                                                                                 .addGroup(jPanel2Layout
                                                                                                                 .createParallelGroup(
-                                                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                                                .addComponent(jLabel6,
-                                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                                137,
-                                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                                .addComponent(jLabel8,
-                                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                                                137,
-                                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                                                .addPreferredGap(
-                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                                                                                                false)
+                                                                                                                .addComponent(jLabel12,
+                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                                147,
+                                                                                                                                Short.MAX_VALUE)
+                                                                                                                .addComponent(jLabel13,
+                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                                Short.MAX_VALUE))
+                                                                                                .addGap(18, 18, 18)
                                                                                                 .addGroup(jPanel2Layout
                                                                                                                 .createParallelGroup(
-                                                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                                                .addComponent(jTextFieldRangeProfileVlan,
-                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                                242,
-                                                                                                                                Short.MAX_VALUE)
-                                                                                                                .addComponent(jComboBoxModoAutoConfig,
+                                                                                                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                                                                                                false)
+                                                                                                                .addComponent(jComboBoxInterfaceUplink1,
                                                                                                                                 0,
                                                                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                                Short.MAX_VALUE)))
+                                                                                                                                Short.MAX_VALUE)
+                                                                                                                .addComponent(jTextFieldRangeVlan1,
+                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                                143,
+                                                                                                                                Short.MAX_VALUE))))
+                                                                .addGap(49, 49, 49)
+                                                                .addGroup(jPanel2Layout.createParallelGroup(
+                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                .addGroup(jPanel2Layout
+                                                                                                .createSequentialGroup()
+                                                                                                .addComponent(jLabel14,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                137,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                .addPreferredGap(
+                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                                .addComponent(jComboBoxModoAutoConfig1,
+                                                                                                                0,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                Short.MAX_VALUE))
                                                                                 .addGroup(jPanel2Layout
                                                                                                 .createSequentialGroup()
                                                                                                 .addGroup(jPanel2Layout
@@ -510,72 +513,94 @@ public class OltG16 extends javax.swing.JInternalFrame {
                                                                                                                 .addGroup(jPanel2Layout
                                                                                                                                 .createSequentialGroup()
                                                                                                                                 .addGap(12, 12, 12)
-                                                                                                                                .addComponent(jRadioButtonBridge)
+                                                                                                                                .addComponent(jRadioButtonBridge1)
                                                                                                                                 .addPreferredGap(
                                                                                                                                                 javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                                                                .addComponent(jRadioButtonRouter))
-                                                                                                                .addComponent(jLabel7))
-                                                                                                .addGap(0, 0, Short.MAX_VALUE)))
-                                                                .addContainerGap()));
+                                                                                                                                .addComponent(jRadioButtonRouter1))
+                                                                                                                .addComponent(jLabel11))
+                                                                                                .addGap(0, 0, Short.MAX_VALUE))
+                                                                                .addGroup(jPanel2Layout
+                                                                                                .createSequentialGroup()
+                                                                                                .addComponent(jLabel16,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                137,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                .addPreferredGap(
+                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                                .addComponent(jComboBoxModoVlan,
+                                                                                                                0,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                Short.MAX_VALUE)))
+                                                                .addGap(29, 29, 29)));
                 jPanel2Layout.setVerticalGroup(
                                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addGroup(jPanel2Layout.createSequentialGroup()
-                                                                .addGap(5, 5, 5)
-                                                                .addGroup(jPanel2Layout.createParallelGroup(
-                                                                                javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                                .addComponent(jLabel3,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                23,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addComponent(jComboBoxInterfaceUplink,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE)
-                                                                                .addComponent(jLabel6,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                23,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addComponent(jComboBoxModoAutoConfig,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                .addGap(6, 6, 6)
-                                                                .addGroup(jPanel2Layout.createParallelGroup(
-                                                                                javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                                .addComponent(jLabel8,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                23,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addComponent(jLabel5,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                23,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                .addComponent(jTextFieldRangeVlan)
-                                                                                .addComponent(jTextFieldRangeProfileVlan,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                .addGap(6, 6, 6)
+                                                                .addGap(12, 12, 12)
                                                                 .addGroup(jPanel2Layout.createParallelGroup(
                                                                                 javax.swing.GroupLayout.Alignment.LEADING)
                                                                                 .addGroup(jPanel2Layout
                                                                                                 .createParallelGroup(
                                                                                                                 javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                                                .addComponent(jLabel4,
+                                                                                                .addComponent(jComboBoxModoAutoConfig1)
+                                                                                                .addComponent(jLabel14,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                23,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                                .addGroup(jPanel2Layout
+                                                                                                .createParallelGroup(
+                                                                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                                                .addComponent(jLabel12,
                                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                                                 23,
                                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                .addComponent(jTextFieldRangeProfileLine))
+                                                                                                .addComponent(jComboBoxInterfaceUplink1,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                Short.MAX_VALUE)))
+                                                                .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addGroup(jPanel2Layout.createParallelGroup(
+                                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                                .addComponent(jComboBoxModoVlan)
+                                                                                .addComponent(jLabel16,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                23,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addComponent(jLabel17,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                23,
+                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addComponent(jComboBoxBridgeUplink,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                Short.MAX_VALUE))
+                                                                .addPreferredGap(
+                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                Short.MAX_VALUE)
+                                                                .addGroup(jPanel2Layout.createParallelGroup(
+                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                .addGroup(jPanel2Layout
+                                                                                                .createParallelGroup(
+                                                                                                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                                                .addComponent(jLabel13,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                23,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                                .addComponent(jTextFieldRangeVlan1,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))
                                                                                 .addGroup(jPanel2Layout
                                                                                                 .createSequentialGroup()
-                                                                                                .addComponent(jLabel7)
+                                                                                                .addComponent(jLabel11)
                                                                                                 .addPreferredGap(
                                                                                                                 javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                                                                 .addGroup(jPanel2Layout
                                                                                                                 .createParallelGroup(
                                                                                                                                 javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                                                                .addComponent(jRadioButtonBridge)
-                                                                                                                .addComponent(jRadioButtonRouter))))
+                                                                                                                .addComponent(jRadioButtonBridge1)
+                                                                                                                .addComponent(jRadioButtonRouter1))))
                                                                 .addGap(12, 12, 12)));
 
                 jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Script pronto",
@@ -698,34 +723,38 @@ public class OltG16 extends javax.swing.JInternalFrame {
                                                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
                                                                                 Short.MAX_VALUE)
                                                                 .addGroup(layout.createParallelGroup(
-                                                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
                                                                                 false)
-                                                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                                                                                                layout.createSequentialGroup()
+                                                                                .addComponent(jPanel5,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                Short.MAX_VALUE)
+                                                                                .addGroup(layout.createParallelGroup(
+                                                                                                javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                                .addGroup(layout.createSequentialGroup()
                                                                                                                 .addComponent(jPanel3,
                                                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
                                                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                                                                .addPreferredGap(
-                                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                                                Short.MAX_VALUE)
+                                                                                                                .addGap(18, 18, 18)
                                                                                                                 .addComponent(jPanel4,
                                                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
                                                                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                                                .addComponent(jPanel2,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE)
-                                                                                .addComponent(jPanel1,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE)
-                                                                                .addComponent(jPanel5,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                                                Short.MAX_VALUE))
+                                                                                                .addGroup(layout
+                                                                                                                .createParallelGroup(
+                                                                                                                                javax.swing.GroupLayout.Alignment.TRAILING,
+                                                                                                                                false)
+                                                                                                                .addComponent(jPanel2,
+                                                                                                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                                Short.MAX_VALUE)
+                                                                                                                .addComponent(jPanel1,
+                                                                                                                                javax.swing.GroupLayout.Alignment.LEADING,
+                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                                                                                Short.MAX_VALUE))))
                                                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
                                                                                 Short.MAX_VALUE)));
                 layout.setVerticalGroup(
@@ -766,7 +795,6 @@ public class OltG16 extends javax.swing.JInternalFrame {
                                                                                 Short.MAX_VALUE)));
 
                 pack();
-
         }// </editor-fold>//GEN-END:initComponents
 
         private void jPasswordFieldOltPasswdActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jPasswordFieldOltPasswdActionPerformed
@@ -781,45 +809,16 @@ public class OltG16 extends javax.swing.JInternalFrame {
                 // TODO add your handling code here:
         }// GEN-LAST:event_jFormattedTextFieldPortOltActionPerformed
 
-        private void jRadioButtonBridgeActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jRadioButtonBridgeActionPerformed
-                // TODO add your handling code here:
-        }// GEN-LAST:event_jRadioButtonBridgeActionPerformed
-
-        private void jRadioButtonRouterActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jRadioButtonRouterActionPerformed
-                // TODO add your handling code here:
-        }// GEN-LAST:event_jRadioButtonRouterActionPerformed
-
-        private void jComboBoxInterfaceUplinkActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jComboBoxInterfaceUplinkActionPerformed
-                // TODO add your handling code here:
-        }// GEN-LAST:event_jComboBoxInterfaceUplinkActionPerformed
-
-        private void jComboBoxModoAutoConfigActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jComboBoxModoAutoConfigActionPerformed
-                // TODO add your handling code here:
-        }// GEN-LAST:event_jComboBoxModoAutoConfigActionPerformed
-
-        private void jTextFieldRangeProfileVlanActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jTextFieldRangeProfileVlanActionPerformed
-                // TODO add your handling code here:
-        }// GEN-LAST:event_jTextFieldRangeProfileVlanActionPerformed
-
-        private void jTextFieldRangeProfileLineActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jTextFieldRangeProfileLineActionPerformed
-                // TODO add your handling code here:
-        }// GEN-LAST:event_jTextFieldRangeProfileLineActionPerformed
-
-        private void jTextFieldRangeVlanActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jTextFieldRangeVlanActionPerformed
-                // TODO add your handling code here:
-        }// GEN-LAST:event_jTextFieldRangeVlanActionPerformed
-
-        private void jButtonFileChooserActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonFileChooserActionPerformed
+        private void jButtonFileChooserActionPerformed(final java.awt.event.ActionEvent evt) {
                 final JFileChooser fileChooser = new JFileChooser();
 
                 // Adiciona um filtro para aceitar apenas arquivos de texto e derivados
                 final FileNameExtensionFilter filter = new FileNameExtensionFilter(
                                 "Arquivos de Texto", "txt", "md", "csv", "log", "java", "xml", "html", "json");
                 fileChooser.setFileFilter(filter);
+
                 // Exibe o seletor de arquivo e obtém a resposta do usuário
-                final int returnValue = fileChooser.showOpenDialog(this);
-                fileChooser.setDialogTitle("Selecione o arquivo:");
-                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                final int returnValue = fileChooser.showOpenDialog(null);
 
                 // Verifica se o usuário escolheu um arquivo
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -833,37 +832,37 @@ public class OltG16 extends javax.swing.JInternalFrame {
                 } else {
                         this.fileChooserIsSelected = false;
                         JOptionPane.showMessageDialog(null,
-                                        "Nenhum arquivo selecionado.", "Error!",
+                                        "Nenhum arquivo selecionado.", "Error",
                                         JOptionPane.ERROR_MESSAGE, this.errorIcon);
                         jButtonFileChooser.setText("File");
                         jTextAreaPreviewCode.setText("");
                 }
-
         }// GEN-LAST:event_jButtonFileChooserActionPerformed
 
-        private void jButtonEnviarActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonEnviarActionPerformed
+        private void jButtonEnviarActionPerformed(final java.awt.event.ActionEvent evt) {
                 if (this.fileChooserIsSelected) {
-                        if (this.oltGpon.checkTelnet(jTextFieldIpOlt.getText(), jFormattedTextFieldPortOlt.getText(),
+                        if (this.olt8820Plus.checkTelnet(jTextFieldIpOlt.getText(),
+                                        jFormattedTextFieldPortOlt.getText(),
                                         jTextFieldOltUser.getText(), jPasswordFieldOltPasswd.getPassword(),
                                         this.errorIcon)) {
                                 JOptionPane.showMessageDialog(null,
-                                                "Valores validos!", "Sucesso!",
+                                                "Valores validos!", "Sucesso",
                                                 JOptionPane.ERROR_MESSAGE, this.successIcon);
                                 final SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
                                         @Override
                                         protected Void doInBackground() throws Exception {
-                                                final Telnet acessoOlt = new Telnet(jTextFieldIpOlt.getText(),
+                                                final Telnet8820Plus acessoOlt = new Telnet8820Plus(
+                                                                jTextFieldIpOlt.getText(),
                                                                 Integer.parseInt(jFormattedTextFieldPortOlt.getText()),
                                                                 jTextFieldOltUser.getText(),
-                                                                new String(jPasswordFieldOltPasswd.getPassword()),
-                                                                getOltName());
+                                                                new String(jPasswordFieldOltPasswd.getPassword()), getOltName());
+
                                                 acessoOlt.oltAccess(nomeArq);
                                                 return null;
                                         }
 
                                 };
                                 worker.execute();
-
                         }
                 } else {
                         JOptionPane.showMessageDialog(null,
@@ -872,30 +871,29 @@ public class OltG16 extends javax.swing.JInternalFrame {
                 }
         }// GEN-LAST:event_jButtonEnviarActionPerformed
 
-        private void jButtonCriarActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonCriarActionPerformed
-                this.nomeArq = "scriptG16.txt";
+        private void jButtonCriarActionPerformed(final java.awt.event.ActionEvent evt) {
+                this.nomeArq = "script8820I.txt";
 
                 String terceiros = "router";
-                if (jRadioButtonBridge.isSelected()) {
+                if (jRadioButtonBridge1.isSelected()) {
                         terceiros = "bridge";
                 }
-                if (this.oltGpon.start(this.interfaceGpon, (String) jComboBoxInterfaceUplink.getSelectedItem(),
-                                (String) jComboBoxModoAutoConfig.getSelectedItem(),
-                                terceiros, this.slotLength, jTextFieldRangeVlan.getText(),
-                                jTextFieldRangeProfileVlan.getText(),
-                                jTextFieldRangeProfileLine.getText(),
-                                this.configuracoes, nomeArq)) {
+                if (this.olt8820Plus.start((String) this.jComboBoxInterfaceUplink1.getSelectedItem(),
+                                this.configuracoes,
+                                terceiros, (String) this.jComboBoxModoAutoConfig1.getSelectedItem(),
+                                this.jTextFieldRangeVlan1.getText(), (String) this.jComboBoxModoVlan.getSelectedItem(),
+                                (String) this.jComboBoxBridgeUplink.getSelectedItem(), this.slotLength, this.nomeArq)) {
                         // Cria um objeto ConfigGenerator para gerar o script de configuração
                         JOptionPane.showMessageDialog(null,
-                                        "Script criado com sucesso!", "Sucesso!",
+                                        "Script criado com sucesso!", "Sucesso",
                                         JOptionPane.ERROR_MESSAGE, this.successIcon);
                         this.fileChooserIsSelected = true;
                         jButtonFileChooser.setText(this.nomeArq);
                         previewText();
-
                 } else {
+
                         JOptionPane.showMessageDialog(null,
-                                        "Script nao foi criado!", "Error!",
+                                        "Script nao foi criado!", "Error",
                                         JOptionPane.ERROR_MESSAGE, this.errorIcon);
                 }
         }// GEN-LAST:event_jButtonCriarActionPerformed
@@ -904,14 +902,35 @@ public class OltG16 extends javax.swing.JInternalFrame {
                 // TODO add your handling code here:
         }// GEN-LAST:event_jTextFieldOltUserActionPerformed
 
-        private void formKeyPressed(final java.awt.event.KeyEvent evt) {// GEN-FIRST:event_formKeyPressed
-                if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                        saida();
-                        dispose();
-                }
-        }// GEN-LAST:event_formKeyPressed
-
         private void jButtonCancelActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonCancelActionPerformed
                 this.dispose();
         }// GEN-LAST:event_jButtonCancelActionPerformed
+
+        private void jRadioButtonBridge1ActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jRadioButtonBridge1ActionPerformed
+                // TODO add your handling code here:
+        }// GEN-LAST:event_jRadioButtonBridge1ActionPerformed
+
+        private void jRadioButtonRouter1ActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jRadioButtonRouter1ActionPerformed
+                // TODO add your handling code here:
+        }// GEN-LAST:event_jRadioButtonRouter1ActionPerformed
+
+        private void jComboBoxInterfaceUplink1ActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jComboBoxInterfaceUplink1ActionPerformed
+                // TODO add your handling code here:
+        }// GEN-LAST:event_jComboBoxInterfaceUplink1ActionPerformed
+
+        private void jComboBoxModoAutoConfig1ActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jComboBoxModoAutoConfig1ActionPerformed
+                // TODO add your handling code here:
+        }// GEN-LAST:event_jComboBoxModoAutoConfig1ActionPerformed
+
+        private void jTextFieldRangeVlan1ActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jTextFieldRangeVlan1ActionPerformed
+                // TODO add your handling code here:
+        }// GEN-LAST:event_jTextFieldRangeVlan1ActionPerformed
+
+        private void jComboBoxModoVlanActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jComboBoxModoVlanActionPerformed
+                // TODO add your handling code here:
+        }// GEN-LAST:event_jComboBoxModoVlanActionPerformed
+
+        private void jComboBoxBridgeUplinkActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jComboBoxBridgeUplinkActionPerformed
+                // TODO add your handling code here:
+        }// GEN-LAST:event_jComboBoxBridgeUplinkActionPerformed
 }

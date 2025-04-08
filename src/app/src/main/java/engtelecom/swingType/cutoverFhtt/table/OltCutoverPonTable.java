@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package engtelecom.swingType;
+package engtelecom.swingType.cutoverFhtt.table;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,6 +49,25 @@ public class OltCutoverPonTable extends javax.swing.JFrame {
                 model.addRow(new Object[] { slot, pon, false });
         }
 
+        public void ordenarTabela() {
+                DefaultTableModel model = (DefaultTableModel) jTablePon.getModel();
+                TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+                jTablePon.setRowSorter(sorter);
+
+                // Definir comparadores para colunas numéricas
+                sorter.setComparator(0, Comparator.comparingInt(o -> Integer.valueOf(o.toString()))); // SLOT
+                sorter.setComparator(1, Comparator.comparingInt(o -> Integer.valueOf(o.toString()))); // PON
+
+                // Definir ordenação: primeiro SLOT (coluna 0) e depois PON (coluna 1)
+                List<RowSorter.SortKey> sortKeys = Arrays.asList(
+                                new RowSorter.SortKey(0, SortOrder.ASCENDING), // Ordena SLOT em ordem crescente
+                                new RowSorter.SortKey(1, SortOrder.ASCENDING) // Ordena PON em ordem crescente
+                );
+
+                sorter.setSortKeys(sortKeys);
+                sorter.sort(); // Aplica a ordenação
+        }
+
         /**
          * Coleta os dados selecionados na tabela considerando a ordenação do sorter.
          */
@@ -71,25 +90,6 @@ public class OltCutoverPonTable extends javax.swing.JFrame {
                         }
                 }
                 return ponSelecionada;
-        }
-
-        public void ordenarTabela() {
-                DefaultTableModel model = (DefaultTableModel) jTablePon.getModel();
-                TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
-                jTablePon.setRowSorter(sorter);
-
-                // Definir comparadores para colunas numéricas
-                sorter.setComparator(0, Comparator.comparingInt(o -> Integer.valueOf(o.toString()))); // SLOT
-                sorter.setComparator(1, Comparator.comparingInt(o -> Integer.valueOf(o.toString()))); // PON
-
-                // Definir ordenação: primeiro SLOT (coluna 0) e depois PON (coluna 1)
-                List<RowSorter.SortKey> sortKeys = Arrays.asList(
-                                new RowSorter.SortKey(0, SortOrder.ASCENDING), // Ordena SLOT em ordem crescente
-                                new RowSorter.SortKey(1, SortOrder.ASCENDING) // Ordena PON em ordem crescente
-                );
-
-                sorter.setSortKeys(sortKeys);
-                sorter.sort(); // Aplica a ordenação
         }
 
         private void initComponents() {

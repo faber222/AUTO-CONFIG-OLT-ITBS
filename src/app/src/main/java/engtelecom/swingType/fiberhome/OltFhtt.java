@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
-package engtelecom.swingType;
+package engtelecom.swingType.fiberhome;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -17,8 +17,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import engtelecom.App;
 import engtelecom.access.TelnetFhtt;
-import engtelecom.product.OltGpon;
 import engtelecom.product.OltGponFhtt;
+import engtelecom.swingType.OltPreview;
+import engtelecom.swingType.fiberhome.capability.CapabilityProfile;
+import engtelecom.swingType.fiberhome.capability.CapabilityProfileListener;
 
 /**
  *

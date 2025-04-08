@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package engtelecom.swingType;
+package engtelecom.swingType.cutoverFhtt.origem;
 
 import javax.swing.SpinnerNumberModel;
 
@@ -28,7 +28,7 @@ public class Olt5kCutoverOrigemAcesso extends javax.swing.JFrame {
     private javax.swing.JSpinner jSpinnerPortOlt;
     private javax.swing.JTextField jTextFieldIpOlt;
     private javax.swing.JTextField jTextFieldUser;
-    private javax.swing.SpinnerNumberModel jSpinnerPortMax;
+    private final javax.swing.SpinnerNumberModel jSpinnerPortMax;
     // End of variables declaration//GEN-END:variables
 
     private Olt5kCutoverOrigemAcessoListener listener;
@@ -41,7 +41,7 @@ public class Olt5kCutoverOrigemAcesso extends javax.swing.JFrame {
         initComponents();
     }
 
-    public void setListener(Olt5kCutoverOrigemAcessoListener listener) {
+    public void setListener(final Olt5kCutoverOrigemAcessoListener listener) {
         this.listener = listener;
     }
 
@@ -107,14 +107,14 @@ public class Olt5kCutoverOrigemAcesso extends javax.swing.JFrame {
 
         jButtonClose.setText("Close");
         jButtonClose.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jButtonCloseActionPerformed(evt);
             }
         });
 
         jButtonOk.setText("OK");
         jButtonOk.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jButtonOkActionPerformed(evt);
             }
         });
@@ -125,7 +125,7 @@ public class Olt5kCutoverOrigemAcesso extends javax.swing.JFrame {
         jTextFieldUser.setAutoscrolls(false);
         // jTextFieldUser.setFocusable(false);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        final javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,7 +227,7 @@ public class Olt5kCutoverOrigemAcesso extends javax.swing.JFrame {
                                         .addComponent(jButtonClose))
                                 .addGap(1, 1, 1)));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,11 +244,11 @@ public class Olt5kCutoverOrigemAcesso extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonCloseActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jButtonCloseActionPerformed(final java.awt.event.ActionEvent evt) {
         this.dispose();
     }
 
-    private void jButtonOkActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jButtonOkActionPerformed(final java.awt.event.ActionEvent evt) {
         final String ip = String.valueOf(jTextFieldIpOlt.getText());
         final String pass = new String(jPasswordFieldOltPasswd.getPassword());
         final String user = jTextFieldUser.getText();

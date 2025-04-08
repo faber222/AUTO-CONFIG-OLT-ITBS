@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 
-package engtelecom.swingType;
+package engtelecom.swingType.fiberhome.capability;
 
 /**
  *

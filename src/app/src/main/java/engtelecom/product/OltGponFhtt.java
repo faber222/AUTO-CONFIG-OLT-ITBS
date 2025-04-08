@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import engtelecom.config.ConfigGeneratorFhtt;
-import engtelecom.swingType.OltFhtt;
+import engtelecom.swingType.fiberhome.OltFhtt;
 
 public class OltGponFhtt extends Olt {
     private String portaUplink;

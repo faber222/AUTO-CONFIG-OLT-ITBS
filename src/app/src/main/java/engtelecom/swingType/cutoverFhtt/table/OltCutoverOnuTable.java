@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package engtelecom.swingType;
+package engtelecom.swingType.cutoverFhtt.table;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,6 +45,28 @@ public class OltCutoverOnuTable extends javax.swing.JFrame {
                 model.addRow(new Object[] { slot, pon, onu, false });
         }
 
+        public void ordenarTabela() {
+                DefaultTableModel model = (DefaultTableModel) jTableOnu.getModel();
+                TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+                jTableOnu.setRowSorter(sorter);
+
+                // Definir comparadores para colunas numéricas
+                sorter.setComparator(0, Comparator.comparingInt(o -> Integer.valueOf(o.toString()))); // SLOT
+                sorter.setComparator(1, Comparator.comparingInt(o -> Integer.valueOf(o.toString()))); // PON
+                sorter.setComparator(2, Comparator.comparingInt(o -> Integer.valueOf(o.toString()))); // ONU
+
+                // Definir ordenação: primeiro SLOT (coluna 0), depois PON (coluna 1), e depois
+                // ONU (coluna 2)
+                List<RowSorter.SortKey> sortKeys = Arrays.asList(
+                                new RowSorter.SortKey(0, SortOrder.ASCENDING), // Ordena SLOT em ordem crescente
+                                new RowSorter.SortKey(1, SortOrder.ASCENDING), // Ordena PON em ordem crescente
+                                new RowSorter.SortKey(2, SortOrder.ASCENDING) // Ordena ONU em ordem crescente
+                );
+
+                sorter.setSortKeys(sortKeys);
+                sorter.sort(); // Aplica a ordenação
+        }
+
         /**
          * Coleta os dados selecionados na tabela considerando a ordenação do sorter.
          */
@@ -68,28 +90,6 @@ public class OltCutoverOnuTable extends javax.swing.JFrame {
                         }
                 }
                 return onuSelecionada;
-        }
-
-        public void ordenarTabela() {
-                DefaultTableModel model = (DefaultTableModel) jTableOnu.getModel();
-                TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
-                jTableOnu.setRowSorter(sorter);
-
-                // Definir comparadores para colunas numéricas
-                sorter.setComparator(0, Comparator.comparingInt(o -> Integer.valueOf(o.toString()))); // SLOT
-                sorter.setComparator(1, Comparator.comparingInt(o -> Integer.valueOf(o.toString()))); // PON
-                sorter.setComparator(2, Comparator.comparingInt(o -> Integer.valueOf(o.toString()))); // ONU
-
-                // Definir ordenação: primeiro SLOT (coluna 0), depois PON (coluna 1), e depois
-                // ONU (coluna 2)
-                List<RowSorter.SortKey> sortKeys = Arrays.asList(
-                                new RowSorter.SortKey(0, SortOrder.ASCENDING), // Ordena SLOT em ordem crescente
-                                new RowSorter.SortKey(1, SortOrder.ASCENDING), // Ordena PON em ordem crescente
-                                new RowSorter.SortKey(2, SortOrder.ASCENDING) // Ordena ONU em ordem crescente
-                );
-
-                sorter.setSortKeys(sortKeys);
-                sorter.sort(); // Aplica a ordenação
         }
 
         private void initComponents() {

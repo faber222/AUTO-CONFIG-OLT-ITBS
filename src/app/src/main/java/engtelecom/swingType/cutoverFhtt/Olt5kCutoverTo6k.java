@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package engtelecom.swingType;
+package engtelecom.swingType.cutoverFhtt;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -20,6 +20,17 @@ import engtelecom.access.SSHClient;
 import engtelecom.access.TelnetCutover;
 import engtelecom.access.TelnetFhtt;
 import engtelecom.analytics.DataAnaliser5k;
+import engtelecom.swingType.OltPreview;
+import engtelecom.swingType.cutoverFhtt.destino.Olt5kCutoverDestinoAcesso;
+import engtelecom.swingType.cutoverFhtt.destino.Olt5kCutoverDestinoAcessoListener;
+import engtelecom.swingType.cutoverFhtt.origem.Olt5kCutoverOrigemAcesso;
+import engtelecom.swingType.cutoverFhtt.origem.Olt5kCutoverOrigemAcessoListener;
+import engtelecom.swingType.cutoverFhtt.table.OltCutoverOnuTable;
+import engtelecom.swingType.cutoverFhtt.table.OltCutoverOnuTableListener;
+import engtelecom.swingType.cutoverFhtt.table.OltCutoverPonTable;
+import engtelecom.swingType.cutoverFhtt.table.OltCutoverPonTableListener;
+import engtelecom.swingType.cutoverFhtt.table.OltCutoverSlotTable;
+import engtelecom.swingType.cutoverFhtt.table.OltCutoverSlotTableListener;
 
 /**
  *
@@ -53,12 +64,12 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
 
         private javax.swing.JLabel jLabel1;
 
-        private javax.swing.JLabel jLabel3;
-
+        
         private javax.swing.JLabel jLabel5;
         private javax.swing.JLabel jLabel6;
         private javax.swing.JLabel jLabel7;
         private javax.swing.JLabel jLabel8;
+        private javax.swing.JLabel jLabel3;
         private javax.swing.JPanel jPanel1;
         private javax.swing.JPanel jPanel2;
         private javax.swing.JPanel jPanel3;
@@ -145,7 +156,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 }
 
                 // Cria um resumo em uma única linha
-                StringBuilder resumo = new StringBuilder();
+                final StringBuilder resumo = new StringBuilder();
                 for (final String[] onu : this.onuSelecionadaOnuTable) {
                         // Formata cada ONU como SLOT-PON-ONU e adiciona ao resumo
                         resumo.append(onu[0]).append("-").append(onu[1]).append("-").append(onu[2]).append(", ");
@@ -177,7 +188,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 }
 
                 // Cria um resumo em uma única linha
-                StringBuilder resumo = new StringBuilder();
+                final StringBuilder resumo = new StringBuilder();
                 for (final String[] slot : this.slotSelecionadaSlotTable) {
                         // Formata cada ONU como SLOT e adiciona ao resumo
                         resumo.append(slot[0]).append(", ");
@@ -208,7 +219,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 }
 
                 // Cria um resumo em uma única linha
-                StringBuilder resumo = new StringBuilder();
+                final StringBuilder resumo = new StringBuilder();
                 for (final String[] pon : this.ponSelecionadaPonTable) {
                         // Formata cada pon como SLOT-PON e adiciona ao resumo
                         resumo.append(pon[0]).append("-").append(pon[1]).append(", ");
@@ -230,7 +241,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
         }
 
         @Override
-        public void onProfileDadosOrigemCreated(String ip, String user, String passwd, String port, boolean isTelnet) {
+        public void onProfileDadosOrigemCreated(final String ip, final String user, final String passwd, final String port, final boolean isTelnet) {
                 System.out.println("Ip: " + ip);
                 System.out.println("Usuário: " + user);
                 System.out.println("Senha: " + passwd);
@@ -250,7 +261,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
         }
 
         @Override
-        public void onProfileDadosDestinoCreated(String ip, String user, String passwd, String port) {
+        public void onProfileDadosDestinoCreated(final String ip, final String user, final String passwd, final String port) {
                 System.out.println("Ip: " + ip);
                 System.out.println("Usuário: " + user);
                 System.out.println("Senha: " + passwd);
