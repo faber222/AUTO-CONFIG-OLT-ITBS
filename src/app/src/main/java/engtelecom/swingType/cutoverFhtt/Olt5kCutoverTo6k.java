@@ -7,6 +7,7 @@ package engtelecom.swingType.cutoverFhtt;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -21,6 +22,8 @@ import engtelecom.analytics.DataAnaliser5k;
 import engtelecom.swingType.OltPreview;
 import engtelecom.swingType.cutoverFhtt.destino.Olt5kCutoverDestinoAcesso;
 import engtelecom.swingType.cutoverFhtt.destino.Olt5kCutoverDestinoAcessoListener;
+import engtelecom.swingType.cutoverFhtt.destino.OltCutoverFormDestino;
+import engtelecom.swingType.cutoverFhtt.destino.OltCutoverFormDestinoListener;
 import engtelecom.swingType.cutoverFhtt.origem.Olt5kCutoverOrigemAcesso;
 import engtelecom.swingType.cutoverFhtt.origem.Olt5kCutoverOrigemAcessoListener;
 import engtelecom.swingType.cutoverFhtt.table.OltCutoverOnuTable;
@@ -36,7 +39,7 @@ import engtelecom.swingType.cutoverFhtt.table.OltCutoverSlotTableListener;
  */
 public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 implements OltCutoverOnuTableListener, OltCutoverPonTableListener, OltCutoverSlotTableListener,
-                Olt5kCutoverOrigemAcessoListener, Olt5kCutoverDestinoAcessoListener {
+                Olt5kCutoverOrigemAcessoListener, Olt5kCutoverDestinoAcessoListener, OltCutoverFormDestinoListener {
 
         // Variables declaration - do not modify//GEN-BEGIN:variables
         private javax.swing.ButtonGroup buttonGroup1;
@@ -62,7 +65,6 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
 
         private javax.swing.JLabel jLabel1;
 
-        
         private javax.swing.JLabel jLabel5;
         private javax.swing.JLabel jLabel6;
         private javax.swing.JLabel jLabel7;
@@ -86,6 +88,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
         private final OltCutoverSlotTable oltCutoverSlotTable;
         private final Olt5kCutoverOrigemAcesso olt5kCutoverOrigemAcesso;
         private final Olt5kCutoverDestinoAcesso olt5kCutoverDestinoAcesso;
+        private OltCutoverFormDestino oltCutoverFormDestino;
 
         private List<String[]> onuSelecionadaOnuTable;
         private List<String[]> ponSelecionadaPonTable;
@@ -96,7 +99,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
         private OltPreview preview;
         private boolean fileChooserIsSelected;
         private String filePath;
-        private boolean scriptCriado;
+        private final boolean scriptCriado;
         private boolean origemSelecionada;
 
         private String ipOltOrigem;
@@ -122,6 +125,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 this.oltCutoverSlotTable = new OltCutoverSlotTable();
                 this.olt5kCutoverOrigemAcesso = new Olt5kCutoverOrigemAcesso();
                 this.olt5kCutoverDestinoAcesso = new Olt5kCutoverDestinoAcesso();
+
                 this.dadosOrigemPreenchidos = false;
                 this.dadosDestinoPreenchidos = false;
                 this.fileChooserIsSelected = false;
@@ -239,7 +243,8 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
         }
 
         @Override
-        public void onProfileDadosOrigemCreated(final String ip, final String user, final String passwd, final String port, final boolean isTelnet) {
+        public void onProfileDadosOrigemCreated(final String ip, final String user, final String passwd,
+                        final String port, final boolean isTelnet) {
                 System.out.println("Ip: " + ip);
                 System.out.println("Usuário: " + user);
                 System.out.println("Senha: " + passwd);
@@ -259,7 +264,8 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
         }
 
         @Override
-        public void onProfileDadosDestinoCreated(final String ip, final String user, final String passwd, final String port) {
+        public void onProfileDadosDestinoCreated(final String ip, final String user, final String passwd,
+                        final String port) {
                 System.out.println("Ip: " + ip);
                 System.out.println("Usuário: " + user);
                 System.out.println("Senha: " + passwd);
@@ -270,6 +276,18 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 this.passOltDestino = passwd;
                 this.portOltDestino = port;
                 dadosDestinoPreenchidos = true;
+        }
+
+        @Override
+        public void onProfileFormDestinoCreated(final ArrayList<String[]> nodos) {
+                for (final String[] dados : nodos) {
+                        // Verifica o tamanho do array para saber se veio com ou sem PON
+                        if (dados.length == 2) {
+                                System.out.println("SLOT: " + dados[0] + " | PON: " + dados[1]);
+                        } else {
+                                System.out.println("SLOT: " + dados[0]);
+                        }
+                }
         }
 
         /**
@@ -764,6 +782,9 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
         }
 
         private void jButtonDadosOltDestinoActionPerformed(final java.awt.event.ActionEvent evt) {
+                this.oltCutoverFormDestino = new OltCutoverFormDestino(jRadioButtonSlot.isSelected());
+                oltCutoverFormDestino.setListener(this);
+                oltCutoverFormDestino.setVisible(true);
         }
 
         private void jButtonPreviewActionPerformed(final java.awt.event.ActionEvent evt) {
@@ -778,84 +799,86 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 // PRECISA CRIAR UM COLETADOR DE DADOS DA OLT 5K
 
                 // if (dadosOrigemPreenchidos) {
-                //         JOptionPane.showMessageDialog(null,
-                //                         "Acessando a OLT remotamente....", null,
-                //                         JOptionPane.INFORMATION_MESSAGE, null);
-                //         boolean acessou = false;
-                //         final String arq = "dados.txt";
-                //         jButtonColetar.setText("Coletar bkp remoto");
-                //         fileChooserIsSelected = false;
-                //         if (this.isTelnetOltOrigem) {
-                //                 final TelnetCutover telnet = new TelnetCutover(this.ipOltOrigem,
-                //                                 Integer.parseInt(this.portOltOrigem),
-                //                                 this.userOltOrigem,
-                //                                 this.passOltOrigem, arq);
-                //                 if (telnet.oltAccess()) {
-                //                         this.filePath = arq;
-                //                         previewText(this.filePath);
-                //                         jButtonColetar.setText(this.filePath);
-                //                         acessou = true;
-                //                         fileChooserIsSelected = true;
-                //                 }
+                // JOptionPane.showMessageDialog(null,
+                // "Acessando a OLT remotamente....", null,
+                // JOptionPane.INFORMATION_MESSAGE, null);
+                // boolean acessou = false;
+                // final String arq = "dados.txt";
+                // jButtonColetar.setText("Coletar bkp remoto");
+                // fileChooserIsSelected = false;
+                // if (this.isTelnetOltOrigem) {
+                // final TelnetCutover telnet = new TelnetCutover(this.ipOltOrigem,
+                // Integer.parseInt(this.portOltOrigem),
+                // this.userOltOrigem,
+                // this.passOltOrigem, arq);
+                // if (telnet.oltAccess()) {
+                // this.filePath = arq;
+                // previewText(this.filePath);
+                // jButtonColetar.setText(this.filePath);
+                // acessou = true;
+                // fileChooserIsSelected = true;
+                // }
 
-                //         } else {
-                //                 final SSHClient sshClient = new SSHClient(
-                //                                 this.ipOltOrigem,
-                //                                 Integer.parseInt(this.portOltOrigem),
-                //                                 this.userOltOrigem,
-                //                                 this.passOltOrigem, arq);
-                //                 if (sshClient.oltAccess()) {
-                //                         this.filePath = arq;
-                //                         previewText(this.filePath);
-                //                         jButtonColetar.setText(this.filePath);
-                //                         acessou = true;
-                //                         fileChooserIsSelected = true;
-                //                 }
-                //         }
-                //         if (acessou) {
-                //                 JOptionPane.showMessageDialog(null,
-                //                                 "Script importado com sucesso", null,
-                //                                 JOptionPane.INFORMATION_MESSAGE, null);
-                //         } else {
-                //                 JOptionPane.showMessageDialog(null,
-                //                                 "Não foi possível importar o script", null,
-                //                                 JOptionPane.INFORMATION_MESSAGE, null);
-                //         }
                 // } else {
-                //         JOptionPane.showMessageDialog(null,
-                //                         "Para importar o script remotamente, é importante que seja preenchido os dados de acesso da OLT,\n"
-                //                                         +
-                //                                         "sem isso não será possível fazer a coleta remota, somente via script backup importado localmente!",
-                //                         null,
-                //                         JOptionPane.INFORMATION_MESSAGE, null);
+                // final SSHClient sshClient = new SSHClient(
+                // this.ipOltOrigem,
+                // Integer.parseInt(this.portOltOrigem),
+                // this.userOltOrigem,
+                // this.passOltOrigem, arq);
+                // if (sshClient.oltAccess()) {
+                // this.filePath = arq;
+                // previewText(this.filePath);
+                // jButtonColetar.setText(this.filePath);
+                // acessou = true;
+                // fileChooserIsSelected = true;
+                // }
+                // }
+                // if (acessou) {
+                // JOptionPane.showMessageDialog(null,
+                // "Script importado com sucesso", null,
+                // JOptionPane.INFORMATION_MESSAGE, null);
+                // } else {
+                // JOptionPane.showMessageDialog(null,
+                // "Não foi possível importar o script", null,
+                // JOptionPane.INFORMATION_MESSAGE, null);
+                // }
+                // } else {
+                // JOptionPane.showMessageDialog(null,
+                // "Para importar o script remotamente, é importante que seja preenchido os
+                // dados de acesso da OLT,\n"
+                // +
+                // "sem isso não será possível fazer a coleta remota, somente via script backup
+                // importado localmente!",
+                // null,
+                // JOptionPane.INFORMATION_MESSAGE, null);
                 // }
 
         }
 
         private void jButtonCriarActionPerformed(final java.awt.event.ActionEvent evt) {
-                if (this.origemSelecionada) {
-                        // this.dataAnaliser5k = new DataAnaliser5k(this.filePath);
-                        // this.dataAnaliser5k.start();
-                        // String oltType = "AN6000";
-                        // final String slotChassiPon = (String) jSpinnerSlotPON.getValue().toString();
-                        // final String slotChassiUp = (String)
-                        // jSpinnerSlotUplink.getValue().toString();
-                        // final String slotPortaUp = (String)
-                        // jSpinnerPortaUplink.getValue().toString();
 
-                        // final ConfigCutoverGenerator5k cutover = new
-                        // ConfigCutoverGenerator5k(dataAnaliser,
-                        // slotChassiPon, slotChassiUp, slotPortaUp);
-                        // if (cutover.start()) {
-                        // previewText("scriptMigracao.txt");
-                        scriptCriado = true;
-                        // }
+                // Falta agora finalizar a possibilidade de criar o script com limitação de slot, pon e onu
+                
+                // if (this.origemSelecionada) {
+                //         this.dataAnaliser5k = new DataAnaliser5k(this.filePath);
+                //         this.dataAnaliser5k.start();
+                //         // String oltType = "AN6000";
+                //         final String slotChassiPon = (String) jSpinnerSlotPON.getValue().toString();
+                //         final String slotChassiUp = (String) jSpinnerSlotUplink.getValue().toString();
+                //         final String slotPortaUp = (String) jSpinnerPortaUplink.getValue().toString();
 
-                } else {
-                        JOptionPane.showMessageDialog(null,
-                                        "Nenhuma origem selecionada.", "Error!",
-                                        JOptionPane.ERROR_MESSAGE, null);
-                }
+                //         final ConfigCutoverGenerator5k cutover = new ConfigCutoverGenerator5k(dataAnaliser5k,
+                //                         slotChassiPon, slotChassiUp, slotPortaUp);
+                //         if (cutover.start()) {
+                //                 previewText("scriptMigracao.txt");
+                //                 scriptCriado = true;
+                //         }
+
+                // } else {
+                //         JOptionPane.showMessageDialog(null,
+                //                         "Nenhuma origem selecionada.", "Error!",
+                //                         JOptionPane.ERROR_MESSAGE, null);
+                // }
         }
 
         private void jButtonEnviarActionPerformed(final java.awt.event.ActionEvent evt) {
