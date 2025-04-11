@@ -55,8 +55,6 @@ public class DataRuleFilter {
 
                     // Formata o valor como "XXXXyyyyyyyy;0/x/y"
                     final String value = normalizePhyId(stringHex) + ";" + aim;
-                    System.out.println("CPE: " + value);
-
 
                     // Adiciona o valor na hashMap, agrupando por chave (line)
                     this.dataMap.computeIfAbsent(lineKey, k -> new ArrayList<>()).add(value);
