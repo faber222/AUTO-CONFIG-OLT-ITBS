@@ -4,6 +4,7 @@
  */
 package engtelecom.swingType.cutoverFhtt.destino;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -15,11 +16,74 @@ import java.util.Map;
  */
 public class OltCutoverFormDestino extends javax.swing.JFrame {
 
+    // /**
+    //  * @param args the command line arguments
+    //  */
+    // public static void main(String args[]) {
+    //     /* Set the Nimbus look and feel */
+    //     // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
+    //     // (optional) ">
+    //     /*
+    //      * If Nimbus (introduced in Java SE 6) is not available, stay with the default
+    //      * look and feel.
+    //      * For details see
+    //      * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+    //      */
+    //     try {
+    //         for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+    //             if ("Nimbus".equals(info.getName())) {
+    //                 javax.swing.UIManager.setLookAndFeel(info.getClassName());
+    //                 break;
+    //             }
+    //         }
+    //     } catch (ClassNotFoundException ex) {
+    //         java.util.logging.Logger.getLogger(OltCutoverFormDestino.class.getName())
+    //                 .log(java.util.logging.Level.SEVERE, null, ex);
+    //     } catch (InstantiationException ex) {
+    //         java.util.logging.Logger.getLogger(OltCutoverFormDestino.class.getName())
+    //                 .log(java.util.logging.Level.SEVERE, null, ex);
+    //     } catch (IllegalAccessException ex) {
+    //         java.util.logging.Logger.getLogger(OltCutoverFormDestino.class.getName())
+    //                 .log(java.util.logging.Level.SEVERE, null, ex);
+    //     } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+    //         java.util.logging.Logger.getLogger(OltCutoverFormDestino.class.getName())
+    //                 .log(java.util.logging.Level.SEVERE, null, ex);
+    //     }
+    //     // </editor-fold>
+
+    //     /* Create and display the form */
+    //     java.awt.EventQueue.invokeLater(new Runnable() {
+    //         public void run() {
+    //             new OltCutoverFormDestino().setVisible(true);
+    //         }
+    //     });
+    // }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonOK;
+
+    private javax.swing.JPanel jPanel1;
+
+    private javax.swing.JScrollPane jScrollPane2;
+
+    private javax.swing.JTree jTree1;
+
+    private final boolean type;
+
+    // End of variables declaration//GEN-END:variables
+
+    private OltCutoverFormDestinoListener listener;
+
     /**
      * Creates new form OltCutoverFormDestino
      */
-    public OltCutoverFormDestino() {
+    public OltCutoverFormDestino(final boolean type) {
+        this.type = type;
         initComponents();
+    }
+
+    public void setListener(final OltCutoverFormDestinoListener listener) {
+        this.listener = listener;
     }
 
     /**
@@ -42,29 +106,46 @@ public class OltCutoverFormDestino extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        javax.swing.tree.DefaultMutableTreeNode root = new javax.swing.tree.DefaultMutableTreeNode("OLT'S");
+        final javax.swing.tree.DefaultMutableTreeNode root = new javax.swing.tree.DefaultMutableTreeNode("OLT'S");
 
-        Map<String, List<Integer>> olts = new LinkedHashMap<>();
+        final Map<String, List<Integer>> olts = new LinkedHashMap<>();
         olts.put("AN6001-G16", Arrays.asList(1));
         olts.put("AN6000-2", Arrays.asList(1, 2));
         olts.put("AN6000-7", Arrays.asList(1, 2, 3, 4, 5, 6, 7));
         olts.put("AN6000-15", Arrays.asList(1, 2, 3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 15, 16, 17));
         olts.put("AN6000-17", Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19));
 
-        for (Map.Entry<String, List<Integer>> entry : olts.entrySet()) {
-            String oltName = entry.getKey();
-            List<Integer> slots = entry.getValue();
+        for (final Map.Entry<String, List<Integer>> entry : olts.entrySet()) {
+            final String oltName = entry.getKey();
+            final List<Integer> slots = entry.getValue();
 
-            javax.swing.tree.DefaultMutableTreeNode oltNode = new javax.swing.tree.DefaultMutableTreeNode(oltName);
+            final javax.swing.tree.DefaultMutableTreeNode oltNode = new javax.swing.tree.DefaultMutableTreeNode(oltName);
 
-            for (Integer slot : slots) {
-                javax.swing.tree.DefaultMutableTreeNode slotNode = new javax.swing.tree.DefaultMutableTreeNode(
+            // for (Integer slot : slots) {
+            // javax.swing.tree.DefaultMutableTreeNode slotNode = new
+            // javax.swing.tree.DefaultMutableTreeNode(
+            // "SLOT " + slot);
+
+            // for (int pon = 1; pon <= 16; pon++) {
+            // javax.swing.tree.DefaultMutableTreeNode ponNode = new
+            // javax.swing.tree.DefaultMutableTreeNode(
+            // "PON " + pon);
+            // slotNode.add(ponNode);
+            // }
+
+            // oltNode.add(slotNode);
+            // }
+
+            for (final Integer slot : slots) {
+                final javax.swing.tree.DefaultMutableTreeNode slotNode = new javax.swing.tree.DefaultMutableTreeNode(
                         "SLOT " + slot);
 
-                for (int pon = 1; pon <= 16; pon++) {
-                    javax.swing.tree.DefaultMutableTreeNode ponNode = new javax.swing.tree.DefaultMutableTreeNode(
-                            "PON " + pon);
-                    slotNode.add(ponNode);
+                if (!this.type) {
+                    for (int pon = 1; pon <= 16; pon++) {
+                        final javax.swing.tree.DefaultMutableTreeNode ponNode = new javax.swing.tree.DefaultMutableTreeNode(
+                                "PON " + pon);
+                        slotNode.add(ponNode);
+                    }
                 }
 
                 oltNode.add(slotNode);
@@ -75,20 +156,19 @@ public class OltCutoverFormDestino extends javax.swing.JFrame {
 
         jTree1.setModel(new javax.swing.tree.DefaultTreeModel(root));
         jScrollPane2.setViewportView(jTree1);
-        // javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
-        // jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+
         jScrollPane2.setViewportView(jTree1);
         jTree1.getSelectionModel().setSelectionMode(
                 javax.swing.tree.TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION);
 
         jButtonOK.setText("OK");
         jButtonOK.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(final java.awt.event.ActionEvent evt) {
                 jButtonOKActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        final javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -111,7 +191,7 @@ public class OltCutoverFormDestino extends javax.swing.JFrame {
                                 .addComponent(jButtonOK)
                                 .addGap(6, 6, 6)));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,74 +205,35 @@ public class OltCutoverFormDestino extends javax.swing.JFrame {
                                         javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonOKActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonOKActionPerformed
-        javax.swing.tree.TreePath[] selectedPaths = jTree1.getSelectionPaths();
+    private void jButtonOKActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonOKActionPerformed
+        final javax.swing.tree.TreePath[] selectedPaths = jTree1.getSelectionPaths();
+        final ArrayList<String[]> nodos = new ArrayList<>();
 
         if (selectedPaths != null && selectedPaths.length > 0) {
-            for (javax.swing.tree.TreePath path : selectedPaths) {
-                Object[] nodes = path.getPath();
-                // Esperamos: root -> OLT -> SLOT -> PON
-                if (nodes.length == 4 && nodes[3].toString().startsWith("PON")) {
-                    String olt = nodes[1].toString();
-                    String slot = nodes[2].toString();
-                    String pon = nodes[3].toString();
-                    System.out.println("Selecionado: " + olt + " / " + slot + " / " + pon);
+            for (final javax.swing.tree.TreePath path : selectedPaths) {
+                final Object[] nodes = path.getPath();
+
+                if (nodes.length == 3 && nodes[2].toString().startsWith("SLOT") && this.type) {
+                    // String olt = nodes[1].toString();
+                    final String slot = nodes[2].toString();
+                    nodos.add(new String[] { slot }); // Adiciona apenas OLT e SLOT
+                } else if (nodes.length == 4 && nodes[3].toString().startsWith("PON") && !this.type) {
+                    // String olt = nodes[1].toString();
+                    final String slot = nodes[2].toString();
+                    final String pon = nodes[3].toString();
+                    nodos.add(new String[] { slot, pon }); // Adiciona OLT, SLOT e PON
                 }
             }
+
+            if (listener != null) {
+                listener.onProfileFormDestinoCreated(nodos);
+            }
+            this.dispose();
         } else {
-            System.out.println("Nenhuma PON selecionada.");
+            System.out.println("Nenhuma seleção válida.");
         }
     }// GEN-LAST:event_jButtonOKActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
-        // (optional) ">
-        /*
-         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
-         * look and feel.
-         * For details see
-         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OltCutoverFormDestino.class.getName())
-                    .log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OltCutoverFormDestino.class.getName())
-                    .log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OltCutoverFormDestino.class.getName())
-                    .log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OltCutoverFormDestino.class.getName())
-                    .log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        // </editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new OltCutoverFormDestino().setVisible(true);
-            }
-        });
-    }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonOK;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTree jTree1;
-    // End of variables declaration//GEN-END:variables
 }
