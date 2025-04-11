@@ -229,10 +229,12 @@ public class OltGponFhtt extends Olt {
 
         if (!checkPhyId(this.phyIdCpe)) {
             JOptionPane.showMessageDialog(null,
-                    "PhyId invalido. Por favor, insira um phy-id valido (FHTT12345678).", "Erro",
+                    "PhyId inválido. Por favor, insira um phy-id válido (ex: FHTT1234aabb).", "Erro",
                     JOptionPane.ERROR_MESSAGE, oltData.getErrorIcon());
             return false;
         }
+
+        this.phyIdCpe = normalizePhyId(this.phyIdCpe);
 
         printUplinkPonCpeValues();
 
@@ -327,7 +329,15 @@ public class OltGponFhtt extends Olt {
     }
 
     public boolean checkPhyId(final String phyId) {
-        return (phyId.matches("^[A-Za-z0-9]{4}[A-Fa-f0-9]{8}$"));
+        return phyId != null && phyId.matches("^[A-Za-z0-9]{4}[A-Fa-f0-9]{8}$");
+    }
+
+    private String normalizePhyId(String phyId) {
+        if (phyId == null || phyId.length() != 12)
+            return phyId;
+        String prefix = phyId.substring(0, 4).toUpperCase();
+        String rest = phyId.substring(4).toLowerCase();
+        return prefix + rest;
     }
 
     public boolean checkTelnet(final String ipAddress, final String port, final String user, final char[] pwd,
