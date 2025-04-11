@@ -16,8 +16,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import engtelecom.access.SSHClient;
-import engtelecom.access.TelnetCutover;
 import engtelecom.access.TelnetFhtt;
 import engtelecom.analytics.DataAnaliser5k;
 import engtelecom.swingType.OltPreview;
@@ -776,58 +774,61 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
         }
 
         private void jButtonColetarActionPerformed(final java.awt.event.ActionEvent evt) {
-                if (dadosOrigemPreenchidos) {
-                        JOptionPane.showMessageDialog(null,
-                                        "Acessando a OLT remotamente....", null,
-                                        JOptionPane.INFORMATION_MESSAGE, null);
-                        boolean acessou = false;
-                        final String arq = "dados.txt";
-                        jButtonColetar.setText("Coletar bkp remoto");
-                        fileChooserIsSelected = false;
-                        if (this.isTelnetOltOrigem) {
-                                final TelnetCutover telnet = new TelnetCutover(this.ipOltOrigem,
-                                                Integer.parseInt(this.portOltOrigem),
-                                                this.userOltOrigem,
-                                                this.passOltOrigem, arq);
-                                if (telnet.oltAccess()) {
-                                        this.filePath = arq;
-                                        previewText(this.filePath);
-                                        jButtonColetar.setText(this.filePath);
-                                        acessou = true;
-                                        fileChooserIsSelected = true;
-                                }
 
-                        } else {
-                                final SSHClient sshClient = new SSHClient(
-                                                this.ipOltOrigem,
-                                                Integer.parseInt(this.portOltOrigem),
-                                                this.userOltOrigem,
-                                                this.passOltOrigem, arq);
-                                if (sshClient.oltAccess()) {
-                                        this.filePath = arq;
-                                        previewText(this.filePath);
-                                        jButtonColetar.setText(this.filePath);
-                                        acessou = true;
-                                        fileChooserIsSelected = true;
-                                }
-                        }
-                        if (acessou) {
-                                JOptionPane.showMessageDialog(null,
-                                                "Script importado com sucesso", null,
-                                                JOptionPane.INFORMATION_MESSAGE, null);
-                        } else {
-                                JOptionPane.showMessageDialog(null,
-                                                "Não foi possível importar o script", null,
-                                                JOptionPane.INFORMATION_MESSAGE, null);
-                        }
-                } else {
-                        JOptionPane.showMessageDialog(null,
-                                        "Para importar o script remotamente, é importante que seja preenchido os dados de acesso da OLT,\n"
-                                                        +
-                                                        "sem isso não será possível fazer a coleta remota, somente via script backup importado localmente!",
-                                        null,
-                                        JOptionPane.INFORMATION_MESSAGE, null);
-                }
+                // PRECISA CRIAR UM COLETADOR DE DADOS DA OLT 5K
+
+                // if (dadosOrigemPreenchidos) {
+                //         JOptionPane.showMessageDialog(null,
+                //                         "Acessando a OLT remotamente....", null,
+                //                         JOptionPane.INFORMATION_MESSAGE, null);
+                //         boolean acessou = false;
+                //         final String arq = "dados.txt";
+                //         jButtonColetar.setText("Coletar bkp remoto");
+                //         fileChooserIsSelected = false;
+                //         if (this.isTelnetOltOrigem) {
+                //                 final TelnetCutover telnet = new TelnetCutover(this.ipOltOrigem,
+                //                                 Integer.parseInt(this.portOltOrigem),
+                //                                 this.userOltOrigem,
+                //                                 this.passOltOrigem, arq);
+                //                 if (telnet.oltAccess()) {
+                //                         this.filePath = arq;
+                //                         previewText(this.filePath);
+                //                         jButtonColetar.setText(this.filePath);
+                //                         acessou = true;
+                //                         fileChooserIsSelected = true;
+                //                 }
+
+                //         } else {
+                //                 final SSHClient sshClient = new SSHClient(
+                //                                 this.ipOltOrigem,
+                //                                 Integer.parseInt(this.portOltOrigem),
+                //                                 this.userOltOrigem,
+                //                                 this.passOltOrigem, arq);
+                //                 if (sshClient.oltAccess()) {
+                //                         this.filePath = arq;
+                //                         previewText(this.filePath);
+                //                         jButtonColetar.setText(this.filePath);
+                //                         acessou = true;
+                //                         fileChooserIsSelected = true;
+                //                 }
+                //         }
+                //         if (acessou) {
+                //                 JOptionPane.showMessageDialog(null,
+                //                                 "Script importado com sucesso", null,
+                //                                 JOptionPane.INFORMATION_MESSAGE, null);
+                //         } else {
+                //                 JOptionPane.showMessageDialog(null,
+                //                                 "Não foi possível importar o script", null,
+                //                                 JOptionPane.INFORMATION_MESSAGE, null);
+                //         }
+                // } else {
+                //         JOptionPane.showMessageDialog(null,
+                //                         "Para importar o script remotamente, é importante que seja preenchido os dados de acesso da OLT,\n"
+                //                                         +
+                //                                         "sem isso não será possível fazer a coleta remota, somente via script backup importado localmente!",
+                //                         null,
+                //                         JOptionPane.INFORMATION_MESSAGE, null);
+                // }
 
         }
 
