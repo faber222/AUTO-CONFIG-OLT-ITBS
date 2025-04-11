@@ -53,8 +53,10 @@ public class DataRuleFilter {
 
                     final int lineKey = Integer.parseInt(hexMatcher.group(2)); // Captura o valor do line como chave
 
-                    // Formata o valor como "XXXX-XXXXXXXX;0/x/y"
-                    final String value = stringHex + ";" + aim;
+                    // Formata o valor como "XXXXyyyyyyyy;0/x/y"
+                    final String value = normalizePhyId(stringHex) + ";" + aim;
+                    System.out.println("CPE: " + value);
+
 
                     // Adiciona o valor na hashMap, agrupando por chave (line)
                     this.dataMap.computeIfAbsent(lineKey, k -> new ArrayList<>()).add(value);
@@ -63,6 +65,14 @@ public class DataRuleFilter {
         } catch (final IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private String normalizePhyId(String phyId) {
+        if (phyId == null || phyId.length() != 12)
+            return phyId;
+        String prefix = phyId.substring(0, 4).toUpperCase();
+        String rest = phyId.substring(4).toLowerCase();
+        return prefix + rest;
     }
 
     public HashMap<Integer, ArrayList<String>> getDataMap() {
