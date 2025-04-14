@@ -26,22 +26,17 @@ public class ConfigCutoverGenerator5k {
     private final List<List<String>> configQinQ;
     private final List<List<String>> profileServMode;
 
-    @SuppressWarnings("unused")
-    private final String slotChassiGpon;
-    @SuppressWarnings("unused")
-    private final String slotChassiUplink;
-    @SuppressWarnings("unused")
-    private final String slotPortaUplink;
+    private final List<String[]> uplink;
+    private final List<String[]> slotChassiGpon;
 
     private final DataAnaliser5k dataAnaliser5k;
 
     public ConfigCutoverGenerator5k(final DataAnaliser5k data,
-            final String slotChassiGpon, final String slotChassiUplink, final String slotPortaUplink) {
+            final List<String[]> slotChassiGpon, final List<String[]> uplinkDestinoSelecionado) {
         this.dataAnaliser5k = data;
 
         this.slotChassiGpon = slotChassiGpon;
-        this.slotChassiUplink = slotChassiUplink;
-        this.slotPortaUplink = slotPortaUplink;
+        this.uplink = uplinkDestinoSelecionado;
 
         this.profileServMode = new ArrayList<>();
 
@@ -63,7 +58,7 @@ public class ConfigCutoverGenerator5k {
     }
 
     private boolean writeScript() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("scriptMigracao.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("scriptMigracao5kto6k.txt"))) {
             if (this.profileServMode != null) {
                 for (final List<String> list : this.profileServMode) {
                     for (final String lines : list) {
@@ -159,11 +154,15 @@ public class ConfigCutoverGenerator5k {
         final ScriptsCutoverAN5kto6k scriptsAN6k = new ScriptsCutoverAN5kto6k();
 
         // Configurar vlan de uplink
-        for (final String[] config : this.dataAnaliser5k.getDataVlanUpFilter().getUplinkVlans()) {
-            configUplinkVlan.add(scriptsAN6k.addVlanToUplink(config[0], config[1], config[2], config[3]));
+        for (final String[] uplink : this.uplink) {
+            for (final String[] config : this.dataAnaliser5k.getDataVlanUpFilter().getUplinkVlans()) {
+                configUplinkVlan.add(scriptsAN6k.addVlanToUplink(uplink[0], uplink[1], config[2], config[3]));
+            }
         }
 
         // Configurar o whitelist
+        for (final String[] slotPon : this.slotChassiGpon) {
+        }
         for (final String[] config : this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist()) {
             configWhiteList.add(scriptsAN6k.provisionaCPE(config[0], config[1], config[2], config[3], config[4]));
         }

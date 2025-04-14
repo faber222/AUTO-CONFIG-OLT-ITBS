@@ -289,22 +289,22 @@ public class OltCutoverFormDestino extends javax.swing.JFrame {
                     String topLevel = nodes[1].toString();
 
                     if ("OLT'S".equals(topLevel)) {
-                        if (nodes.length == 3 && nodes[2].toString().startsWith("SLOT") && this.type) {
-                            final String slot = nodes[2].toString();
+                        if (nodes.length == 4 && nodes[3].toString().startsWith("SLOT") && this.type) {
+                            final String slot = extrairNumero(nodes[3].toString());
                             oltNodos.add(new String[] { slot });
-                        } else if (nodes.length == 4 && nodes[3].toString().startsWith("PON") && !this.type) {
-                            final String slot = nodes[2].toString();
-                            final String pon = nodes[3].toString();
+                        } else if (nodes.length == 5 && nodes[4].toString().startsWith("PON") && !this.type) {
+                            final String slot = extrairNumero(nodes[3].toString());
+                            final String pon = extrairNumero(nodes[4].toString());
                             oltNodos.add(new String[] { slot, pon });
                         }
                     } else if ("UPLINK's".equals(topLevel)) {
                         if (nodes.length <= 5) {
-                            final String slot = nodes[3].toString();
-                            final String porta = nodes[4].toString();
+                            final String slot = extrairNumero(nodes[3].toString());
+                            final String porta = extrairNumero(nodes[4].toString());
                             uplinkNodos.add(new String[] { slot, porta });
                         } else if (nodes.length > 5) {
-                            final String slot = nodes[3].toString();
-                            final String porta = nodes[5].toString();
+                            final String slot = extrairNumero(nodes[3].toString());
+                            final String porta = extrairNumero(nodes[5].toString());
                             uplinkNodos.add(new String[] { slot, porta });
                         }
                     }
@@ -318,6 +318,14 @@ public class OltCutoverFormDestino extends javax.swing.JFrame {
         } else {
             System.out.println("Nenhuma seleção válida.");
         }
+    }
+
+    private String extrairNumero(String texto) {
+        java.util.regex.Matcher matcher = java.util.regex.Pattern.compile("\\d+(\\.\\d+)?").matcher(texto);
+        if (matcher.find()) {
+            return matcher.group();
+        }
+        return null;
     }
 
 }
