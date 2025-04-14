@@ -17,46 +17,47 @@ import java.util.Map;
 public class OltCutoverFormDestino extends javax.swing.JFrame {
 
     // /**
-    //  * @param args the command line arguments
-    //  */
+    // * @param args the command line arguments
+    // */
     // public static void main(String args[]) {
-    //     /* Set the Nimbus look and feel */
-    //     // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
-    //     // (optional) ">
-    //     /*
-    //      * If Nimbus (introduced in Java SE 6) is not available, stay with the default
-    //      * look and feel.
-    //      * For details see
-    //      * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-    //      */
-    //     try {
-    //         for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-    //             if ("Nimbus".equals(info.getName())) {
-    //                 javax.swing.UIManager.setLookAndFeel(info.getClassName());
-    //                 break;
-    //             }
-    //         }
-    //     } catch (ClassNotFoundException ex) {
-    //         java.util.logging.Logger.getLogger(OltCutoverFormDestino.class.getName())
-    //                 .log(java.util.logging.Level.SEVERE, null, ex);
-    //     } catch (InstantiationException ex) {
-    //         java.util.logging.Logger.getLogger(OltCutoverFormDestino.class.getName())
-    //                 .log(java.util.logging.Level.SEVERE, null, ex);
-    //     } catch (IllegalAccessException ex) {
-    //         java.util.logging.Logger.getLogger(OltCutoverFormDestino.class.getName())
-    //                 .log(java.util.logging.Level.SEVERE, null, ex);
-    //     } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-    //         java.util.logging.Logger.getLogger(OltCutoverFormDestino.class.getName())
-    //                 .log(java.util.logging.Level.SEVERE, null, ex);
-    //     }
-    //     // </editor-fold>
+    // /* Set the Nimbus look and feel */
+    // // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
+    // // (optional) ">
+    // /*
+    // * If Nimbus (introduced in Java SE 6) is not available, stay with the default
+    // * look and feel.
+    // * For details see
+    // * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+    // */
+    // try {
+    // for (javax.swing.UIManager.LookAndFeelInfo info :
+    // javax.swing.UIManager.getInstalledLookAndFeels()) {
+    // if ("Nimbus".equals(info.getName())) {
+    // javax.swing.UIManager.setLookAndFeel(info.getClassName());
+    // break;
+    // }
+    // }
+    // } catch (ClassNotFoundException ex) {
+    // java.util.logging.Logger.getLogger(OltCutoverFormDestino.class.getName())
+    // .log(java.util.logging.Level.SEVERE, null, ex);
+    // } catch (InstantiationException ex) {
+    // java.util.logging.Logger.getLogger(OltCutoverFormDestino.class.getName())
+    // .log(java.util.logging.Level.SEVERE, null, ex);
+    // } catch (IllegalAccessException ex) {
+    // java.util.logging.Logger.getLogger(OltCutoverFormDestino.class.getName())
+    // .log(java.util.logging.Level.SEVERE, null, ex);
+    // } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+    // java.util.logging.Logger.getLogger(OltCutoverFormDestino.class.getName())
+    // .log(java.util.logging.Level.SEVERE, null, ex);
+    // }
+    // // </editor-fold>
 
-    //     /* Create and display the form */
-    //     java.awt.EventQueue.invokeLater(new Runnable() {
-    //         public void run() {
-    //             new OltCutoverFormDestino().setVisible(true);
-    //         }
-    //     });
+    // /* Create and display the form */
+    // java.awt.EventQueue.invokeLater(new Runnable() {
+    // public void run() {
+    // new OltCutoverFormDestino().setVisible(true);
+    // }
+    // });
     // }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -106,43 +107,32 @@ public class OltCutoverFormDestino extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        final javax.swing.tree.DefaultMutableTreeNode root = new javax.swing.tree.DefaultMutableTreeNode("OLT'S");
+        // Cria a "raiz técnica" invisível
+        javax.swing.tree.DefaultMutableTreeNode root = new javax.swing.tree.DefaultMutableTreeNode("");
 
-        final Map<String, List<Integer>> olts = new LinkedHashMap<>();
+        javax.swing.tree.DefaultMutableTreeNode oltsRoot = new javax.swing.tree.DefaultMutableTreeNode("OLT'S");
+        javax.swing.tree.DefaultMutableTreeNode uplinksRoot = new javax.swing.tree.DefaultMutableTreeNode("UPLINK's");
+
+        Map<String, List<Integer>> olts = new LinkedHashMap<>();
         olts.put("AN6001-G16", Arrays.asList(1));
         olts.put("AN6000-2", Arrays.asList(1, 2));
         olts.put("AN6000-7", Arrays.asList(1, 2, 3, 4, 5, 6, 7));
         olts.put("AN6000-15", Arrays.asList(1, 2, 3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 15, 16, 17));
         olts.put("AN6000-17", Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19));
 
-        for (final Map.Entry<String, List<Integer>> entry : olts.entrySet()) {
-            final String oltName = entry.getKey();
-            final List<Integer> slots = entry.getValue();
+        for (Map.Entry<String, List<Integer>> entry : olts.entrySet()) {
+            String oltName = entry.getKey();
+            List<Integer> slots = entry.getValue();
 
-            final javax.swing.tree.DefaultMutableTreeNode oltNode = new javax.swing.tree.DefaultMutableTreeNode(oltName);
-
-            // for (Integer slot : slots) {
-            // javax.swing.tree.DefaultMutableTreeNode slotNode = new
-            // javax.swing.tree.DefaultMutableTreeNode(
-            // "SLOT " + slot);
-
-            // for (int pon = 1; pon <= 16; pon++) {
-            // javax.swing.tree.DefaultMutableTreeNode ponNode = new
-            // javax.swing.tree.DefaultMutableTreeNode(
-            // "PON " + pon);
-            // slotNode.add(ponNode);
-            // }
-
-            // oltNode.add(slotNode);
-            // }
-
-            for (final Integer slot : slots) {
-                final javax.swing.tree.DefaultMutableTreeNode slotNode = new javax.swing.tree.DefaultMutableTreeNode(
+            // OLT'S
+            javax.swing.tree.DefaultMutableTreeNode oltNode = new javax.swing.tree.DefaultMutableTreeNode(oltName);
+            for (Integer slot : slots) {
+                javax.swing.tree.DefaultMutableTreeNode slotNode = new javax.swing.tree.DefaultMutableTreeNode(
                         "SLOT " + slot);
 
                 if (!this.type) {
                     for (int pon = 1; pon <= 16; pon++) {
-                        final javax.swing.tree.DefaultMutableTreeNode ponNode = new javax.swing.tree.DefaultMutableTreeNode(
+                        javax.swing.tree.DefaultMutableTreeNode ponNode = new javax.swing.tree.DefaultMutableTreeNode(
                                 "PON " + pon);
                         slotNode.add(ponNode);
                     }
@@ -150,11 +140,137 @@ public class OltCutoverFormDestino extends javax.swing.JFrame {
 
                 oltNode.add(slotNode);
             }
+            oltsRoot.add(oltNode);
 
-            root.add(oltNode);
+            // UPLINK's
+            // javax.swing.tree.DefaultMutableTreeNode uplinkModel = new
+            // javax.swing.tree.DefaultMutableTreeNode(oltName);
+            // uplinksRoot.add(uplinkModel);
+            javax.swing.tree.DefaultMutableTreeNode uplinkModel = new javax.swing.tree.DefaultMutableTreeNode(oltName);
+
+            switch (oltName) {
+                case "AN6001-G16":
+                    javax.swing.tree.DefaultMutableTreeNode slot19 = new javax.swing.tree.DefaultMutableTreeNode(
+                            "SLOT 19");
+                    for (int i = 1; i <= 6; i++) {
+                        slot19.add(new javax.swing.tree.DefaultMutableTreeNode("PORTA " + i));
+                    }
+                    uplinkModel.add(slot19);
+                    break;
+
+                case "AN6000-2":
+                    for (int s = 3; s <= 4; s++) {
+                        javax.swing.tree.DefaultMutableTreeNode slot = new javax.swing.tree.DefaultMutableTreeNode(
+                                "SLOT " + s);
+                        for (int i = 1; i <= 6; i++) {
+                            slot.add(new javax.swing.tree.DefaultMutableTreeNode("PORTA " + i));
+                        }
+                        uplinkModel.add(slot);
+                    }
+                    break;
+
+                case "AN6000-7":
+                    for (int s = 6; s <= 7; s++) {
+                        javax.swing.tree.DefaultMutableTreeNode slot = new javax.swing.tree.DefaultMutableTreeNode(
+                                "SLOT " + s);
+                        javax.swing.tree.DefaultMutableTreeNode ku1bNode = new javax.swing.tree.DefaultMutableTreeNode(
+                                "KU1B");
+                        for (int i = 1; i <= 5; i++) {
+                            ku1bNode.add(new javax.swing.tree.DefaultMutableTreeNode("PORTA " + i));
+                        }
+                        slot.add(ku1bNode);
+
+                        javax.swing.tree.DefaultMutableTreeNode hu8aNode = new javax.swing.tree.DefaultMutableTreeNode(
+                                "HU8A");
+                        for (int i = 1; i <= 8; i++) {
+                            hu8aNode.add(new javax.swing.tree.DefaultMutableTreeNode("PORTA " + i));
+                        }
+                        slot.add(hu8aNode);
+
+                        uplinkModel.add(slot);
+                    }
+                    for (int s = 8; s <= 9; s++) {
+                        javax.swing.tree.DefaultMutableTreeNode slot = new javax.swing.tree.DefaultMutableTreeNode(
+                                "SLOT " + s);
+                        for (int i = 1; i <= 4; i++) {
+                            slot.add(new javax.swing.tree.DefaultMutableTreeNode("PORTA " + i));
+                        }
+                        uplinkModel.add(slot);
+                    }
+                    break;
+
+                case "AN6000-15":
+                    for (int s = 8; s <= 9; s++) {
+                        javax.swing.tree.DefaultMutableTreeNode slot = new javax.swing.tree.DefaultMutableTreeNode(
+                                "SLOT " + s);
+                        for (int i = 1; i <= 4; i++) {
+                            slot.add(new javax.swing.tree.DefaultMutableTreeNode("PORTA " + i));
+                        }
+                        uplinkModel.add(slot);
+                    }
+                    for (int s = 16; s <= 17; s++) {
+                        javax.swing.tree.DefaultMutableTreeNode slot = new javax.swing.tree.DefaultMutableTreeNode(
+                                "SLOT " + s);
+                        javax.swing.tree.DefaultMutableTreeNode ku1bNode = new javax.swing.tree.DefaultMutableTreeNode(
+                                "KU1B");
+                        for (int i = 1; i <= 5; i++) {
+                            ku1bNode.add(new javax.swing.tree.DefaultMutableTreeNode("PORTA " + i));
+                        }
+                        slot.add(ku1bNode);
+
+                        javax.swing.tree.DefaultMutableTreeNode hu8aNode = new javax.swing.tree.DefaultMutableTreeNode(
+                                "HU8A");
+                        for (int i = 1; i <= 8; i++) {
+                            hu8aNode.add(new javax.swing.tree.DefaultMutableTreeNode("PORTA " + i));
+                        }
+                        slot.add(hu8aNode);
+
+                        uplinkModel.add(slot);
+                    }
+                    break;
+
+                case "AN6000-17":
+                    for (int s = 9; s <= 10; s++) {
+                        javax.swing.tree.DefaultMutableTreeNode slot = new javax.swing.tree.DefaultMutableTreeNode(
+                                "SLOT " + s);
+                        for (int i = 1; i <= 4; i++) {
+                            slot.add(new javax.swing.tree.DefaultMutableTreeNode("PORTA " + i));
+                        }
+                        uplinkModel.add(slot);
+                    }
+                    for (int s = 18; s <= 19; s++) {
+                        javax.swing.tree.DefaultMutableTreeNode slot = new javax.swing.tree.DefaultMutableTreeNode(
+                                "SLOT " + s);
+                        javax.swing.tree.DefaultMutableTreeNode ku1bNode = new javax.swing.tree.DefaultMutableTreeNode(
+                                "KU1B");
+                        for (int i = 1; i <= 5; i++) {
+                            ku1bNode.add(new javax.swing.tree.DefaultMutableTreeNode("PORTA " + i));
+                        }
+                        slot.add(ku1bNode);
+
+                        javax.swing.tree.DefaultMutableTreeNode hu8aNode = new javax.swing.tree.DefaultMutableTreeNode(
+                                "HU8A");
+                        for (int i = 1; i <= 8; i++) {
+                            hu8aNode.add(new javax.swing.tree.DefaultMutableTreeNode("PORTA " + i));
+                        }
+                        slot.add(hu8aNode);
+
+                        uplinkModel.add(slot);
+                    }
+                    break;
+            }
+
+            uplinksRoot.add(uplinkModel);
+
         }
 
+        // Adiciona os dois grupos à raiz técnica invisível
+        root.add(oltsRoot);
+        root.add(uplinksRoot);
+
         jTree1.setModel(new javax.swing.tree.DefaultTreeModel(root));
+        jTree1.setRootVisible(false); // Esconde a raiz técnica ("")
+
         jScrollPane2.setViewportView(jTree1);
 
         jScrollPane2.setViewportView(jTree1);
@@ -208,32 +324,48 @@ public class OltCutoverFormDestino extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonOKActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonOKActionPerformed
+    private void jButtonOKActionPerformed(final java.awt.event.ActionEvent evt) {
         final javax.swing.tree.TreePath[] selectedPaths = jTree1.getSelectionPaths();
-        final ArrayList<String[]> nodos = new ArrayList<>();
+        final ArrayList<String[]> oltNodos = new ArrayList<>();
+        final ArrayList<String[]> uplinkNodos = new ArrayList<>();
 
         if (selectedPaths != null && selectedPaths.length > 0) {
             for (final javax.swing.tree.TreePath path : selectedPaths) {
                 final Object[] nodes = path.getPath();
 
-                if (nodes.length == 3 && nodes[2].toString().startsWith("SLOT") && this.type) {
-                    // String olt = nodes[1].toString();
-                    final String slot = nodes[2].toString();
-                    nodos.add(new String[] { slot }); // Adiciona apenas OLT e SLOT
-                } else if (nodes.length == 4 && nodes[3].toString().startsWith("PON") && !this.type) {
-                    // String olt = nodes[1].toString();
-                    final String slot = nodes[2].toString();
-                    final String pon = nodes[3].toString();
-                    nodos.add(new String[] { slot, pon }); // Adiciona OLT, SLOT e PON
+                if (nodes.length >= 2) {
+                    String topLevel = nodes[1].toString();
+
+                    if ("OLT'S".equals(topLevel)) {
+                        if (nodes.length == 3 && nodes[2].toString().startsWith("SLOT") && this.type) {
+                            final String slot = nodes[2].toString();
+                            oltNodos.add(new String[] { slot });
+                        } else if (nodes.length == 4 && nodes[3].toString().startsWith("PON") && !this.type) {
+                            final String slot = nodes[2].toString();
+                            final String pon = nodes[3].toString();
+                            oltNodos.add(new String[] { slot, pon });
+                        }
+                    } else if ("UPLINK's".equals(topLevel)) {
+                        if (nodes.length <= 5) {
+                            final String slot = nodes[3].toString();
+                            final String porta = nodes[4].toString();
+                            uplinkNodos.add(new String[] { slot, porta });
+                        } else if (nodes.length > 5) {
+                            final String slot = nodes[3].toString();
+                            final String porta = nodes[5].toString();
+                            uplinkNodos.add(new String[] { slot, porta });
+                        }
+                    }
                 }
             }
 
             if (listener != null) {
-                listener.onProfileFormDestinoCreated(nodos);
+                listener.onProfileFormDestinoCreated(oltNodos, uplinkNodos);
             }
             this.dispose();
         } else {
             System.out.println("Nenhuma seleção válida.");
         }
-    }// GEN-LAST:event_jButtonOKActionPerformed
+    }
+
 }

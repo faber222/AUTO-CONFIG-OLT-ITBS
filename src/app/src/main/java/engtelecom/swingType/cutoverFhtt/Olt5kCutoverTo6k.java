@@ -93,6 +93,9 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
         private List<String[]> onuSelecionadaOnuTable;
         private List<String[]> ponSelecionadaPonTable;
         private List<String[]> slotSelecionadaSlotTable;
+        private List<String[]> ponDestinoSelecionado;
+        private List<String[]> slotDestinoSelecionado;
+        private List<String[]> uplinkDestinoSelecionado;
 
         private DataAnaliser5k dataAnaliser5k;
 
@@ -279,14 +282,22 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
         }
 
         @Override
-        public void onProfileFormDestinoCreated(final ArrayList<String[]> nodos) {
-                for (final String[] dados : nodos) {
+        public void onProfileFormDestinoCreated(final ArrayList<String[]> oltNodos,
+                        final ArrayList<String[]> uplinkNodos) {
+                for (final String[] dados : oltNodos) {
                         // Verifica o tamanho do array para saber se veio com ou sem PON
                         if (dados.length == 2) {
+                                this.ponDestinoSelecionado = oltNodos;
                                 System.out.println("SLOT: " + dados[0] + " | PON: " + dados[1]);
                         } else {
+                                this.slotDestinoSelecionado = oltNodos;
                                 System.out.println("SLOT: " + dados[0]);
                         }
+                }
+
+                System.out.println("UPLINK's:");
+                for (String[] dados : uplinkNodos) {
+                        System.out.println(Arrays.toString(dados));
                 }
         }
 
@@ -857,27 +868,31 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
 
         private void jButtonCriarActionPerformed(final java.awt.event.ActionEvent evt) {
 
-                // Falta agora finalizar a possibilidade de criar o script com limitação de slot, pon e onu
-                
-                // if (this.origemSelecionada) {
-                //         this.dataAnaliser5k = new DataAnaliser5k(this.filePath);
-                //         this.dataAnaliser5k.start();
-                //         // String oltType = "AN6000";
-                //         final String slotChassiPon = (String) jSpinnerSlotPON.getValue().toString();
-                //         final String slotChassiUp = (String) jSpinnerSlotUplink.getValue().toString();
-                //         final String slotPortaUp = (String) jSpinnerPortaUplink.getValue().toString();
+                // Falta agora finalizar a possibilidade de criar o script com limitação de
+                // slot, pon e onu
 
-                //         final ConfigCutoverGenerator5k cutover = new ConfigCutoverGenerator5k(dataAnaliser5k,
-                //                         slotChassiPon, slotChassiUp, slotPortaUp);
-                //         if (cutover.start()) {
-                //                 previewText("scriptMigracao.txt");
-                //                 scriptCriado = true;
-                //         }
+                // if (this.origemSelecionada) {
+                // // this.dataAnaliser5k = new DataAnaliser5k(this.filePath);
+                // // this.dataAnaliser5k.start();
+                // // String oltType = "AN6000";
+                // final String slotChassiPon = (String) jSpinnerSlotPON.getValue().toString();
+                // final String slotChassiUp = (String)
+                // jSpinnerSlotUplink.getValue().toString();
+                // final String slotPortaUp = (String)
+                // jSpinnerPortaUplink.getValue().toString();
+
+                // final ConfigCutoverGenerator5k cutover = new
+                // ConfigCutoverGenerator5k(dataAnaliser5k,
+                // slotChassiPon, slotChassiUp, slotPortaUp);
+                // if (cutover.start()) {
+                // previewText("scriptMigracao5kto6k.txt");
+                // scriptCriado = true;
+                // }
 
                 // } else {
-                //         JOptionPane.showMessageDialog(null,
-                //                         "Nenhuma origem selecionada.", "Error!",
-                //                         JOptionPane.ERROR_MESSAGE, null);
+                // JOptionPane.showMessageDialog(null,
+                // "Nenhuma origem selecionada.", "Error!",
+                // JOptionPane.ERROR_MESSAGE, null);
                 // }
         }
 
@@ -893,7 +908,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                                                 this.userOltDestino,
                                                 this.passOltDestino,
                                                 "AN6000");
-                                if (tesTelnetFhtt.oltAccess("scriptMigracao.txt")) {
+                                if (tesTelnetFhtt.oltAccess("scriptMigracao5kto6k.txt")) {
                                         JOptionPane.showMessageDialog(null,
                                                         "Script aplicado com sucesso!", null,
                                                         JOptionPane.INFORMATION_MESSAGE, null);
