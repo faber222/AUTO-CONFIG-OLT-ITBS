@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableModel;
@@ -170,7 +171,14 @@ public class OltCutoverOnuTable extends javax.swing.JFrame {
         private void jButtonOkActionPerformed() {
                 if (listener != null) {
                         List<String[]> selecionados = getOnuSelecionada(); // Atualiza os dados selecionados;
-                        listener.onProfileCreatedOnuTable(selecionados);
+                        if (selecionados.isEmpty()) {
+                                JOptionPane.showMessageDialog(
+                                                null,
+                                                "Erro: Selecione alguma CPE!", "Campo vazio!",
+                                                JOptionPane.ERROR_MESSAGE);
+                        } else {
+                                listener.onProfileCreatedOnuTable(selecionados);
+                        }
                 }
                 this.dispose(); // Fecha o JFrame
         }

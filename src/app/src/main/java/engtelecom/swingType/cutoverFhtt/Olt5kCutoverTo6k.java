@@ -84,9 +84,9 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
         private javax.swing.JTextPane jTextPaneDadosOltOrigem;
         private javax.swing.JTextArea jTextAreaPreviewCode;
 
-        private final OltCutoverOnuTable oltCutoverOnuTable;
-        private final OltCutoverPonTable oltCutoverPonTable;
-        private final OltCutoverSlotTable oltCutoverSlotTable;
+        private OltCutoverOnuTable oltCutoverOnuTable;
+        private OltCutoverPonTable oltCutoverPonTable;
+        private OltCutoverSlotTable oltCutoverSlotTable;
         private final Olt5kCutoverOrigemAcesso olt5kCutoverOrigemAcesso;
         private final Olt5kCutoverDestinoAcesso olt5kCutoverDestinoAcesso;
         private OltCutoverFormDestino oltCutoverFormDestino;
@@ -121,14 +121,15 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
         private String portOltDestino;
         private String passOltDestino;
 
+        private int slotValue;
+        private int ponValue;
+
         /**
          * Creates new form Olt5kCutover
          */
         public Olt5kCutoverTo6k() {
                 initComponents();
-                this.oltCutoverOnuTable = new OltCutoverOnuTable();
-                this.oltCutoverPonTable = new OltCutoverPonTable();
-                this.oltCutoverSlotTable = new OltCutoverSlotTable();
+
                 this.olt5kCutoverOrigemAcesso = new Olt5kCutoverOrigemAcesso();
                 this.olt5kCutoverDestinoAcesso = new Olt5kCutoverDestinoAcesso();
 
@@ -156,31 +157,101 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
         @Override
         public void onProfileCreatedOnuTable(final List<String[]> onuSelecionada) {
 
-                this.onuSelecionadaOnuTable = onuSelecionada; // Copia os dados corretamente
+                final String slotBase = onuSelecionada.get(0)[0];
+                for (final String[] onu : onuSelecionada) {
+                        if (!onu[0].equals(slotBase)) {
+                                JOptionPane.showMessageDialog(
+                                                null,
+                                                "Erro: Todas as ONUs selecionadas devem estar no mesmo SLOT.",
+                                                "SLOT Diferente",
+                                                JOptionPane.ERROR_MESSAGE);
+                                jTextPaneDadosOltOrigem.setText("");
+                                return;
+                        }
+                }
 
-                // Debug: imprimir para garantir que os dados foram armazenados corretamente
+                this.onuSelecionadaOnuTable = onuSelecionada;
+
+                // Debug
                 System.out.println("ONU Selecionada na classe principal:");
                 for (final String[] onu : this.onuSelecionadaOnuTable) {
                         System.out.println(Arrays.toString(onu));
                 }
 
-                // Cria um resumo em uma única linha
+                // Conta PONs únicas
+                final Set<String> ponsUnicas = new HashSet<>();
+                for (final String[] onu : this.onuSelecionadaOnuTable) {
+                        if (onu.length > 1) {
+                                ponsUnicas.add(onu[1]); // Índice 1 = valor da PON
+                        }
+                }
+                this.ponValue = ponsUnicas.size();
+
+                // Resumo formatado
                 final StringBuilder resumo = new StringBuilder();
                 for (final String[] onu : this.onuSelecionadaOnuTable) {
-                        // Formata cada ONU como SLOT-PON-ONU e adiciona ao resumo
                         resumo.append(onu[0]).append("-").append(onu[1]).append("-").append(onu[2]).append(", ");
                 }
 
-                // Remove a última vírgula e espaço, se existirem
+                if (resumo.length() > 0) {
+                        resumo.setLength(resumo.length() - 2); // Remove vírgula e espaço final
+                }
+
+                final int maxLength = 66;
+                String textoFinal = resumo.toString();
+                if (textoFinal.length() > maxLength) {
+                        textoFinal = textoFinal.substring(0, maxLength - 3) + "...";
+                }
+
+                jTextPaneDadosOltOrigem.setText(textoFinal);
+        }
+
+        @Override
+        public void onProfileCreatedPonTable(final List<String[]> ponSelecionada) {
+                final String slotBase = ponSelecionada.get(0)[0];
+                for (final String[] pon : ponSelecionada) {
+                        if (!pon[0].equals(slotBase)) {
+                                JOptionPane.showMessageDialog(
+                                                null,
+                                                "Erro: Todas as PONs selecionadas devem estar no mesmo SLOT.",
+                                                "SLOT Diferente",
+                                                JOptionPane.ERROR_MESSAGE);
+                                jTextPaneDadosOltOrigem.setText("");
+                                return;
+                        }
+                }
+
+                this.ponSelecionadaPonTable = ponSelecionada;
+
+                // Debug
+                System.out.println("PON Selecionada na classe principal:");
+                for (final String[] pon : this.ponSelecionadaPonTable) {
+                        System.out.println(Arrays.toString(pon));
+                }
+
+                // Conta PONs únicas
+                final Set<String> ponsUnicas = new HashSet<>();
+                for (final String[] pon : this.ponSelecionadaPonTable) {
+                        if (pon.length > 1) {
+                                ponsUnicas.add(pon[1]); // Índice 1 = valor da PON
+                        }
+                }
+
+                this.ponValue = ponsUnicas.size();
+
+                final StringBuilder resumo = new StringBuilder();
+                for (final String[] pon : this.ponSelecionadaPonTable) {
+                        resumo.append(pon[0]).append("-").append(pon[1]).append(", ");
+                }
+
                 if (resumo.length() > 0) {
                         resumo.setLength(resumo.length() - 2);
                 }
 
-                // Limita o texto ao tamanho máximo permitido
-                final int maxLength = 66; // Defina o limite de caracteres
+                final int maxLength = 66;
                 String textoFinal = resumo.toString();
                 if (textoFinal.length() > maxLength) {
-                        textoFinal = textoFinal.substring(0, maxLength - 3) + "..."; // Trunca e adiciona "..."
+                        textoFinal = textoFinal.substring(0, maxLength - 3) + "...";
                 }
 
                 jTextPaneDadosOltOrigem.setText(textoFinal);
@@ -196,54 +267,30 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                         System.out.println(Arrays.toString(slot));
                 }
 
+                // Conta SLOTs únicos
+                final Set<String> slotsUnicos = new HashSet<>();
+                for (final String[] slot : this.slotSelecionadaSlotTable) {
+                        if (slot.length > 0) {
+                                slotsUnicos.add(slot[0]); // Índice 0 = valor do SLOT
+                        }
+                }
+
+                this.slotValue = slotsUnicos.size();
+
                 // Cria um resumo em uma única linha
                 final StringBuilder resumo = new StringBuilder();
                 for (final String[] slot : this.slotSelecionadaSlotTable) {
-                        // Formata cada ONU como SLOT e adiciona ao resumo
                         resumo.append(slot[0]).append(", ");
                 }
 
-                // Remove a última vírgula e espaço, se existirem
                 if (resumo.length() > 0) {
-                        resumo.setLength(resumo.length() - 2);
+                        resumo.setLength(resumo.length() - 2); // Remove vírgula e espaço final
                 }
 
-                // Limita o texto ao tamanho máximo permitido
-                final int maxLength = 66; // Defina o limite de caracteres
+                final int maxLength = 66;
                 String textoFinal = resumo.toString();
                 if (textoFinal.length() > maxLength) {
-                        textoFinal = textoFinal.substring(0, maxLength - 3) + "..."; // Trunca e adiciona "..."
-                }
-
-                jTextPaneDadosOltOrigem.setText(textoFinal);
-        }
-
-        @Override
-        public void onProfileCreatedPonTable(final List<String[]> ponSelecionada) {
-                this.ponSelecionadaPonTable = ponSelecionada;
-
-                System.out.println("Pon Selecionada na classe principal:");
-                for (final String[] pon : this.ponSelecionadaPonTable) {
-                        System.out.println(Arrays.toString(pon));
-                }
-
-                // Cria um resumo em uma única linha
-                final StringBuilder resumo = new StringBuilder();
-                for (final String[] pon : this.ponSelecionadaPonTable) {
-                        // Formata cada pon como SLOT-PON e adiciona ao resumo
-                        resumo.append(pon[0]).append("-").append(pon[1]).append(", ");
-                }
-
-                // Remove a última vírgula e espaço, se existirem
-                if (resumo.length() > 0) {
-                        resumo.setLength(resumo.length() - 2);
-                }
-
-                // Limita o texto ao tamanho máximo permitido
-                final int maxLength = 66; // Defina o limite de caracteres
-                String textoFinal = resumo.toString();
-                if (textoFinal.length() > maxLength) {
-                        textoFinal = textoFinal.substring(0, maxLength - 3) + "..."; // Trunca e adiciona "..."
+                        textoFinal = textoFinal.substring(0, maxLength - 3) + "...";
                 }
 
                 jTextPaneDadosOltOrigem.setText(textoFinal);
@@ -760,6 +807,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                         origemSelecionada = true;
                         final Set<String> conjuntoUnico = new HashSet<>();
                         if (jRadioButtonSlot.isSelected()) {
+                                this.oltCutoverSlotTable = new OltCutoverSlotTable();
                                 for (final String[] linha : this.dataAnaliser5k.getDataWhitelistFilter()
                                                 .getWhitelist()) {
                                         if (conjuntoUnico.add(linha[1])) { // Só adiciona se ainda não existir no
@@ -771,6 +819,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                                 oltCutoverSlotTable.setListener(this);
                                 oltCutoverSlotTable.setVisible(true);
                         } else if (jRadioButtonPon.isSelected()) {
+                                this.oltCutoverPonTable = new OltCutoverPonTable();
                                 for (final String[] linha : this.dataAnaliser5k.getDataWhitelistFilter()
                                                 .getWhitelist()) {
                                         final String chave = linha[1] + ";" + linha[2]; // Cria uma chave única
@@ -783,6 +832,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                                 oltCutoverPonTable.setListener(this);
                                 oltCutoverPonTable.setVisible(true);
                         } else {
+                                this.oltCutoverOnuTable = new OltCutoverOnuTable();
                                 for (final String[] linha : this.dataAnaliser5k.getDataWhitelistFilter()
                                                 .getWhitelist()) {
                                         oltCutoverOnuTable.adicionarLinha(linha[1], linha[2], linha[3]);
@@ -804,9 +854,16 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
         }
 
         private void jButtonDadosOltDestinoActionPerformed(final java.awt.event.ActionEvent evt) {
-                this.oltCutoverFormDestino = new OltCutoverFormDestino(jRadioButtonSlot.isSelected());
-                oltCutoverFormDestino.setListener(this);
-                oltCutoverFormDestino.setVisible(true);
+                if (this.origemSelecionada) {
+                        this.oltCutoverFormDestino = new OltCutoverFormDestino(jRadioButtonSlot.isSelected(),
+                                        this.slotValue, this.ponValue);
+                        oltCutoverFormDestino.setListener(this);
+                        oltCutoverFormDestino.setVisible(true);
+                } else {
+                        JOptionPane.showMessageDialog(null,
+                                        "Nenhuma origem selecionada.", "Error!",
+                                        JOptionPane.ERROR_MESSAGE, null);
+                }
         }
 
         private void jButtonPreviewActionPerformed(final java.awt.event.ActionEvent evt) {

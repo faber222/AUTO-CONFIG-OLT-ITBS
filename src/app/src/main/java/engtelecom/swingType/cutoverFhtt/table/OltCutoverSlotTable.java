@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableModel;
@@ -195,7 +196,14 @@ public class OltCutoverSlotTable extends javax.swing.JFrame {
         private void jButtonOkActionPerformed() {
                 if (listener != null) {
                         List<String[]> selecionados = getSlotSelecionado(); // Atualiza os dados selecionados;
-                        listener.onProfileCreatedSlotTable(selecionados);
+                        if (selecionados.isEmpty()) {
+                                JOptionPane.showMessageDialog(
+                                                null,
+                                                "Erro: Selecione algum Slot!", "Campo vazio!",
+                                                JOptionPane.ERROR_MESSAGE);
+                        } else {
+                                listener.onProfileCreatedSlotTable(selecionados);
+                        }
                 }
                 this.dispose(); // Fecha o JFrame
         }
