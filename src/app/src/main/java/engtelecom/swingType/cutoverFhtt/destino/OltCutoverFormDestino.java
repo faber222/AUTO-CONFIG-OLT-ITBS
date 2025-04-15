@@ -10,6 +10,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author faber222
@@ -26,6 +28,8 @@ public class OltCutoverFormDestino extends javax.swing.JFrame {
     private javax.swing.JTree jTree1;
 
     private final boolean type;
+    private int slotValue;
+    private int ponValue;
 
     // End of variables declaration//GEN-END:variables
 
@@ -34,8 +38,10 @@ public class OltCutoverFormDestino extends javax.swing.JFrame {
     /**
      * Creates new form OltCutoverFormDestino
      */
-    public OltCutoverFormDestino(final boolean type) {
+    public OltCutoverFormDestino(final boolean type, int slotValue, int ponValue) {
         this.type = type;
+        this.slotValue = slotValue;
+        this.ponValue = ponValue;
         initComponents();
     }
 
@@ -311,10 +317,33 @@ public class OltCutoverFormDestino extends javax.swing.JFrame {
                 }
             }
 
-            if (listener != null) {
-                listener.onProfileFormDestinoCreated(oltNodos, uplinkNodos);
+            if (uplinkNodos.isEmpty() && !oltNodos.isEmpty()) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Erro: É obrigatório selecionar alguma porta uplink, use a tecla Ctrl para selecionar ao \n"
+                                + " mesmo tempo um porta ou slot de serviço e também selecionar uma porta de uplink!",
+                        "Campo vazio!",
+                        JOptionPane.ERROR_MESSAGE);
+                this.dispose();
+            } else if (oltNodos.isEmpty()) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Erro: Selecione algum Slot ou Pon!", "Campo vazio!",
+                        JOptionPane.ERROR_MESSAGE);
+                this.dispose();
+
+            } else if (uplinkNodos.isEmpty()) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Erro: É obrigatório selecionar alguma porta uplink!", "Campo vazio!",
+                        JOptionPane.ERROR_MESSAGE);
+                this.dispose();
+
+            } else if (listener != null) {
+                listener.onProfileFormDestinoCreated(oltNodos, uplinkNodos, this.slotValue, this.ponValue);
             }
             this.dispose();
+
         } else {
             System.out.println("Nenhuma seleção válida.");
         }

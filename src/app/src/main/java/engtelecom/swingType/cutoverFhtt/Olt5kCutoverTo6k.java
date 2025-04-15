@@ -334,7 +334,38 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
 
         @Override
         public void onProfileFormDestinoCreated(final ArrayList<String[]> oltNodos,
-                        final ArrayList<String[]> uplinkNodos) {
+                        final ArrayList<String[]> uplinkNodos, int slotValue, int ponValue) {
+                // Determina se os dados são de PONs (2 campos) ou SLOTs (1 campo)
+                boolean isPon = oltNodos.stream().allMatch(dados -> dados.length == 2);
+                boolean isSlot = oltNodos.stream().allMatch(dados -> dados.length == 1);
+
+                if (!isPon && !isSlot) {
+                        JOptionPane.showMessageDialog(
+                                        null,
+                                        "Erro: Os dados da OLT estão misturados ou mal formatados.",
+                                        "Validação de destino",
+                                        JOptionPane.ERROR_MESSAGE);
+                        return;
+                }
+
+                if (isPon && oltNodos.size() != ponValue) {
+                        JOptionPane.showMessageDialog(
+                                        null,
+                                        "Erro: Você deve selecionar exatamente " + ponValue + " PON(s).",
+                                        "Quantidade incorreta de PONs",
+                                        JOptionPane.ERROR_MESSAGE);
+                        return;
+                }
+
+                if (isSlot && oltNodos.size() != slotValue) {
+                        JOptionPane.showMessageDialog(
+                                        null,
+                                        "Erro: Você deve selecionar exatamente " + slotValue + " SLOT(s).",
+                                        "Quantidade incorreta de SLOTs",
+                                        JOptionPane.ERROR_MESSAGE);
+                        return;
+                }
+
                 System.out.println("OLT's:");
                 this.gponDestinoSelecionado = oltNodos;
 
