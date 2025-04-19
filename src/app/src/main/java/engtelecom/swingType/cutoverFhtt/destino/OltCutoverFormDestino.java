@@ -321,7 +321,7 @@ public class OltCutoverFormDestino extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(
                         null,
                         "Erro: É obrigatório selecionar alguma porta uplink, use a tecla Ctrl para selecionar ao \n"
-                                + " mesmo tempo um porta ou slot de serviço e também selecionar uma porta de uplink!",
+                                + " mesmo tempo uma porta pon ou slot de serviço e também selecionar uma porta de uplink!",
                         "Campo vazio!",
                         JOptionPane.ERROR_MESSAGE);
                 this.dispose();
