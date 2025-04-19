@@ -142,22 +142,29 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 this.destinoSelecionado = false;
         }
 
-        public OltCutoverOnuTable getOltCutoverOnuTable() {
-                return oltCutoverOnuTable;
-        }
-
-        public OltCutoverPonTable getOltCutoverPonTable() {
-                return oltCutoverPonTable;
-        }
-
-        public OltCutoverSlotTable getOltCutoverSlotTable() {
-                return oltCutoverSlotTable;
-        }
-
+        /**
+         * Retorna uma lista de string contendo a info do slot e porta uplink de destino
+         * 
+         * [0] - slot
+         * 
+         * [1] - porta
+         * 
+         * @return List<String[]>
+         */
         public List<String[]> getUplinkDestinoSelecionado() {
                 return uplinkDestinoSelecionado;
         }
 
+        /**
+         * Retorna uma lista de string contendo a info do slot ou pon serviço de
+         * destino.
+         * 
+         * [0] - slot
+         * 
+         * [1] - pon
+         * 
+         * @return List<String[]> array size == 1 || array size == 2
+         */
         public List<String[]> getGponDestinoSelecionado() {
                 return gponDestinoSelecionado;
         }
