@@ -4,12 +4,15 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JOptionPane;
 
 import engtelecom.analytics.DataAnaliser5k;
 import engtelecom.scripts.ScriptsCutoverAN5kto6k;
+import engtelecom.swingType.cutoverFhtt.Olt5kCutoverTo6k;
 
 public class ConfigCutoverGenerator5k {
 
@@ -26,17 +29,20 @@ public class ConfigCutoverGenerator5k {
     private final List<List<String>> configQinQ;
     private final List<List<String>> profileServMode;
 
-    private final List<String[]> uplink;
-    private final List<String[]> slotChassiGpon;
-
     private final DataAnaliser5k dataAnaliser5k;
 
-    public ConfigCutoverGenerator5k(final DataAnaliser5k data,
-            final List<String[]> slotChassiGpon, final List<String[]> uplinkDestinoSelecionado) {
-        this.dataAnaliser5k = data;
+    private List<String[]> onuOrigemSelecionadaOnuTable;
+    private List<String[]> ponOrigemSelecionadaPonTable;
+    private List<String[]> slotOrigemSelecionadaSlotTable;
+    private List<String[]> uplinkDestinoSelecionado;
+    private List<String[]> gponDestinoSelecionado;
 
-        this.slotChassiGpon = slotChassiGpon;
-        this.uplink = uplinkDestinoSelecionado;
+    private final Olt5kCutoverTo6k olt5kCutoverTo6k;
+
+    public ConfigCutoverGenerator5k(final DataAnaliser5k data,
+            final Olt5kCutoverTo6k olt5kCutoverTo6k) {
+        this.olt5kCutoverTo6k = olt5kCutoverTo6k;
+        this.dataAnaliser5k = data;
 
         this.profileServMode = new ArrayList<>();
 
@@ -88,6 +94,7 @@ public class ConfigCutoverGenerator5k {
                     }
                 }
             }
+            writer.newLine();
 
             if (this.configBandWidth != null) {
                 for (final List<String> list : this.configBandWidth) {
@@ -154,18 +161,33 @@ public class ConfigCutoverGenerator5k {
         final ScriptsCutoverAN5kto6k scriptsAN6k = new ScriptsCutoverAN5kto6k();
 
         // Configurar vlan de uplink
-        for (final String[] uplink : this.uplink) {
+        for (final String[] uplink : this.olt5kCutoverTo6k.getUplinkDestinoSelecionado()) {
             for (final String[] config : this.dataAnaliser5k.getDataVlanUpFilter().getUplinkVlans()) {
                 configUplinkVlan.add(scriptsAN6k.addVlanToUplink(uplink[0], uplink[1], config[2], config[3]));
             }
         }
 
-        // Configurar o whitelist
-        for (final String[] slotPon : this.slotChassiGpon) {
+        List<String[]> listaFiltrada = null;
+
+        if (olt5kCutoverTo6k.isSlotSelect()) {
+            listaFiltrada = filtrarEMapearPorSlot(this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist());
+        } else if (olt5kCutoverTo6k.isPonSelect()) {
+            listaFiltrada = filtrarEMapearPorPon(this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist());
+        } else if (olt5kCutoverTo6k.isOnuSelect()) {
+            listaFiltrada = filtrarEMapearPorOnu(this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist());
+        } else {
+            throw new IllegalStateException("Nenhum tipo de seleção (slot, PON, ONU) foi ativado.");
         }
-        for (final String[] config : this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist()) {
+
+        for (final String[] config : listaFiltrada) {
             configWhiteList.add(scriptsAN6k.provisionaCPE(config[0], config[1], config[2], config[3], config[4]));
         }
+
+        // for (final String[] config :
+        // this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist()) {
+        // configWhiteList.add(scriptsAN6k.provisionaCPE(config[0], config[1],
+        // config[2], config[3], config[4]));
+        // }
 
         // Configurar o wan-service
         // Configurar o pppoe
@@ -274,4 +296,109 @@ public class ConfigCutoverGenerator5k {
             return false;
         }
     }
+
+    public List<String[]> filtrarEMapearPorSlot(final List<String[]> whitelist) {
+        final List<String[]> origemSlots = olt5kCutoverTo6k.getSlotOrigemSelecionadaSlotTable();
+        final List<String[]> destinoSlots = olt5kCutoverTo6k.getGponDestinoSelecionado();
+
+        // Cria um mapa de substituição: slotOrigem -> slotDestino
+        final Map<String, String> mapeamentoSlot = new HashMap<>();
+        for (int i = 0; i < origemSlots.size(); i++) {
+            final String slotOrigem = origemSlots.get(i)[0];
+            final String slotDestino = destinoSlots.get(i)[0];
+            mapeamentoSlot.put(slotOrigem, slotDestino);
+        }
+
+        final List<String[]> resultado = new ArrayList<>();
+
+        for (final String[] entrada : whitelist) {
+            final String slotAtual = entrada[1];
+
+            if (mapeamentoSlot.containsKey(slotAtual)) {
+                final String novoSlot = mapeamentoSlot.get(slotAtual);
+
+                final String[] novaEntrada = entrada.clone();
+                novaEntrada[1] = novoSlot;
+
+                resultado.add(novaEntrada);
+            }
+        }
+
+        return resultado;
+    }
+
+    public List<String[]> filtrarEMapearPorPon(final List<String[]> whitelist) {
+        final List<String[]> origem = olt5kCutoverTo6k.getPonOrigemSelecionadaPonTable();
+        final List<String[]> destino = olt5kCutoverTo6k.getGponDestinoSelecionado();
+
+        final Map<String, String> mapaPonOrigemParaDestino = new HashMap<>();
+
+        for (int i = 0; i < origem.size(); i++) {
+            final String ponOrigem = origem.get(i)[1];
+            final String ponDestino = destino.get(i)[1];
+            mapaPonOrigemParaDestino.put(ponOrigem, ponDestino);
+        }
+
+        final String slotOrigem = origem.get(0)[0];
+        final String slotDestino = destino.get(0)[0];
+
+        final List<String[]> filtradosMapeados = new ArrayList<>();
+
+        for (final String[] linha : whitelist) {
+            final String linhaSlot = linha[1];
+            final String linhaPon = linha[2];
+
+            if (linhaSlot.equals(slotOrigem) && mapaPonOrigemParaDestino.containsKey(linhaPon)) {
+                final String novaPon = mapaPonOrigemParaDestino.get(linhaPon);
+
+                filtradosMapeados.add(new String[] {
+                        linha[0], // phy addr
+                        slotDestino, // novo slot (único)
+                        novaPon, // pon mapeada
+                        linha[3], // onu
+                        linha[4] // type
+                });
+            }
+        }
+
+        return filtradosMapeados;
+    }
+
+    private List<String[]> filtrarEMapearPorOnu(final List<String[]> whitelist) {
+        final List<String[]> resultado = new ArrayList<>();
+        final List<String[]> origem = olt5kCutoverTo6k.getOnuOrigemSelecionadaOnuTable();
+        final List<String[]> destino = olt5kCutoverTo6k.getGponDestinoSelecionado();
+
+        // Confirma que o destino tem slot e pon definidos
+        if (destino.isEmpty() || destino.get(0).length < 2) {
+            System.err.println("Destino inválido para ONU.");
+            return resultado;
+        }
+
+        final String novoSlot = destino.get(0)[0];
+        final String novaPon = destino.get(0)[1];
+
+        for (final String[] linha : whitelist) {
+            final String slot = linha[1];
+            final String pon = linha[2];
+            final String onu = linha[3];
+
+            for (final String[] onuSelecionada : origem) {
+                final String slotOrigem = onuSelecionada[0];
+                final String ponOrigem = onuSelecionada[1];
+                final String onuOrigem = onuSelecionada[2];
+
+                if (slot.equals(slotOrigem) && pon.equals(ponOrigem) && onu.equals(onuOrigem)) {
+                    final String[] novaLinha = linha.clone();
+                    novaLinha[1] = novoSlot;
+                    novaLinha[2] = novaPon;
+                    resultado.add(novaLinha);
+                    break;
+                }
+            }
+        }
+
+        return resultado;
+    }
+
 }
