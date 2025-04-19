@@ -142,18 +142,71 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 this.destinoSelecionado = false;
         }
 
+        public OltCutoverOnuTable getOltCutoverOnuTable() {
+                return oltCutoverOnuTable;
+        }
+
+        public OltCutoverPonTable getOltCutoverPonTable() {
+                return oltCutoverPonTable;
+        }
+
+        public OltCutoverSlotTable getOltCutoverSlotTable() {
+                return oltCutoverSlotTable;
+        }
+
+        public List<String[]> getUplinkDestinoSelecionado() {
+                return uplinkDestinoSelecionado;
+        }
+
+        public List<String[]> getGponDestinoSelecionado() {
+                return gponDestinoSelecionado;
+        }
+
+        /**
+         * Retorna uma lista de string contendo as onus selecionadas para serem migradas
+         * 
+         * [0] - slot
+         * 
+         * [1] - pon
+         * 
+         * [2] - onu
+         * 
+         * @return List<String[]>
+         */
         public List<String[]> getOnuSelecionadaOnuTable() {
                 return onuSelecionadaOnuTable;
         }
 
+        /**
+         * Retorna uma lista de string contendo as pons selecionadas para serem migradas
+         * 
+         * [0] - slot
+         * 
+         * [1] - pon
+         * 
+         * @return List<String[]>
+         */
         public List<String[]> getPonSelecionadaPonTable() {
                 return ponSelecionadaPonTable;
         }
 
+        /**
+         * Retorna uma lista de string contendo os slots selecionados para serem
+         * migrados
+         * 
+         * [0] - slot
+         * 
+         * @return List<String[]>
+         */
         public List<String[]> getSlotSelecionadaSlotTable() {
                 return slotSelecionadaSlotTable;
         }
 
+        /**
+         * Método interface, herdado da tabela de onu, usado para selecionar as onus de
+         * origem.
+         * 
+         */
         @Override
         public void onProfileCreatedOnuTable(final List<String[]> onuSelecionada) {
 
@@ -206,6 +259,10 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 jTextPaneDadosOltOrigem.setText(textoFinal);
         }
 
+        /**
+         * Método interface, herdado da tabela de pon, usado para selecionar as pons de
+         * origem.
+         */
         @Override
         public void onProfileCreatedPonTable(final List<String[]> ponSelecionada) {
                 final String slotBase = ponSelecionada.get(0)[0];
@@ -257,6 +314,10 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 jTextPaneDadosOltOrigem.setText(textoFinal);
         }
 
+        /**
+         * Método interface, herdado da tabela de slot, usado para selecionar os slots
+         * de origem.
+         */
         @Override
         public void onProfileCreatedSlotTable(final List<String[]> slotSelecionada) {
                 this.slotSelecionadaSlotTable = slotSelecionada; // Copia os dados corretamente
@@ -296,6 +357,10 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 jTextPaneDadosOltOrigem.setText(textoFinal);
         }
 
+        /**
+         * Método herdado da interface que faz a coleta dos dados da olt de origem para
+         * coleta via ssh/telnet
+         */
         @Override
         public void onProfileDadosOrigemCreated(final String ip, final String user, final String passwd,
                         final String port, final boolean isTelnet) {
@@ -317,6 +382,10 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 dadosOrigemPreenchidos = true;
         }
 
+        /**
+         * Método herdado da interface que faz a coleta dos dados da olt de destino para
+         * envio de dados via telnet
+         */
         @Override
         public void onProfileDadosDestinoCreated(final String ip, final String user, final String passwd,
                         final String port) {
@@ -332,6 +401,11 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 dadosDestinoPreenchidos = true;
         }
 
+        /**
+         * Método herdado da interface que faz a coleta dos nodos UPLINK e SERVIÇO,
+         * importante para a seleção correta para a migração dos dados.
+         * 
+         */
         @Override
         public void onProfileFormDestinoCreated(final ArrayList<String[]> oltNodos,
                         final ArrayList<String[]> uplinkNodos, int slotValue, int ponValue) {
@@ -830,6 +904,15 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 pack();
         }// </editor-fold>//GEN-END:initComponents
 
+        /**
+         * Método usado para fazer a coleta dos dados da olt de origem, sendo eles os
+         * valores de slot, pon ou onu.
+         * 
+         * Ele ao mesmo tempo reconhece se foi selecionado coleta por slot, pon ou onu e
+         * abre sua respectiva coleta ordenada.
+         * 
+         * @param evt NÃO USADO!
+         */
         private void jButtonDadosOltOrigemActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonDadosOltOrigemActionPerformed
                 if (this.fileChooserIsSelected) {
 
@@ -884,6 +967,12 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 this.dispose();
         }
 
+        /**
+         * Método usado para chamar a interface formulário usada para coleta dos dados
+         * da OLT de destino, sendo placa de serviço e uplink usar.
+         * 
+         * @param evt NÃO USADO!
+         */
         private void jButtonDadosOltDestinoActionPerformed(final java.awt.event.ActionEvent evt) {
                 if (this.origemSelecionada) {
                         this.oltCutoverFormDestino = new OltCutoverFormDestino(jRadioButtonSlot.isSelected(),
@@ -899,11 +988,16 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
 
         private void jButtonPreviewActionPerformed(final java.awt.event.ActionEvent evt) {
                 preview = new OltPreview("Cutover 5k");
-                // System.out.println(jTextAreaPreviewCode.getText());
                 preview.setjTextAreaPreview(jTextAreaPreviewCode);
                 preview.setVisible(true);
         }
 
+        /**
+         * Método usado para coletar remotamente via telnet ou ssh os dados da olt
+         * fiberhome de origem.
+         * 
+         * @param evt NÃO USADO!
+         */
         private void jButtonColetarActionPerformed(final java.awt.event.ActionEvent evt) {
 
                 // PRECISA CRIAR UM COLETADOR DE DADOS DA OLT 5K
@@ -965,6 +1059,11 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
 
         }
 
+        /**
+         * Método usado para criar o script de migração.
+         * 
+         * @param evt NÃO USADO!
+         */
         private void jButtonCriarActionPerformed(final java.awt.event.ActionEvent evt) {
                 // Falta agora finalizar a possibilidade de criar o script com limitação de
                 // slot, pon e onu
@@ -986,6 +1085,12 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 }
         }
 
+        /**
+         * Método usado para enviar todas as configurações via telnet.
+         * Funcional apenas para olt fiberhome.
+         * 
+         * @param evt NÃO USADO!
+         */
         private void jButtonEnviarActionPerformed(final java.awt.event.ActionEvent evt) {
                 if (dadosDestinoPreenchidos) {
                         if (scriptCriado) {
@@ -1027,11 +1132,17 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 }
         }
 
+        /**
+         * Método que chama a interface formulário dos dados da olt de origem!
+         */
         private void jButtonDadosImportOltOrigemActionPerformed() {
                 olt5kCutoverOrigemAcesso.setListener(this);
                 olt5kCutoverOrigemAcesso.setVisible(true);
         }
 
+        /**
+         * Método que chama a interface formulário dos dados da olt de destino
+         */
         private void jButtonDadosImportOltDestinoActionPerformed() {
                 olt5kCutoverDestinoAcesso.setListener(this);
                 olt5kCutoverDestinoAcesso.setVisible(true);
