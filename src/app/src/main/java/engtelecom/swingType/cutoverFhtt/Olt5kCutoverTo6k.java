@@ -94,8 +94,6 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
         private List<String[]> onuSelecionadaOnuTable;
         private List<String[]> ponSelecionadaPonTable;
         private List<String[]> slotSelecionadaSlotTable;
-        // private List<String[]> ponDestinoSelecionado;
-        // private List<String[]> slotDestinoSelecionado;
         private List<String[]> uplinkDestinoSelecionado;
         private List<String[]> gponDestinoSelecionado;
 
@@ -451,15 +449,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 this.gponDestinoSelecionado = oltNodos;
 
                 for (final String[] dados : oltNodos) {
-                        // Verifica o tamanho do array para saber se veio com ou sem PON
                         System.out.println(Arrays.toString(dados));
-                        if (dados.length == 2) {
-                                // this.ponDestinoSelecionado = oltNodos;
-                                System.out.println("SLOT: " + dados[0] + " | PON: " + dados[1]);
-                        } else {
-                                // this.slotDestinoSelecionado = oltNodos;
-                                System.out.println("SLOT: " + dados[0]);
-                        }
                 }
 
                 System.out.println("UPLINK's:");
