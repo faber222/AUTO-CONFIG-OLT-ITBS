@@ -91,9 +91,9 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
         private final Olt5kCutoverDestinoAcesso olt5kCutoverDestinoAcesso;
         private OltCutoverFormDestino oltCutoverFormDestino;
 
-        private List<String[]> onuSelecionadaOnuTable;
-        private List<String[]> ponSelecionadaPonTable;
-        private List<String[]> slotSelecionadaSlotTable;
+        private List<String[]> onuOrigemSelecionadaOnuTable;
+        private List<String[]> ponOrigemSelecionadaPonTable;
+        private List<String[]> slotOrigemSelecionadaSlotTable;
         private List<String[]> uplinkDestinoSelecionado;
         private List<String[]> gponDestinoSelecionado;
 
@@ -113,6 +113,10 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
         private boolean isTelnetOltOrigem;
         private boolean dadosOrigemPreenchidos;
         private boolean dadosDestinoPreenchidos;
+
+        private boolean isSlotSelect;
+        private boolean isPonSelect;
+        private boolean isOnuSelect;
 
         private String ipOltDestino;
         private String userOltDestino;
@@ -138,6 +142,21 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 this.scriptCriado = false;
                 this.origemSelecionada = false;
                 this.destinoSelecionado = false;
+                this.isSlotSelect = false;
+                this.isPonSelect = false;
+                this.isOnuSelect = false;
+        }
+
+        public boolean isSlotSelect() {
+                return isSlotSelect;
+        }
+
+        public boolean isPonSelect() {
+                return isPonSelect;
+        }
+
+        public boolean isOnuSelect() {
+                return isOnuSelect;
         }
 
         /**
@@ -178,8 +197,8 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
          * 
          * @return List<String[]>
          */
-        public List<String[]> getOnuSelecionadaOnuTable() {
-                return onuSelecionadaOnuTable;
+        public List<String[]> getOnuOrigemSelecionadaOnuTable() {
+                return onuOrigemSelecionadaOnuTable;
         }
 
         /**
@@ -191,8 +210,8 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
          * 
          * @return List<String[]>
          */
-        public List<String[]> getPonSelecionadaPonTable() {
-                return ponSelecionadaPonTable;
+        public List<String[]> getPonOrigemSelecionadaPonTable() {
+                return ponOrigemSelecionadaPonTable;
         }
 
         /**
@@ -203,8 +222,8 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
          * 
          * @return List<String[]>
          */
-        public List<String[]> getSlotSelecionadaSlotTable() {
-                return slotSelecionadaSlotTable;
+        public List<String[]> getSlotOrigemSelecionadaSlotTable() {
+                return slotOrigemSelecionadaSlotTable;
         }
 
         /**
@@ -224,21 +243,22 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                                                 "SLOT Diferente",
                                                 JOptionPane.ERROR_MESSAGE);
                                 jTextPaneDadosOltOrigem.setText("");
+                                this.isOnuSelect = false;
                                 return;
                         }
                 }
 
-                this.onuSelecionadaOnuTable = onuSelecionada;
+                this.onuOrigemSelecionadaOnuTable = onuSelecionada;
 
                 // Debug
                 System.out.println("ONU Selecionada na classe principal:");
-                for (final String[] onu : this.onuSelecionadaOnuTable) {
+                for (final String[] onu : this.onuOrigemSelecionadaOnuTable) {
                         System.out.println(Arrays.toString(onu));
                 }
 
                 // Conta PONs únicas
                 final Set<String> ponsUnicas = new HashSet<>();
-                for (final String[] onu : this.onuSelecionadaOnuTable) {
+                for (final String[] onu : this.onuOrigemSelecionadaOnuTable) {
                         if (onu.length > 1) {
                                 ponsUnicas.add(onu[1]); // Índice 1 = valor da PON
                         }
@@ -247,7 +267,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
 
                 // Resumo formatado
                 final StringBuilder resumo = new StringBuilder();
-                for (final String[] onu : this.onuSelecionadaOnuTable) {
+                for (final String[] onu : this.onuOrigemSelecionadaOnuTable) {
                         resumo.append(onu[0]).append("-").append(onu[1]).append("-").append(onu[2]).append(", ");
                 }
 
@@ -262,6 +282,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 }
 
                 jTextPaneDadosOltOrigem.setText(textoFinal);
+                this.isOnuSelect = true;
         }
 
         /**
@@ -279,21 +300,22 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                                                 "SLOT Diferente",
                                                 JOptionPane.ERROR_MESSAGE);
                                 jTextPaneDadosOltOrigem.setText("");
+                                this.isPonSelect = false;
                                 return;
                         }
                 }
 
-                this.ponSelecionadaPonTable = ponSelecionada;
+                this.ponOrigemSelecionadaPonTable = ponSelecionada;
 
                 // Debug
                 System.out.println("PON Selecionada na classe principal:");
-                for (final String[] pon : this.ponSelecionadaPonTable) {
+                for (final String[] pon : this.ponOrigemSelecionadaPonTable) {
                         System.out.println(Arrays.toString(pon));
                 }
 
                 // Conta PONs únicas
                 final Set<String> ponsUnicas = new HashSet<>();
-                for (final String[] pon : this.ponSelecionadaPonTable) {
+                for (final String[] pon : this.ponOrigemSelecionadaPonTable) {
                         if (pon.length > 1) {
                                 ponsUnicas.add(pon[1]); // Índice 1 = valor da PON
                         }
@@ -302,7 +324,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 this.ponValue = ponsUnicas.size();
 
                 final StringBuilder resumo = new StringBuilder();
-                for (final String[] pon : this.ponSelecionadaPonTable) {
+                for (final String[] pon : this.ponOrigemSelecionadaPonTable) {
                         resumo.append(pon[0]).append("-").append(pon[1]).append(", ");
                 }
 
@@ -317,6 +339,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 }
 
                 jTextPaneDadosOltOrigem.setText(textoFinal);
+                this.isPonSelect = true;
         }
 
         /**
@@ -325,17 +348,17 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
          */
         @Override
         public void onProfileCreatedSlotTable(final List<String[]> slotSelecionada) {
-                this.slotSelecionadaSlotTable = slotSelecionada; // Copia os dados corretamente
+                this.slotOrigemSelecionadaSlotTable = slotSelecionada; // Copia os dados corretamente
 
                 // Debug: imprimir para garantir que os dados foram armazenados corretamente
                 System.out.println("SLOT Selecionado na classe principal:");
-                for (final String[] slot : this.slotSelecionadaSlotTable) {
+                for (final String[] slot : this.slotOrigemSelecionadaSlotTable) {
                         System.out.println(Arrays.toString(slot));
                 }
 
                 // Conta SLOTs únicos
                 final Set<String> slotsUnicos = new HashSet<>();
-                for (final String[] slot : this.slotSelecionadaSlotTable) {
+                for (final String[] slot : this.slotOrigemSelecionadaSlotTable) {
                         if (slot.length > 0) {
                                 slotsUnicos.add(slot[0]); // Índice 0 = valor do SLOT
                         }
@@ -345,7 +368,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
 
                 // Cria um resumo em uma única linha
                 final StringBuilder resumo = new StringBuilder();
-                for (final String[] slot : this.slotSelecionadaSlotTable) {
+                for (final String[] slot : this.slotOrigemSelecionadaSlotTable) {
                         resumo.append(slot[0]).append(", ");
                 }
 
@@ -360,6 +383,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 }
 
                 jTextPaneDadosOltOrigem.setText(textoFinal);
+                this.isSlotSelect = true;
         }
 
         /**
@@ -911,6 +935,9 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
          * @param evt NÃO USADO!
          */
         private void jButtonDadosOltOrigemActionPerformed(final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonDadosOltOrigemActionPerformed
+                this.isPonSelect = false;
+                this.isOnuSelect = false;
+                this.isSlotSelect = false;
                 if (this.fileChooserIsSelected) {
 
                         this.dataAnaliser5k = new DataAnaliser5k(this.filePath);
@@ -954,6 +981,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                         }
                 } else {
                         origemSelecionada = false;
+
                         JOptionPane.showMessageDialog(null,
                                         "Nenhum arquivo importado localmente ou remotamente.", "Error!",
                                         JOptionPane.ERROR_MESSAGE, null);
@@ -996,6 +1024,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
          * @param evt NÃO USADO!
          */
         private void jButtonColetarActionPerformed(final java.awt.event.ActionEvent evt) {
+
 
                 // PRECISA CRIAR UM COLETADOR DE DADOS DA OLT 5K
 
@@ -1068,8 +1097,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                         // this.dataAnaliser5k = new DataAnaliser5k(this.filePath);
                         // this.dataAnaliser5k.start();
 
-                        final ConfigCutoverGenerator5k cutover = new ConfigCutoverGenerator5k(dataAnaliser5k,
-                                        this.gponDestinoSelecionado, this.uplinkDestinoSelecionado);
+                        final ConfigCutoverGenerator5k cutover = new ConfigCutoverGenerator5k(dataAnaliser5k, this);
                         if (cutover.start()) {
                                 previewText("scriptMigracao5kto6k.txt");
                                 scriptCriado = true;
