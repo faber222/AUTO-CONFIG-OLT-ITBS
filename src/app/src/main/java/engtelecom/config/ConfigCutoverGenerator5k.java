@@ -167,112 +167,197 @@ public class ConfigCutoverGenerator5k {
             }
         }
 
-        List<String[]> listaFiltrada = null;
+        List<String[]> whiteListFiltrado = null;
+        List<String[]> wanServicePPPFiltrado = null;
+        List<String[]> wanServiceBridgeFiltrado = null;
+        List<String[]> wifiFiltrado = null;
+        List<String[]> veipCfgFiltrado = null;
+        List<String[]> portEthFiltrado = null;
+        List<String[]> bandWidthFiltrado = null;
 
         if (olt5kCutoverTo6k.isSlotSelect()) {
-            listaFiltrada = filtrarEMapearPorSlot(this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist());
+            // whiteList
+            whiteListFiltrado = filtrarEMapearPorSlot(this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist(), 1);
+
+            // wanService pppoe
+            wanServicePPPFiltrado = filtrarEMapearPorSlot(
+                    this.dataAnaliser5k.getDataWanServiceFilter().getWanRouterConfigs(), 0);
+
+            // wanService bridge
+            wanServiceBridgeFiltrado = filtrarEMapearPorSlot(
+                    this.dataAnaliser5k.getDataWanServiceFilter().getWanBridgeConfigs(), 0);
+
+            // wifi
+            wifiFiltrado = filtrarEMapearPorSlot(this.dataAnaliser5k.getDataWanServiceWifiFilter().getWifiConfigs(), 0);
+
+            // veip
+            veipCfgFiltrado = filtrarEMapearPorSlot(this.dataAnaliser5k.getDataVeipFilter().getVeipConfigs(), 0);
+
+            // portEth
+            portEthFiltrado = filtrarEMapearPorSlot(this.dataAnaliser5k.getDataPortEthFilter().getEthConfigs(), 0);
+
+            // bandWidth
+            bandWidthFiltrado = filtrarEMapearPorSlot(
+                    this.dataAnaliser5k.getDataBandwidthFilter().getBandwidthConfigs(), 0);
+
         } else if (olt5kCutoverTo6k.isPonSelect()) {
-            listaFiltrada = filtrarEMapearPorPon(this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist());
+            // whiteList
+            whiteListFiltrado = filtrarEMapearPorPon(this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist(), 1, 2);
+
+            // wanService pppoe
+            wanServicePPPFiltrado = filtrarEMapearPorPon(
+                    this.dataAnaliser5k.getDataWanServiceFilter().getWanRouterConfigs(), 0, 1);
+
+            // wanService bridge
+            wanServiceBridgeFiltrado = filtrarEMapearPorPon(
+                    this.dataAnaliser5k.getDataWanServiceFilter().getWanBridgeConfigs(), 0, 1);
+
+            // wifi
+            wifiFiltrado = filtrarEMapearPorPon(this.dataAnaliser5k.getDataWanServiceWifiFilter().getWifiConfigs(), 0,
+                    1);
+
+            // veip
+            veipCfgFiltrado = filtrarEMapearPorPon(this.dataAnaliser5k.getDataVeipFilter().getVeipConfigs(), 0, 1);
+
+            // portEth
+            portEthFiltrado = filtrarEMapearPorPon(this.dataAnaliser5k.getDataPortEthFilter().getEthConfigs(), 0, 1);
+
+            // bandWidth
+            bandWidthFiltrado = filtrarEMapearPorPon(
+                    this.dataAnaliser5k.getDataBandwidthFilter().getBandwidthConfigs(), 0, 1);
+
         } else if (olt5kCutoverTo6k.isOnuSelect()) {
-            listaFiltrada = filtrarEMapearPorOnu(this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist());
+            // whiteList
+            whiteListFiltrado = filtrarEMapearPorOnu(this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist(), 1, 2,
+                    3);
+
+            // wanService pppoe
+            wanServicePPPFiltrado = filtrarEMapearPorOnu(
+                    this.dataAnaliser5k.getDataWanServiceFilter().getWanRouterConfigs(), 0, 1, 2);
+
+            // wanService bridge
+            wanServiceBridgeFiltrado = filtrarEMapearPorOnu(
+                    this.dataAnaliser5k.getDataWanServiceFilter().getWanBridgeConfigs(), 0, 1, 2);
+
+            // wifi
+            wifiFiltrado = filtrarEMapearPorOnu(this.dataAnaliser5k.getDataWanServiceWifiFilter().getWifiConfigs(), 0,
+                    1, 2);
+
+            // veip
+            veipCfgFiltrado = filtrarEMapearPorOnu(this.dataAnaliser5k.getDataVeipFilter().getVeipConfigs(), 0, 1, 2);
+
+            // portEth
+            portEthFiltrado = filtrarEMapearPorOnu(this.dataAnaliser5k.getDataPortEthFilter().getEthConfigs(), 0, 1, 2);
+
+            // bandWidth
+            bandWidthFiltrado = filtrarEMapearPorOnu(
+                    this.dataAnaliser5k.getDataBandwidthFilter().getBandwidthConfigs(), 0, 1, 2);
+
         } else {
             throw new IllegalStateException("Nenhum tipo de seleção (slot, PON, ONU) foi ativado.");
         }
 
-        for (final String[] config : listaFiltrada) {
-            configWhiteList.add(scriptsAN6k.provisionaCPE(config[0], config[1], config[2], config[3], config[4]));
+        if (whiteListFiltrado != null) {
+            for (final String[] config : whiteListFiltrado) {
+                configWhiteList.add(scriptsAN6k.provisionaCPE(config[0], config[1], config[2], config[3], config[4]));
+            }
         }
-
-        // for (final String[] config :
-        // this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist()) {
-        // configWhiteList.add(scriptsAN6k.provisionaCPE(config[0], config[1],
-        // config[2], config[3], config[4]));
-        // }
 
         // Configurar o wan-service
         // Configurar o pppoe
-        for (final String[] config : this.dataAnaliser5k.getDataWanServiceFilter().getWanRouterConfigs()) {
-            configWanService.add(scriptsAN6k.comandoPpoe(config[0], config[1], config[2], config[6], config[9],
-                    config[10], config[3], config[4], config[5], config[7], config[8]));
+        if (wanServicePPPFiltrado != null) {
+            for (final String[] config : wanServicePPPFiltrado) {
+                configWanService.add(scriptsAN6k.comandoPpoe(config[0], config[1], config[2], config[6], config[9],
+                        config[10], config[3], config[4], config[5], config[7], config[8]));
+            }
         }
 
         // Configurar o bridge
-        for (final String[] config : this.dataAnaliser5k.getDataWanServiceFilter().getWanBridgeConfigs()) {
-            configWanService.add(scriptsAN6k.comandoBridge(config[0], config[1], config[2], config[6], config[3],
-                    config[4], config[5], config[7], config[8], config[9], config[10]));
+        if (wanServiceBridgeFiltrado != null) {
+            for (final String[] config : wanServiceBridgeFiltrado) {
+                configWanService.add(scriptsAN6k.comandoBridge(config[0], config[1], config[2], config[6], config[3],
+                        config[4], config[5], config[7], config[8], config[9], config[10]));
+            }
         }
 
         // Configurar o wifi com senha
         // Configurar o wifi com radius
 
-        for (final String[] config : this.dataAnaliser5k.getDataWanServiceWifiFilter().getWifiConfigs()) {
-            if ("1".equals(config[3])) {
-                // ssid 2.4
-                if ("N/A".equals(config[13])) {
+        if (wifiFiltrado != null) {
+            for (final String[] config : wifiFiltrado) {
+                if ("1".equals(config[3])) {
+                    // ssid 2.4
+                    if ("N/A".equals(config[13])) {
 
-                    // sem radius
-                    configWifi.add(scriptsAN6k.comandoWifi2(config[0], config[1], config[2],
-                            config[6].replaceAll("[\\p{Cntrl}&&[^\\n\\t]]",
-                                    "-"),
-                            config[10],
-                            "802.11bgn", config[3], config[4],
-                            config[5], config[7], config[8].replace("_", "-"), config[9]));
+                        // sem radius
+                        configWifi.add(scriptsAN6k.comandoWifi2(config[0], config[1], config[2],
+                                config[6].replaceAll("[\\p{Cntrl}&&[^\\n\\t]]",
+                                        "-"),
+                                config[10],
+                                "802.11bgn", config[3], config[4],
+                                config[5], config[7], config[8].replace("_", "-"), config[9]));
+                    } else {
+                        // com radius
+                        configWifi.add(scriptsAN6k.comandoWifi2(config[0], config[1], config[2],
+                                config[6].replaceAll("[\\p{Cntrl}&&[^\\n\\t]]",
+                                        "-"),
+                                config[10], "802.11bgn", config[3], config[4],
+                                config[5], config[7], config[8].replace("_", "-"), config[9], config[11],
+                                config[12], config[13]));
+                    }
                 } else {
-                    // com radius
-                    configWifi.add(scriptsAN6k.comandoWifi2(config[0], config[1], config[2],
-                            config[6].replaceAll("[\\p{Cntrl}&&[^\\n\\t]]",
-                                    "-"),
-                            config[10], "802.11bgn", config[3], config[4],
-                            config[5], config[7], config[8].replace("_", "-"), config[9], config[11],
-                            config[12], config[13]));
-                }
-
-            } else {
-                // ssid 5.0
-                if ("N/A".equals(config[13])) {
-                    // sem radius
-                    configWifi.add(scriptsAN6k.comandoWifi5(config[0], config[1], config[2],
-                            config[6].replaceAll("[\\p{Cntrl}&&[^\\n\\t]]",
-                                    "-"),
-                            config[10],
-                            "802.11ac", config[3], config[4],
-                            config[5], config[7], config[8].replace("_", "-"), config[9]));
-                } else {
-                    // com radius
-                    configWifi.add(scriptsAN6k.comandoWifi5(config[0], config[1], config[2],
-                            config[6].replaceAll("[\\p{Cntrl}&&[^\\n\\t]]",
-                                    "-"),
-                            config[10], "802.11ac", config[3], config[4],
-                            config[5], config[7], config[8].replace("_", "-"), config[9], config[11],
-                            config[12], config[13]));
+                    // ssid 5.0
+                    if ("N/A".equals(config[13])) {
+                        // sem radius
+                        configWifi.add(scriptsAN6k.comandoWifi5(config[0], config[1], config[2],
+                                config[6].replaceAll("[\\p{Cntrl}&&[^\\n\\t]]",
+                                        "-"),
+                                config[10],
+                                "802.11ac", config[3], config[4],
+                                config[5], config[7], config[8].replace("_", "-"), config[9]));
+                    } else {
+                        // com radius
+                        configWifi.add(scriptsAN6k.comandoWifi5(config[0], config[1], config[2],
+                                config[6].replaceAll("[\\p{Cntrl}&&[^\\n\\t]]",
+                                        "-"),
+                                config[10], "802.11ac", config[3], config[4],
+                                config[5], config[7], config[8].replace("_", "-"), config[9], config[11],
+                                config[12], config[13]));
+                    }
                 }
             }
-
         }
 
-        // Configurar o veip
+        // Configurar o veip profile
         for (final String[] config : this.dataAnaliser5k.getDataVeipFilter().getPrfMgrConfigs()) {
             profileServMode.add(scriptsAN6k.configProfileServMode(config[0], config[1], config[2]));
         }
 
-        for (final String[] config : this.dataAnaliser5k.getDataVeipFilter().getVeipConfigs()) {
-            configVeip.add(scriptsAN6k.configVeip(config[0], config[1], config[2], config[5], config[6]));
+        // Configurar o veip
+        if (veipCfgFiltrado != null) {
+            for (final String[] config : veipCfgFiltrado) {
+                configVeip.add(scriptsAN6k.configVeip(config[0], config[1], config[2], config[5], config[6]));
+            }
         }
 
         // Configurar o portEth
-        for (final String[] config : this.dataAnaliser5k.getDataPortEthFilter().getEthConfigs()) {
-            configEth.add(scriptsAN6k.configEth(config[0], config[1], config[2],
-                    config[3], config[5], config[4], config[6]));
+        if (portEthFiltrado != null) {
+            for (final String[] config : portEthFiltrado) {
+                configEth.add(scriptsAN6k.configEth(config[0], config[1], config[2],
+                        config[3], config[5], config[4], config[6]));
+            }
         }
 
         // Configurar o bandwidth
-        for (final String[] config : this.dataAnaliser5k.getDataBandwidthFilter().getBandwidthConfigs()) {
-            final String fixbw = String.valueOf(Math.max(Integer.parseInt(config[4]), 64));
-            final String asbw = String.valueOf(Math.max(Integer.parseInt(config[5]), 64));
-            final String maxbw = String.valueOf(Math.max(Integer.parseInt(config[6]), 512));
+        if (bandWidthFiltrado != null) {
+            for (final String[] config : bandWidthFiltrado) {
+                final String fixbw = String.valueOf(Math.max(Integer.parseInt(config[4]), 64));
+                final String asbw = String.valueOf(Math.max(Integer.parseInt(config[5]), 64));
+                final String maxbw = String.valueOf(Math.max(Integer.parseInt(config[6]), 512));
 
-            configBandWidth.add(scriptsAN6k.configBandwidth(config[0], config[1], config[2], config[3],
-                    fixbw, asbw, maxbw));
+                configBandWidth.add(scriptsAN6k.configBandwidth(config[0], config[1], config[2], config[3],
+                        fixbw, asbw, maxbw));
+            }
         }
 
         // TO-DO
@@ -297,7 +382,15 @@ public class ConfigCutoverGenerator5k {
         }
     }
 
-    public List<String[]> filtrarEMapearPorSlot(final List<String[]> whitelist) {
+    /**
+     * Filtra os dados do List<String[]> baseado no valor de escolha do slot
+     * 
+     * @param list  List<String[]> contendo os comandos para criação
+     * @param index Index do valor do slot
+     * @return Retorna a List<String[]> inicial porém somente com os valores do
+     *         index escolhido!
+     */
+    public List<String[]> filtrarEMapearPorSlot(final List<String[]> list, final int index) {
         final List<String[]> origemSlots = olt5kCutoverTo6k.getSlotOrigemSelecionadaSlotTable();
         final List<String[]> destinoSlots = olt5kCutoverTo6k.getGponDestinoSelecionado();
 
@@ -311,15 +404,12 @@ public class ConfigCutoverGenerator5k {
 
         final List<String[]> resultado = new ArrayList<>();
 
-        for (final String[] entrada : whitelist) {
+        for (final String[] entrada : list) {
             final String slotAtual = entrada[1];
 
             if (mapeamentoSlot.containsKey(slotAtual)) {
-                final String novoSlot = mapeamentoSlot.get(slotAtual);
-
                 final String[] novaEntrada = entrada.clone();
-                novaEntrada[1] = novoSlot;
-
+                novaEntrada[index] = mapeamentoSlot.get(slotAtual);
                 resultado.add(novaEntrada);
             }
         }
@@ -327,7 +417,17 @@ public class ConfigCutoverGenerator5k {
         return resultado;
     }
 
-    public List<String[]> filtrarEMapearPorPon(final List<String[]> whitelist) {
+    /**
+     * Filtra os dados do List<String[]> baseado no valor de escolha slot e pon
+     * 
+     * @param list      List<String[]> contendo os comandos para criação
+     * @param indexSlot Index do valor do slot
+     * @param indexPon  Index do valor da pon
+     * @return Retorna a List<String[]> inicial porém somente com os valores do
+     *         index escolhido!
+     */
+    public List<String[]> filtrarEMapearPorPon(final List<String[]> list, final int indexSlot,
+            final int indexPon) {
         final List<String[]> origem = olt5kCutoverTo6k.getPonOrigemSelecionadaPonTable();
         final List<String[]> destino = olt5kCutoverTo6k.getGponDestinoSelecionado();
 
@@ -344,27 +444,36 @@ public class ConfigCutoverGenerator5k {
 
         final List<String[]> filtradosMapeados = new ArrayList<>();
 
-        for (final String[] linha : whitelist) {
+        for (final String[] linha : list) {
             final String linhaSlot = linha[1];
             final String linhaPon = linha[2];
 
             if (linhaSlot.equals(slotOrigem) && mapaPonOrigemParaDestino.containsKey(linhaPon)) {
                 final String novaPon = mapaPonOrigemParaDestino.get(linhaPon);
 
-                filtradosMapeados.add(new String[] {
-                        linha[0], // phy addr
-                        slotDestino, // novo slot (único)
-                        novaPon, // pon mapeada
-                        linha[3], // onu
-                        linha[4] // type
-                });
+                final String[] novaLinha = linha.clone();
+                novaLinha[indexSlot] = slotDestino;
+                novaLinha[indexPon] = novaPon;
+
+                filtradosMapeados.add(novaLinha);
             }
         }
 
         return filtradosMapeados;
     }
 
-    private List<String[]> filtrarEMapearPorOnu(final List<String[]> whitelist) {
+    /**
+     * Filtra os dados do List<String[]> baseado no valor de escolha slot, pon e onu
+     * 
+     * @param list      List<String[]> contendo os comandos para criação
+     * @param indexSlot Index do valor do slot
+     * @param indexPon  Index do valor da pon
+     * @param indexOnu  Index do valor da onu
+     * @return Retorna a List<String[]> inicial porém somente com os valores do
+     *         index escolhido!
+     */
+    private List<String[]> filtrarEMapearPorOnu(final List<String[]> list, final int indexSlot,
+            final int indexPon, final int indexOnu) {
         final List<String[]> resultado = new ArrayList<>();
         final List<String[]> origem = olt5kCutoverTo6k.getOnuOrigemSelecionadaOnuTable();
         final List<String[]> destino = olt5kCutoverTo6k.getGponDestinoSelecionado();
@@ -378,10 +487,10 @@ public class ConfigCutoverGenerator5k {
         final String novoSlot = destino.get(0)[0];
         final String novaPon = destino.get(0)[1];
 
-        for (final String[] linha : whitelist) {
-            final String slot = linha[1];
-            final String pon = linha[2];
-            final String onu = linha[3];
+        for (final String[] linha : list) {
+            final String slot = linha[indexSlot];
+            final String pon = linha[indexPon];
+            final String onu = linha[indexOnu];
 
             for (final String[] onuSelecionada : origem) {
                 final String slotOrigem = onuSelecionada[0];
@@ -390,8 +499,8 @@ public class ConfigCutoverGenerator5k {
 
                 if (slot.equals(slotOrigem) && pon.equals(ponOrigem) && onu.equals(onuOrigem)) {
                     final String[] novaLinha = linha.clone();
-                    novaLinha[1] = novoSlot;
-                    novaLinha[2] = novaPon;
+                    novaLinha[indexSlot] = novoSlot;
+                    novaLinha[indexPon] = novaPon;
                     resultado.add(novaLinha);
                     break;
                 }
