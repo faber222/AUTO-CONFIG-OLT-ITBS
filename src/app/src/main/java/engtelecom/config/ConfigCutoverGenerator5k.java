@@ -169,6 +169,7 @@ public class ConfigCutoverGenerator5k {
 
         List<String[]> whiteListFiltrado = null;
         List<String[]> wanServicePPPFiltrado = null;
+        List<String[]> wanServiceStaticFiltrado = null;
         List<String[]> wanServiceBridgeFiltrado = null;
         List<String[]> wifiFiltrado = null;
         List<String[]> veipCfgFiltrado = null;
@@ -182,6 +183,10 @@ public class ConfigCutoverGenerator5k {
             // wanService pppoe
             wanServicePPPFiltrado = filtrarEMapearPorSlot(
                     this.dataAnaliser5k.getDataWanServiceFilter().getWanRouterConfigs(), 0);
+
+            // wanService static
+            wanServiceStaticFiltrado = filtrarEMapearPorSlot(
+                    this.dataAnaliser5k.getDataWanServiceFilter().getWanStaticConfigs(), 0);
 
             // wanService bridge
             wanServiceBridgeFiltrado = filtrarEMapearPorSlot(
@@ -207,6 +212,10 @@ public class ConfigCutoverGenerator5k {
             // wanService pppoe
             wanServicePPPFiltrado = filtrarEMapearPorPon(
                     this.dataAnaliser5k.getDataWanServiceFilter().getWanRouterConfigs(), 0, 1);
+
+            // wanService static
+            wanServiceStaticFiltrado = filtrarEMapearPorPon(
+                    this.dataAnaliser5k.getDataWanServiceFilter().getWanStaticConfigs(), 0, 1);
 
             // wanService bridge
             wanServiceBridgeFiltrado = filtrarEMapearPorPon(
@@ -234,6 +243,10 @@ public class ConfigCutoverGenerator5k {
             // wanService pppoe
             wanServicePPPFiltrado = filtrarEMapearPorOnu(
                     this.dataAnaliser5k.getDataWanServiceFilter().getWanRouterConfigs(), 0, 1, 2);
+
+            // wanService static
+            wanServiceStaticFiltrado = filtrarEMapearPorOnu(
+                    this.dataAnaliser5k.getDataWanServiceFilter().getWanStaticConfigs(), 0, 1, 2);
 
             // wanService bridge
             wanServiceBridgeFiltrado = filtrarEMapearPorOnu(
@@ -268,6 +281,15 @@ public class ConfigCutoverGenerator5k {
         if (wanServicePPPFiltrado != null) {
             for (final String[] config : wanServicePPPFiltrado) {
                 configWanService.add(scriptsAN6k.comandoPpoe(config[0], config[1], config[2], config[6], config[9],
+                        config[10], config[3], config[4], config[5], config[7], config[8]));
+            }
+        }
+
+        // Configurar o router static
+        // FALTA FINALIZAR
+        if (wanServiceStaticFiltrado != null) {
+            for (final String[] config : wanServiceStaticFiltrado) {
+                configWanService.add(scriptsAN6k.comandoStatic(config[0], config[1], config[2], config[6], config[9],
                         config[10], config[3], config[4], config[5], config[7], config[8]));
             }
         }
