@@ -30,9 +30,9 @@ public class DataVeipFilter {
     }
 
     /**
-     * [0] SLOT
-     * [1] PON
-     * [2] ONU
+     * [0] slot
+     * [1] pon
+     * [2] onu
      * [3] Port
      * [4] Index do onuVeip
      * [5] VLAN usada
