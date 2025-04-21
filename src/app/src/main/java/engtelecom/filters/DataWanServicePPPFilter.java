@@ -1,18 +1,39 @@
 package engtelecom.filters;
 
-import java.io.*;
-import java.util.*;
-import java.util.regex.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DataWanServicePPPFilter {
     private final String path;
     private final List<String[]> wanRouterConfigs; // Configs de "ty r"
     private final List<String[]> wanBridgeConfigs; // Configs de "ty b"
+    private final List<String[]> wanStaticConfigs; // Configs de "disp sta"
 
     public DataWanServicePPPFilter(final String path) {
         this.path = path;
         this.wanRouterConfigs = new ArrayList<>();
         this.wanBridgeConfigs = new ArrayList<>();
+        this.wanStaticConfigs = new ArrayList<>();
+    }
+
+    /**
+     * [0] slot
+     * [1] pon
+     * [2] onu
+     * [3] index
+     * [4] IP
+     * [5] MASK
+     * [6] GATEWAY
+     * [7] SLA
+     * 
+     * @return Lista com configurações do tipo static
+     */
+    public List<String[]> getWanStaticConfigs() {
+        return wanStaticConfigs;
     }
 
     /**
@@ -103,6 +124,26 @@ public class DataWanServicePPPFilter {
                     wanBridgeConfigs.add(new String[] { slot, pon, onu, ind, mode, tipo, vlan, nat, vlanMode, tvlan,
                             tvid });
                 }
+
+                Pattern staticPattern = Pattern.compile(
+                        "set wancfg sl (\\d+) (\\d+) (\\d+) ind (\\d+).*? dsp sta ip ([\\d.]+) mask ([\\d.]+) gate ([\\d.]+).*? sla ([\\d.]+)");
+                Matcher staticMatcher = staticPattern.matcher(line);
+
+                if (staticMatcher.find()) {
+                    final String slot = staticMatcher.group(1);
+                    final String pon = staticMatcher.group(2);
+                    final String onu = staticMatcher.group(3);
+                    final String ind = staticMatcher.group(4);
+                    final String ip = staticMatcher.group(5);
+                    final String mask = staticMatcher.group(6);
+                    final String gate = staticMatcher.group(7);
+                    final String sla = staticMatcher.group(8);
+
+                    wanStaticConfigs.add(new String[] {
+                            slot, pon, onu, ind, ip, mask, gate, sla
+                    });
+                }
+
             }
 
             // Debug: Exibir os resultados processados
