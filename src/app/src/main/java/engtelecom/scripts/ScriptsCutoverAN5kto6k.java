@@ -169,6 +169,39 @@ public class ScriptsCutoverAN5kto6k {
         }
 
         /**
+         * Função usada para criar o script para configurar o router static da cpe
+         * 
+         * @param slotGpon     Slot da placa no chassi
+         * @param slotPortaPon Porta pon onde a CPE se encontra
+         * @param slotCpe      Slot da pon onde desejamos provisionar a CPE
+         * @param vlan         Vlan do WanService
+         * @param userPPP      Usuario pppoe
+         * @param passPPP      Senha do pppoe
+         * @param index        Index do WanService
+         * @param mode         Modo do WanService (Internet, voice/Internet, etc)
+         * @param type         Modo de operação da Wan (bridge/router)
+         * @param nat          Nat enable/disable
+         * @param dsp          Modo pppoe/null
+         * 
+         * @return Lista de strings contendo todo o script para configurar pppoe
+         */
+        public List<String> comandoStatic(final String slotGpon, final String slotPortaPon, final String slotCpe,
+                        final String vlan, final String userPPP, final String passPPP, final String index,
+                        final String mode, final String type, final String nat, final String dsp) {
+                final List<String> scriptComandoPpoe = new ArrayList<>();
+                scriptComandoPpoe.add(String.format("interface pon 1/%s/%s", slotGpon, slotPortaPon));
+                scriptComandoPpoe.add(String.format(
+                                "onu wan-cfg %s index %s mode %s type %s %s 7 nat %s qos disable dsp %s pro disable %s %s null auto entries 6 fe1 fe2 fe3 fe4 ssid1 ssid5",
+                                slotCpe, index, mode, type, vlan, nat, dsp, userPPP, passPPP));
+                scriptComandoPpoe.add(String.format(
+                                "onu ipv6-wan-cfg %s ind %s ip-stack-mode both ipv6-src-type slaac prefix-src-type delegate",
+                                slotCpe, index));
+                scriptComandoPpoe.add("exit");
+                return scriptComandoPpoe;
+        }
+
+
+        /**
          * Função usada para criar o script para configurar o pppoe da cpe
          * 
          * @param slotGpon     Slot da placa no chassi
