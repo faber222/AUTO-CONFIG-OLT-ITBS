@@ -287,12 +287,12 @@ public class ConfigCutoverGenerator5k {
 
         // Configurar o router static
         // FALTA FINALIZAR
-        if (wanServiceStaticFiltrado != null) {
-            for (final String[] config : wanServiceStaticFiltrado) {
-                configWanService.add(scriptsAN6k.comandoStatic(config[0], config[1], config[2], config[6], config[9],
-                        config[10], config[3], config[4], config[5], config[7], config[8]));
-            }
-        }
+        // if (wanServiceStaticFiltrado != null) {
+        //     for (final String[] config : wanServiceStaticFiltrado) {
+        //         configWanService.add(scriptsAN6k.comandoStatic(config[0], config[1], config[2], config[6], config[9],
+        //                 config[10], config[3], config[4], config[5], config[7], config[8]));
+        //     }
+        // }
 
         // Configurar o bridge
         if (wanServiceBridgeFiltrado != null) {
@@ -416,7 +416,6 @@ public class ConfigCutoverGenerator5k {
         final List<String[]> origemSlots = olt5kCutoverTo6k.getSlotOrigemSelecionadaSlotTable();
         final List<String[]> destinoSlots = olt5kCutoverTo6k.getGponDestinoSelecionado();
 
-        // Cria um mapa de substituição: slotOrigem -> slotDestino
         final Map<String, String> mapeamentoSlot = new HashMap<>();
         for (int i = 0; i < origemSlots.size(); i++) {
             final String slotOrigem = origemSlots.get(i)[0];
@@ -427,7 +426,7 @@ public class ConfigCutoverGenerator5k {
         final List<String[]> resultado = new ArrayList<>();
 
         for (final String[] entrada : list) {
-            final String slotAtual = entrada[1];
+            final String slotAtual = entrada[index];
 
             if (mapeamentoSlot.containsKey(slotAtual)) {
                 final String[] novaEntrada = entrada.clone();
@@ -467,8 +466,8 @@ public class ConfigCutoverGenerator5k {
         final List<String[]> filtradosMapeados = new ArrayList<>();
 
         for (final String[] linha : list) {
-            final String linhaSlot = linha[1];
-            final String linhaPon = linha[2];
+            final String linhaSlot = linha[indexSlot];
+            final String linhaPon = linha[indexPon];
 
             if (linhaSlot.equals(slotOrigem) && mapaPonOrigemParaDestino.containsKey(linhaPon)) {
                 final String novaPon = mapaPonOrigemParaDestino.get(linhaPon);
