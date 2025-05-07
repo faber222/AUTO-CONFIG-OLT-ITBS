@@ -53,8 +53,11 @@ public class DataWhitelistFilter {
 
             while ((line = br.readLine()) != null) {
                 // Regex para capturar as entradas de whitelist
+                // final Pattern whitePattern = Pattern.compile(
+                //         "set white phy addr (\\S+) .*? sl (\\d+) p (\\d+) o (\\d+) ty (\\S+)");
                 final Pattern whitePattern = Pattern.compile(
-                        "set white phy addr (\\S+) .*? sl (\\d+) p (\\d+) o (\\d+) ty (\\S+)");
+                        "set white phy addr (\\S+) .*? sl (\\d+) p (\\d+) o ((?:\\d+|null)) ty (\\S+)");
+
                 final Matcher whiteMatcher = whitePattern.matcher(line);
 
                 if (whiteMatcher.find()) {

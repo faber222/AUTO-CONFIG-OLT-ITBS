@@ -165,6 +165,9 @@ public class ConfigCutoverGenerator5k {
             for (final String[] config : this.dataAnaliser5k.getDataVlanUpFilter().getUplinkVlans()) {
                 configUplinkVlan.add(scriptsAN6k.addVlanToUplink(uplink[0], uplink[1], config[2], config[3]));
             }
+            for (final String[] config : this.dataAnaliser5k.getDataVlanUpFilter().getTrunkVlans()) {
+                configUplinkVlan.add(scriptsAN6k.addVlanToUplink(uplink[0], uplink[1], config[0], config[1]));
+            }
         }
 
         List<String[]> whiteListFiltrado = null;
