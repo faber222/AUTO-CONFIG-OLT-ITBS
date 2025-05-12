@@ -173,6 +173,7 @@ public class ConfigCutoverGenerator5k {
         List<String[]> whiteListFiltrado = null;
         List<String[]> wanServicePPPFiltrado = null;
         List<String[]> wanServiceStaticFiltrado = null;
+        List<String[]> wanServiceDhcpFiltrado = null;
         List<String[]> wanServiceBridgeFiltrado = null;
         List<String[]> wifiFiltrado = null;
         List<String[]> veipCfgFiltrado = null;
@@ -190,6 +191,10 @@ public class ConfigCutoverGenerator5k {
             // wanService static
             wanServiceStaticFiltrado = filtrarEMapearPorSlot(
                     this.dataAnaliser5k.getDataWanServiceFilter().getWanStaticConfigs(), 0);
+            
+            // wanService dhcp
+            wanServiceDhcpFiltrado = filtrarEMapearPorSlot(
+                    this.dataAnaliser5k.getDataWanServiceFilter().getWanIpoeConfigs(), 0);
 
             // wanService bridge
             wanServiceBridgeFiltrado = filtrarEMapearPorSlot(
@@ -219,6 +224,10 @@ public class ConfigCutoverGenerator5k {
             // wanService static
             wanServiceStaticFiltrado = filtrarEMapearPorPon(
                     this.dataAnaliser5k.getDataWanServiceFilter().getWanStaticConfigs(), 0, 1);
+            
+            // wanService dhcp
+            wanServiceDhcpFiltrado = filtrarEMapearPorPon(
+                    this.dataAnaliser5k.getDataWanServiceFilter().getWanIpoeConfigs(), 0, 1);
 
             // wanService bridge
             wanServiceBridgeFiltrado = filtrarEMapearPorPon(
@@ -250,6 +259,10 @@ public class ConfigCutoverGenerator5k {
             // wanService static
             wanServiceStaticFiltrado = filtrarEMapearPorOnu(
                     this.dataAnaliser5k.getDataWanServiceFilter().getWanStaticConfigs(), 0, 1, 2);
+                
+            // wanService dhcp
+            wanServiceDhcpFiltrado = filtrarEMapearPorOnu(
+                    this.dataAnaliser5k.getDataWanServiceFilter().getWanIpoeConfigs(), 0, 1, 2);
 
             // wanService bridge
             wanServiceBridgeFiltrado = filtrarEMapearPorOnu(
@@ -284,24 +297,34 @@ public class ConfigCutoverGenerator5k {
         if (wanServicePPPFiltrado != null) {
             for (final String[] config : wanServicePPPFiltrado) {
                 configWanService.add(scriptsAN6k.comandoPpoe(config[0], config[1], config[2], config[6], config[9],
-                        config[10], config[3], config[4], config[5], config[7], config[8]));
+                        config[10], config[3], config[4], config[5], config[7], config[8], config[11], config[12],
+                        config[13]));
             }
         }
 
         // Configurar o router static
-        // FALTA FINALIZAR
-        // if (wanServiceStaticFiltrado != null) {
-        //     for (final String[] config : wanServiceStaticFiltrado) {
-        //         configWanService.add(scriptsAN6k.comandoStatic(config[0], config[1], config[2], config[6], config[9],
-        //                 config[10], config[3], config[4], config[5], config[7], config[8]));
-        //     }
-        // }
+        if (wanServiceStaticFiltrado != null) {
+            for (final String[] config : wanServiceStaticFiltrado) {
+                configWanService.add(scriptsAN6k.comandoStatic(config[0], config[1], config[2], config[6], config[3],
+                        config[4], config[5], config[7], config[8], config[9], config[10], config[11], config[12],
+                        config[13], config[14], config[15]));
+            }
+        }
+
+        // Configurar o router ipoe
+        if (wanServiceDhcpFiltrado != null) {
+            for (final String[] config : wanServiceDhcpFiltrado) {
+                configWanService.add(scriptsAN6k.comandoIpoe(config[0], config[1], config[2], config[6], config[3],
+                        config[4], config[5], config[7], config[8], config[9], config[10]));
+            }
+        }
 
         // Configurar o bridge
         if (wanServiceBridgeFiltrado != null) {
             for (final String[] config : wanServiceBridgeFiltrado) {
                 configWanService.add(scriptsAN6k.comandoBridge(config[0], config[1], config[2], config[6], config[3],
-                        config[4], config[5], config[7], config[8], config[9], config[10]));
+                        config[4], config[5], config[7], config[8], config[9], config[10], config[11], config[12],
+                        config[13]));
             }
         }
 
