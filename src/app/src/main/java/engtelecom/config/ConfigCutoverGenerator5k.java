@@ -182,7 +182,11 @@ public class ConfigCutoverGenerator5k {
 
         if (olt5kCutoverTo6k.isSlotSelect()) {
             // whiteList
-            whiteListFiltrado = filtrarEMapearPorSlot(this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist(), 1);
+            // whiteListFiltrado =
+            // filtrarEMapearPorSlot(this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist(),
+            // 1);
+            whiteListFiltrado = filtrarEMapearPorSlot(this.dataAnaliser5k.getDataWhitelistFilter().getAuthoList(),
+                    1);
 
             // wanService pppoe
             wanServicePPPFiltrado = filtrarEMapearPorSlot(
@@ -191,7 +195,7 @@ public class ConfigCutoverGenerator5k {
             // wanService static
             wanServiceStaticFiltrado = filtrarEMapearPorSlot(
                     this.dataAnaliser5k.getDataWanServiceFilter().getWanStaticConfigs(), 0);
-            
+
             // wanService dhcp
             wanServiceDhcpFiltrado = filtrarEMapearPorSlot(
                     this.dataAnaliser5k.getDataWanServiceFilter().getWanIpoeConfigs(), 0);
@@ -215,7 +219,11 @@ public class ConfigCutoverGenerator5k {
 
         } else if (olt5kCutoverTo6k.isPonSelect()) {
             // whiteList
-            whiteListFiltrado = filtrarEMapearPorPon(this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist(), 1, 2);
+            // whiteListFiltrado =
+            // filtrarEMapearPorPon(this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist(),
+            // 1, 2);
+            whiteListFiltrado = filtrarEMapearPorPon(this.dataAnaliser5k.getDataWhitelistFilter().getAuthoList(),
+                    1, 2);
 
             // wanService pppoe
             wanServicePPPFiltrado = filtrarEMapearPorPon(
@@ -224,7 +232,7 @@ public class ConfigCutoverGenerator5k {
             // wanService static
             wanServiceStaticFiltrado = filtrarEMapearPorPon(
                     this.dataAnaliser5k.getDataWanServiceFilter().getWanStaticConfigs(), 0, 1);
-            
+
             // wanService dhcp
             wanServiceDhcpFiltrado = filtrarEMapearPorPon(
                     this.dataAnaliser5k.getDataWanServiceFilter().getWanIpoeConfigs(), 0, 1);
@@ -249,7 +257,10 @@ public class ConfigCutoverGenerator5k {
 
         } else if (olt5kCutoverTo6k.isOnuSelect()) {
             // whiteList
-            whiteListFiltrado = filtrarEMapearPorOnu(this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist(), 1, 2,
+            // whiteListFiltrado = filtrarEMapearPorOnu(
+            // this.dataAnaliser5k.getDataWhitelistFilter().getWhitelist(), 1, 2, 3);
+            whiteListFiltrado = filtrarEMapearPorOnu(this.dataAnaliser5k.getDataWhitelistFilter().getAuthoList(),
+                    1, 2,
                     3);
 
             // wanService pppoe
@@ -259,7 +270,7 @@ public class ConfigCutoverGenerator5k {
             // wanService static
             wanServiceStaticFiltrado = filtrarEMapearPorOnu(
                     this.dataAnaliser5k.getDataWanServiceFilter().getWanStaticConfigs(), 0, 1, 2);
-                
+
             // wanService dhcp
             wanServiceDhcpFiltrado = filtrarEMapearPorOnu(
                     this.dataAnaliser5k.getDataWanServiceFilter().getWanIpoeConfigs(), 0, 1, 2);

@@ -1005,7 +1005,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                                 this.oltCutoverOnuTable = new OltCutoverOnuTable();
                                 for (final String[] linha : this.dataAnaliser5k.getDataWhitelistFilter()
                                                 .getWhitelist()) {
-                                        oltCutoverOnuTable.adicionarLinha(linha[1], linha[2], linha[3]);
+                                        oltCutoverOnuTable.adicionarLinha(linha[0],linha[1], linha[2], linha[3]);
                                 }
                                 oltCutoverOnuTable.ordenarTabela();
                                 oltCutoverOnuTable.setListener(this);
@@ -1056,7 +1056,6 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
          * @param evt NÃO USADO!
          */
         private void jButtonColetarActionPerformed(final java.awt.event.ActionEvent evt) {
-
 
                 // PRECISA CRIAR UM COLETADOR DE DADOS DA OLT 5K
 

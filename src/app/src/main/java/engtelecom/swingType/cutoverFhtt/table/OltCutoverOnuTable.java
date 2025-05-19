@@ -41,9 +41,39 @@ public class OltCutoverOnuTable extends javax.swing.JFrame {
         }
 
         // Método para adicionar novas linhas dinamicamente
-        public void adicionarLinha(String slot, String pon, String onu) {
+
+        // public void adicionarLinha(String slot, String pon, String onu) {
+        // javax.swing.table.DefaultTableModel model =
+        // (javax.swing.table.DefaultTableModel) jTableOnu.getModel();
+
+        // if (onu.equals("null")) {
+        // System.out.println("Onu sem valor na posição: " + slot + "/" + pon + "/" +
+        // onu);
+        // }
+
+        // model.addRow(new Object[] { slot, pon, onu, false });
+        // }
+
+        public void adicionarLinha(String phyId, String slot, String pon, String onu) {
                 javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTableOnu.getModel();
+
+                // Loga apenas uma vez se a ONU for null
+                if ("null".equalsIgnoreCase(onu)) {
+                        System.out.println("CPE " + phyId + " sem valor definido no whitelist!");
+                }
+
                 model.addRow(new Object[] { slot, pon, onu, false });
+        }
+
+        private int safeParseInt(String value) {
+                try {
+                        if (value == null || value.equalsIgnoreCase("null") || value.isEmpty()) {
+                                return Integer.MAX_VALUE; // coloca no final da ordenação
+                        }
+                        return Integer.parseInt(value.trim());
+                } catch (NumberFormatException e) {
+                        return Integer.MAX_VALUE; // também coloca no final da ordenação
+                }
         }
 
         public void ordenarTabela() {
@@ -52,9 +82,16 @@ public class OltCutoverOnuTable extends javax.swing.JFrame {
                 jTableOnu.setRowSorter(sorter);
 
                 // Definir comparadores para colunas numéricas
-                sorter.setComparator(0, Comparator.comparingInt(o -> Integer.valueOf(o.toString()))); // SLOT
-                sorter.setComparator(1, Comparator.comparingInt(o -> Integer.valueOf(o.toString()))); // PON
-                sorter.setComparator(2, Comparator.comparingInt(o -> Integer.valueOf(o.toString()))); // ONU
+                // sorter.setComparator(0, Comparator.comparingInt(o ->
+                // Integer.valueOf(o.toString()))); // SLOT
+                // sorter.setComparator(1, Comparator.comparingInt(o ->
+                // Integer.valueOf(o.toString()))); // PON
+                // sorter.setComparator(2, Comparator.comparingInt(o ->
+                // Integer.valueOf(o.toString()))); // ONU
+
+                sorter.setComparator(0, Comparator.comparingInt(o -> safeParseInt(o.toString())));
+                sorter.setComparator(1, Comparator.comparingInt(o -> safeParseInt(o.toString())));
+                sorter.setComparator(2, Comparator.comparingInt(o -> safeParseInt(o.toString())));
 
                 // Definir ordenação: primeiro SLOT (coluna 0), depois PON (coluna 1), e depois
                 // ONU (coluna 2)
