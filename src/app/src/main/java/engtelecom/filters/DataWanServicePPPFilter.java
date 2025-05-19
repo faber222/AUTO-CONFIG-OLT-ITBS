@@ -105,6 +105,7 @@ public class DataWanServicePPPFilter {
         encodingMap.put('=', 'a');
         encodingMap.put('^', '@');
         encodingMap.put('~', ' ');
+        encodingMap.put(' ', '~');
         encodingMap.put('<', 'b');
         encodingMap.put('>', '`');
         encodingMap.put(',', 'r');
