@@ -483,6 +483,38 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 }
 
                 this.destinoSelecionado = true;
+
+                // Após validar e armazenar os dados:
+                final StringBuilder resumo = new StringBuilder();
+
+                // Adiciona os dados de destino (GPON/SLOT)
+                resumo.append("Serviço: ");
+                for (final String[] dados : gponDestinoSelecionado) {
+                        resumo.append(String.join("-", dados)).append(", ");
+                }
+                if (!gponDestinoSelecionado.isEmpty()) {
+                        resumo.setLength(resumo.length() - 2); // remove última vírgula e espaço
+                }
+                resumo.append(" ");
+
+                // Adiciona os dados de uplink
+                resumo.append("Uplink: ");
+                for (final String[] dados : uplinkDestinoSelecionado) {
+                        resumo.append(String.join("-", dados)).append(", ");
+                }
+                if (!uplinkDestinoSelecionado.isEmpty()) {
+                        resumo.setLength(resumo.length() - 2);
+                }
+
+                // Limita o tamanho do texto para evitar quebra de layout
+                final int maxLength = 66;
+                String textoFinal = resumo.toString();
+                if (textoFinal.length() > maxLength) {
+                        textoFinal = textoFinal.substring(0, maxLength - 3) + "...";
+                }
+
+                // Exibe no JTextPane do destino
+                jTextPaneDadosOltDestino.setText(textoFinal);
         }
 
         /**
@@ -525,7 +557,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 jButtonPreview = new javax.swing.JButton();
                 jTextAreaPreviewCode = new javax.swing.JTextArea();
 
-                setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+                setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
                 setTitle("Cutover 5k");
                 setResizable(false);
                 setClosable(true);
