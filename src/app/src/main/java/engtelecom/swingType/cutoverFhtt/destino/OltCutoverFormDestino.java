@@ -66,7 +66,7 @@ public class OltCutoverFormDestino extends javax.swing.JFrame {
         jTree1 = new javax.swing.JTree();
         jButtonOK = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
         // Cria a "raiz técnica" invisível
