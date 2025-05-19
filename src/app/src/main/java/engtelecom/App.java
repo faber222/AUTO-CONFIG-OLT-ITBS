@@ -12,7 +12,6 @@ import engtelecom.swingType.cutoverItbs.OltCutover;
 import engtelecom.swingType.fiberhome.OltFhtt;
 import engtelecom.swingType.gcon.OltG08;
 import engtelecom.swingType.gcon.OltG16;
-import engtelecom.swingType.templates.OltCutover5k;
 import engtelecom.swingType.zhone.Olt8820;    
 
 /**
@@ -117,7 +116,7 @@ public class App extends javax.swing.JFrame {
     private final String oltG08;
     private final String olt8820;
     private final String oltCutover;
-    private final String oltCutover5k;
+    // private final String oltCutover5k;
     private final String oltCutover5kTo6k;
 
     // End of variables declaration//GEN-END:variables
@@ -131,7 +130,7 @@ public class App extends javax.swing.JFrame {
         this.oltG16 = "G16";
         this.oltG08 = "G08";
         this.oltCutover = "OLT-CUTOVER";
-        this.oltCutover5k = "OLT-CUTOVER-5k";
+        // this.oltCutover5k = "OLT-CUTOVER-5k";
         this.oltCutover5kTo6k = "OLT-CUTOVER-5k-TO-6K";
         initComponents();
         this.setIconImage(this.mainIcon.getImage());
@@ -321,11 +320,11 @@ public class App extends javax.swing.JFrame {
 
         jMenu4.add(jMenuCutover);
 
-        jMenuCutover5k.setIcon(oltCutoverIcon);
-        jMenuCutover5k.setText(this.oltCutover5k);
-        jMenuCutover5k.addActionListener((final java.awt.event.ActionEvent evt) -> {
-            jMenuCutover5kActionPerformed();
-        });
+        // jMenuCutover5k.setIcon(oltCutoverIcon);
+        // jMenuCutover5k.setText(this.oltCutover5k);
+        // jMenuCutover5k.addActionListener((final java.awt.event.ActionEvent evt) -> {
+        //     jMenuCutover5kActionPerformed();
+        // });
 
         jMenu4.add(jMenuCutover5k);
 
@@ -397,11 +396,11 @@ public class App extends javax.swing.JFrame {
         telaCutover.setVisible(true);
     }// GEN-LAST:event_jMenu8820iActionPerformed
 
-    private void jMenuCutover5kActionPerformed() {// GEN-FIRST:event_jMenu8820iActionPerformed
-        final OltCutover5k telaCutover2 = new OltCutover5k(this);
-        jDesktopPane1.add(telaCutover2);
-        telaCutover2.setVisible(true);
-    }// GEN-LAST:event_jMenu8820iActionPerformed
+    // private void jMenuCutover5kActionPerformed() {// GEN-FIRST:event_jMenu8820iActionPerformed
+    //     final OltCutover5k telaCutover2 = new OltCutover5k(this);
+    //     jDesktopPane1.add(telaCutover2);
+    //     telaCutover2.setVisible(true);
+    // }// GEN-LAST:event_jMenu8820iActionPerformed
 
     private void jMenuCutover5kTo6kActionPerformed() {// GEN-FIRST:event_jMenu8820iActionPerformed
         final Olt5kCutoverTo6k olt5kCutoverTo6k = new Olt5kCutoverTo6k();
