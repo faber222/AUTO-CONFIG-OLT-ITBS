@@ -2,7 +2,7 @@
  * @author faber222
  * @since 2024
 */
-package engtelecom.access.write;
+package engtelecom.access.write.itbs;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

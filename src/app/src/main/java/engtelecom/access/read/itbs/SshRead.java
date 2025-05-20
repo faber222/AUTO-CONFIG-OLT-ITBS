@@ -1,4 +1,4 @@
-package engtelecom.access.read;
+package engtelecom.access.read.itbs;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -15,7 +15,7 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 
-public class SSHClient implements Runnable {
+public class SshRead implements Runnable {
 
     private Session session;
     private ChannelExec channelExec;
@@ -39,7 +39,7 @@ public class SSHClient implements Runnable {
      * @param user O nome de usuário para autenticação SSH.
      * @param pwd  A senha para autenticação SSH.
      */
-    public SSHClient(final String host, final int port, final String user, final String pwd, String fileName) {
+    public SshRead(final String host, final int port, final String user, final String pwd, String fileName) {
         this.host = host;
         this.port = port;
         this.username = user;

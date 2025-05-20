@@ -15,8 +15,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import engtelecom.App;
-import engtelecom.access.read.SSHClient;
-import engtelecom.access.read.TelnetCutover;
+import engtelecom.access.read.itbs.SshRead;
+import engtelecom.access.read.itbs.TelnetRead;
 import engtelecom.access.write.fhtt.TelnetFhtt;
 
 /**
@@ -958,7 +958,7 @@ public class OltCutover5k extends javax.swing.JInternalFrame {
                 jButtonColetar.setText("Coletar");
                 fileChooserIsSelected = false;
                 if (jRadioButtonTELNETOrigem.isSelected()) {
-                        final TelnetCutover telnet = new TelnetCutover(jTextFieldIpOltOrigem.getText(),
+                        final TelnetRead telnet = new TelnetRead(jTextFieldIpOltOrigem.getText(),
                                         (Integer) jSpinnerPortOltOrigem.getValue(), jTextFieldOltUserOrigem.getText(),
                                         new String(jPasswordFieldOltPasswdOrigem.getPassword()), arq);
                         if (telnet.oltAccess()) {
@@ -970,7 +970,7 @@ public class OltCutover5k extends javax.swing.JInternalFrame {
                         }
 
                 } else {
-                        final SSHClient sshClient = new SSHClient(jTextFieldIpOltOrigem.getText(),
+                        final SshRead sshClient = new SshRead(jTextFieldIpOltOrigem.getText(),
                                         (Integer) jSpinnerPortOltOrigem.getValue(), jTextFieldOltUserOrigem.getText(),
                                         new String(jPasswordFieldOltPasswdOrigem.getPassword()), arq);
                         if (sshClient.oltAccess()) {
