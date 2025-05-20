@@ -17,7 +17,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import engtelecom.access.TelnetFhtt;
+import engtelecom.access.write.TelnetFhtt;
 import engtelecom.analytics.DataAnaliser5k;
 import engtelecom.config.ConfigCutoverGenerator5k;
 import engtelecom.swingType.OltPreview;

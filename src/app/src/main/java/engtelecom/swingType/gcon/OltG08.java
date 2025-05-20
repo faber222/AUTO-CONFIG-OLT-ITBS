@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import engtelecom.access.Telnet;
+import engtelecom.access.write.Telnet;
 import engtelecom.product.OltGpon;
 
 /**

@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import engtelecom.access.Telnet8820Plus;
+import engtelecom.access.write.Telnet8820Plus;
 import engtelecom.product.Olt8820Plus;
 
 /**

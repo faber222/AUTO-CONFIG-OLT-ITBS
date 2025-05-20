@@ -1,4 +1,4 @@
-package engtelecom.access;
+package engtelecom.access.read;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

@@ -15,9 +15,9 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import engtelecom.App;
-import engtelecom.access.SSHClient;
-import engtelecom.access.TelnetCutover;
-import engtelecom.access.TelnetFhtt;
+import engtelecom.access.read.SSHClient;
+import engtelecom.access.read.TelnetCutover;
+import engtelecom.access.write.TelnetFhtt;
 
 /**
  *

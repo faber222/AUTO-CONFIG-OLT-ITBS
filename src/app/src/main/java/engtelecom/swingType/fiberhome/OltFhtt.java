@@ -16,7 +16,7 @@ import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import engtelecom.App;
-import engtelecom.access.TelnetFhtt;
+import engtelecom.access.write.TelnetFhtt;
 import engtelecom.product.OltGponFhtt;
 import engtelecom.swingType.OltPreview;
 import engtelecom.swingType.fiberhome.capability.CapabilityProfile;
