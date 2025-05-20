@@ -19,6 +19,8 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import engtelecom.access.SshManager;
+import engtelecom.access.TelnetManager;
 import engtelecom.access.read.fhtt.TelnetReadFhtt;
 import engtelecom.access.write.fhtt.TelnetWriteFhtt;
 import engtelecom.analytics.DataAnaliser5k;
@@ -44,37 +46,6 @@ import engtelecom.swingType.cutoverFhtt.table.OltCutoverSlotTableListener;
 public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 implements OltCutoverOnuTableListener, OltCutoverPonTableListener, OltCutoverSlotTableListener,
                 Olt5kCutoverOrigemAcessoListener, Olt5kCutoverDestinoAcessoListener, OltCutoverFormDestinoListener {
-
-        private class TelnetManager {
-                private final List<TelnetReadFhtt> activeConnections = new ArrayList<>();
-
-                public void startConnection(final String host, final int port, final String username,
-                                final String password, final String fileName,
-                                final Consumer<String> onSuccess, final Consumer<Exception> onError) {
-
-                        final TelnetReadFhtt telnet = new TelnetReadFhtt(host, port, username, password, fileName);
-                        telnet.setListener(new TelnetReadFhtt.TelnetOperationListener() {
-                                @Override
-                                public void onOperationComplete(final String fileName) {
-                                        activeConnections.remove(telnet);
-                                        onSuccess.accept(fileName);
-                                }
-
-                                @Override
-                                public void onOperationFailed(final Exception e) {
-                                        activeConnections.remove(telnet);
-                                        onError.accept(e);
-                                }
-                        });
-
-                        activeConnections.add(telnet);
-                        telnet.startConnection();
-                }
-
-                public void stopAllConnections() {
-                        new ArrayList<>(activeConnections).forEach(TelnetReadFhtt::stop);
-                }
-        }
 
         // Variables declaration - do not modify//GEN-BEGIN:variables
         private javax.swing.ButtonGroup buttonGroup1;
@@ -161,6 +132,8 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
         private int ponValue;
 
         private final TelnetManager telnetManager = new TelnetManager();
+
+        private final SshManager sshManager = new SshManager();
 
         /**
          * Creates new form Olt5kCutover
@@ -553,9 +526,11 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                 jTextPaneDadosOltDestino.setText(textoFinal);
         }
 
+        // Atualize o método dispose para limpar conexões SSH também
         @Override
         public void dispose() {
                 telnetManager.stopAllConnections();
+                sshManager.stopAllConnections();
                 super.dispose();
         }
 
@@ -1159,36 +1134,68 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
 
                         final String arq = "dados.txt";
 
-                        telnetManager.startConnection(
-                                        this.ipOltOrigem,
-                                        Integer.parseInt(this.portOltOrigem),
-                                        this.userOltOrigem,
-                                        this.passOltOrigem,
-                                        arq,
-                                        fileName -> {
-                                                SwingUtilities.invokeLater(() -> {
-                                                        this.filePath = fileName;
-                                                        previewText(this.filePath);
-                                                        jButtonColetar.setText("Coletar bkp remoto");
-                                                        jButtonColetar.setEnabled(true);
-                                                        fileChooserIsSelected = true;
-                                                        JOptionPane.showMessageDialog(null,
-                                                                        "Script importado com sucesso",
-                                                                        "Sucesso",
-                                                                        JOptionPane.INFORMATION_MESSAGE);
+                        if (this.isTelnetOltOrigem) {
+                                telnetManager.startConnection(
+                                                this.ipOltOrigem,
+                                                Integer.parseInt(this.portOltOrigem),
+                                                this.userOltOrigem,
+                                                this.passOltOrigem,
+                                                arq,
+                                                fileName -> {
+                                                        SwingUtilities.invokeLater(() -> {
+                                                                this.filePath = fileName;
+                                                                previewText(this.filePath);
+                                                                jButtonColetar.setText("Coletar bkp remoto");
+                                                                jButtonColetar.setEnabled(true);
+                                                                fileChooserIsSelected = true;
+                                                                JOptionPane.showMessageDialog(null,
+                                                                                "Script importado com sucesso",
+                                                                                "Sucesso",
+                                                                                JOptionPane.INFORMATION_MESSAGE);
+                                                        });
+                                                },
+                                                e -> {
+                                                        SwingUtilities.invokeLater(() -> {
+                                                                jButtonColetar.setText("Coletar bkp remoto");
+                                                                jButtonColetar.setEnabled(true);
+                                                                JOptionPane.showMessageDialog(null,
+                                                                                "Não foi possível importar o script: "
+                                                                                                + e.getMessage(),
+                                                                                "Erro",
+                                                                                JOptionPane.ERROR_MESSAGE);
+                                                        });
                                                 });
-                                        },
-                                        e -> {
-                                                SwingUtilities.invokeLater(() -> {
-                                                        jButtonColetar.setText("Coletar bkp remoto");
-                                                        jButtonColetar.setEnabled(true);
-                                                        JOptionPane.showMessageDialog(null,
-                                                                        "Não foi possível importar o script: "
-                                                                                        + e.getMessage(),
-                                                                        "Erro",
-                                                                        JOptionPane.ERROR_MESSAGE);
+                        } else {
+                                sshManager.startConnection(
+                                                this.ipOltOrigem,
+                                                Integer.parseInt(this.portOltOrigem),
+                                                this.userOltOrigem,
+                                                this.passOltOrigem,
+                                                arq,
+                                                fileName -> {
+                                                        SwingUtilities.invokeLater(() -> {
+                                                                this.filePath = fileName;
+                                                                previewText(this.filePath);
+                                                                jButtonColetar.setText("Coletar bkp remoto");
+                                                                jButtonColetar.setEnabled(true);
+                                                                fileChooserIsSelected = true;
+                                                                JOptionPane.showMessageDialog(null,
+                                                                                "Coleta SSH concluída com sucesso",
+                                                                                "Sucesso",
+                                                                                JOptionPane.INFORMATION_MESSAGE);
+                                                        });
+                                                },
+                                                e -> {
+                                                        SwingUtilities.invokeLater(() -> {
+                                                                jButtonColetar.setText("Coletar bkp remoto");
+                                                                jButtonColetar.setEnabled(true);
+                                                                JOptionPane.showMessageDialog(null,
+                                                                                "Erro na coleta SSH: " + e.getMessage(),
+                                                                                "Erro",
+                                                                                JOptionPane.ERROR_MESSAGE);
+                                                        });
                                                 });
-                                        });
+                        }
                 } else {
                         JOptionPane.showMessageDialog(null,
                                         "Para importar o script remotamente, é necessário preencher os dados de acesso da OLT.",
