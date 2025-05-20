@@ -16,7 +16,7 @@ import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import engtelecom.App;
-import engtelecom.access.write.fhtt.TelnetFhtt;
+import engtelecom.access.write.fhtt.TelnetWriteFhtt;
 import engtelecom.product.OltGponFhtt;
 import engtelecom.swingType.OltPreview;
 import engtelecom.swingType.fiberhome.capability.CapabilityProfile;
@@ -1281,7 +1281,7 @@ public class OltFhtt extends javax.swing.JInternalFrame implements CapabilityPro
 				final SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
 					@Override
 					protected Void doInBackground() throws Exception {
-						final TelnetFhtt acessoOlt = new TelnetFhtt(jTextFieldIpOlt.getText(),
+						final TelnetWriteFhtt acessoOlt = new TelnetWriteFhtt(jTextFieldIpOlt.getText(),
 								Integer.parseInt(jSpinnerPortOlt.getValue().toString()),
 								jTextFieldOltUser.getText(),
 								new String(jPasswordFieldOltPasswd.getPassword()), getOltName());

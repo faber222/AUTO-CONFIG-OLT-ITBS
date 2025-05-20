@@ -21,7 +21,7 @@ import org.apache.commons.net.telnet.TelnetClient;
 /**
  * Classe que realiza acesso via Telnet a uma OLT 8820 Plus.
  */
-public class Telnet8820Plus implements Runnable {
+public class TelnetWrite8820Plus implements Runnable {
     private TelnetClient telnetClient;
     private BufferedReader in;
     private PrintWriter out;
@@ -43,7 +43,7 @@ public class Telnet8820Plus implements Runnable {
      * @param user O nome de usuário para autenticação.
      * @param pwd  A senha para autenticação.
      */
-    public Telnet8820Plus(final String host, final int port, final String user, final String pwd,
+    public TelnetWrite8820Plus(final String host, final int port, final String user, final String pwd,
             final String oltName) {
         this.host = host;
         this.port = port;

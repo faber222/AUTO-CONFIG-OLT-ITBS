@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import engtelecom.access.write.itbs.Telnet;
+import engtelecom.access.write.itbs.TelnetWrite;
 import engtelecom.product.OltGpon;
 
 /**
@@ -828,7 +828,7 @@ public class OltG08 extends javax.swing.JInternalFrame {
                                 final SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
                                         @Override
                                         protected Void doInBackground() throws Exception {
-                                                final Telnet acessoOlt = new Telnet(jTextFieldIpOlt.getText(),
+                                                final TelnetWrite acessoOlt = new TelnetWrite(jTextFieldIpOlt.getText(),
                                                                 Integer.parseInt(jFormattedTextFieldPortOlt.getText()),
                                                                 jTextFieldOltUser.getText(),
                                                                 new String(jPasswordFieldOltPasswd.getPassword()), getOltName());

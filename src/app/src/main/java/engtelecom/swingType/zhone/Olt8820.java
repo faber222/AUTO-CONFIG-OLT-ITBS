@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import engtelecom.access.write.itbs.Telnet8820Plus;
+import engtelecom.access.write.itbs.TelnetWrite8820Plus;
 import engtelecom.product.Olt8820Plus;
 
 /**
@@ -851,7 +851,7 @@ public class Olt8820 extends javax.swing.JInternalFrame {
                                 final SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
                                         @Override
                                         protected Void doInBackground() throws Exception {
-                                                final Telnet8820Plus acessoOlt = new Telnet8820Plus(
+                                                final TelnetWrite8820Plus acessoOlt = new TelnetWrite8820Plus(
                                                                 jTextFieldIpOlt.getText(),
                                                                 Integer.parseInt(jFormattedTextFieldPortOlt.getText()),
                                                                 jTextFieldOltUser.getText(),

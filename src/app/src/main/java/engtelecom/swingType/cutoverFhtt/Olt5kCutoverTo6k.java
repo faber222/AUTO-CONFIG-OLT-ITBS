@@ -17,7 +17,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import engtelecom.access.write.fhtt.TelnetFhtt;
+import engtelecom.access.write.fhtt.TelnetWriteFhtt;
 import engtelecom.analytics.DataAnaliser5k;
 import engtelecom.config.ConfigCutoverGenerator5k;
 import engtelecom.swingType.OltPreview;
@@ -1154,7 +1154,7 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                                                 "Acessando a OLT remotamente....", null,
                                                 JOptionPane.INFORMATION_MESSAGE, null);
 
-                                final TelnetFhtt tesTelnetFhtt = new TelnetFhtt(this.ipOltDestino,
+                                final TelnetWriteFhtt tesTelnetFhtt = new TelnetWriteFhtt(this.ipOltDestino,
                                                 Integer.parseInt(this.portOltDestino),
                                                 this.userOltDestino,
                                                 this.passOltDestino,

@@ -17,7 +17,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import engtelecom.App;
 import engtelecom.access.read.itbs.SshRead;
 import engtelecom.access.read.itbs.TelnetRead;
-import engtelecom.access.write.fhtt.TelnetFhtt;
+import engtelecom.access.write.fhtt.TelnetWriteFhtt;
 import engtelecom.analytics.DataAnaliser;
 import engtelecom.config.ConfigCutoverGenerator;
 
@@ -942,7 +942,7 @@ public class OltCutover extends javax.swing.JInternalFrame {
                                 oltType = "AN6000";
                         }
                         // if (jRadioButtonTELNELDestino.isSelected()) {
-                        final TelnetFhtt tesTelnetFhtt = new TelnetFhtt(jTextFieldIpOltDestino.getText(),
+                        final TelnetWriteFhtt tesTelnetFhtt = new TelnetWriteFhtt(jTextFieldIpOltDestino.getText(),
                                         (Integer) jSpinnerPortOltDestino.getValue(),
                                         jTextFieldOltUserDestino.getText(),
                                         new String(jPasswordFieldOltPasswdDestino.getPassword()),
