@@ -1,4 +1,4 @@
-package engtelecom.access.write;
+package engtelecom.access.write.fhtt;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
