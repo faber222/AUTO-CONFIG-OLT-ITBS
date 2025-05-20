@@ -10,15 +10,15 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.UnknownHostException;
-
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
-// FALTA IMPLEMENTAR
-// FALTA IMPLEMENTAR
-// FALTA IMPLEMENTAR
-// FALTA IMPLEMENTAR
-// FALTA IMPLEMENTAR
 public class TelnetReadFhtt implements Runnable {
+    public interface TelnetOperationListener {
+        void onOperationComplete(String fileName);
+
+        void onOperationFailed(Exception e);
+    }
 
     private Socket socket;
     private BufferedReader in;
@@ -26,13 +26,12 @@ public class TelnetReadFhtt implements Runnable {
     private Thread thread;
     private boolean active;
 
-    // Atributos para oltAccess
     private final String host;
     private final int port;
     private final String username;
     private final String password;
-
     private final String fileName;
+    private TelnetOperationListener listener;
 
     public TelnetReadFhtt(String host, int port, String username, String password, String fileName) {
         this.host = host;
@@ -42,118 +41,116 @@ public class TelnetReadFhtt implements Runnable {
         this.fileName = fileName;
     }
 
-    public boolean oltAccess() {
+    public void setListener(TelnetOperationListener listener) {
+        this.listener = listener;
+    }
+
+    public void startConnection() {
+        thread = new Thread(this);
+        thread.start();
+    }
+
+    public void run() {
         try {
-            // Configuração do socket e streams de entrada/saída
-            final int timeout = 5000; // 5 segundos
+            final int timeout = 5000;
             final SocketAddress socketAddress = new InetSocketAddress(host, port);
             socket = new Socket();
-
-            // Tenta conectar dentro do tempo limite especificado
             socket.connect(socketAddress, timeout);
 
-            // Verifica se o socket foi realmente conectado
-            if (socket.isConnected()) {
-                System.out.println("Socket conectado com sucesso ao host " + host + " na porta " + port);
+            if (!socket.isConnected()) {
+                throw new IOException("Falha ao conectar ao host " + host + " na porta " + port);
             }
 
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
 
-            // Início da Leitura em tempo real
             active = true;
-            thread = new Thread(this);
-            thread.start();
 
-            // Login
-            out.println(username);
-            Thread.sleep(100);
-            out.println(password);
-            Thread.sleep(100);
-            out.println("enable");
-            Thread.sleep(100);
-            out.println(password);
-            Thread.sleep(100);
+            // Login sequence
+            sendCommand(username, 100);
+            sendCommand(password, 100);
+            sendCommand("enable", 100);
+            sendCommand(password, 100);
+            sendCommand("GEPON", 100);
 
             applyCommands();
 
-            // Espera até que o processamento do comando (sh run) esteja completo
-            thread.join(); // Aguarda o término da thread de leitura (run)
+            // Read responses
+            readResponses();
 
-            // Somente após a leitura completa, finalMessage é chamado
-            finalMessage();
-            return true;
+            if (listener != null) {
+                SwingUtilities.invokeLater(() -> listener.onOperationComplete(fileName));
+            }
         } catch (final UnknownHostException exception) {
-            System.err.println("Erro na entrada.");
-            JOptionPane.showMessageDialog(null,
-                    "Erro na entrada.", "Aviso!",
-                    JOptionPane.INFORMATION_MESSAGE);
-            System.err.println("Host desconhecido: " + host);
+            notifyError("Erro na entrada.\nHost desconhecido: " + host, exception);
         } catch (final IOException exception) {
-            System.err.println("Erro de I/O ao tentar conectar ao host " + host + " na porta " + port);
-            JOptionPane.showMessageDialog(null, "Erro de I/O ao tentar conectar ao host " + host + " na porta "
-                    + port, "Aviso!",
-                    JOptionPane.INFORMATION_MESSAGE);
+            notifyError("Erro de I/O ao tentar conectar ao host " + host + " na porta " + port, exception);
         } catch (final InterruptedException ex) {
+            notifyError("Operação interrompida", ex);
+        } finally {
+            closeResources();
         }
-        return false;
     }
 
-    /**
-     * Implementação do método run() da interface Runnable.
-     * Este método é executado em uma thread separada para permitir a leitura
-     * em tempo real das respostas do dispositivo de rede.
-     */
-    public void run() {
-        final String prompt = "!end  of config -----------------------------------------------"; // Prompt que indica o
-                                                                                                 // fim da saída
-        try (BufferedWriter fileWriter = new BufferedWriter(
-                new FileWriter(this.fileName, false))) {
+    private void sendCommand(String command, int delay) throws InterruptedException {
+        out.println(command);
+        Thread.sleep(delay);
+    }
+
+    private void readResponses() throws IOException, InterruptedException {
+        final String prompt = "Admin(DEBUG_H)>";
+        final String prompt2 = "!end  of config -----------------------------------------------";
+
+        try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter(this.fileName, false))) {
             String answer;
             while (active && !Thread.currentThread().isInterrupted()) {
                 if ((answer = in.readLine()) != null) {
                     fileWriter.write(answer);
                     fileWriter.newLine();
-                    // Verifique se o prompt final foi recebido
-                    if (answer.trim().endsWith(prompt)) {
-                        active = false; // Termina a leitura
+
+                    if (answer.trim().endsWith(prompt) || answer.trim().endsWith(prompt2)) {
+                        active = false;
                         break;
                     }
                 }
-            }
-        } catch (final IOException exception) {
-            if (active) {
-                System.err.println("Erro de comunicacao.");
             }
         }
     }
 
     private void applyCommands() throws InterruptedException {
-        out.println("cd service");
-        Thread.sleep(100);
-        out.println("terminal length 0");
-        Thread.sleep(100);
-        out.println("cd ..");
-        Thread.sleep(100);
-        out.println("lll");
-        Thread.sleep(100);
-        out.println("show running-config");
-        Thread.sleep(100);
+        sendCommand("cd service", 100);
+        sendCommand("terminal length 0", 100);
+        sendCommand("cd ..", 100);
+        sendCommand("lll", 100);
+        sendCommand("show running-config", 100);
+        sendCommand("", 100);
     }
 
-    /**
-     * Mensagem de alerta ao usuário
-     */
-    private void finalMessage() {
+    private void notifyError(String message, Exception exception) {
+        if (listener != null) {
+            SwingUtilities.invokeLater(() -> {
+                listener.onOperationFailed(exception);
+                JOptionPane.showMessageDialog(null, message, "Aviso!", JOptionPane.INFORMATION_MESSAGE);
+            });
+        }
+    }
 
-        // Interrompe a thread, caso esteja esperando
-        if (thread != null) {
-            try {
+    private void closeResources() {
+        active = false;
+        try {
+            if (socket != null && !socket.isClosed()) {
                 socket.close();
-            } catch (final IOException e) {
-                e.printStackTrace();
             }
+        } catch (final IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void stop() {
+        active = false;
+        if (thread != null) {
             thread.interrupt();
         }
+        closeResources();
     }
 }
