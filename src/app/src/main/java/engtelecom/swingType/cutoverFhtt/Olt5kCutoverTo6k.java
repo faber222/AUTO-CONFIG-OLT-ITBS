@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Consumer;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -21,7 +20,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import engtelecom.access.SshManager;
 import engtelecom.access.TelnetManager;
-import engtelecom.access.read.fhtt.TelnetReadFhtt;
 import engtelecom.access.write.fhtt.TelnetWriteFhtt;
 import engtelecom.analytics.DataAnaliser5k;
 import engtelecom.config.ConfigCutoverGenerator5k;
@@ -1223,9 +1221,15 @@ public class Olt5kCutoverTo6k extends javax.swing.JInternalFrame
                         }
 
                 } else {
-                        JOptionPane.showMessageDialog(null,
-                                        "Nenhuma origem selecionada.", "Error!",
+			if(!this.origemSelecionada){
+			      JOptionPane.showMessageDialog(null,
+                                        "Nenhuma origem selecionada!", "Error!",
                                         JOptionPane.ERROR_MESSAGE, null);
+			} else {
+			      JOptionPane.showMessageDialog(null,
+                                        "Nenhum destino selecionado!", "Error!",
+                                        JOptionPane.ERROR_MESSAGE, null);	
+			}
                 }
         }
 

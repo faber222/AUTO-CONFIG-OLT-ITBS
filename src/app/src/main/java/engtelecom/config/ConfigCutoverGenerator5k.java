@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import engtelecom.analytics.DataAnaliser5k;
@@ -426,11 +427,16 @@ public class ConfigCutoverGenerator5k {
 
         // Configurar o qinq
 
+        ImageIcon successIcon = new ImageIcon(getClass().getResource("/icons/yes.png"));
+
         if (writeScript()) {
             System.out.println("Script criado com sucesso!");
             JOptionPane.showMessageDialog(null,
-                    "Script de migração criado com sucesso!.", null,
-                    JOptionPane.WARNING_MESSAGE, null);
+                    "Script de migração criado com sucesso!",
+                    "Sucesso!",
+                    JOptionPane.PLAIN_MESSAGE,
+                    successIcon);
+
             return true;
         } else {
             System.out.println("Script não foi criado, ocorreu algum erro!");
