@@ -20,12 +20,15 @@ import engtelecom.access.read.itbs.TelnetRead;
 import engtelecom.access.write.fhtt.TelnetWriteFhtt;
 import engtelecom.analytics.DataAnaliser;
 import engtelecom.config.ConfigCutoverGenerator;
+import engtelecom.swingType.cutoverFhtt.destino.Olt5kCutoverDestinoAcessoListener;
+import engtelecom.swingType.cutoverFhtt.origem.Olt5kCutoverOrigemAcessoListener;
 
 /**
  *
  * @author faber222
  */
-public class OltCutover extends javax.swing.JInternalFrame {
+public class OltCutover extends javax.swing.JInternalFrame
+                implements Olt5kCutoverOrigemAcessoListener, Olt5kCutoverDestinoAcessoListener {
 
         private final SpinnerNumberModel modelChassiPon;
         private final SpinnerNumberModel modelChassiUp;
@@ -103,6 +106,18 @@ public class OltCutover extends javax.swing.JInternalFrame {
         private final ImageIcon criarIcon;
         private final ImageIcon enviarIcon;
         private final ImageIcon sairIcon;
+
+        private String ipOltOrigem;
+        private String ipOltDestino;
+        private String passOltOrigem;
+        private String passOltDestino;
+        private String portOltOrigem;
+        private String portOltDestino;
+        private String userOltOrigem;
+        private String userOltDestino;
+        private boolean isTelnetOltOrigem;
+        private boolean dadosOrigemPreenchidos;
+        private boolean dadosDestinoPreenchidos;
 
         private boolean fileChooserIsSelected;
         private String filePath;
@@ -483,13 +498,6 @@ public class OltCutover extends javax.swing.JInternalFrame {
                 jRadioButtonTELNELDestino.setMargin(new java.awt.Insets(0, 0, 0, 0));
 
                 jLabel12.setText("Acesso:");
-
-                // buttonGroup2.add(jRadioButtonSSHDestino);
-                // jRadioButtonSSHDestino.setSelected(true);
-                // jRadioButtonSSHDestino.setText("SSH");
-                // jRadioButtonSSHDestino.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,
-                // 0, 0, 0));
-                // jRadioButtonSSHDestino.setMargin(new java.awt.Insets(0, 0, 0, 0));
 
                 buttonGroup3.add(jRadioButtonAn5k);
                 jRadioButtonAn5k.setSelected(true);
@@ -960,27 +968,6 @@ public class OltCutover extends javax.swing.JInternalFrame {
                                                 JOptionPane.INFORMATION_MESSAGE, null);
                         }
 
-                        // } else {
-                        // final SSHClientFhtt sshClient = new SSHClientFhtt(
-                        // jTextFieldIpOltDestino.getText(),
-                        // (Integer) jSpinnerPortOltDestino.getValue(),
-                        // jTextFieldOltUserDestino.getText(),
-                        // new String(jPasswordFieldOltPasswdDestino.getPassword()), oltType);
-                        // if (sshClient.oltAccess("scriptMigracao.txt")) {
-                        // JOptionPane.showMessageDialog(null,
-                        // "Script aplicado com sucesso!", null,
-                        // JOptionPane.INFORMATION_MESSAGE, null);
-                        // JOptionPane.showMessageDialog(null,
-                        // "NÃO ESQUEÇA DE VALIDAR O LOG GERADO E APLICAR AS CONFIGURAÇÕES!",
-                        // null,
-                        // JOptionPane.INFORMATION_MESSAGE, null);
-                        // } else {
-                        // JOptionPane.showMessageDialog(null,
-                        // "Não foi possível aplicar o script!", null,
-                        // JOptionPane.INFORMATION_MESSAGE, null);
-                        // }
-                        // }
-
                 } else {
                         JOptionPane.showMessageDialog(null,
                                         "Nenhum script criado para enviar.", "Error!",
@@ -1086,6 +1073,50 @@ public class OltCutover extends javax.swing.JInternalFrame {
                         jTextAreaPreviewCode.setText("");
                 }
 
+        }
+
+        /**
+         * Método herdado da interface que faz a coleta dos dados da olt de origem para
+         * coleta via ssh/telnet
+         */
+        @Override
+        public void onProfileDadosOrigemCreated(final String ip, final String user, final String passwd,
+                        final String port, final boolean isTelnet) {
+                System.out.println("Ip: " + ip);
+                System.out.println("Usuário: " + user);
+                System.out.println("Senha: " + passwd);
+                System.out.println("Porta: " + port);
+                if (isTelnet) {
+                        System.out.println("Acesso por telnet");
+                } else {
+                        System.out.println("Acesso por ssh");
+                }
+
+                this.ipOltOrigem = ip;
+                this.userOltOrigem = user;
+                this.passOltOrigem = passwd;
+                this.portOltOrigem = port;
+                this.isTelnetOltOrigem = isTelnet;
+                dadosOrigemPreenchidos = true;
+        }
+
+        /**
+         * Método herdado da interface que faz a coleta dos dados da olt de destino para
+         * envio de dados via telnet
+         */
+        @Override
+        public void onProfileDadosDestinoCreated(final String ip, final String user, final String passwd,
+                        final String port) {
+                System.out.println("Ip: " + ip);
+                System.out.println("Usuário: " + user);
+                System.out.println("Senha: " + passwd);
+                System.out.println("Porta: " + port);
+
+                this.ipOltDestino = ip;
+                this.userOltDestino = user;
+                this.passOltDestino = passwd;
+                this.portOltDestino = port;
+                dadosDestinoPreenchidos = true;
         }
 
 }
