@@ -4,7 +4,14 @@
  */
 package engtelecom;
 
+import java.util.prefs.Preferences;
+
 import javax.swing.ImageIcon;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+
+import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
 
 import engtelecom.swingType.InfoFrame;
 import engtelecom.swingType.cutoverFhtt.Olt5kCutoverTo6k;
@@ -12,43 +19,23 @@ import engtelecom.swingType.cutoverItbs.OltCutover;
 import engtelecom.swingType.fiberhome.OltFhtt;
 import engtelecom.swingType.gcon.OltG08;
 import engtelecom.swingType.gcon.OltG16;
-import engtelecom.swingType.zhone.Olt8820;    
+import engtelecom.swingType.zhone.Olt8820;
 
 /**
  *
  * @author faber222
  */
 public class App extends javax.swing.JFrame {
+    private static boolean darkMode = true; // Tema padrão: Dark
 
     /**
      * @param args the command line arguments
      */
     public static void main(final String args[]) {
-        /* Set the Nimbus look and feel */
-        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
-        // (optional) ">
-        /*
-         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
-         * look and feel.
-         * For details see
-         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (final javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-                | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(App.class.getName()).log(java.util.logging.Level.SEVERE, null,
-                    ex);
-        }
-        // FlatDarkLaf.setup();
-        // FlatMacDarkLaf.setup();
-        // FlatMacLightLaf.setup();
-        /* Create and display the form */
+        final Preferences prefs = Preferences.userNodeForPackage(App.class);
+        darkMode = prefs.getBoolean("DARK_MODE", true); // Default: Dark
+        // Aplica o tema inicial
+        atualizarTemaGlobal(darkMode);
         java.awt.EventQueue.invokeLater(() -> {
             new App().setVisible(true);
         });
@@ -80,7 +67,7 @@ public class App extends javax.swing.JFrame {
 
     private javax.swing.JMenuItem jMenuCutover;
 
-    private javax.swing.JMenuItem jMenuCutover5k;
+    private javax.swing.JMenuItem jMenuTema;
 
     private javax.swing.JMenuItem jMenuCutover5kTo6k;
 
@@ -109,6 +96,7 @@ public class App extends javax.swing.JFrame {
     private ImageIcon enviarIcon;
     private ImageIcon sairIcon;
     private ImageIcon previewIcon;
+    private ImageIcon temaIcon;
 
     private final String oltAn5k;
     private final String oltAn6k;
@@ -198,6 +186,7 @@ public class App extends javax.swing.JFrame {
         this.infoIcon = new ImageIcon(classLoader.getResource("icons/information.png"));
         this.mainIcon = new ImageIcon(classLoader.getResource("provedor.png"));
         this.oltCutoverIcon = new ImageIcon(classLoader.getResource("script.png"));
+        this.temaIcon = new ImageIcon(classLoader.getResource("icons/contrast_high.png"));
 
         this.ipIcon = new ImageIcon(classLoader.getResource("icons/server.png"));
         this.portIcon = new ImageIcon(classLoader.getResource("icons/sitemap.png"));
@@ -232,7 +221,7 @@ public class App extends javax.swing.JFrame {
         jMenuG08 = new javax.swing.JMenuItem();
         jMenu8820i = new javax.swing.JMenuItem();
         jMenuCutover = new javax.swing.JMenuItem();
-        jMenuCutover5k = new javax.swing.JMenuItem();
+        jMenuTema = new javax.swing.JMenuItem();
         jMenuCutover5kTo6k = new javax.swing.JMenuItem();
 
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -320,13 +309,7 @@ public class App extends javax.swing.JFrame {
 
         jMenu4.add(jMenuCutover);
 
-        // jMenuCutover5k.setIcon(oltCutoverIcon);
-        // jMenuCutover5k.setText(this.oltCutover5k);
-        // jMenuCutover5k.addActionListener((final java.awt.event.ActionEvent evt) -> {
-        //     jMenuCutover5kActionPerformed();
-        // });
-
-        jMenu4.add(jMenuCutover5k);
+        // jMenu4.add();
 
         jMenuCutover5kTo6k.setIcon(oltCutoverIcon);
         jMenuCutover5kTo6k.setText(this.oltCutover5kTo6k);
@@ -346,6 +329,13 @@ public class App extends javax.swing.JFrame {
         });
         jMenu5.add(jMenuItem3);
 
+        jMenuTema.setIcon(temaIcon);
+        jMenuTema.setText("Tema");
+        jMenuTema.addActionListener((final java.awt.event.ActionEvent evt) -> {
+            jMenuTemaActionPerformed();
+        });
+        jMenu5.add(jMenuTema);
+        
         jMenuItem2.setIcon(databaseDisconnect); // NOI18N
         jMenuItem2.setText("Sair");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -354,6 +344,7 @@ public class App extends javax.swing.JFrame {
             }
         });
         jMenu5.add(jMenuItem2);
+
 
         jMenuBar1.add(jMenu5);
 
@@ -396,11 +387,10 @@ public class App extends javax.swing.JFrame {
         telaCutover.setVisible(true);
     }// GEN-LAST:event_jMenu8820iActionPerformed
 
-    // private void jMenuCutover5kActionPerformed() {// GEN-FIRST:event_jMenu8820iActionPerformed
-    //     final OltCutover5k telaCutover2 = new OltCutover5k(this);
-    //     jDesktopPane1.add(telaCutover2);
-    //     telaCutover2.setVisible(true);
-    // }// GEN-LAST:event_jMenu8820iActionPerformed
+    private void jMenuTemaActionPerformed() {//
+        App.atualizarTemaGlobal(!App.isDarkMode());
+        atualizarUI();
+    }// GEN-LAST:event_jMenu8820iActionPerformed
 
     private void jMenuCutover5kTo6kActionPerformed() {// GEN-FIRST:event_jMenu8820iActionPerformed
         final Olt5kCutoverTo6k olt5kCutoverTo6k = new Olt5kCutoverTo6k();
@@ -427,4 +417,30 @@ public class App extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed() {// GEN-FIRST:event_jMenuItem2ActionPerformed
         System.exit(0);
     }// GEN-LAST:event_jMenuItem2ActionPerformed
+
+    public static void atualizarTemaGlobal(final boolean isDarkMode) {
+        try {
+            darkMode = isDarkMode;
+            final Preferences prefs = Preferences.userNodeForPackage(App.class);
+            prefs.putBoolean("DARK_MODE", darkMode);
+            if (isDarkMode) {
+                UIManager.setLookAndFeel(new FlatMacDarkLaf());
+            } else {
+                UIManager.setLookAndFeel(new FlatMacLightLaf());
+
+            }
+
+        } catch (final Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Getter para o tema atual
+    public static boolean isDarkMode() {
+        return darkMode;
+    }
+
+    private void atualizarUI() {
+        SwingUtilities.updateComponentTreeUI(this); // Atualiza o JFrame principal
+    }
 }

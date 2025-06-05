@@ -214,7 +214,7 @@ public class OltCutover extends javax.swing.JInternalFrame {
                 jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "OLT-ORIGEM",
                                 javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
                                 javax.swing.border.TitledBorder.DEFAULT_POSITION,
-                                new java.awt.Font("JetBrains Mono ExtraBold", 0, 12), new java.awt.Color(0, 0, 0))); // NOI18N
+                                new java.awt.Font("JetBrains Mono ExtraBold", 0, 12))); // NOI18N
                 jPanel1.setForeground(java.awt.SystemColor.activeCaption);
                 jPanel1.setToolTipText("OLT");
                 jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -429,7 +429,6 @@ public class OltCutover extends javax.swing.JInternalFrame {
                                                                                 .addComponent(jLabel6))
                                                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
                                                                                 Short.MAX_VALUE)));
-
                 jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Preview",
                                 javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
                                 javax.swing.border.TitledBorder.DEFAULT_POSITION,

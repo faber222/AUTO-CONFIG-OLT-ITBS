@@ -235,8 +235,8 @@ public class OltG16 extends javax.swing.JInternalFrame {
                 setResizable(true);
                 setTitle("G16");
                 setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-                setMinimumSize(new java.awt.Dimension(812, 700));
-                setPreferredSize(new java.awt.Dimension(812, 700));
+                setMinimumSize(new java.awt.Dimension(770, 630));
+                setPreferredSize(new java.awt.Dimension(770, 630));
                 setRequestFocusEnabled(false);
 
                 jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Dados de acesso da OLT ",

@@ -226,8 +226,8 @@ public class Olt8820 extends javax.swing.JInternalFrame {
                 setResizable(true);
                 setTitle("8820i");
                 setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-                setMinimumSize(new java.awt.Dimension(745, 705));
-                setPreferredSize(new java.awt.Dimension(733, 705));
+                setMinimumSize(new java.awt.Dimension(710, 630));
+                setPreferredSize(new java.awt.Dimension(710, 630));
                 setRequestFocusEnabled(false);
 
                 // setVisible(true);

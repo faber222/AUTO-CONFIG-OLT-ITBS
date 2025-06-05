@@ -420,7 +420,7 @@ public class OltFhtt extends javax.swing.JInternalFrame implements CapabilityPro
 		final ClassLoader classLoader = OltFhtt.class.getClassLoader();
 		this.errorIcon = new ImageIcon(classLoader.getResource("erro.png"));
 		this.successIcon = new ImageIcon(classLoader.getResource("success.png"));
-		this.oltIcon = new ImageIcon(classLoader.getResource("AN6000_15.png"));
+		this.oltIcon = new ImageIcon(classLoader.getResource("OLT_AN6000.png"));
 		this.nomeArq = "script" + this.oltName + ".txt";
 		this.fileName = this.nomeArq;
 		this.fileChooserIsSelected = false;
