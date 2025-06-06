@@ -94,11 +94,11 @@ public class DataAnaliser {
         this.dataMapRules.forEach((lineKey, valueList) -> {
             // recebe o retorno do dataSorter se não for nulo
             this.lines = (lineKey != null) ? dataSorter(lineKey, 0) : null;
-
+            
             // itera os valores obtidos do rule
             for (String eachRules : valueList) {
                 String local = null;
-
+                
                 // itera os valores obtidos do line
                 for (String eachLines : this.lines) {
                     // captura o ultimo item do array, que é a chave da hash vlan
@@ -106,12 +106,11 @@ public class DataAnaliser {
                     int vlanKey = Integer.parseInt(arrayEachVlan[arrayEachVlan.length - 1]);
 
                     // recebe o retorno do dataSorter se não for nulo
-                    this.vlans = (vlanKey != 0) ? dataSorter(vlanKey, 1) : null;
+                    this.vlans = (vlanKey >= 0) ? dataSorter(vlanKey, 1) : null;
 
                     // itera os valores obtidos do vlan
                     for (String eachVlan : this.vlans) {
                         local = eachRules + ";" + eachLines + ";" + eachVlan;
-
                         // ITBS-5f72cb27;0/9/1;58;1005;veip;TRUE;null;1;1005;1005
                     }
                     this.data.add(local);
