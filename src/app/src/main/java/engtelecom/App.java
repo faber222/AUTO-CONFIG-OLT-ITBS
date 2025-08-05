@@ -14,6 +14,7 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 
 import engtelecom.swingType.InfoFrame;
+import engtelecom.swingType.anm2Unm.Anm2Unm;
 import engtelecom.swingType.cutoverFhtt.Olt5kCutoverTo6k;
 import engtelecom.swingType.cutoverItbs.OltCutover;
 import engtelecom.swingType.fiberhome.OltFhtt;
@@ -41,18 +42,40 @@ public class App extends javax.swing.JFrame {
         });
     }
 
+    public static void atualizarTemaGlobal(final boolean isDarkMode) {
+        try {
+            darkMode = isDarkMode;
+            final Preferences prefs = Preferences.userNodeForPackage(App.class);
+            prefs.putBoolean("DARK_MODE", darkMode);
+            if (isDarkMode) {
+                UIManager.setLookAndFeel(new FlatMacDarkLaf());
+            } else {
+                UIManager.setLookAndFeel(new FlatMacLightLaf());
+
+            }
+
+        } catch (final Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Getter para o tema atual
+    public static boolean isDarkMode() {
+        return darkMode;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane1;
 
     private javax.swing.JMenu jMenu1;
-
     private javax.swing.JMenu jMenu3;
-
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+
     private javax.swing.JMenuItem jMenuItem2;
+
     private javax.swing.JMenuItem jMenuItem3;
 
     private javax.swing.JMenuItem jMenu8820i;
@@ -66,24 +89,24 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuG16;
 
     private javax.swing.JMenuItem jMenuCutover;
-
+    
     private javax.swing.JMenuItem jMenuTema;
 
     private javax.swing.JMenuItem jMenuCutover5kTo6k;
-
+    private javax.swing.JMenuItem jMenuAnm2Unm;
     private ImageIcon infoIcon;
     private ImageIcon terminalIcon;
     private ImageIcon terminalOsxIcon;
+
     private ImageIcon databaseRefresh;
     private ImageIcon databaseDisconnect;
-
     private ImageIcon olt8820Icon;
     private ImageIcon oltG16Icon;
     private ImageIcon oltG08Icon;
     private ImageIcon oltAN6KIcon;
+
     private ImageIcon mainIcon;
     private ImageIcon oltCutoverIcon;
-
     private ImageIcon ipIcon;
     private ImageIcon portIcon;
     private ImageIcon userIcon;
@@ -95,17 +118,21 @@ public class App extends javax.swing.JFrame {
     private ImageIcon criarIcon;
     private ImageIcon enviarIcon;
     private ImageIcon sairIcon;
+
     private ImageIcon previewIcon;
     private ImageIcon temaIcon;
-
     private final String oltAn5k;
     private final String oltAn6k;
     private final String oltG16;
     private final String oltG08;
     private final String olt8820;
+    
     private final String oltCutover;
+
     // private final String oltCutover5k;
     private final String oltCutover5kTo6k;
+
+    private final String migracaoAnm2Unm;
 
     // End of variables declaration//GEN-END:variables
     /**
@@ -120,6 +147,7 @@ public class App extends javax.swing.JFrame {
         this.oltCutover = "OLT-CUTOVER";
         // this.oltCutover5k = "OLT-CUTOVER-5k";
         this.oltCutover5kTo6k = "OLT-CUTOVER-5k-TO-6K";
+        this.migracaoAnm2Unm = "ANM-2-UNM";
         initComponents();
         this.setIconImage(this.mainIcon.getImage());
     }
@@ -223,6 +251,7 @@ public class App extends javax.swing.JFrame {
         jMenuCutover = new javax.swing.JMenuItem();
         jMenuTema = new javax.swing.JMenuItem();
         jMenuCutover5kTo6k = new javax.swing.JMenuItem();
+        jMenuAnm2Unm = new javax.swing.JMenuItem();
 
         jMenuItem1 = new javax.swing.JMenuItem();
         jDesktopPane1 = new javax.swing.JDesktopPane();
@@ -318,6 +347,14 @@ public class App extends javax.swing.JFrame {
         });
 
         jMenu4.add(jMenuCutover5kTo6k);
+        
+        jMenuAnm2Unm.setIcon(oltCutoverIcon);
+        jMenuAnm2Unm.setText(this.migracaoAnm2Unm);
+        jMenuAnm2Unm.addActionListener((final java.awt.event.ActionEvent evt) -> {
+            jMenuAnm2UnmActionPerformed();
+        });
+
+        jMenu4.add(jMenuAnm2Unm);
 
         jMenu5.setIcon(infoIcon); // NOI18N
         jMenu5.setText("Sobre");
@@ -386,7 +423,7 @@ public class App extends javax.swing.JFrame {
         jDesktopPane1.add(telaCutover);
         telaCutover.setVisible(true);
     }// GEN-LAST:event_jMenu8820iActionPerformed
-
+    
     private void jMenuTemaActionPerformed() {//
         App.atualizarTemaGlobal(!App.isDarkMode());
         atualizarUI();
@@ -396,6 +433,12 @@ public class App extends javax.swing.JFrame {
         final Olt5kCutoverTo6k olt5kCutoverTo6k = new Olt5kCutoverTo6k();
         jDesktopPane1.add(olt5kCutoverTo6k);
         olt5kCutoverTo6k.setVisible(true);
+    }// GEN-LAST:event_jMenu8820iActionPerformed
+
+    private void jMenuAnm2UnmActionPerformed() {// GEN-FIRST:event_jMenu8820iActionPerformed
+        final Anm2Unm migracaoAnm2Unm = new Anm2Unm();
+        jDesktopPane1.add(migracaoAnm2Unm);
+        migracaoAnm2Unm.setVisible(true);
     }// GEN-LAST:event_jMenu8820iActionPerformed
 
     private void jMenuAN5kActionPerformed() {
@@ -417,28 +460,6 @@ public class App extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed() {// GEN-FIRST:event_jMenuItem2ActionPerformed
         System.exit(0);
     }// GEN-LAST:event_jMenuItem2ActionPerformed
-
-    public static void atualizarTemaGlobal(final boolean isDarkMode) {
-        try {
-            darkMode = isDarkMode;
-            final Preferences prefs = Preferences.userNodeForPackage(App.class);
-            prefs.putBoolean("DARK_MODE", darkMode);
-            if (isDarkMode) {
-                UIManager.setLookAndFeel(new FlatMacDarkLaf());
-            } else {
-                UIManager.setLookAndFeel(new FlatMacLightLaf());
-
-            }
-
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Getter para o tema atual
-    public static boolean isDarkMode() {
-        return darkMode;
-    }
 
     private void atualizarUI() {
         SwingUtilities.updateComponentTreeUI(this); // Atualiza o JFrame principal
