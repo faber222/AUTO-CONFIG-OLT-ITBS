@@ -4,17 +4,8 @@
  */
 package engtelecom.swingType.anm2Unm;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-import engtelecom.config.ConfigAnm2Unm;
 
 /**
  *
@@ -39,8 +30,6 @@ public class Anm2Unm extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JProgressBar jProgressBar;
-    private String batchAnm;
-    private String batchUnm;
 
     private String AnmFilePath;
     private String UnmFilePath;
@@ -204,7 +193,7 @@ public class Anm2Unm extends javax.swing.JInternalFrame {
             javax.swing.BorderFactory.createTitledBorder("Painel")
         );
 
-        jProgressBar.setValue(50);
+        jProgressBar.setValue(0);
 
         jButtonStart.setIcon(
             new javax.swing.ImageIcon(
@@ -218,10 +207,10 @@ public class Anm2Unm extends javax.swing.JInternalFrame {
                     final java.awt.event.ActionEvent evt
                 ) {
                     try {
-						jButtonStartActionPerformed(evt);
-					} catch (final Exception e) {
-						e.printStackTrace();
-					}
+                        jButtonStartActionPerformed(evt);
+                    } catch (final Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         );
@@ -231,7 +220,7 @@ public class Anm2Unm extends javax.swing.JInternalFrame {
         jLabel4.setText("Progresso:");
 
         jLabelPercent.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabelPercent.setText("50%");
+        jLabelPercent.setText("0%");
 
         final javax.swing.GroupLayout jPanel3Layout =
             new javax.swing.GroupLayout(jPanel3);
@@ -438,15 +427,7 @@ public class Anm2Unm extends javax.swing.JInternalFrame {
     private void fileAnmActionPerformed(final java.awt.event.ActionEvent evt) {
         final JFileChooser fileChooser = new JFileChooser();
 
-        // Adiciona um filtro para aceitar apenas arquivos de texto e derivados
-        final FileNameExtensionFilter filter = new FileNameExtensionFilter(
-            "Arquivos de Texto",
-            "txt",
-            "csv",
-            "xls",
-            "xlsx"
-        );
-        fileChooser.setFileFilter(filter);
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         // Exibe o seletor de arquivo e obtém a resposta do usuário
         final int returnValue = fileChooser.showOpenDialog(this);
         fileChooser.setDialogTitle("Selecione o arquivo:");
@@ -488,15 +469,8 @@ public class Anm2Unm extends javax.swing.JInternalFrame {
     private void fileUnmActionPerformed(final java.awt.event.ActionEvent evt) {
         final JFileChooser fileChooser = new JFileChooser();
 
-        // Adiciona um filtro para aceitar apenas arquivos de texto e derivados
-        final FileNameExtensionFilter filter = new FileNameExtensionFilter(
-            "Arquivos de Texto",
-            "txt",
-            "csv",
-            "xls",
-            "xlsx"
-        );
-        fileChooser.setFileFilter(filter);
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
         // Exibe o seletor de arquivo e obtém a resposta do usuário
         final int returnValue = fileChooser.showOpenDialog(this);
         fileChooser.setDialogTitle("Selecione o arquivo:");
@@ -520,7 +494,6 @@ public class Anm2Unm extends javax.swing.JInternalFrame {
             }
 
             fileUnm.setText(fileName);
-            // previewText(this.UnmFilePath);
         } else {
             this.batchUnmIsSelected = false;
             JOptionPane.showMessageDialog(
@@ -531,32 +504,34 @@ public class Anm2Unm extends javax.swing.JInternalFrame {
                 null
             );
             fileUnm.setText("File");
-            // jTextAreaPreviewCode.setText("");
         }
     }
 
     private void jButtonStartActionPerformed(
         final java.awt.event.ActionEvent evt
-    ) throws Exception {
-        if (this.batchAnmIsSelected && this.batchUnmIsSelected) {
-            final ConfigAnm2Unm configAnm2Unm = new ConfigAnm2Unm(Paths.get(this.AnmFilePath), Paths.get(this.UnmFilePath));
-            configAnm2Unm.processar();
+    ) {
+        if (batchAnmIsSelected && batchUnmIsSelected) {
+            BatchAnmUnmWorker worker = new BatchAnmUnmWorker(
+                this.AnmFilePath,
+                this.UnmFilePath,
+                jProgressBar,
+                jLabelPercent
+            );
+            worker.execute();
         } else {
-            if (!this.batchAnmIsSelected) {
+            if (!batchAnmIsSelected) {
                 JOptionPane.showMessageDialog(
                     null,
-                    "Nenhum bkp do ANM selecionado!",
-                    "Error!",
-                    JOptionPane.ERROR_MESSAGE,
-                    null
+                    "Nenhuma pasta ANM selecionada!",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
                 );
             } else {
                 JOptionPane.showMessageDialog(
                     null,
-                    "Nenhum batch do UNM selecionado!",
-                    "Error!",
-                    JOptionPane.ERROR_MESSAGE,
-                    null
+                    "Nenhuma pasta UNM selecionada!",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE
                 );
             }
         }

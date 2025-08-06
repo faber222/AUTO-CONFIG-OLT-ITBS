@@ -1,6 +1,5 @@
 package engtelecom.config;
 
-// import com.google.common.collect.Table.Cell;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -12,6 +11,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -23,19 +24,10 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-// import com.google.common.collect.Table.Cell;
 
 @SuppressWarnings("unused")
 public class ConfigAnm2Unm {
 
-    // main para testar
-    public static void main(final String[] args) throws Exception {
-        final Path anmPath = Paths.get("entrada.csv");
-        final Path unmPath = Paths.get("entrada.xls");
-
-        final ConfigAnm2Unm config = new ConfigAnm2Unm(anmPath, unmPath);
-        config.processar();
-    }
     private final Path anmPath;
 
     private final Path unmPath;
@@ -45,25 +37,50 @@ public class ConfigAnm2Unm {
         this.unmPath = unmPath;
     }
 
-    public void processar() throws Exception {
+    public void processar(final String nomeArquivoSaida) throws Exception {
         final List<Map<String, String>> anmData = lerCsvAnm(anmPath);
         final List<String> unmData = lerXlsUnm(unmPath);
 
-        salvarAnmTxt(anmData, "anm_output.txt");
-        salvarUnmTxt(unmData, "unm_output.txt");
+        final Map<String, String> mapPhysicalToDesc = new LinkedHashMap<>();
+        final Set<String> usados = new HashSet<>();
 
-        // // Exemplo: salvar valores de Physical Address que existem nos dois arquivos
-        // Set<String> comum = new HashSet<>();
-        // for (Map<String, String> linha : anmData) {
-        //     String physAddr = linha.get("Physical Address");
-        //     if (unmData.contains(physAddr)) {
-        //         comum.add(physAddr);
-        //     }
-        // }
-        // salvarComum(comum, "comparacao_output.txt");
+        for (String unm : unmData) {
+            String descricao = unm; // Default é o próprio valor do UNM
+
+            Iterator<Map<String, String>> iter = anmData.iterator();
+            while (iter.hasNext()) {
+                Map<String, String> anm = iter.next();
+                String phys = anm.get("Physical Address");
+                if (phys.equalsIgnoreCase(unm)) {
+                    descricao = anm.get("Object Name");
+                    iter.remove(); // Remove para otimizar próximas buscas
+                    break;
+                }
+            }
+
+            mapPhysicalToDesc.put(unm, descricao);
+        }
+        salvarComparacao(mapPhysicalToDesc, nomeArquivoSaida);
     }
 
-    private List<Map<String, String>> lerCsvAnm(final Path path) throws IOException {
+    private void salvarComparacao(
+        final Map<String, String> mapa,
+        final String nomeArquivo
+    ) throws IOException {
+        try (
+            BufferedWriter writer = Files.newBufferedWriter(
+                Paths.get(nomeArquivo)
+            )
+        ) {
+            for (final Map.Entry<String, String> entry : mapa.entrySet()) {
+                writer.write(entry.getValue() + ";" + entry.getKey());
+                writer.newLine();
+            }
+        }
+    }
+
+    private List<Map<String, String>> lerCsvAnm(final Path path)
+        throws IOException {
         final List<Map<String, String>> resultado = new ArrayList<>();
         try (
             BufferedReader reader = Files.newBufferedReader(
@@ -103,7 +120,9 @@ public class ConfigAnm2Unm {
                 ) continue;
 
                 final Map<String, String> mapa = new HashMap<>();
-                mapa.put("Object Name", partes[idxObjectName].trim());
+                String objectName = partes[idxObjectName].trim().replaceAll("\\s+", "-");
+                mapa.put("Object Name", objectName);
+                // mapa.put("Object Name", partes[idxObjectName].trim());
                 mapa.put("Physical Address", partes[idxPhysAddress].trim());
                 resultado.add(mapa);
             }
@@ -112,7 +131,7 @@ public class ConfigAnm2Unm {
     }
 
     @SuppressWarnings("deprecation")
-	private List<String> lerXlsUnm(final Path path) throws IOException {
+    private List<String> lerXlsUnm(final Path path) throws IOException {
         final List<String> resultado = new ArrayList<>();
         try (
             InputStream inp = Files.newInputStream(path);
@@ -153,36 +172,5 @@ public class ConfigAnm2Unm {
             }
         }
         return resultado;
-    }
-
-    private void salvarAnmTxt(
-        final List<Map<String, String>> dados,
-        final String nomeArquivo
-    ) throws IOException {
-        try (
-            BufferedWriter writer = Files.newBufferedWriter(
-                Paths.get(nomeArquivo)
-            )
-        ) {
-            for (final Map<String, String> linha : dados) {
-                writer.write(
-                    linha.get("Object Name") +
-                    " ; " +
-                    linha.get("Physical Address")
-                );
-                writer.newLine();
-            }
-        }
-    }
-
-    private void salvarUnmTxt(final List<String> dados, final String nomeArquivo)
-        throws IOException {
-        Files.write(Paths.get(nomeArquivo), dados);
-    }
-
-    @SuppressWarnings("unused")
-	private void salvarComum(final Set<String> comum, final String nomeArquivo)
-        throws IOException {
-        Files.write(Paths.get(nomeArquivo), comum);
     }
 }
